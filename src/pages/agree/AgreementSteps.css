@@ -1,0 +1,608 @@
+body:has(.agreement_step_page) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.agreement_step_page {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #ffffff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #111827;
+  font-family: var(--font-pretendard);
+}
+
+.agreement_step_banner {
+  position: relative;
+  width: 100%;
+  height: 228px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #60a5fa;
+}
+
+.agreement_step_back {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 12;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.agreement_step_back img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.agreement_step_bubble {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+}
+
+.agreement_step_bubble--large {
+  top: -50px;
+  right: -42px;
+  width: 174px;
+  height: 174px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  background: radial-gradient(
+    circle at 32% 24%,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.5) 25%,
+    rgba(219, 237, 255, 0.3) 60%,
+    rgba(254, 226, 243, 0.22) 100%
+  );
+  filter: blur(1.5px);
+}
+
+.agreement_step_bubble--medium {
+  bottom: -42px;
+  left: -34px;
+  width: 128px;
+  height: 128px;
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  background: radial-gradient(
+    circle at 38% 30%,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.48) 29%,
+    rgba(252, 226, 242, 0.3) 66%,
+    rgba(215, 236, 255, 0.23) 100%
+  );
+  filter: blur(1px);
+}
+
+.agreement_step_bubble--small {
+  top: 46px;
+  left: 54px;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  background: radial-gradient(
+    circle at 28% 22%,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(255, 255, 255, 0.5) 28%,
+    rgba(214, 235, 255, 0.32) 66%,
+    rgba(253, 225, 241, 0.22) 100%
+  );
+  filter: blur(1px);
+}
+
+.agreement_step_bubble--tiny {
+  right: 93px;
+  bottom: 40px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.52) 35%,
+    rgba(220, 238, 255, 0.28) 66%,
+    rgba(253, 224, 240, 0.22) 100%
+  );
+  filter: blur(0.75px);
+}
+
+.agreement_step_body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 32px 88px;
+}
+
+.agreement_step_title {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+.agreement_step_supporting {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.agreement_step_continue {
+  position: absolute;
+  right: 32px;
+  bottom: 28px;
+  left: 32px;
+  height: 56px;
+  border: 0;
+  border-radius: 14px;
+  background: #3b82f6;
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.agreement_step_continue--emphasized {
+  background: #2563eb;
+  box-shadow: 0 12px 27px rgba(37, 99, 235, 0.3);
+}
+
+.agreement_step_continue:disabled {
+  cursor: default;
+}
+
+.agreement_step_benefits {
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agreement_step_benefit {
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid #edf2ff;
+  border-radius: 16px;
+  background: #f8faff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.agreement_step_benefit:hover {
+  background: #f0f4ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.05);
+}
+
+.agreement_step_benefit_check {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #cbd5e1;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.agreement_step_benefit_check--active {
+  background: #3b82f6;
+}
+
+.agreement_step_benefit_check::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 5px;
+  width: 6px;
+  height: 9px;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: rotate(42deg);
+}
+
+.agreement_step_all_select {
+  width: 100%;
+  margin: 10px 0 2px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.agreement_step_all_select:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.agreement_step_all_select_text {
+  color: #1e293b;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.agreement_step_divider {
+  width: 100%;
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 4px 0;
+}
+
+.agreement_step_choice {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #e3edff;
+  border-radius: 18px;
+  background: #f8faff;
+  box-sizing: border-box;
+}
+
+.agreement_step_choice--lead {
+  order: -1;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.agreement_step_choice_label {
+  display: block;
+  margin: 0 0 11px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.agreement_step_choice_switch {
+  height: 50px;
+  padding: 4px;
+  border-radius: 13px;
+  background: #e9f0fc;
+  display: flex;
+  gap: 4px;
+}
+
+.agreement_step_choice_option {
+  flex: 1;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.agreement_step_choice_option--selected {
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+}
+
+.agreement_step_choice_option:disabled {
+  cursor: default;
+}
+
+.agreement_step_choice_dot {
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+.agreement_step_overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.48); /* Soft dark dim background */
+  backdrop-filter: blur(8px); /* Elegant glassmorphism blur */
+}
+
+.agreement_step_alert {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  z-index: 11;
+  width: 310px; /* Wider spacious modern card width */
+  overflow: visible; /* Support absolute elements floating on top */
+  border-radius: 32px; /* Large beautiful rounded corners */
+  background: #ffffff; /* Pure white background */
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14); /* Silver premium shadow */
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-sizing: border-box;
+  padding: 44px 24px 28px; /* Spacious spacing inside */
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.agreement_step_alert_body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.agreement_step_alert_icon {
+  width: 68px; /* Larger icon area */
+  height: 68px;
+  margin: -78px auto 20px; /* Overlap and float gracefully on top boundary */
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1.5px solid rgba(37, 99, 235, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.1);
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 5;
+  position: relative;
+  animation: float-alert-icon 3s ease-in-out infinite; /* Soft micro animation */
+}
+
+@keyframes float-alert-icon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.agreement_step_alert_icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.agreement_step_alert_title {
+  margin: 0 0 14px;
+  color: #1e293b;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  font-family: var(--font-pretendard);
+  word-break: keep-all;
+}
+
+.agreement_step_alert_text {
+  margin: 0 0 28px; /* Spacious separation before buttons */
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+  font-weight: 500;
+  font-family: var(--font-pretendard);
+  word-break: keep-all;
+}
+
+.agreement_step_alert_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spaced out large CTA buttons */
+  width: 100%;
+}
+
+.agreement_step_alert_button {
+  height: 48px; /* Larger premium height */
+  border: 0;
+  background: #f1f5f9; /* Soft light gray background */
+  color: #4b5563; /* Elegant dark gray text */
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 14px; /* Curved large button radius */
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.agreement_step_alert_button:hover {
+  background: #e2e8f0;
+}
+
+.agreement_step_alert_button:active {
+  transform: scale(0.98);
+}
+
+.agreement_step_alert_button--allow {
+  background: #2563eb; /* Brand blue point color */
+  color: #ffffff; /* White text */
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+}
+
+.agreement_step_alert_button--allow:hover {
+  background: #1d4ed8;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+}
+
+.agreement_step_alert_button--allow:active {
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+}
+
+/* --- [배너가 없는 버전의 미니멀 화이트 레이아웃] --- */
+.agreement_step_page--nobanner {
+  background-color: #ffffff;
+}
+
+.agreement_step_page--nobanner .agreement_step_body {
+  padding: 72px 32px 80px; /* 전체 글들을 시원하고 여유있게 아래로 밀어내림 */
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 2단 회색 선택 박스 (iOS 추적 금지 / 허용 선택 카드) */
+.att_card_container {
+  width: 100%;
+  max-width: 320px;
+  background-color: #f3f4f6; /* 연한 회색 배경 */
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 28px 0 32px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.att_card_row {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #9ca3af; /* 미선택 컬러 */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.att_card_row--top {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.att_card_row--selected {
+  font-weight: 700;
+  color: #1f2937; /* 선택된 컬러 (어두운 블랙) */
+}
+
+/* 허용 버튼 선택 시 파란색 */
+.att_card_row:nth-child(2).att_card_row--selected {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.att_check_icon {
+  margin-right: 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 혜택 안내 목록 스타일 */
+.benefit_info_list {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* 글들 사이의 수직 간격을 깔끔하게 줄임 */
+  margin-bottom: 32px;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.benefit_info_item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  padding: 4px 0; /* 각 줄 사이의 패딩 여백도 대폭 줄여 컴팩트하게 조율 */
+}
+
+/* 라운드 서클 라인 아이콘 */
+.benefit_info_circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #dbeafe;
+  background: #eff6ff; /* 부드럽고 맑은 파스텔 블루 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb; /* 세련된 브랜드 파란색 아이콘 컬러 */
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.04); /* 매우 은은하고 고급스러운 그림자 */
+}
+
+.benefit_info_circle--w-icon {
+  font-family: var(--font-pretendard);
+  font-weight: 800;
+  color: #2563eb;
+  font-size: 16px; /* W 아이콘이 원 안에 균형있게 들어가도록 다듬음 */
+}
+
+.benefit_info_text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.45;
+  letter-spacing: -0.3px;
+}
+
+/* 하단 연한 설명 텍스트 */
+.agreement_bottom_legal_text {
+  width: 100%;
+  max-width: 320px;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+  text-align: center;
+  margin-bottom: 24px;
+}

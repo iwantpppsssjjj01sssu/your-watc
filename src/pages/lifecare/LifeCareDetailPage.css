@@ -1,0 +1,535 @@
+/* ==========================================================================
+   라이프케어 보관법 상세 페이지 스타일 (LifeCareDetailPage.css)
+   ========================================================================== */
+
+/* 1. 글로벌 모바일 앱 래퍼 */
+.lifecare_detail_wrapper {
+  background-color: #f1f5f9;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: var(--font-pretendard);
+  overflow-x: hidden;
+}
+
+.lifecare_detail_container {
+  width: 100%;
+  max-width: 390px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 2. 상단 블러 고정 헤더 */
+.detail_blur_header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.detail_back_btn {
+  background: none;
+  border: none;
+  padding: 12px 16px 12px 8px; /* Wide touch area */
+  margin-left: -8px; /* Offset to align chevron perfectly on the left */
+  cursor: pointer;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.detail_back_btn:active {
+  opacity: 0.6;
+  transform: scale(0.96);
+}
+
+.detail_header_title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  text-align: center;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 3. 상단 히어로 비주얼 배너 영역 */
+.detail_hero_section {
+  padding: 24px 20px;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 4px solid #e2e8f0;
+  box-sizing: border-box;
+}
+
+.hero_visual_container {
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+/* 둥둥 떠있는 SVG 무한 애니메이션 */
+.care_svg_illustration {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.08));
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.hero_text_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero_badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.hero_title {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.hero_subtitle {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+  max-width: 90%;
+}
+
+/* 4. 3대 핵심 비법 카드형 섹션 */
+.detail_tips_section {
+  padding: 24px 20px 16px;
+  box-sizing: border-box;
+}
+
+.section_title {
+  font-size: 15px;
+  font-weight: 850;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.02em;
+}
+
+.section_title_indicator {
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.tips_cards_container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tip_card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  box-sizing: border-box;
+}
+
+.tip_card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+.tip_card_title {
+  font-size: 13.5px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.tip_card_desc {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0 0 10px 0;
+  font-weight: 450;
+}
+
+.tip_card_subtip {
+  border-left: 3.5px solid #64748b;
+  padding: 8px 10px;
+  border-radius: 4px 8px 8px 4px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.tip_card_subtip_text {
+  font-size: 11px;
+  line-height: 1.45;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 5. 왓씨 보관 연계 추천 서비스 배너 */
+.detail_watc_banner {
+  margin: 16px 20px;
+  padding: 18px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-left: 4px solid #64748b;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.watc_banner_tag {
+  font-size: 9.5px;
+  color: #ffffff;
+  font-weight: 800;
+  padding: 2.5px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.watc_banner_title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.watc_banner_desc {
+  font-size: 11.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.watc_banner_footer {
+  display: flex;
+  align-items: center;
+}
+
+.watc_banner_badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 9999px;
+}
+
+/* 6. 인터랙티브 마이크로 퀴즈 섹션 */
+.detail_quiz_section {
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.quiz_card {
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.quiz_header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.quiz_icon {
+  font-size: 16px;
+}
+
+.quiz_badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: -0.01em;
+}
+
+.quiz_question {
+  font-size: 14px;
+  font-weight: 850;
+  color: #0f172a;
+  line-height: 1.45;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.quiz_options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.quiz_option_btn {
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.quiz_option_btn:hover:not(.disabled) {
+  border-color: #94a3b8;
+  background-color: #f8fafc;
+}
+
+.quiz_option_btn:active:not(.disabled) {
+  transform: scale(0.98);
+}
+
+.quiz_option_btn.selected {
+  border-color: #475569;
+  background-color: #f1f5f9;
+  font-weight: 700;
+}
+
+.quiz_option_btn.correct {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+  color: #065f46;
+}
+
+.quiz_option_btn.incorrect {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+  color: #991b1b;
+}
+
+.quiz_option_btn.disabled {
+  cursor: default;
+}
+
+.option_indicator {
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+  background-color: #f1f5f9;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quiz_option_btn.correct .option_indicator {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.quiz_option_btn.incorrect .option_indicator {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.option_text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: inherit;
+  font-weight: 500;
+}
+
+.quiz_submit_btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-sizing: border-box;
+}
+
+.quiz_submit_btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.quiz_submit_btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.quiz_result_container {
+  border-top: 1px dashed #cbd5e1;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.quiz_result_banner {
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.quiz_result_banner h4 {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.quiz_result_banner.correct {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.quiz_result_banner.incorrect {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.quiz_explanation {
+  font-size: 11.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 14px 0;
+  font-weight: 450;
+}
+
+.quiz_retry_btn {
+  background: none;
+  border: 1.5px solid;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.quiz_retry_btn:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 7. 하단 고정 예약 유도 플로팅 액션바 */
+.detail_floating_action_bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 20%, #ffffff 100%);
+  padding: 16px 20px 24px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none; /* 하단 빈 공간 클릭 통과 */
+}
+
+.detail_cta_btn {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+  pointer-events: auto; /* 버튼만 마우스 이벤트 수신 */
+  box-sizing: border-box;
+}
+
+.detail_cta_btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+.detail_cta_btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.cta_icon {
+  font-size: 14px;
+}
+
+/* 8. 애니메이션 유틸리티 */
+.animate_fade_in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

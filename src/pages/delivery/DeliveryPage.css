@@ -1,0 +1,415 @@
+.delivery_container {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 0 120px; /* Removed top and horizontal paddings to allow full-width header */
+  box-sizing: border-box;
+  font-family: var(--font-pretendard);
+  color: #0f172a;
+  background-color: #f8fbff;
+}
+
+.delivery_header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.delivery_back_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 12px 16px 12px 8px; /* Wide touch area */
+  margin-left: -8px; /* Offset to align chevron perfectly on the left */
+  cursor: pointer;
+  color: #334155;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.delivery_back_button:active {
+  opacity: 0.6;
+  transform: scale(0.96);
+}
+
+.delivery_title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  text-align: center;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.delivery_header_right_spacer {
+  width: 24px; /* Matches back button layout balance */
+  height: 24px;
+}
+
+.delivery_content {
+  padding: 20px 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery_content_subtitle {
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.delivery_summary_cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.delivery_summary_card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.delivery_summary_card--active {
+  border-color: #2563eb;
+  box-shadow: 0 14px 26px rgba(37, 99, 235, 0.14);
+}
+
+.delivery_summary_label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.delivery_summary_card strong {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.delivery_section {
+  margin-bottom: 20px;
+}
+
+.delivery_section_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.delivery_section_label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 0.5px;
+}
+
+.delivery_section_title {
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.delivery_status_badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.delivery_rider_card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.delivery_rider_info {
+  flex: 1;
+  display: grid;
+  gap: 8px;
+}
+
+.delivery_rider_name,
+.delivery_rider_rating,
+.delivery_rider_contact,
+.delivery_rider_eta {
+  margin: 0;
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.delivery_rider_avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.delivery_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.delivery_card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+}
+
+.delivery_card h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.delivery_card p,
+.delivery_card ul {
+  margin: 0;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.delivery_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.delivery_pill_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.delivery_pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.delivery_confirm_button {
+  margin-top: 16px;
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.delivery_map_box {
+  position: relative;
+  width: 100%;
+  height: 132px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.delivery_map_path {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  right: 20px;
+  bottom: 24px;
+  border: 1px dashed rgba(37, 99, 235, 0.5);
+  border-radius: 18px;
+}
+
+.delivery_map_pin {
+  position: absolute;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.delivery_map_pin--start {
+  top: 28px;
+  left: 26px;
+}
+
+.delivery_map_pin--end {
+  bottom: 28px;
+  right: 26px;
+}
+
+.delivery_status_section {
+  margin-bottom: 20px;
+}
+
+.delivery_step_list {
+  display: grid;
+  gap: 10px;
+}
+
+.delivery_step_item {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.delivery_step_item--active {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.delivery_action_list {
+  display: grid;
+  gap: 10px;
+}
+
+.delivery_action_card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+.delivery_action_label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.delivery_action_card strong {
+  font-size: 14px;
+  display: block;
+  margin-top: 4px;
+  color: #0f172a;
+}
+
+.delivery_status_section--final .delivery_completion_card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.delivery_completion_card p {
+  margin: 0 0 8px;
+}
+
+.delivery_completion_card p:last-child {
+  margin-bottom: 0;
+}
+
+.delivery_tab_bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  height: 76px;
+  background-color: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.delivery_tab_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 6px 0;
+  cursor: pointer;
+  color: #94a3b8;
+  position: relative;
+}
+
+.delivery_tab_item--active {
+  color: #000000;
+}
+
+.delivery_tab_icon {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 5px;
+}
+
+.delivery_tab_label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.delivery_tab_indicator {
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  background-color: #2563eb;
+  border-radius: 50%;
+}
