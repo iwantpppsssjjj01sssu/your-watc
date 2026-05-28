@@ -973,8 +973,8 @@
    [신규 추가] 12. 친구 초대 레이아웃
    ========================================================================== */
 .invite_code_box {
-  background-color: #fff1f2;
-  border: 2px dashed #fecdd3;
+  background-color: #eff6ff;
+  border: 2px dashed #93c5fd;
   border-radius: 20px;
   padding: 20px;
   text-align: center;
@@ -985,7 +985,7 @@
 .invite_code_lbl {
   font-size: 10px;
   font-weight: 800;
-  color: #e11d48;
+  color: #2563eb;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 6px;
@@ -1003,43 +1003,43 @@
 .invite_code_val {
   font-size: 15px;
   font-weight: 900;
-  color: #9f1239;
+  color: #1d4ed8;
   letter-spacing: 0.02em;
 }
 
 .invite_copy_btn {
   background-color: #ffffff;
-  border: 1.5px solid #fda4af;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border: 1.5px solid #93c5fd;
+  border-radius: 10px;
+  padding: 7px 14px;
   font-size: 11px;
-  font-weight: 850;
-  color: #e11d48;
+  font-weight: 700;
+  color: #1d4ed8;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .invite_copy_btn:hover {
-  background-color: #ffe4e6;
+  background-color: #e0f2fe;
 }
 
 .invite_copy_btn:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
 }
 
 .invite_guide_card {
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbeafe;
   border-radius: 18px;
   padding: 18px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
   box-sizing: border-box;
 }
 
 .invite_guide_card h4 {
   font-size: 13px;
   font-weight: 850;
-  color: #0f172a;
+  color: #1d4ed8;
   margin: 0 0 16px 0;
   text-align: center;
 }
@@ -1054,15 +1054,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #eff6ff;
 }
 
 .invite_step_cell .step_num {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background-color: #ffe4e6;
-  color: #e11d48;
-  font-size: 11px;
+  background-color: #bfdbfe;
+  color: #1d4ed8;
+  font-size: 12px;
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -1071,10 +1074,61 @@
 }
 
 .invite_step_cell p {
-  font-size: 11.5px;
-  color: #475569;
+  font-size: 12px;
+  color: #334155;
   margin: 0;
   font-weight: 500;
+}
+
+.mypagedetail_floating_action_bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 16px 20px 24px;
+  background: linear-gradient(to top, rgba(248, 250, 252, 0.96), transparent);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.mypagedetail_cta_btn {
+  width: 100%;
+  max-width: 360px;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 18px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: -0.02em;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.16);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.mypagedetail_cta_btn.is-subtle {
+  background: rgba(59, 130, 246, 0.12) !important;
+  color: #1e3a8a !important;
+  border: 1px solid rgba(59, 130, 246, 0.24) !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08) !important;
+  padding: 12px 16px !important;
+  font-size: 13px !important;
+}
+
+.mypagedetail_cta_btn:hover {
+  transform: translateY(-1px);
+}
+
+.mypagedetail_cta_btn:active {
+  transform: translateY(0) scale(0.99);
 }
 
 /* ==========================================================================

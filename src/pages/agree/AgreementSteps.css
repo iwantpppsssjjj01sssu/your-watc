@@ -6,7 +6,7 @@ body:has(.agreement_step_page) {
 .agreement_step_page {
   width: 100%;
   max-width: 390px;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
   background: #ffffff;
   position: relative;
@@ -18,31 +18,46 @@ body:has(.agreement_step_page) {
 }
 
 .agreement_step_banner {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   width: 100%;
-  height: 228px;
+  height: 150px;
   flex-shrink: 0;
   overflow: hidden;
-  background: #60a5fa;
+  background: linear-gradient(180deg, #eff6ff 0%, #ddebff 46%, #f8fbff 100%);
+}
+
+.agreement_step_banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 45% 20%,
+      rgba(56, 137, 255, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(180deg, rgba(59, 130, 246, 0.18), rgba(255, 255, 255, 0.95));
+  z-index: 1;
 }
 
 .agreement_step_back {
   position: absolute;
   top: 18px;
   left: 18px;
-  z-index: 12;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  margin-top: 0;
   padding: 0;
-  border: 0;
-  background: transparent;
-  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: inherit;
-  line-height: 1;
+  box-sizing: border-box;
 }
 
 .agreement_step_back img {
@@ -55,148 +70,196 @@ body:has(.agreement_step_page) {
   position: absolute;
   display: block;
   border-radius: 50%;
+  z-index: 2;
 }
 
 .agreement_step_bubble--large {
-  top: -50px;
-  right: -42px;
-  width: 174px;
-  height: 174px;
-  border: 1px solid rgba(255, 255, 255, 0.58);
+  top: -36px;
+  right: -24px;
+  width: 180px;
+  height: 180px;
   background: radial-gradient(
-    circle at 32% 24%,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.5) 25%,
-    rgba(219, 237, 255, 0.3) 60%,
-    rgba(254, 226, 243, 0.22) 100%
+    circle at 40% 40%,
+    rgba(255, 255, 255, 0.88),
+    rgba(255, 255, 255, 0.18) 55%,
+    rgba(48, 118, 255, 0.05) 100%
   );
-  filter: blur(1.5px);
+  filter: blur(1px);
+  border: none;
 }
 
 .agreement_step_bubble--medium {
-  bottom: -42px;
-  left: -34px;
-  width: 128px;
-  height: 128px;
-  border: 1px solid rgba(255, 255, 255, 0.56);
+  bottom: -26px;
+  left: -24px;
+  width: 130px;
+  height: 130px;
   background: radial-gradient(
-    circle at 38% 30%,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0.48) 29%,
-    rgba(252, 226, 242, 0.3) 66%,
-    rgba(215, 236, 255, 0.23) 100%
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.86),
+    rgba(255, 255, 255, 0.14) 42%,
+    rgba(178, 210, 255, 0.12) 100%
   );
-  filter: blur(1px);
+  filter: blur(0.8px);
+  border: none;
 }
 
 .agreement_step_bubble--small {
-  top: 46px;
-  left: 54px;
-  width: 66px;
-  height: 66px;
-  border: 1px solid rgba(255, 255, 255, 0.62);
+  top: 64px;
+  left: 42px;
+  width: 64px;
+  height: 64px;
   background: radial-gradient(
-    circle at 28% 22%,
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(255, 255, 255, 0.5) 28%,
-    rgba(214, 235, 255, 0.32) 66%,
-    rgba(253, 225, 241, 0.22) 100%
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.4) 36%,
+    rgba(186, 215, 255, 0.12) 100%
   );
-  filter: blur(1px);
+  filter: blur(0.8px);
+  border: none;
 }
 
 .agreement_step_bubble--tiny {
-  right: 93px;
-  bottom: 40px;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.64);
+  right: 84px;
+  bottom: 38px;
+  width: 34px;
+  height: 34px;
   background: radial-gradient(
-    circle at 30% 25%,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.52) 35%,
-    rgba(220, 238, 255, 0.28) 66%,
-    rgba(253, 224, 240, 0.22) 100%
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.48) 32%,
+    rgba(196, 221, 255, 0.16) 100%
   );
-  filter: blur(0.75px);
+  filter: blur(0.6px);
+  border: none;
 }
 
 .agreement_step_body {
   display: flex;
-  flex: 1;
+  flex: 1; /* 나머지 공간을 모두 차지 */
   flex-direction: column;
-  align-items: center;
-  padding: 24px 32px 88px;
+  padding: 20px 24px 20px; /* 아래쪽 padding을 확보해서 버튼이 짤리지 않게 함 */
+  overflow-y: hidden; /* 내용이 길면 스크롤이 되게 함 */
+  -webkit-overflow-scrolling: touch;
+  padding-top: 20px;
+  margin-top: -30px;
+}
+
+.agreement_step_title_group {
+  padding: 12px 0 8px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .agreement_step_title {
   margin: 0;
-  color: #111827;
-  font-size: 24px;
+  font-size: 38px;
   font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -1px;
-  text-align: center;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  color: #0f172a;
+  text-align: left;
+  word-break: keep-all;
+}
+
+.agreement_step_title_highlight {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .agreement_step_supporting {
-  margin: 8px 0 0;
-  color: #6b7280;
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: -0.3px;
-  text-align: center;
+  margin-top: 1px;
+  color: rgba(71, 85, 105, 0.9);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.2px;
+  text-align: left;
+  word-break: keep-all;
+  margin-bottom: 14px;
+}
+
+.agreement_step_card {
+  position: relative;
+  padding: 26px;
+  border-radius: 32px;
+  background-color: #ffffff;
+  box-shadow: 0 28px 64px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .agreement_step_continue {
-  position: absolute;
-  right: 32px;
-  bottom: 28px;
-  left: 32px;
-  height: 56px;
+  position: relative;
+  margin: 16px 24px 24px;
+  height: 60px;
   border: 0;
-  border-radius: 14px;
-  background: #3b82f6;
-  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 22px 50px rgba(37, 99, 235, 0.18);
   color: #ffffff;
   cursor: pointer;
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .agreement_step_continue--emphasized {
-  background: #2563eb;
-  box-shadow: 0 12px 27px rgba(37, 99, 235, 0.3);
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 22px 50px rgba(37, 99, 235, 0.22);
 }
 
 .agreement_step_continue:disabled {
-  cursor: default;
+  opacity: 0.58;
+  background: linear-gradient(90deg, #c1d4f4 0%, #d4dbe6 100%);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.agreement_step_continue:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 24px 54px rgba(37, 99, 235, 0.24);
+}
+
+.agreement_step_continue_arrow {
+  display: inline-block;
+  transform: translateX(1px);
+  font-size: 18px;
+  line-height: 1;
 }
 
 .agreement_step_benefits {
   width: 100%;
-  margin: 6px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .agreement_step_benefit {
-  min-height: 52px;
-  padding: 0 16px;
-  border: 1px solid #edf2ff;
-  border-radius: 16px;
-  background: #f8faff;
+  padding: 18px 18px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 26px;
+  background: #ffffff;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   color: #374151;
   font-size: 15px;
   font-weight: 600;
@@ -205,74 +268,87 @@ body:has(.agreement_step_page) {
     transform 0.2s ease,
     box-shadow 0.2s ease,
     background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .agreement_step_benefit:hover {
-  background: #f0f4ff;
+  background: #f8fafc;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.05);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
 }
 
 .agreement_step_benefit_check {
   position: relative;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: #f2f5fb;
+  border: 1px solid #d8e1ee;
   transition:
-    background-color 0.2s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
     transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .agreement_step_benefit_check--active {
-  background: #3b82f6;
+  background: #eff6ff;
+  border-color: #dbeafe;
 }
 
 .agreement_step_benefit_check::before {
   content: "";
-  position: absolute;
-  left: 7px;
-  top: 5px;
-  width: 6px;
-  height: 9px;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
-  transform: rotate(42deg);
+  display: none;
+}
+
+.agreement_step_benefit_check--active::after {
+  content: "✓";
+  color: #2563eb;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .agreement_step_all_select {
   width: 100%;
-  margin: 10px 0 2px;
-  padding: 12px 16px;
+  margin: 0;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   cursor: pointer;
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 16px;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+  background: #ffffff;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 26px;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .agreement_step_all_select:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.12);
 }
 
 .agreement_step_all_select_text {
-  color: #1e293b;
-  font-size: 15px;
+  color: #0f172a;
+  font-size: 17px;
   font-weight: 700;
 }
 
 .agreement_step_divider {
   width: 100%;
   height: 1px;
-  background-color: #f1f5f9;
+  background-color: #e2e8f0;
   margin: 4px 0;
 }
 
@@ -396,7 +472,8 @@ body:has(.agreement_step_page) {
 }
 
 @keyframes float-alert-icon {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -486,10 +563,23 @@ body:has(.agreement_step_page) {
   background-color: #ffffff;
 }
 
+/* Noble minimal layout for steps without banner */
+.agreement_step_page--nobanner .agreement_step_banner {
+  display: none; /* ensure no banner renders */
+}
+
 .agreement_step_page--nobanner .agreement_step_body {
-  padding: 72px 32px 80px; /* 전체 글들을 시원하고 여유있게 아래로 밀어내림 */
+  padding: 80px 32px 80px; /* generous top padding to prevent clipping */
   flex-direction: column;
   align-items: center;
+}
+
+/* Title styling for minimal step pages */
+.agreement_step_page--nobanner .agreement_step_title {
+  font-size: 26px;
+  color: #111827;
+  text-align: center;
+  font-weight: 700;
 }
 
 /* 2단 회색 선택 박스 (iOS 추적 금지 / 허용 선택 카드) */
@@ -526,13 +616,14 @@ body:has(.agreement_step_page) {
   border-bottom: 1px solid #e5e7eb;
 }
 
-.att_card_row--selected {
-  font-weight: 700;
-  color: #1f2937; /* 선택된 컬러 (어두운 블랙) */
+/* Default: both options gray */
+.att_card_row {
+  color: #9ca3af;
 }
 
-/* 허용 버튼 선택 시 파란색 */
-.att_card_row:nth-child(2).att_card_row--selected {
+/* Selected: blue highlight */
+.att_card_row--selected {
+  font-weight: 700;
   color: #2563eb;
   background-color: #eff6ff;
 }
@@ -588,9 +679,9 @@ body:has(.agreement_step_page) {
 }
 
 .benefit_info_text {
-  font-size: 15px;
-  font-weight: 500;
-  color: #374151;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
   line-height: 1.45;
   letter-spacing: -0.3px;
 }
@@ -605,4 +696,23 @@ body:has(.agreement_step_page) {
   letter-spacing: -0.3px;
   text-align: center;
   margin-bottom: 24px;
+}
+
+.agreement_step_body {
+  padding-bottom: 40px;
+}
+
+.agreement_step_continue {
+  position: static; /* fixed를 static으로 변경 */
+  margin: 40px 24px 40px; /* 위아래 여백을 넉넉히 줘서 본문 아래에 자연스럽게 위치하게 함 */
+  width: calc(100% - 48px); /* 가로 꽉 차게 */
+  height: 60px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  /* ... 나머지 스타일 유지 ... */
+}
+
+.agreement_step_continue:disabled {
+  opacity: 0.45;
 }

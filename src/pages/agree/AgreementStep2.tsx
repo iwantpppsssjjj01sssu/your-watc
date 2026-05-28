@@ -15,6 +15,7 @@ export function AgreementStep2() {
 
   return (
     <AgreementStepLayout
+      title={"맞춤형 서비스 제공을 위해 허용을 눌러주세요"}
       onBack={() => navigate(-1)}
       onContinue={() => navigate("/agree3")}
       continueEmphasized={true} // 시안처럼 언제나 강조된 꽉 찬 파란색 버튼 상태 유지

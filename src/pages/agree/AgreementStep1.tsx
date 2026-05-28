@@ -44,44 +44,53 @@ export function AgreementStep1() {
       onContinue={() => navigate("/agree2")}
       continueDisabled={!hasSelected}
       continueEmphasized={hasSelected}
+      title={
+        <>
+          더 스마트한
+          <br />
+          <span className="agreement_step_title_highlight">세탁 경험</span>을 위해
+        </>
+      }
     >
       <p className="agreement_step_supporting">
-        필요한 소식만 놓치지 않고 받아볼 수 있어요.
+        필요한 소식만 편하게 받아보세요.
       </p>
 
-      {/* 전체 선택 버튼 */}
-      <div className="agreement_step_all_select" onClick={handleAllToggle}>
-        <span
-          className={`agreement_step_benefit_check ${
-            allSelected ? "agreement_step_benefit_check--active" : ""
-          }`}
-          aria-hidden="true"
-        />
-        <span className="agreement_step_all_select_text">전체 선택</span>
+      <div className="agreement_step_card">
+        {/* 전체 선택 버튼 */}
+        <div className="agreement_step_all_select" onClick={handleAllToggle}>
+          <span
+            className={`agreement_step_benefit_check ${
+              allSelected ? "agreement_step_benefit_check--active" : ""
+            }`}
+            aria-hidden="true"
+          />
+          <span className="agreement_step_all_select_text">전체 선택</span>
+        </div>
+
+        <div className="agreement_step_divider" />
+
+        <ul className="agreement_step_benefits">
+          {benefits.map((benefit) => {
+            const isActive = selectedItems[benefit];
+            return (
+              <li
+                className="agreement_step_benefit"
+                key={benefit}
+                onClick={() => handleToggle(benefit)}
+              >
+                <span
+                  className={`agreement_step_benefit_check ${
+                    isActive ? "agreement_step_benefit_check--active" : ""
+                  }`}
+                  aria-hidden="true"
+                />
+                {benefit}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-
-      <div className="agreement_step_divider" />
-
-      <ul className="agreement_step_benefits">
-        {benefits.map((benefit) => {
-          const isActive = selectedItems[benefit];
-          return (
-            <li
-              className="agreement_step_benefit"
-              key={benefit}
-              onClick={() => handleToggle(benefit)}
-            >
-              <span
-                className={`agreement_step_benefit_check ${
-                  isActive ? "agreement_step_benefit_check--active" : ""
-                }`}
-                aria-hidden="true"
-              />
-              {benefit}
-            </li>
-          );
-        })}
-      </ul>
     </AgreementStepLayout>
   );
 }

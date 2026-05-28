@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import "./AgreementSteps.css";
-import backImg from "../../asset/img/back.png";
+import { BackButton } from "../../components/BackButton";
 
 type AgreementStepLayoutProps = {
   children: ReactNode;
+  title?: ReactNode; // 커스텀 타이틀 지원
   lead?: ReactNode;
   onBack: () => void;
   onContinue: () => void;
@@ -28,32 +29,27 @@ export function BubbleBanner() {
 
 export function AgreementStepLayout({
   children,
+  title = "더 스마트한 세탁 경험을 위해", // 기본 타이틀 제공
   lead,
-  onBack,
+  // onBack,
   onContinue,
   continueDisabled = false,
   continueEmphasized = false,
   overlay,
   showBanner = true, // 기본값은 true
 }: AgreementStepLayoutProps) {
+
   return (
-    <main className={`agreement_step_page ${!showBanner ? "agreement_step_page--nobanner" : ""}`}>
-      {showBanner && (
-        <button
-          className="agreement_step_back"
-          type="button"
-          aria-label="뒤로가기"
-          onClick={onBack}
-        >
-          <img src={backImg} alt="뒤로가기" />
-        </button>
-      )}
+    <main
+      className={`agreement_step_page ${!showBanner ? "agreement_step_page--nobanner" : ""}`}
+    >
+      {showBanner && <BackButton />}
       {showBanner && <BubbleBanner />}
       <section className="agreement_step_body">
         {lead}
-        <h1 className="agreement_step_title">
-          더 스마트한 세탁 경험을 위해
-        </h1>
+        <div className="agreement_step_title_group">
+          <h1 className="agreement_step_title">{title}</h1>
+        </div>
         {children}
       </section>
       <button
