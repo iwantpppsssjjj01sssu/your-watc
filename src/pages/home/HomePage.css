@@ -1394,7 +1394,7 @@
   align-items: center;
 
   justify-content: flex-start;
-  padding-top: 18px;
+  padding-top: 12px;
 }
 
 .home_tab_fill {
@@ -1429,14 +1429,15 @@
 }
 
 .home_tab_label {
-  font-size: 10px;
-  font-weight: 700;
+  font-family: var(--font-pretendard);
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: -0.2px;
 }
 
 .home_tab_indicator {
   position: absolute;
-  bottom: 20px;
+  bottom: 26px;
   width: 4px;
   height: 4px;
   background-color: #2563eb;

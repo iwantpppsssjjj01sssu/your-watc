@@ -239,6 +239,11 @@ export function HomePage() {
     }
   }, [location.search]);
 
+  // 모든 탭 이동 및 페이지 전환 시 최상단 스크롤 리셋
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [activeTab, location.pathname, location.search]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -884,12 +889,22 @@ export function HomePage() {
     return reviewsData[tag] || [];
   };
 
+  const isReserveLanding = activeTab === "reserve" && !showReserveDetail && !showAiGuideDetail;
+
   return (
     <div
       className="homepage_layout"
       style={{ width: "100%", minHeight: "100dvh", backgroundColor: "#ffffff" }}
     >
-      <div className="home_container">
+      <div 
+        className="home_container"
+        style={isReserveLanding ? {
+          height: "calc(100dvh - 96px - env(safe-area-inset-bottom, 0px))",
+          minHeight: "0",
+          overflow: "hidden",
+          paddingBottom: "20px",
+        } : undefined}
+      >
         {/* ---------------------------------------------------- */}
         {/* [1. HOME VIEW - First Photo Circular Progress Dashboard] */}
         {/* ---------------------------------------------------- */}

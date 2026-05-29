@@ -136,6 +136,11 @@ export function DeliveryPage() {
     };
   }, [watchId]);
 
+  // 페이지 진입 시 최상단 스크롤 리셋
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
   return (
     <div className="delivery_container">
       <header className="delivery_header">
