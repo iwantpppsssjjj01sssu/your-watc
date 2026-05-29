@@ -1,44 +1,33 @@
 import { useNavigate } from "react-router-dom";
-import backImg from "../asset/img/back.png";
 
 export function BackButton() {
   const navigate = useNavigate();
 
   return (
     <button
-      style={styles.backButton}
+      className="premium_back_btn"
+      style={{
+        position: "absolute",
+        top: "18px",
+        left: "18px",
+        zIndex: 110,
+      }}
       type="button"
       aria-label="뒤로가기"
       onClick={() => navigate(-1)}
     >
-      <img src={backImg} alt="뒤로가기" style={styles.backButtonImage} />
+      <svg
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
     </button>
   );
 }
-
-const styles = {
-  backButton: {
-    position: "absolute" as const,
-    top: "18px",
-    left: "18px",
-    zIndex: 110,
-    width: "42px",
-    height: "42px",
-    border: "1px solid rgba(255, 255, 255, 0.45)",
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
-    backdropFilter: "blur(14px)",
-    borderRadius: "14px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    padding: 0,
-    boxSizing: "border-box" as const,
-    transition: "transform 0.22s ease, background-color 0.22s ease",
-  },
-  backButtonImage: {
-    width: "20px",
-    height: "20px",
-    objectFit: "contain" as const,
-  },
-};

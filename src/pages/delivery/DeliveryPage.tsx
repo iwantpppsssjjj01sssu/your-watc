@@ -146,7 +146,7 @@ export function DeliveryPage() {
       <header className="delivery_header">
         <button
           type="button"
-          className="delivery_back_button"
+          className="premium_back_btn"
           onClick={() => navigate(-1)}
           aria-label="뒤로가기"
         >

@@ -348,7 +348,7 @@ export function LifeCareDetailPage() {
         <header className="detail_blur_header">
           <button
             type="button"
-            className="detail_back_btn"
+            className="premium_back_btn"
             onClick={handleBack}
             aria-label="의류관리 탭으로 돌아가기"
           >
@@ -366,7 +366,7 @@ export function LifeCareDetailPage() {
             </svg>
           </button>
           <span className="detail_header_title">스마트 보관 백과</span>
-          <div style={{ width: "24px" }}></div> {/* 우측 밸런스용 빈 공간 */}
+          <div style={{ width: "42px" }}></div> {/* 우측 밸런스용 빈 공간 */}
         </header>
 
         {/* 상단 히어로 비주얼 배너 영역 */}

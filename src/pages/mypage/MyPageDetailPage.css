@@ -72,10 +72,10 @@
 }
 
 .menu_header_title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.03em;
+  color: #111827;
+  letter-spacing: -0.3px;
   text-align: center;
   flex: 1;
   white-space: nowrap;
@@ -1085,10 +1085,10 @@
 .mypagedetail_floating_action_bar {
   position: sticky;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, 880px);
-  max-width: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 880px;
   margin: 0 auto;
   padding: 16px 20px 24px;
   background: linear-gradient(to top, rgba(248, 250, 252, 0.96), transparent);

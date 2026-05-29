@@ -62,13 +62,22 @@ function NavDeliveryIcon({ active }: { active: boolean }) {
     <svg
       className="home_tab_icon"
       viewBox="0 0 24 24"
-      fill={active ? "#2563eb" : "none"}
+      fill="none"
       stroke={active ? "#2563eb" : "#94a3b8"}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       style={{ width: "24px", height: "24px" }}
     >
+      {active && (
+        <polygon
+          points="6.5,6 22.5,6 19.8,14.4 9.2,14.4"
+          fill="#2563eb"
+          stroke="#2563eb"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+      )}
       <circle cx="9" cy="21" r="1.5" fill={active ? "#2563eb" : "#94a3b8"} />
       <circle cx="20" cy="21" r="1.5" fill={active ? "#2563eb" : "#94a3b8"} />
       <path
@@ -80,18 +89,46 @@ function NavDeliveryIcon({ active }: { active: boolean }) {
 }
 
 function NavCareIcon({ active }: { active: boolean }) {
+  const color = active ? "#2563eb" : "#94a3b8";
+  const innerHangerColor = active ? "#ffffff" : "#f1f5f9";
   return (
     <svg
       className="home_tab_icon"
       viewBox="0 0 24 24"
       fill="none"
-      stroke={active ? "#2563eb" : "#94a3b8"}
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       style={{ width: "24px", height: "24px" }}
     >
-      <path d="M12 7a3 3 0 1 0-3-3M12 7L2 14.5a1.5 1.5 0 0 0 .5 2.5h19a1.5 1.5 0 0 0 .5-2.5L12 7Z" />
+      <g>
+        {/* Hanger hook emerging from shirt neck */}
+        <path
+          d="M12 7a3 3 0 1 0-3-3"
+          fill="none"
+          stroke={color}
+          strokeWidth="2"
+        />
+        {/* Premium T-shirt draped on the hanger (Always filled) */}
+        <path
+          d="M 6 8.5 L 2 11 L 4.5 15 L 7.5 13.5 L 7.5 21 L 16.5 21 L 16.5 13.5 L 19.5 15 L 22 11 L 18 8.5 C 17.5 8.7 15 9.5 12 9.5 C 9 9.5 6.5 8.7 6 8.5 Z"
+          fill={color}
+          stroke={color}
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+        {/* Hanger body lines visible inside the T-shirt */}
+        <path
+          d="M12 8.2 L6 12 H18 Z"
+          fill="none"
+          stroke={innerHangerColor}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.9"
+        />
+      </g>
     </svg>
   );
 }

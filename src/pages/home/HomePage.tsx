@@ -104,11 +104,31 @@ export function HomePage() {
 
   // --- Profile Edit Modal States (Interactive Dialog Form) ---
   const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
+
+  // --- Gift Modal States (Point & Coupon Gift flow) ---
+  const [showGiftModal, setShowGiftModal] = useState<boolean>(false);
+  const [giftType, setGiftType] = useState<"point" | "coupon">("point");
+  const [userPoints, setUserPoints] = useState<number>(3000); // Default 3,000P
+  const [userCoupons, setUserCoupons] = useState<number>(2); // Default 2 coupons
+  const [giftAmount, setGiftAmount] = useState<string>("1000"); // Point gift amount
+  const [giftCouponCount, setGiftCouponCount] = useState<number>(1); // Coupon gift count
+  const [giftRecipient, setGiftRecipient] = useState<string>("");
+  const [giftMethod, setGiftMethod] = useState<"kakao" | "watc" | null>(null);
+  const [showKakaoSim, setShowKakaoSim] = useState<boolean>(false);
+  const [showWatcSim, setShowWatcSim] = useState<boolean>(false);
+
+  // --- Typewriter Welcome Title & Circular Progress Stage States ---
+  const [typewrittenTitle, setTypewrittenTitle] = useState<string>("");
+  const [typewrittenSubtitle, setTypewrittenSubtitle] = useState<string>("");
+  const [circleProgress, setCircleProgress] = useState<number>(0);
+  const [typewriterFinished, setTypewriterFinished] = useState<boolean>(false);
+
   const [profileName, setProfileName] = useState<string>("하은");
   const [profilePhone, setProfilePhone] = useState<string>("010-9876-5432");
   const [profileAddress, setProfileAddress] = useState<string>(
     "서울특별시 서초구 반포동 왓씨타워 410호",
   );
+  const currentProfileImg = i1Img;
   const [profileEntry, setProfileEntry] =
     useState<string>("공동현관 비밀번호: #1234*");
   const [profileRequest, setProfileRequest] = useState<string>("문 앞 보관");
@@ -163,6 +183,8 @@ export function HomePage() {
   const [visibleSections, setVisibleSections] = useState<boolean[]>(
     Array(7).fill(false),
   );
+  const [hasScrolled, setHasScrolled] = useState<boolean>(false);
+  const [progressPercent, setProgressPercent] = useState<number>(1);
   const [reserveDate, setReserveDate] = useState<string>("5월 9일 목요일");
   const [reserveTime, setReserveTime] = useState<string>("2-4 PM 오후");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
@@ -245,6 +267,22 @@ export function HomePage() {
   }, [activeTab, location.pathname, location.search]);
 
   useEffect(() => {
+    if (activeTab === "home") {
+      setVisibleSections(Array(7).fill(false));
+      setHasScrolled(false);
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab !== "home") return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 5 && !hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       (entries) => {
         setVisibleSections((prev) => {
@@ -254,21 +292,138 @@ export function HomePage() {
               entry.target.getAttribute("data-section-index"),
             );
             if (entry.isIntersecting && !next[index]) {
-              next[index] = true;
+              if (index < 2 || hasScrolled) {
+                next[index] = true;
+              }
             }
           });
           return next;
         });
       },
-      { threshold: 0.2 },
+      { threshold: 0.1 },
     );
 
     sectionRefs.current.forEach((section) => {
       if (section) observer.observe(section);
     });
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [activeTab, hasScrolled]);
+
+  // --- Typewriter welcome greeting effect ---
+  useEffect(() => {
+    if (activeTab === "home") {
+      setTypewrittenTitle("");
+      setTypewrittenSubtitle("");
+      setTypewriterFinished(false); // Reset reveal status
+
+      const titleText = "반가워요!";
+      const subtitleText = "당신을 위한 스마트 케어, 왓씨입니다.";
+
+      let titleIdx = 0;
+      let subtitleIdx = 0;
+      let titleInterval: number;
+      let subtitleInterval: number;
+
+      titleInterval = window.setInterval(() => {
+        if (titleIdx < titleText.length) {
+          const char = titleText[titleIdx];
+          setTypewrittenTitle((prev) => prev + char);
+          titleIdx++;
+        } else {
+          clearInterval(titleInterval);
+
+          // Start typing subtitle after a short delay
+          setTimeout(() => {
+            subtitleInterval = window.setInterval(() => {
+              if (subtitleIdx < subtitleText.length) {
+                const char = subtitleText[subtitleIdx];
+                setTypewrittenSubtitle((prev) => prev + char);
+                subtitleIdx++;
+              } else {
+                clearInterval(subtitleInterval);
+                setTypewriterFinished(true); // Typewriter fully completed! Reveal all sections below!
+              }
+            }, 55); // 55ms typing speed per character - extremely smooth and elegant!
+          }, 150);
+        }
+      }, 85); // 85ms typing speed for "반가워요!"
+
+      return () => {
+        clearInterval(titleInterval);
+        clearInterval(subtitleInterval);
+      };
+    }
+  }, [activeTab]);
+
+  // --- Two-stage Circular & Numerical progress animation effect ---
+  useEffect(() => {
+    if (activeTab === "home") {
+      if (!typewriterFinished) {
+        setProgressPercent(1);
+        setCircleProgress(0);
+        return;
+      }
+
+      setProgressPercent(1);
+      setCircleProgress(0); // Reset both progress measures
+
+      const startNum = 1;
+      const endNum = 66;
+      const numDuration = 2400; // [피드백 적용] 2.4초 동안 부드럽고 여유롭게 숫자 카운트업
+      const startTime = performance.now();
+
+      let animationFrameId: number;
+
+      const animateCount = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const numProgress = Math.min(elapsed / numDuration, 1);
+
+        // Custom Cubic ease out for luxurious numerical deceleration
+        const easeProgress = 1 - Math.pow(1 - numProgress, 3);
+        const currentVal = Math.floor(
+          startNum + (endNum - startNum) * easeProgress,
+        );
+        setProgressPercent(currentVal);
+
+        if (numProgress < 1) {
+          animationFrameId = requestAnimationFrame(animateCount);
+        } else {
+          setProgressPercent(endNum);
+
+          // Number spin finished! Now animate the progress ring smoothly
+          const ringStartTime = performance.now();
+          const ringDuration = 2000; // [피드백 적용] 2.0초 동안 원형 그래프가 천천히 차오름
+
+          const animateRing = (ringTime: number) => {
+            const ringElapsed = ringTime - ringStartTime;
+            const ringProgress = Math.min(ringElapsed / ringDuration, 1);
+
+            // Premium cubic ease out for progress ring fill
+            const easeRingProgress = 1 - Math.pow(1 - ringProgress, 3);
+            setCircleProgress(easeRingProgress * 66);
+
+            if (ringProgress < 1) {
+              animationFrameId = requestAnimationFrame(animateRing);
+            } else {
+              setCircleProgress(66);
+            }
+          };
+
+          animationFrameId = requestAnimationFrame(animateRing);
+        }
+      };
+
+      animationFrameId = requestAnimationFrame(animateCount);
+
+      return () => {
+        cancelAnimationFrame(animationFrameId);
+      };
+    }
+  }, [activeTab, typewriterFinished]);
 
   const handleCameraCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -889,21 +1044,27 @@ export function HomePage() {
     return reviewsData[tag] || [];
   };
 
-  const isReserveLanding = activeTab === "reserve" && !showReserveDetail && !showAiGuideDetail;
+  const isReserveLanding =
+    activeTab === "reserve" && !showReserveDetail && !showAiGuideDetail;
 
   return (
     <div
       className="homepage_layout"
       style={{ width: "100%", minHeight: "100dvh", backgroundColor: "#ffffff" }}
     >
-      <div 
+      <div
         className="home_container"
-        style={isReserveLanding ? {
-          height: "calc(100dvh - 96px - env(safe-area-inset-bottom, 0px))",
-          minHeight: "0",
-          overflow: "hidden",
-          paddingBottom: "20px",
-        } : undefined}
+        style={
+          isReserveLanding
+            ? {
+                height:
+                  "calc(100dvh - 96px - env(safe-area-inset-bottom, 0px))",
+                minHeight: "0",
+                overflow: "hidden",
+                paddingBottom: "20px",
+              }
+            : undefined
+        }
       >
         {/* ---------------------------------------------------- */}
         {/* [1. HOME VIEW - First Photo Circular Progress Dashboard] */}
@@ -916,350 +1077,387 @@ export function HomePage() {
                 sectionRefs.current[0] = el;
               }}
               data-section-index="0"
-              className={`home_header home_fade_section ${
+              className={`home_header home_fade_section stagger-0 ${
                 visibleSections[0] ? "visible" : ""
               }`}
             >
-              <h1 className="home_greeting_title">반가워요!</h1>
+              <h1 className="home_greeting_title">
+                {typewrittenTitle}
+                {typewrittenTitle !== "반가워요!" && (
+                  <span className="typewriter_cursor">|</span>
+                )}
+              </h1>
               <p className="home_subtitle_text">
-                당신을 위한 스마트 케어, <span>왓씨</span>입니다.
+                {(() => {
+                  if (!typewrittenSubtitle) return "\u00A0";
+                  if (typewrittenSubtitle.includes("왓씨")) {
+                    const parts = typewrittenSubtitle.split("왓씨");
+                    return (
+                      <>
+                        {parts[0]}
+                        <span>왓씨</span>
+                        {parts[1]}
+                      </>
+                    );
+                  }
+                  if (
+                    typewrittenSubtitle.endsWith("당신을 위한 스마트 케어, 왓")
+                  ) {
+                    return (
+                      <>
+                        당신을 위한 스마트 케어, <span>왓</span>
+                      </>
+                    );
+                  }
+                  return typewrittenSubtitle;
+                })()}
+                {typewrittenTitle === "반가워요!" &&
+                  typewrittenSubtitle !==
+                    "당신을 위한 스마트 케어, 왓씨입니다." && (
+                    <span className="typewriter_cursor">|</span>
+                  )}
               </p>
             </header>
 
-            {/* 중앙 세탁 진행 현황 카드 (66% 진행 중 원형 진행률) */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[1] = el;
-              }}
-              data-section-index="1"
-              className={`home_dashboard home_fade_section ${
-                visibleSections[1] ? "visible" : ""
-              }`}
+            <div
+              className={`homepage_delayed_sections ${typewriterFinished ? "sections_reveal" : "sections_hidden"}`}
             >
-              <div
-                className="home_summary_card"
-                onClick={() => handleAction("진행 상세 현황")}
+              {/* 중앙 세탁 진행 현황 카드 (66% 진행 중 원형 진행률) */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[1] = el;
+                }}
+                data-section-index="1"
+                className={`home_dashboard home_fade_section stagger-1 ${
+                  visibleSections[1] ? "visible" : ""
+                }`}
               >
-                <h2 className="home_card_main_text">
-                  세탁{" "}
-                  <span className="blue_percent">
-                    <span className="digit digit-1">6</span>
-                    <span className="digit digit-2">6</span>
-                    <span className="percent-char">%</span>
-                  </span>{" "}
-                  진행 중
-                </h2>
-
-                {/* [SVG 둥근 그라데이션 원형 프로그레스 링 & 정중앙 정렬 세탁물 그래픽] */}
-                <div className="home_circle_container">
-                  <svg className="home_circle_svg" viewBox="0 0 170 170">
-                    <defs>
-                      <linearGradient
-                        id="gaugeGradient"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#5EA2FF" />
-                        <stop offset="100%" stopColor="#2F62F5" />
-                      </linearGradient>
-                      {/* Sparkle effect for premium feel */}
-                      <filter id="glow">
-                        <feGaussianBlur
-                          stdDeviation="1.5"
-                          result="coloredBlur"
-                        />
-                        <feMerge>
-                          <feMergeNode in="coloredBlur" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                    {/* 배경 원형 (light gray) */}
-                    <circle
-                      cx="85"
-                      cy="85"
-                      r="70"
-                      stroke="#f0f3f7"
-                      strokeWidth="12"
-                      fill="transparent"
-                    />
-                    {/* 진행도 링 (66%) - 더 두꺼운 stroke로 입체감 */}
-                    <circle
-                      cx="85"
-                      cy="85"
-                      r="70"
-                      className="home_circle_svg_progress"
-                      stroke="url(#gaugeGradient)"
-                      strokeWidth="12"
-                      fill="transparent"
-                      strokeDasharray="439.8"
-                      strokeDashoffset={439.8 * (1 - 0.66)}
-                      strokeLinecap="round"
-                      transform="rotate(-90 85 85)"
-                    />
-                    {/* Sparkle dots (3개의 작은 별) */}
-                    <circle
-                      cx="130"
-                      cy="50"
-                      r="2.5"
-                      fill="#5EA2FF"
-                      opacity="0.6"
-                    />
-                    <circle
-                      cx="145"
-                      cy="85"
-                      r="1.8"
-                      fill="#2F62F5"
-                      opacity="0.5"
-                    />
-                    <circle
-                      cx="60"
-                      cy="140"
-                      r="2"
-                      fill="#5EA2FF"
-                      opacity="0.55"
-                    />
-                  </svg>
-                  {/* Innermost: b1 image */}
-                  <img
-                    src={b1Img}
-                    alt="가장 안쪽 명품 코트"
-                    className="home_circle_image_inner"
-                  />
-                  {/* Subtle light shine effect around image */}
-                  <div className="home_circle_shine_effect"></div>
-                </div>
-
-                {/* [그 아래 파란색 세탁 상세 보러가기 / 연한 회색 배송시간 보러가기 버튼 스택] */}
-                <div className="home_card_btn_stack">
-                  <button
-                    className="home_card_btn_primary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("세탁 상황 자세히 보기");
-                    }}
-                  >
-                    세탁 상황 자세히 보러가기
-                  </button>
-                  <button
-                    className="home_card_btn_secondary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("예상 배송 시간 조회");
-                    }}
-                  >
-                    예상 배송 시간 보러가기
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            {/* 2개의 퀵서비스 카드 (60초 세탁 신청 & 왓씨 이용방법) */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[2] = el;
-              }}
-              data-section-index="2"
-              className={`home_columns_section home_fade_section ${
-                visibleSections[2] ? "visible" : ""
-              }`}
-            >
-              <div
-                className="home_col_card_blue"
-                onClick={() => handleAction("60초 세탁 신청")}
-              >
-                <div className="home_col_title_row">
-                  <span className="home_col_title_large">60초</span>
-                  <span className="home_col_title_large">세탁 신청</span>
-                </div>
-                <img
-                  src={j1Img}
-                  alt="3D 세탁 바구니"
-                  className="home_col_image home_col_image--clock"
-                />
-              </div>
-
-              <div
-                className="home_col_card_white"
-                onClick={() => handleAction("왓씨 이용방법")}
-              >
-                <div className="home_col_title_row">
-                  <span className="home_col_title_large">왓씨</span>
-                  <span className="home_col_title_large">이용방법</span>
-                </div>
-                <img
-                  src={l1Img}
-                  alt="왓씨 이용방법 이미지"
-                  className="home_col_image home_col_image--ring"
-                />
-              </div>
-            </section>
-
-            {/* 중간 서브 메뉴 카드 2단 배치 (가격표 & 세탁 종류 안내) */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[3] = el;
-              }}
-              data-section-index="3"
-              className={`home_sub_columns_section home_fade_section ${
-                visibleSections[3] ? "visible" : ""
-              }`}
-            >
-              <button
-                className="home_sub_col_card"
-                onClick={() => handleAction("가격표")}
-              >
-                가격표
-              </button>
-              <button
-                className="home_sub_col_card"
-                onClick={() => handleAction("세탁 종류 안내")}
-              >
-                세탁 종류 안내
-              </button>
-            </section>
-
-            {/* 하단 AI 세탁 가이드 배너 (Full-width) */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[4] = el;
-              }}
-              data-section-index="4"
-              className={`home_guide_full_section home_fade_section ${
-                visibleSections[4] ? "visible" : ""
-              }`}
-            >
-              <div
-                className="home_guide_banner"
-                onClick={() => handleAction("AI 세탁 가이드")}
-              >
-                <div className="home_guide_left">
-                  <img
-                    src={k1Img}
-                    alt="AI 세탁 가이드"
-                    className="home_guide_k1_img"
-                  />
-                </div>
-                <div className="home_guide_right">
-                  <h3 className="home_guide_title">AI 세탁 가이드</h3>
-                  <p className="home_guide_desc">
-                    사진을 찍어서 옷에 맞는
-                    <br />
-                    세탁법을 간편하게 확인해보세요
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* 실제 고객 리뷰 영역 [가로 스크롤 Swiper UI 로 변경] */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[5] = el;
-              }}
-              data-section-index="5"
-              className={`home_reviews_section home_fade_section ${
-                visibleSections[5] ? "visible" : ""
-              }`}
-            >
-              <div className="home_review_header_row">
-                <h3 className="home_review_title">실제 고객 리뷰</h3>
-                <button
-                  className="home_review_more"
-                  onClick={() => handleAction("리뷰 전체 보기")}
+                <div
+                  className="home_summary_card"
+                  onClick={() => handleAction("진행 상세 현황")}
                 >
-                  전체보기&gt;
-                </button>
-              </div>
+                  <h2 className="home_card_main_text">
+                    세탁{" "}
+                    <span className="blue_percent dynamic_count_active">
+                      <span className="digit">{progressPercent}</span>
+                      <span className="percent-char">%</span>
+                    </span>{" "}
+                    진행 중
+                  </h2>
 
-              {/* Categories scroll area */}
-              <div className="home_review_tags_container">
-                {reviewTags.map((tag) => (
-                  <button
-                    key={tag}
-                    className={`home_tag_pill ${selectedTag === tag ? "home_tag_pill--active" : ""}`}
-                    onClick={() => setSelectedTag(tag)}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-
-              {/* [가로 터치 스크롤 Swiper 카드 슬라이더] */}
-              <div className="home_review_swiper_container">
-                {getReviewsForTag(selectedTag).map((rv, idx) => (
-                  <div
-                    className="home_review_slide_card"
-                    key={`${rv.user}-${idx}`}
-                    onClick={() => setSelectedReview(rv)}
-                  >
-                    <div className="home_review_card_top">
-                      <div className="home_review_stars_row">
-                        <span className="home_review_stars">{rv.stars}</span>
-                        <span className="home_review_user">{rv.user}</span>
-                      </div>
-                      <span className="home_review_date">{rv.date}</span>
-                    </div>
-                    <p className="home_review_body">{rv.body}</p>
-                    <div className="home_review_img_wrapper">
-                      <img
-                        src={rv.img}
-                        alt={`${rv.user} 리뷰 이미지`}
-                        className="home_review_duvet_img"
+                  {/* [SVG 둥근 그라데이션 원형 프로그레스 링 & 정중앙 정렬 세탁물 그래픽] */}
+                  <div className="home_circle_container">
+                    <svg className="home_circle_svg" viewBox="0 0 170 170">
+                      <defs>
+                        <linearGradient
+                          id="gaugeGradient"
+                          x1="0%"
+                          y1="0%"
+                          x2="100%"
+                          y2="100%"
+                        >
+                          <stop offset="0%" stopColor="#5EA2FF" />
+                          <stop offset="100%" stopColor="#2F62F5" />
+                        </linearGradient>
+                        {/* Sparkle effect for premium feel */}
+                        <filter id="glow">
+                          <feGaussianBlur
+                            stdDeviation="1.5"
+                            result="coloredBlur"
+                          />
+                          <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      {/* 배경 원형 (light gray) */}
+                      <circle
+                        cx="85"
+                        cy="85"
+                        r="70"
+                        stroke="#f0f3f7"
+                        strokeWidth="12"
+                        fill="transparent"
                       />
-                    </div>
-                    <div className="home_review_tags_bottom">
-                      {rv.tags.map((t: string) => (
-                        <span className="home_review_bottom_tag" key={t}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                      {/* 진행도 링 (66%) - 더 두꺼운 stroke로 입체감 */}
+                      <circle
+                        cx="85"
+                        cy="85"
+                        r="70"
+                        className="home_circle_svg_progress"
+                        stroke="url(#gaugeGradient)"
+                        strokeWidth="12"
+                        fill="transparent"
+                        strokeDasharray="439.8"
+                        strokeDashoffset={439.8 * (1 - circleProgress / 100)}
+                        strokeLinecap="round"
+                        transform="rotate(-90 85 85)"
+                      />
+                      {/* Sparkle dots (3개의 작은 별) */}
+                      <circle
+                        cx="130"
+                        cy="50"
+                        r="2.5"
+                        fill="#5EA2FF"
+                        opacity="0.6"
+                      />
+                      <circle
+                        cx="145"
+                        cy="85"
+                        r="1.8"
+                        fill="#2F62F5"
+                        opacity="0.5"
+                      />
+                      <circle
+                        cx="60"
+                        cy="140"
+                        r="2"
+                        fill="#5EA2FF"
+                        opacity="0.55"
+                      />
+                    </svg>
+                    {/* Innermost: b1 image */}
+                    <img
+                      src={b1Img}
+                      alt="가장 안쪽 명품 코트"
+                      className="home_circle_image_inner"
+                    />
+                    {/* Subtle light shine effect around image */}
+                    <div className="home_circle_shine_effect"></div>
                   </div>
-                ))}
-              </div>
-            </section>
 
-            {/* 왓씨 세탁 커뮤니티 배너 */}
-            <section
-              ref={(el) => {
-                sectionRefs.current[6] = el;
-              }}
-              data-section-index="6"
-              className={`home_community_section home_fade_section ${
-                visibleSections[6] ? "visible" : ""
-              }`}
-            >
-              <div
-                className="home_community_banner"
-                onClick={() => handleAction("세탁 커뮤니티")}
-              >
-                <div className="home_community_left">
-                  <span className="home_community_label">
-                    왓씨 세탁 커뮤니티
-                  </span>
-                  <h4 className="home_community_title_1">
-                    세탁 경험을 빠르게 공유하고
-                  </h4>
-                  <h4 className="home_community_title_2">
-                    솔루션을 찾아보세요.
-                  </h4>
-                  <div className="home_review_tags_bottom">
-                    <span className="home_review_bottom_tag">#옷관리팁</span>
-                    <span className="home_review_bottom_tag">#얼룩제거</span>
-                    <span className="home_review_bottom_tag">#세탁노하우</span>
+                  {/* [그 아래 파란색 세탁 상세 보러가기 / 연한 회색 배송시간 보러가기 버튼 스택] */}
+                  <div className="home_card_btn_stack">
+                    <button
+                      className="home_card_btn_primary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction("세탁 상황 자세히 보기");
+                      }}
+                    >
+                      세탁 상황 자세히 보러가기
+                    </button>
+                    <button
+                      className="home_card_btn_secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction("예상 배송 시간 조회");
+                      }}
+                    >
+                      예상 배송 시간 보러가기
+                    </button>
                   </div>
                 </div>
-                <div className="home_community_right">
+              </section>
+
+              {/* 2개의 퀵서비스 카드 (60초 세탁 신청 & 왓씨 이용방법) */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[2] = el;
+                }}
+                data-section-index="2"
+                className={`home_columns_section home_fade_section ${!hasScrolled ? "stagger-2" : "stagger-scroll-2"} ${
+                  visibleSections[2] ? "visible" : ""
+                }`}
+              >
+                <div
+                  className="home_col_card_blue"
+                  onClick={() => handleAction("60초 세탁 신청")}
+                >
+                  <div className="home_col_title_row">
+                    <span className="home_col_title_large">60초</span>
+                    <span className="home_col_title_large">세탁 신청</span>
+                  </div>
                   <img
-                    src={d1Img}
-                    alt="세탁 커뮤니티 이미지"
-                    className="home_community_3d_img"
+                    src={j1Img}
+                    alt="3D 세탁 바구니"
+                    className="home_col_image home_col_image--clock"
                   />
                 </div>
-              </div>
-            </section>
+
+                <div
+                  className="home_col_card_white"
+                  onClick={() => handleAction("왓씨 이용방법")}
+                >
+                  <div className="home_col_title_row">
+                    <span className="home_col_title_large">왓씨</span>
+                    <span className="home_col_title_large">이용방법</span>
+                  </div>
+                  <img
+                    src={l1Img}
+                    alt="왓씨 이용방법 이미지"
+                    className="home_col_image home_col_image--ring"
+                  />
+                </div>
+              </section>
+
+              {/* 중간 서브 메뉴 카드 2단 배치 (가격표 & 세탁 종류 안내) */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[3] = el;
+                }}
+                data-section-index="3"
+                className={`home_sub_columns_section home_fade_section ${!hasScrolled ? "stagger-3" : "stagger-scroll-3"} ${
+                  visibleSections[3] ? "visible" : ""
+                }`}
+              >
+                <button
+                  className="home_sub_col_card"
+                  onClick={() => handleAction("가격표")}
+                >
+                  가격표
+                </button>
+                <button
+                  className="home_sub_col_card"
+                  onClick={() => handleAction("세탁 종류 안내")}
+                >
+                  세탁 종류 안내
+                </button>
+              </section>
+
+              {/* 하단 AI 세탁 가이드 배너 (Full-width) */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[4] = el;
+                }}
+                data-section-index="4"
+                className={`home_guide_full_section home_fade_section ${!hasScrolled ? "stagger-4" : "stagger-scroll-4"} ${
+                  visibleSections[4] ? "visible" : ""
+                }`}
+              >
+                <div
+                  className="home_guide_banner"
+                  onClick={() => handleAction("AI 세탁 가이드")}
+                >
+                  <div className="home_guide_left">
+                    <img
+                      src={k1Img}
+                      alt="AI 세탁 가이드"
+                      className="home_guide_k1_img"
+                    />
+                  </div>
+                  <div className="home_guide_right">
+                    <h3 className="home_guide_title">AI 세탁 가이드</h3>
+                    <p className="home_guide_desc">
+                      사진을 찍어서 옷에 맞는
+                      <br />
+                      세탁법을 간편하게 확인해보세요
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* 실제 고객 리뷰 영역 [가로 스크롤 Swiper UI 로 변경] */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[5] = el;
+                }}
+                data-section-index="5"
+                className={`home_reviews_section home_fade_section ${!hasScrolled ? "stagger-5" : "stagger-scroll-5"} ${
+                  visibleSections[5] ? "visible" : ""
+                }`}
+              >
+                <div className="home_review_header_row">
+                  <h3 className="home_review_title">실제 고객 리뷰</h3>
+                  <button
+                    className="home_review_more"
+                    onClick={() => handleAction("리뷰 전체 보기")}
+                  >
+                    전체보기&gt;
+                  </button>
+                </div>
+
+                {/* Categories scroll area */}
+                <div className="home_review_tags_container">
+                  {reviewTags.map((tag) => (
+                    <button
+                      key={tag}
+                      className={`home_tag_pill ${selectedTag === tag ? "home_tag_pill--active" : ""}`}
+                      onClick={() => setSelectedTag(tag)}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+
+                {/* [가로 터치 스크롤 Swiper 카드 슬라이더] */}
+                <div className="home_review_swiper_container">
+                  {getReviewsForTag(selectedTag).map((rv, idx) => (
+                    <div
+                      className="home_review_slide_card"
+                      key={`${rv.user}-${idx}`}
+                      onClick={() => setSelectedReview(rv)}
+                    >
+                      <div className="home_review_card_top">
+                        <div className="home_review_stars_row">
+                          <span className="home_review_stars">{rv.stars}</span>
+                          <span className="home_review_user">{rv.user}</span>
+                        </div>
+                        <span className="home_review_date">{rv.date}</span>
+                      </div>
+                      <p className="home_review_body">{rv.body}</p>
+                      <div className="home_review_img_wrapper">
+                        <img
+                          src={rv.img}
+                          alt={`${rv.user} 리뷰 이미지`}
+                          className="home_review_duvet_img"
+                        />
+                      </div>
+                      <div className="home_review_tags_bottom">
+                        {rv.tags.map((t: string) => (
+                          <span className="home_review_bottom_tag" key={t}>
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* 왓씨 세탁 커뮤니티 배너 */}
+              <section
+                ref={(el) => {
+                  sectionRefs.current[6] = el;
+                }}
+                data-section-index="6"
+                className={`home_community_section home_fade_section ${!hasScrolled ? "stagger-6" : "stagger-scroll-6"} ${
+                  visibleSections[6] ? "visible" : ""
+                }`}
+              >
+                <div
+                  className="home_community_banner"
+                  onClick={() => handleAction("세탁 커뮤니티")}
+                >
+                  <div className="home_community_left">
+                    <span className="home_community_label">
+                      왓씨 세탁 커뮤니티
+                    </span>
+                    <h4 className="home_community_title_1">
+                      세탁 경험을 빠르게 공유하고
+                    </h4>
+                    <h4 className="home_community_title_2">
+                      솔루션을 찾아보세요.
+                    </h4>
+                    <div className="home_review_tags_bottom">
+                      <span className="home_review_bottom_tag">#옷관리팁</span>
+                      <span className="home_review_bottom_tag">#얼룩제거</span>
+                      <span className="home_review_bottom_tag">
+                        #세탁노하우
+                      </span>
+                    </div>
+                  </div>
+                  <div className="home_community_right">
+                    <img
+                      src={d1Img}
+                      alt="세탁 커뮤니티 이미지"
+                      className="home_community_3d_img"
+                    />
+                  </div>
+                </div>
+              </section>
+            </div>
           </>
         )}
 
@@ -1274,7 +1472,7 @@ export function HomePage() {
                 <header className="reserve_detail_header">
                   <button
                     type="button"
-                    className="reserve_detail_back_btn"
+                    className="premium_back_btn"
                     onClick={() => setShowReserveDetail(false)}
                     aria-label="뒤로가기"
                   >
@@ -1292,7 +1490,7 @@ export function HomePage() {
                     </svg>
                   </button>
                   <h1 className="reserve_detail_header_title">세탁 예약하기</h1>
-                  <div style={{ width: 24 }} />
+                  <div style={{ width: 42 }} />
                 </header>
 
                 {/* 스크롤 본문 */}
@@ -1801,7 +1999,7 @@ export function HomePage() {
                 <header className="ai_guide_detail_header">
                   <button
                     type="button"
-                    className="ai_guide_detail_back_btn"
+                    className="premium_back_btn"
                     onClick={() => {
                       setShowAiGuideDetail(false);
                       setScanResult(false);
@@ -1826,7 +2024,7 @@ export function HomePage() {
                   <h1 className="ai_guide_detail_header_title">
                     AI 세탁 스캐너 가이드
                   </h1>
-                  <div style={{ width: 40 }} />
+                  <div style={{ width: 42 }} />
                 </header>
 
                 <div className="ai_guide_detail_content">
@@ -2156,7 +2354,7 @@ export function HomePage() {
             <header className="home_delivery_header">
               <button
                 type="button"
-                className="home_delivery_back_btn"
+                className="premium_back_btn"
                 onClick={() => setActiveTab("home")}
                 aria-label="뒤로가기"
               >
@@ -2179,7 +2377,7 @@ export function HomePage() {
                   소중한 세탁물의 실시간 이동 경로입니다.
                 </p>
               </div>
-              <div style={{ width: 40 }} />
+              <div style={{ width: 42 }} />
             </header>
 
             {/* 실시간 상태 요약 카드 */}
@@ -2666,7 +2864,7 @@ export function HomePage() {
             <header className="care_header">
               <button
                 type="button"
-                className="care_back_button"
+                className="premium_back_btn"
                 onClick={() => navigate("/home?tab=home")}
                 aria-label="홈으로 돌아가기"
               >
@@ -3181,7 +3379,7 @@ export function HomePage() {
             <header className="mypage_header">
               <button
                 type="button"
-                className="mypage_back_btn"
+                className="premium_back_btn"
                 onClick={() => {
                   setActiveTab("home");
                   navigate("/home?tab=home");
@@ -3202,6 +3400,7 @@ export function HomePage() {
                 </svg>
               </button>
               <h1 className="mypage_title">{profileName}님의 WatC</h1>
+              <div className="mypage_header_right_spacer" />
             </header>
 
             {/* 2열 배치 상단 카드 그리드 */}
@@ -3209,12 +3408,15 @@ export function HomePage() {
               {/* 왼쪽 파란색 프로필 카드 [i1Img 이미지 탑재 및 +버튼 상세 설정 모달 연결] */}
               <div
                 className="mypage_profile_blue_card"
-                onClick={() => setShowProfileModal(true)}
+                onClick={() => {
+                  setSelectedTempImg(currentProfileImg);
+                  setShowProfileModal(true);
+                }}
                 style={{ cursor: "pointer" }}
               >
                 <div className="mypage_profile_img_wrapper">
                   <img
-                    src={i1Img} // a1Img 대신 i1Img 탑재 완료
+                    src={currentProfileImg}
                     alt="프로필 이미지"
                     className="mypage_profile_character"
                     style={{
@@ -3231,7 +3433,18 @@ export function HomePage() {
                       setShowProfileModal(true);
                     }}
                   >
-                    +
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      stroke="#2563eb"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -3285,7 +3498,9 @@ export function HomePage() {
               <div className="mypage_wallet_card">
                 <div className="mypage_wallet_column">
                   <span className="mypage_wallet_label">포인트</span>
-                  <span className="mypage_wallet_val">30원</span>
+                  <span className="mypage_wallet_val">
+                    {userPoints.toLocaleString()}P
+                  </span>
                   <div className="mypage_wallet_btn_row">
                     <button
                       className="mypage_w_btn mypage_w_btn--gray"
@@ -3300,9 +3515,11 @@ export function HomePage() {
                       className="mypage_w_btn mypage_w_btn--blue"
                       onClick={(e) => {
                         e.stopPropagation();
-                        triggerToast(
-                          "🎁 안심 포인트 선물 서비스는 현재 정식 준비 중입니다!",
-                        );
+                        setGiftType("point");
+                        setGiftMethod(null);
+                        setGiftRecipient("");
+                        setGiftAmount("1000");
+                        setShowGiftModal(true);
                       }}
                     >
                       선물
@@ -3314,7 +3531,7 @@ export function HomePage() {
 
                 <div className="mypage_wallet_column">
                   <span className="mypage_wallet_label">쿠폰</span>
-                  <span className="mypage_wallet_val">2장</span>
+                  <span className="mypage_wallet_val">{userCoupons}장</span>
                   <div className="mypage_wallet_btn_row">
                     <button
                       className="mypage_w_btn mypage_w_btn--gray"
@@ -3329,9 +3546,11 @@ export function HomePage() {
                       className="mypage_w_btn mypage_w_btn--blue"
                       onClick={(e) => {
                         e.stopPropagation();
-                        triggerToast(
-                          "🎁 안심 쿠폰 선물 서비스는 현재 정식 준비 중입니다!",
-                        );
+                        setGiftType("coupon");
+                        setGiftMethod(null);
+                        setGiftRecipient("");
+                        setGiftCouponCount(1);
+                        setShowGiftModal(true);
                       }}
                     >
                       선물
@@ -3712,11 +3931,460 @@ export function HomePage() {
       )}
 
       {/* 토스트 알림창 */}
-
-      {/* 토스트 알림창 */}
       <div className={`home_toast ${toastMessage ? "show" : ""}`} role="status">
         {toastMessage}
       </div>
+
+      {/* 🎁 마이페이지 안심 포인트 & 쿠폰 선물하기 모달 (카카오톡 및 WatC 사내 송금) */}
+      {showGiftModal && (
+        <div
+          className="gift_modal_overlay"
+          onClick={() => setShowGiftModal(false)}
+        >
+          <div
+            className="gift_modal_card animate_scale_up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="gift_modal_header">
+              <h2>
+                {giftType === "point"
+                  ? "🎁 안심 포인트 선물"
+                  : "🎁 안심 쿠폰 선물"}
+              </h2>
+              <button
+                type="button"
+                className="gift_modal_close_btn"
+                onClick={() => setShowGiftModal(false)}
+                aria-label="닫기"
+              >
+                &times;
+              </button>
+            </div>
+
+            {!giftMethod ? (
+              /* 단계 1: 선물 수단 선택 */
+              <div className="gift_modal_body">
+                <p className="gift_modal_desc">
+                  나의 잔여 보유량:{" "}
+                  <strong>
+                    {giftType === "point"
+                      ? `${userPoints.toLocaleString()}P`
+                      : `${userCoupons}장`}
+                  </strong>
+                </p>
+                <div className="gift_method_selector">
+                  <button
+                    type="button"
+                    className="gift_method_btn gift_method_btn--kakao"
+                    onClick={() => {
+                      setGiftMethod("kakao");
+                      setGiftRecipient("");
+                    }}
+                  >
+                    <div className="gift_method_icon_circle kakao_bg">💬</div>
+                    <div className="gift_method_text">
+                      <span className="gift_method_title">
+                        카카오톡 선물 링크 생성
+                      </span>
+                      <span className="gift_method_subtitle">
+                        친구에게 카카오톡 대화방으로 선물 수령 카드를
+                        발송합니다.
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="gift_method_btn gift_method_btn--watc"
+                    onClick={() => {
+                      setGiftMethod("watc");
+                      setGiftRecipient("");
+                    }}
+                  >
+                    <div className="gift_method_icon_circle watc_bg">💙</div>
+                    <div className="gift_method_text">
+                      <span className="gift_method_title">
+                        WatC 회원에게 직접 양도
+                      </span>
+                      <span className="gift_method_subtitle">
+                        연락처 혹은 WatC 회원 ID로 보유 재화를 즉시 송금합니다.
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            ) : giftMethod === "kakao" ? (
+              /* 단계 2: 카카오톡 선물 카드 세부 설정 */
+              <div className="gift_modal_body">
+                <h3 className="gift_section_subtitle">
+                  카카오톡 선물 카드 데코레이션
+                </h3>
+
+                {giftType === "point" ? (
+                  <div className="gift_input_group">
+                    <label className="gift_label">보낼 안심 포인트</label>
+                    <div className="gift_amount_preset">
+                      {["500", "1000", "2000", "3000"].map((amt) => {
+                        const numericAmt = parseInt(amt);
+                        const disabled = userPoints < numericAmt;
+                        return (
+                          <button
+                            key={amt}
+                            type="button"
+                            className={`gift_amt_btn ${giftAmount === amt ? "active" : ""}`}
+                            disabled={disabled}
+                            onClick={() => setGiftAmount(amt)}
+                          >
+                            {numericAmt.toLocaleString()}P
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="gift_input_group">
+                    <label className="gift_label">보낼 쿠폰 수량</label>
+                    <div className="gift_amount_preset">
+                      {[1, 2].map((num) => {
+                        const disabled = userCoupons < num;
+                        return (
+                          <button
+                            key={num}
+                            type="button"
+                            className={`gift_amt_btn ${giftCouponCount === num ? "active" : ""}`}
+                            disabled={disabled}
+                            onClick={() => setGiftCouponCount(num)}
+                          >
+                            {num}장
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <div className="gift_input_group">
+                  <label className="gift_label">받는 친구 성함/닉네임</label>
+                  <input
+                    type="text"
+                    className="gift_text_input"
+                    placeholder="예: 지훈, 세나 (공란 시 '친구'로 표시)"
+                    value={giftRecipient}
+                    onChange={(e) => setGiftRecipient(e.target.value)}
+                  />
+                </div>
+
+                {/* 카카오톡 공유 카드 미리보기 */}
+                <div className="gift_preview_container">
+                  <span className="preview_label">카카오톡 카드 미리보기</span>
+                  <div className="kakao_preview_card">
+                    <div className="kakao_preview_header">
+                      <span className="kakao_app_logo">WatC</span>
+                      <span className="kakao_badge">선물</span>
+                    </div>
+                    <div className="kakao_preview_body">
+                      <h4 className="kakao_preview_title">
+                        🎁 {giftRecipient ? giftRecipient : "친구"}님!{" "}
+                        {profileName}님이 보낸 세탁 선물이 도착했어요!
+                      </h4>
+                      <p className="kakao_preview_desc">
+                        {giftType === "point"
+                          ? `안심 포인트 ${parseInt(giftAmount).toLocaleString()}P`
+                          : `안심 세탁 쿠폰 ${giftCouponCount}장`}
+                      </p>
+                    </div>
+                    <div className="kakao_preview_action">
+                      WatC 앱에서 안심 수령하기
+                    </div>
+                  </div>
+                </div>
+
+                <div className="gift_action_buttons">
+                  <button
+                    type="button"
+                    className="gift_btn_back"
+                    onClick={() => setGiftMethod(null)}
+                  >
+                    이전으로
+                  </button>
+                  <button
+                    type="button"
+                    className="gift_btn_confirm gift_btn_confirm--kakao"
+                    onClick={() => {
+                      const cost =
+                        giftType === "point"
+                          ? parseInt(giftAmount)
+                          : giftCouponCount;
+                      if (giftType === "point" && userPoints < cost) {
+                        triggerToast("⚠️ 보유하신 포인트가 부족합니다.");
+                        return;
+                      }
+                      if (giftType === "coupon" && userCoupons < cost) {
+                        triggerToast("⚠️ 보유하신 쿠폰 수량이 부족합니다.");
+                        return;
+                      }
+
+                      // 차감 처리
+                      if (giftType === "point") {
+                        setUserPoints((prev) => prev - cost);
+                      } else {
+                        setUserCoupons((prev) => prev - cost);
+                      }
+
+                      setShowKakaoSim(true);
+                    }}
+                  >
+                    카카오톡으로 카드 전송
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* 단계 2: WatC 직접 회원 양도 설정 */
+              <div className="gift_modal_body">
+                <h3 className="gift_section_subtitle">
+                  WatC 회원 즉시 다이렉트 송금
+                </h3>
+
+                <div className="gift_input_group">
+                  <label className="gift_label">받는 회원 연락처 혹은 ID</label>
+                  <input
+                    type="text"
+                    className="gift_text_input"
+                    placeholder="연락처(010-XXXX-XXXX) 또는 ID 입력"
+                    value={giftRecipient}
+                    onChange={(e) => setGiftRecipient(e.target.value)}
+                  />
+                </div>
+
+                {giftType === "point" ? (
+                  <div className="gift_input_group">
+                    <label className="gift_label">보낼 안심 포인트</label>
+                    <div className="gift_amount_preset">
+                      {["500", "1000", "2000", "3000"].map((amt) => {
+                        const numericAmt = parseInt(amt);
+                        const disabled = userPoints < numericAmt;
+                        return (
+                          <button
+                            key={amt}
+                            type="button"
+                            className={`gift_amt_btn ${giftAmount === amt ? "active" : ""}`}
+                            disabled={disabled}
+                            onClick={() => setGiftAmount(amt)}
+                          >
+                            {numericAmt.toLocaleString()}P
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="gift_input_group">
+                    <label className="gift_label">보낼 쿠폰 수량</label>
+                    <div className="gift_amount_preset">
+                      {[1, 2].map((num) => {
+                        const disabled = userCoupons < num;
+                        return (
+                          <button
+                            key={num}
+                            type="button"
+                            className={`gift_amt_btn ${giftCouponCount === num ? "active" : ""}`}
+                            disabled={disabled}
+                            onClick={() => setGiftCouponCount(num)}
+                          >
+                            {num}장
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <div className="gift_action_buttons">
+                  <button
+                    type="button"
+                    className="gift_btn_back"
+                    onClick={() => setGiftMethod(null)}
+                  >
+                    이전으로
+                  </button>
+                  <button
+                    type="button"
+                    className="gift_btn_confirm gift_btn_confirm--watc"
+                    onClick={() => {
+                      if (!giftRecipient.trim()) {
+                        triggerToast(
+                          "⚠️ 받는 친구의 연락처 혹은 ID를 입력해주세요.",
+                        );
+                        return;
+                      }
+                      const cost =
+                        giftType === "point"
+                          ? parseInt(giftAmount)
+                          : giftCouponCount;
+                      if (giftType === "point" && userPoints < cost) {
+                        triggerToast("⚠️ 보유하신 포인트가 부족합니다.");
+                        return;
+                      }
+                      if (giftType === "coupon" && userCoupons < cost) {
+                        triggerToast("⚠️ 보유하신 쿠폰 수량이 부족합니다.");
+                        return;
+                      }
+
+                      // 차감 처리
+                      if (giftType === "point") {
+                        setUserPoints((prev) => prev - cost);
+                      } else {
+                        setUserCoupons((prev) => prev - cost);
+                      }
+
+                      setShowWatcSim(true);
+                    }}
+                  >
+                    보유 재화 즉시 양도
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 💬 카카오톡 공유 시뮬레이터 오버레이 */}
+          {showKakaoSim && (
+            <div
+              className="gift_sim_overlay animate_fade_in"
+              onClick={() => {
+                setShowKakaoSim(false);
+                setShowGiftModal(false);
+                setGiftMethod(null);
+                setGiftRecipient("");
+                triggerToast(
+                  "🎉 카카오톡 공유 선물이 대화방으로 완벽히 전송되었습니다!",
+                );
+              }}
+            >
+              <div
+                className="gift_sim_card kakao_theme"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="gift_sim_header kakao_bar">
+                  <span>카카오톡 친구에게 전송 완료</span>
+                </div>
+                <div className="gift_sim_body">
+                  <div className="kakao_success_icon">💬</div>
+                  <p className="gift_sim_main_txt">
+                    선물 카카오톡 링크 전송 완료!
+                  </p>
+                  <div className="gift_sim_balloon">
+                    <div className="balloon_top">
+                      🎁 WatC 안심 세탁 케어 선물
+                    </div>
+                    <div className="balloon_mid">
+                      {profileName}님이 보낸 실속 선물 코드를 확인해보세요.
+                      <br />
+                      <strong>
+                        {giftType === "point"
+                          ? `안심 포인트 ${parseInt(giftAmount).toLocaleString()}P`
+                          : `안심 세탁 쿠폰 ${giftCouponCount}장`}
+                      </strong>
+                    </div>
+                    <div className="balloon_bottom">WatC 앱 열고 수령하기</div>
+                  </div>
+                  <p className="gift_sim_tip">
+                    화면을 탭하시면 마이페이지로 돌아갑니다.
+                  </p>
+                  <button
+                    type="button"
+                    className="gift_sim_confirm_btn kakao_btn_color"
+                    onClick={() => {
+                      setShowKakaoSim(false);
+                      setShowGiftModal(false);
+                      setGiftMethod(null);
+                      setGiftRecipient("");
+                      triggerToast(
+                        "🎉 카카오톡 공유 선물이 대화방으로 완벽히 전송되었습니다!",
+                      );
+                    }}
+                  >
+                    대화방으로 돌아가기
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 💙 WatC 직접 송금/양도 시뮬레이터 오버레이 */}
+          {showWatcSim && (
+            <div
+              className="gift_sim_overlay animate_fade_in"
+              onClick={() => {
+                setShowWatcSim(false);
+                setShowGiftModal(false);
+                setGiftMethod(null);
+                setGiftRecipient("");
+                triggerToast(
+                  `🎉 ${giftRecipient ? giftRecipient : "친구"}님께 다이렉트 송금이 정상 처리되었습니다!`,
+                );
+              }}
+            >
+              <div
+                className="gift_sim_card watc_theme"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="gift_sim_header watc_bar">
+                  <span>WatC 안심 직통 송금</span>
+                </div>
+                <div className="gift_sim_body">
+                  <div className="watc_success_icon">✓</div>
+                  <p className="gift_sim_main_txt">
+                    즉시 양도가 완료되었습니다!
+                  </p>
+
+                  <div className="gift_sim_rec_table">
+                    <div className="table_row">
+                      <span className="row_lbl">수취인 연락처/ID:</span>
+                      <strong className="row_val">{giftRecipient}</strong>
+                    </div>
+                    <div className="table_row">
+                      <span className="row_lbl">송금 내역:</span>
+                      <strong className="row_val">
+                        {giftType === "point"
+                          ? `안심 포인트 ${parseInt(giftAmount).toLocaleString()}P`
+                          : `안심 세탁 쿠폰 ${giftCouponCount}장`}
+                      </strong>
+                    </div>
+                    <div className="table_row">
+                      <span className="row_lbl">송출인 잔여 보유량:</span>
+                      <strong className="row_val">
+                        {giftType === "point"
+                          ? `${userPoints.toLocaleString()}P`
+                          : `${userCoupons}장`}
+                      </strong>
+                    </div>
+                  </div>
+
+                  <p className="gift_sim_tip">
+                    화면을 탭하시면 마이페이지로 돌아갑니다.
+                  </p>
+                  <button
+                    type="button"
+                    className="gift_sim_confirm_btn watc_btn_color"
+                    onClick={() => {
+                      setShowWatcSim(false);
+                      setShowGiftModal(false);
+                      setGiftMethod(null);
+                      setGiftRecipient("");
+                      triggerToast(
+                        `🎉 ${giftRecipient ? giftRecipient : "친구"}님께 다이렉트 송금이 정상 처리되었습니다!`,
+                      );
+                    }}
+                  >
+                    확인 및 닫기
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

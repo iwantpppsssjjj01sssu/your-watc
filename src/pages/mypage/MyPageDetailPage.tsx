@@ -689,7 +689,7 @@ export function MyPageDetailPage() {
         <header className="menu_detail_header">
           <button
             type="button"
-            className="menu_back_btn"
+            className="premium_back_btn"
             onClick={handleBack}
             aria-label="마이페이지로 돌아가기"
           >
@@ -721,7 +721,7 @@ export function MyPageDetailPage() {
             {currentMenu === "point-history" && "주문 & 포인트 내역"}
             {currentMenu === "coupons" && "나의 쿠폰함"}
           </span>
-          <div style={{ width: "24px" }} />
+          <div style={{ width: "42px" }} />
         </header>
 
         {/* 1. 의류 관리 및 라이프케어 상세 뷰 */}
