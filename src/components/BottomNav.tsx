@@ -196,30 +196,33 @@ const styles = {
     transform: "translateX(-50%)",
     width: "100%",
     maxWidth: "min(880px, 100%)",
-    height: "80px",
+    height: "calc(96px + env(safe-area-inset-bottom, 0px))",
+
     backgroundColor: "#ffffff",
-    borderTop: "1px solid #f1f5f9",
+
+    borderTop: "1px solid #e2e8f0",
+
+    boxShadow: "0 -4px 16px rgba(15, 23, 42, 0.08)",
+
     display: "flex",
     justifyContent: "space-around",
-    alignItems: "center",
-    zIndex: 1000,
-    boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.03)",
-    boxSizing: "border-box" as const,
-    padding: "0 8px",
+    alignItems: "flex-start",
+
+    padding: "10px 8px env(safe-area-inset-bottom, 0px)",
   },
   btnOverride: {
     background: "none",
     border: "none",
-    padding: "6px 0",
+    padding: "0",
+
     display: "flex",
     flexDirection: "column" as const,
+
     alignItems: "center",
-    justifyContent: "center",
+
+    justifyContent: "flex-start", // center → flex-start
+
     flex: 1,
-    cursor: "pointer",
-    position: "relative" as const,
-    outline: "none",
     height: "100%",
-    boxSizing: "border-box" as const,
   },
 };

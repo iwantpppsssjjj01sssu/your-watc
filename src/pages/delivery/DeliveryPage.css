@@ -2,6 +2,7 @@
   width: 100%;
   max-width: min(880px, 100%);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 0 0 120px; /* Removed top and horizontal paddings to allow full-width header */
   box-sizing: border-box;

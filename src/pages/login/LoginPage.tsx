@@ -6,6 +6,9 @@ import kakaoIcon from "../../asset/img/kakaotalk.png";
 import naverIcon from "../../asset/img/naver.png";
 import watcLogo from "../../asset/img/watc_logo.png";
 
+// iframe 환경 탐지
+const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+
 // 더미 계정 정보
 const DUMMY_EMAIL = "watcTheLover410*";
 const DUMMY_PASSWORD = "password01"; // 10자리
@@ -315,7 +318,8 @@ const styles = {
   container: {
     width: "100%",
     maxWidth: "min(760px, 100%)",
-    minHeight: "100vh",
+    minHeight: isInIframe ? "100%" : "100dvh",
+    height: isInIframe ? "100%" : undefined,
     margin: "0 auto",
     backgroundColor: "var(--color-white)",
     position: "relative" as const,
@@ -486,7 +490,7 @@ const styles = {
     cursor: "pointer",
   },
   spinnerContainer: {
-    position: "fixed" as const,
+    poposition: isInIframe ? "absolute" : "fixed",
     top: 0,
     left: 0,
     width: "100%",
@@ -514,7 +518,7 @@ const styles = {
     textAlign: "center" as const,
   },
   modalOverlay: {
-    position: "fixed" as const,
+    position: (isInIframe ? "absolute" : "fixed") as "absolute" | "fixed",
     top: 0,
     left: 0,
     width: "100%",

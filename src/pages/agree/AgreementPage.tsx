@@ -3,6 +3,9 @@ import type { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../../components/BackButton";
 
+// iframe 환경 탐지
+const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+
 export function AgreementPage() {
   const navigate = useNavigate();
   const [checks, setChecks] = useState({
@@ -283,7 +286,8 @@ const styles: Record<string, any> = {
   container: {
     width: "100%",
     maxWidth: "min(880px, 100%)",
-    minHeight: "100vh",
+    minHeight: isInIframe ? "100%" : "100dvh",
+    height: isInIframe ? "100%" : undefined,
     margin: "0 auto",
     backgroundColor: "#ffffff",
     display: "flex",
@@ -388,7 +392,7 @@ const styles: Record<string, any> = {
     boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
   },
   modalOverlay: {
-    position: "fixed" as const,
+    position: isInIframe ? "absolute" : "fixed",
     top: 0,
     left: 0,
     width: "100%",

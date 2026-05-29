@@ -887,7 +887,7 @@ export function HomePage() {
   return (
     <div
       className="homepage_layout"
-      style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff" }}
+      style={{ width: "100%", minHeight: "100dvh", backgroundColor: "#ffffff" }}
     >
       <div className="home_container">
         {/* ---------------------------------------------------- */}

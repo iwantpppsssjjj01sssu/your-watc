@@ -8,6 +8,35 @@ import h1Img from "../asset/img/h1.png";
 export function Splash() {
   const navigate = useNavigate();
 
+  const isInIframe = useMemo(
+    () => typeof window !== "undefined" && window.self !== window.top,
+    []
+  );
+
+  const containerStyle = {
+    ...styles.container,
+    ...(isInIframe
+      ? {
+          height: "100%",
+          minHeight: "100%",
+          position: "relative" as const,
+        }
+      : {}),
+  };
+
+  const getScreenStyle = (baseStyle: any) => ({
+    ...baseStyle,
+    ...(isInIframe
+      ? {
+          position: "absolute" as const,
+          height: "100%",
+          width: "100%",
+          top: 0,
+          left: 0,
+        }
+      : {}),
+  });
+
   const initialBubbles = useMemo(() => {
     const positions = [12, 28, 46, 64, 82];
     return positions.map((left, index) => ({
@@ -79,7 +108,14 @@ export function Splash() {
   };
 
   return (
-    <div style={styles.container}>
+    <div style={containerStyle}>
+      {isInIframe && (
+        <style>{`
+          .blue_cover_layer {
+            position: absolute !important;
+          }
+        `}</style>
+      )}
       <style>{`
         /* --- 로고 컨테이너 세로 스택 정렬 --- */
         .splash_logo_container {
@@ -361,7 +397,7 @@ export function Splash() {
       </button>
 
       {/* PHASE 0: 초기 버블 채우기 */}
-      <div style={styles.baseScreen}>
+      <div style={getScreenStyle(styles.baseScreen)}>
         {phase === 0 && (
           <div className="initial_bubble_container">
             {initialBubbles.map((bubble) => (
@@ -401,7 +437,7 @@ export function Splash() {
         className={`blue_cover_layer ${phase >= 2 && phase < 4 ? "active" : ""} ${phase === 4 ? "fade-out" : ""}`}
       >
         {phase >= 2 && phase < 4 && (
-          <div style={styles.textContainer}>
+          <div style={getScreenStyle(styles.textContainer)}>
             <div
               key={`text-phase-${phase === 2 ? "see" : "c"}`}
               className={`text_wrapper 
@@ -451,7 +487,7 @@ export function Splash() {
       {/* PHASE 4: 최종 브랜드 화면 (흰 배경, a1.png, h1.png, Slogan) */}
       {phase === 4 && (
         <div
-          style={styles.brandScreen}
+          style={getScreenStyle(styles.brandScreen)}
           onClick={() => navigate("/home")}
           role="button"
           tabIndex={0}

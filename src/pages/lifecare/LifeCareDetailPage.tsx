@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./LifeCareDetailPage.css";
+import { ResponsiveIframe } from "../../components/ResponsiveIframe";
 
 // SVG 일러스트레이션 컴포넌트들
 function KnitIllustration() {
@@ -450,6 +451,28 @@ export function LifeCareDetailPage() {
             >
               {content.watcOption.badge}
             </span>
+          </div>
+        </section>
+
+        {/* 스마트 케어 시뮬레이터 iframe 섹션 */}
+        <section className="detail_iframe_section">
+          <h2 className="section_title">
+            <span
+              className="section_title_indicator"
+              style={{ backgroundColor: content.primaryColor }}
+            ></span>
+            실시간 스마트 케어 시뮬레이터
+          </h2>
+          <div className="iframe_card_container">
+            <p className="iframe_card_desc">
+              아래 왓씨(WatC) 스마트 케어 시뮬레이터 인터랙티브 웹뷰를 통해 맞춤형 세탁 온도 및 스팀 처리를 실시간으로 실험해 보고 의류 가이드를 조회해 보세요.
+            </p>
+            <div className="iframe_embed_wrapper">
+              <ResponsiveIframe
+                src="https://example.com"
+                title="스마트 케어 시뮬레이터"
+              />
+            </div>
           </div>
         </section>
 

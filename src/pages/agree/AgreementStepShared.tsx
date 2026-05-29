@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 import "./AgreementSteps.css";
 import { BackButton } from "../../components/BackButton";
 
+// iframe 환경 탐지
+const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+
 type AgreementStepLayoutProps = {
   children: ReactNode;
   title?: ReactNode; // 커스텀 타이틀 지원
@@ -42,6 +45,7 @@ export function AgreementStepLayout({
   return (
     <main
       className={`agreement_step_page ${!showBanner ? "agreement_step_page--nobanner" : ""}`}
+      style={isInIframe ? { minHeight: "100%", height: "100%" } : undefined}
     >
       {showBanner && <BackButton />}
       {showBanner && <BubbleBanner />}
