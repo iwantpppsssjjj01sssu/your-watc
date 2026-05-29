@@ -21,7 +21,7 @@ const styles = {
     position: "absolute" as const,
     top: "18px",
     left: "18px",
-    zIndex: 12,
+    zIndex: 110,
     width: "42px",
     height: "42px",
     border: "1px solid rgba(255, 255, 255, 0.45)",

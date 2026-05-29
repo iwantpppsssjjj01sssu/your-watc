@@ -37,7 +37,8 @@ html,
 body,
 #root {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
+  height: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -57,14 +58,14 @@ body {
   font-family: var(--font-pretendard);
 }
 
-/* 모든 페이지 좌우 여백을 25px로 고정 */
+/* 모든 페이지 좌우 여백을 기기 너비에 맞춰 유동적으로 반응하는 HSL 패딩으로 지정 */
 :root {
-  --page-horizontal-padding: 25px;
+  --page-horizontal-padding: clamp(16px, 6vw, 25px);
 }
 
 body {
-  padding-left: var(--page-horizontal-padding);
-  padding-right: var(--page-horizontal-padding);
+  padding-left: 0;
+  padding-right: 0;
 }
 
 button,

@@ -16,10 +16,12 @@
 
 .lifecare_detail_container {
   width: 100%;
-  max-width: 390px;
+  max-width: min(880px, 100%);
   background-color: #ffffff;
   min-height: 100vh;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.02);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -54,7 +56,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, transform 0.1s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -186,7 +190,9 @@
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s ease;
   box-sizing: border-box;
 }
 
@@ -408,7 +414,9 @@
   font-weight: 800;
   color: #ffffff;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
   box-sizing: border-box;
 }
 
@@ -479,7 +487,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 20%, #ffffff 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.95) 20%,
+    #ffffff 100%
+  );
   padding: 16px 20px 24px;
   display: flex;
   justify-content: center;
@@ -500,7 +513,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.2s ease;
   pointer-events: auto; /* 버튼만 마우스 이벤트 수신 */
   box-sizing: border-box;
 }

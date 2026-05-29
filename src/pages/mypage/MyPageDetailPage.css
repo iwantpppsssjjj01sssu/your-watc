@@ -15,7 +15,7 @@
 
 .mypagedetail_container {
   width: 100%;
-  max-width: 390px;
+  max-width: min(880px, 100%);
   background-color: #ffffff;
   min-height: 100vh;
   box-shadow:
@@ -27,7 +27,7 @@
   box-sizing: border-box;
 
   overflow-y: auto;
-  height: 100vh;
+  height: auto;
 }
 
 /* 2. 상단 고정 투명 백드롭 헤더 */
@@ -1083,10 +1083,10 @@
 .mypagedetail_floating_action_bar {
   position: sticky;
   bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  max-width: 390px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 880px);
+  max-width: 100%;
   margin: 0 auto;
   padding: 16px 20px 24px;
   background: linear-gradient(to top, rgba(248, 250, 252, 0.96), transparent);

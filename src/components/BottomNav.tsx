@@ -195,7 +195,7 @@ const styles = {
     left: "50%",
     transform: "translateX(-50%)",
     width: "100%",
-    maxWidth: "390px",
+    maxWidth: "min(880px, 100%)",
     height: "80px",
     backgroundColor: "#ffffff",
     borderTop: "1px solid #f1f5f9",

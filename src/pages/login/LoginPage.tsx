@@ -111,8 +111,8 @@ function SocialPermissionModal({
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(DUMMY_EMAIL);
+  const [password, setPassword] = useState(DUMMY_PASSWORD);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
@@ -167,8 +167,6 @@ export function LoginPage() {
         양옆이 완전히 꽉 찬 시원한 파란 배너 레이아웃을 구현했습니다.
       */}
       <div style={styles.topSection}>
-        <div style={styles.bgCircle1}></div>
-        <div style={styles.bgCircle2}></div>
         <img src={watcLogo} alt="WatC" style={styles.logo} />
       </div>
 
@@ -316,7 +314,7 @@ export function LoginPage() {
 const styles = {
   container: {
     width: "100%",
-    maxWidth: "390px",
+    maxWidth: "min(760px, 100%)",
     minHeight: "100vh",
     margin: "0 auto",
     backgroundColor: "var(--color-white)",
@@ -326,38 +324,19 @@ const styles = {
     overflow: "hidden",
     fontFamily: "var(--font-pretendard)",
     color: "var(--color-black)",
-    padding: "0 32px",
+    padding: 0,
     boxSizing: "border-box" as const,
   },
   // 음수 마진 기법으로 양옆 레이아웃 여백을 완전히 뚫어버리는 튜닝
   topSection: {
     height: "22vh",
-    marginLeft: "-32px",
-    marginRight: "-32px",
-    width: "calc(100% + 64px)",
+    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     position: "relative" as const,
     background: "linear-gradient(180deg, #2563EB 0%, #3B82F6 100%)",
-  },
-  bgCircle1: {
-    position: "absolute" as const,
-    width: "200px",
-    height: "200px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: "50%",
-    top: "-50px",
-    right: "-50px",
-  },
-  bgCircle2: {
-    position: "absolute" as const,
-    width: "150px",
-    height: "150px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: "50%",
-    bottom: "20px",
-    left: "-50px",
+    overflow: "hidden",
   },
   logo: {
     display: "block",
@@ -369,9 +348,10 @@ const styles = {
   bottomSection: {
     flex: 1,
     backgroundColor: "#ffffff",
-    padding: "60px 0px 24px 0px",
+    padding: "60px 16px 24px 16px",
     display: "flex",
     flexDirection: "column" as const,
+    boxSizing: "border-box" as const,
   },
   inputGroup: { marginBottom: "16px" },
   passwordHeader: {
@@ -455,7 +435,7 @@ const styles = {
   dividerText: { margin: "0 15px", fontSize: "12px", color: "#9CA3AF" },
   socialGrid: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
     gap: "12px",
     marginBottom: "40px",
   },
@@ -547,7 +527,7 @@ const styles = {
     zIndex: 999,
   },
   modalContent: {
-    width: "300px",
+    width: "min(480px, 90%)",
     backgroundColor: "#ffffff",
     borderRadius: "18px",
     padding: "24px 20px",

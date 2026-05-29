@@ -3,8 +3,6 @@ import { Splash } from "./pages/Splash";
 import { LoginPage } from "./pages/login/LoginPage"; // 새로 만들 로그인 페이지
 import { AgreementPage } from "./pages/agree/AgreementPage"; // 새로 만들 약관동의 페이지
 import { AgreementStep1 } from "./pages/agree/AgreementStep1";
-import { AgreementStep2 } from "./pages/agree/AgreementStep2";
-import { AgreementStep3 } from "./pages/agree/AgreementStep3";
 import { HomePage } from "./pages/home/HomePage";
 import { DeliveryPage } from "./pages/delivery/DeliveryPage";
 import { LifeCareDetailPage } from "./pages/lifecare/LifeCareDetailPage";
@@ -26,14 +24,6 @@ export const router = createBrowserRouter([
   {
     path: "/agree1",
     element: <AgreementStep1 />,
-  },
-  {
-    path: "/agree2",
-    element: <AgreementStep2 />,
-  },
-  {
-    path: "/agree3",
-    element: <AgreementStep3 />,
   },
   {
     path: "/home", // 약관동의 후 최종 도착할 메인 홈화면
