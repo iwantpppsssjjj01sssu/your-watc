@@ -8,38 +8,42 @@ import { DeliveryPage } from "./pages/delivery/DeliveryPage";
 import { LifeCareDetailPage } from "./pages/lifecare/LifeCareDetailPage";
 import { MyPageDetailPage } from "./pages/mypage/MyPageDetailPage";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Splash />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/agree",
+      element: <AgreementPage />,
+    },
+    {
+      path: "/agree1",
+      element: <AgreementStep1 />,
+    },
+    {
+      path: "/home",
+      element: <HomePage />,
+    },
+    {
+      path: "/delivery",
+      element: <DeliveryPage />,
+    },
+    {
+      path: "/lifecare/:type",
+      element: <LifeCareDetailPage />,
+    },
+    {
+      path: "/mypage/detail/:menu",
+      element: <MyPageDetailPage />,
+    },
+  ],
   {
-    path: "/", // 앱 처음 켜면 스플래시 실행
-    element: <Splash />,
+    basename: "/your-watc",
   },
-  {
-    path: "/login", // 스플래시 끝나고 도착할 로그인 화면
-    element: <LoginPage />,
-  },
-  {
-    path: "/agree", // 로그인 버튼 누르면 이동할 약관동의 화면
-    element: <AgreementPage />,
-  },
-  {
-    path: "/agree1",
-    element: <AgreementStep1 />,
-  },
-  {
-    path: "/home", // 약관동의 후 최종 도착할 메인 홈화면
-    element: <HomePage />,
-  },
-  {
-    path: "/delivery",
-    element: <DeliveryPage />,
-  },
-  {
-    path: "/lifecare/:type",
-    element: <LifeCareDetailPage />,
-  },
-  {
-    path: "/mypage/detail/:menu",
-    element: <MyPageDetailPage />,
-  },
-]);
-
+);
