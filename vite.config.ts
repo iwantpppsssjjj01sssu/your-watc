@@ -174,6 +174,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: "/your-watc/",
+    build: {
+      outDir: "docs",
+    },
 
     plugins: [
       react(),
