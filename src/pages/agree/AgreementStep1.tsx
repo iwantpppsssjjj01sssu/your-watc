@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgreementStepLayout } from "./AgreementStepShared";
 import r1Img from "../../asset/img/r1.png";
@@ -20,6 +20,12 @@ export function AgreementStep1() {
   // 모달 노출 상태 추가
   const [showTrackingModal, setShowTrackingModal] = useState(false);
   const [showAttSuccess, setShowAttSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!showAttSuccess) return;
+    const timer = setTimeout(() => navigate("/home"), 3000);
+    return () => clearTimeout(timer);
+  }, [showAttSuccess, navigate]);
 
   // 모든 항목이 선택되었는지 여부
   const allSelected = benefits.every((benefit) => selectedItems[benefit]);

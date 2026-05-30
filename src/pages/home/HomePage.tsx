@@ -184,6 +184,8 @@ export function HomePage() {
     Array(7).fill(false),
   );
   const [hasScrolled, setHasScrolled] = useState<boolean>(false);
+  const [communityCardsVisible, setCommunityCardsVisible] = useState<boolean[]>([false, false, false]);
+  const communityCardRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
   const [progressPercent, setProgressPercent] = useState<number>(1);
   const [reserveDate, setReserveDate] = useState<string>("5월 9일 목요일");
   const [reserveTime, setReserveTime] = useState<string>("2-4 PM 오후");
@@ -270,6 +272,7 @@ export function HomePage() {
     if (activeTab === "home") {
       setVisibleSections(Array(7).fill(false));
       setHasScrolled(false);
+      setCommunityCardsVisible([false, false, false]);
     }
   }, [activeTab]);
 
@@ -330,33 +333,53 @@ export function HomePage() {
 
       titleInterval = window.setInterval(() => {
         if (titleIdx < titleText.length) {
-          const char = titleText[titleIdx];
-          setTypewrittenTitle((prev) => prev + char);
-          titleIdx++;
+          const chunk = titleText.slice(titleIdx, titleIdx + 2);
+          setTypewrittenTitle((prev) => prev + chunk);
+          titleIdx += 2;
         } else {
           clearInterval(titleInterval);
 
-          // Start typing subtitle after a short delay
           setTimeout(() => {
             subtitleInterval = window.setInterval(() => {
               if (subtitleIdx < subtitleText.length) {
-                const char = subtitleText[subtitleIdx];
-                setTypewrittenSubtitle((prev) => prev + char);
-                subtitleIdx++;
+                const chunk = subtitleText.slice(subtitleIdx, subtitleIdx + 4);
+                setTypewrittenSubtitle((prev) => prev + chunk);
+                subtitleIdx += 4;
               } else {
                 clearInterval(subtitleInterval);
-                setTypewriterFinished(true); // Typewriter fully completed! Reveal all sections below!
+                setTypewriterFinished(true);
               }
-            }, 55); // 55ms typing speed per character - extremely smooth and elegant!
-          }, 150);
+            }, 16);
+          }, 10);
         }
-      }, 85); // 85ms typing speed for "반가워요!"
+      }, 16);
 
       return () => {
         clearInterval(titleInterval);
         clearInterval(subtitleInterval);
       };
     }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab !== "home") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = Number(entry.target.getAttribute("data-card-index"));
+          setCommunityCardsVisible((prev) => {
+            const next = [...prev];
+            next[index] = entry.isIntersecting;
+            return next;
+          });
+        });
+      },
+      { threshold: 0.15 },
+    );
+    communityCardRefs.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+    return () => observer.disconnect();
   }, [activeTab]);
 
   // --- Two-stage Circular & Numerical progress animation effect ---
@@ -1416,46 +1439,74 @@ export function HomePage() {
                 </div>
               </section>
 
-              {/* 왓씨 세탁 커뮤니티 배너 */}
-              <section
-                ref={(el) => {
-                  sectionRefs.current[6] = el;
-                }}
-                data-section-index="6"
-                className={`home_community_section home_fade_section ${!hasScrolled ? "stagger-6" : "stagger-scroll-6"} ${
-                  visibleSections[6] ? "visible" : ""
-                }`}
-              >
-                <div
-                  className="home_community_banner"
-                  onClick={() => handleAction("세탁 커뮤니티")}
-                >
-                  <div className="home_community_left">
-                    <span className="home_community_label">
-                      왓씨 세탁 커뮤니티
-                    </span>
-                    <h4 className="home_community_title_1">
-                      세탁 경험을 빠르게 공유하고
-                    </h4>
-                    <h4 className="home_community_title_2">
-                      솔루션을 찾아보세요.
-                    </h4>
-                    <div className="home_review_tags_bottom">
-                      <span className="home_review_bottom_tag">#옷관리팁</span>
-                      <span className="home_review_bottom_tag">#얼룩제거</span>
-                      <span className="home_review_bottom_tag">
-                        #세탁노하우
+              {/* 왓씨 세탁 커뮤니티 배너 - 3장 카드 */}
+              <section className="home_community_section">
+                {(
+                  [
+                    {
+                      theme: "blue",
+                      label: "왓씨 세탁 커뮤니티",
+                      title1: "세탁 경험을 빠르게 공유하고",
+                      title2: "솔루션을 찾아보세요.",
+                      tags: ["#옷관리팁", "#얼룩제거", "#세탁노하우"],
+                      img: d1Img,
+                      action: "세탁 커뮤니티",
+                    },
+                    {
+                      theme: "mint",
+                      label: "세탁 노하우",
+                      title1: "내 옷을 더 오래,",
+                      title2: "더 예쁘게 관리하는 법",
+                      tags: ["#울소재", "#손세탁", "#드라이"],
+                      img: e1Img,
+                      action: "세탁 노하우",
+                    },
+                    {
+                      theme: "purple",
+                      label: "이번 주 인기 토픽",
+                      title1: "가장 많이 공유된",
+                      title2: "세탁 이야기 모아보기",
+                      tags: ["#주간인기", "#베스트팁", "#추천글"],
+                      img: m1Img,
+                      action: "인기 토픽",
+                    },
+                  ] as const
+                ).map((card, i) => (
+                  <div
+                    key={i}
+                    ref={(el) => {
+                      communityCardRefs.current[i] = el;
+                    }}
+                    data-card-index={String(i)}
+                    className={`home_community_banner home_community_banner--${card.theme} home_community_card_anim ${communityCardsVisible[i] ? "card-visible" : ""}`}
+                    onClick={() => handleAction(card.action)}
+                  >
+                    <div className="home_community_left">
+                      <span className={`home_community_label home_community_label--${card.theme}`}>
+                        {card.label}
                       </span>
+                      <h4 className="home_community_title_1">{card.title1}</h4>
+                      <h4 className="home_community_title_2">{card.title2}</h4>
+                      <div className="home_review_tags_bottom">
+                        {card.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="home_community_right">
+                      <img
+                        src={card.img}
+                        alt={card.label}
+                        className="home_community_3d_img"
+                      />
                     </div>
                   </div>
-                  <div className="home_community_right">
-                    <img
-                      src={d1Img}
-                      alt="세탁 커뮤니티 이미지"
-                      className="home_community_3d_img"
-                    />
-                  </div>
-                </div>
+                ))}
               </section>
             </div>
           </>

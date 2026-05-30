@@ -940,10 +940,39 @@
 .home_community_section {
   padding: 0 16px;
   margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
+/* 카드 슬라이드업 애니메이션 (스크롤마다 반복) */
+.home_community_card_anim {
+  opacity: 0;
+  transform: translateY(52px);
+  transition:
+    opacity 0.58s cubic-bezier(0.34, 1.25, 0.64, 1),
+    transform 0.58s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+
+.home_community_card_anim.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 카드 색상 테마 */
+.home_community_banner--blue  { background: #eff6ff; }
+.home_community_banner--mint  { background: #f0fdf4; }
+.home_community_banner--purple { background: #fdf4ff; }
+
+.home_community_label--blue   { color: #2563eb; }
+.home_community_label--mint   { color: #16a34a; }
+.home_community_label--purple { color: #9333ea; }
+
+.home_review_bottom_tag--blue   { color: #2563eb; }
+.home_review_bottom_tag--mint   { color: #16a34a; }
+.home_review_bottom_tag--purple { color: #9333ea; }
+
 .home_community_banner {
-  background: #eff6ff; /* Soft pastel blue */
   border-radius: 20px;
   padding: 22px 20px;
   display: flex;
@@ -1965,7 +1994,7 @@
   top: 0;
   z-index: 50;
   width: 100%;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2871,7 +2900,7 @@
 }
 
 .mypage_header {
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3799,7 +3828,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 64px;
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
@@ -4500,7 +4529,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 64px;
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
