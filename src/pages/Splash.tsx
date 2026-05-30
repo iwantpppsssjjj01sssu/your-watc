@@ -38,14 +38,34 @@ export function Splash() {
   });
 
   const initialBubbles = useMemo(() => {
-    const positions = [12, 28, 46, 64, 82];
-    return positions.map((left, index) => ({
+    // ─── W 획 경로 (좌상단 → 좌하단 → 중앙피크 → 우하단 → 우상단) ───
+    // x: 30~52%, y: 43~57%  ← 가로로 넓고 납작한 비율
+    const wPoints = [
+      { left: 30, top: 43 }, // 좌측 상단 코너
+      { left: 33, top: 50 }, // 좌외측 획 중간
+      { left: 36, top: 57 }, // 좌측 하단 골
+      { left: 41, top: 47 }, // 중앙 피크 (W 특유의 솟은 부분)
+      { left: 46, top: 57 }, // 우측 하단 골
+      { left: 49, top: 50 }, // 우외측 획 중간
+      { left: 52, top: 43 }, // 우측 상단 코너
+    ];
+    // ─── C 호 경로 (상단 팁 → 12시 → 9시 → 6시 → 하단 팁) ───
+    // x: 57~71%, y: 43~57%  ← W와 정확히 동일한 높이 범위
+    const cPoints = [
+      { left: 71, top: 44 }, // 상단 개구부 (1시 방향)
+      { left: 65, top: 43 }, // 12시 (호 정상)
+      { left: 58, top: 46 }, // 10시 (상단 좌측 호)
+      { left: 57, top: 50 }, // 9시 (최좌측 닫힘)
+      { left: 58, top: 54 }, // 8시 (하단 좌측 호)
+      { left: 65, top: 57 }, // 6시 (호 바닥)
+      { left: 71, top: 56 }, // 하단 개구부 (5시 방향)
+    ];
+    return [...wPoints, ...cPoints].map((pt, index) => ({
       id: index,
-      size: 22 + (index % 3) * 6,
-      left,
-      top: 42 + index * 5,
-      delay: index * 0.12,
-      duration: 1.4 + index * 0.05,
+      size: 18,
+      left: pt.left,
+      top: pt.top,
+      delay: index * 0.025,
       type: index % 3,
     }));
   }, []);
@@ -59,13 +79,13 @@ export function Splash() {
   const [phase, setPhase] = useState<number>(0);
 
   useEffect(() => {
-    const bubbleTimer = setTimeout(() => setPhase(1), 1800);
-    const imageTimer = setTimeout(() => setPhase(2), 3800);
-    const textAnimTimer = setTimeout(() => setPhase(3), 5600);
-    const morphTimer = setTimeout(() => setPhase(4), 7600);
+    const bubbleTimer = setTimeout(() => setPhase(1), 2200);
+    const imageTimer = setTimeout(() => setPhase(2), 4200);
+    const textAnimTimer = setTimeout(() => setPhase(3), 6000);
+    const morphTimer = setTimeout(() => setPhase(4), 8000);
     const navTimer = setTimeout(() => {
       navigate("/login");
-    }, 11800);
+    }, 12200);
 
     return () => {
       clearTimeout(bubbleTimer);
@@ -304,8 +324,11 @@ export function Splash() {
           position: absolute;
           border-radius: 50%;
           opacity: 0;
-          box-shadow: inset 0 0 16px rgba(255,255,255,0.75);
-          animation: initialBubbleRise 1.5s ease-in-out forwards;
+          box-shadow:
+            inset -2px -2px 6px rgba(255,255,255,0.6),
+            inset 2px 2px 4px rgba(37,99,235,0.3),
+            0 2px 8px rgba(37,99,235,0.15);
+          animation: bubbleFormLetter 1.8s ease-in-out forwards;
         }
 
         .initial_bubble.bubble_type_0 {
@@ -323,11 +346,12 @@ export function Splash() {
           border: 1px solid rgba(37, 99, 235, 0.3);
         }
 
-        @keyframes initialBubbleRise {
-          0% { transform: translateY(28px) scale(0.44); opacity: 0; }
-          25% { opacity: 0.85; transform: translateY(2px) scale(0.98); }
-          60% { opacity: 0.72; transform: translateY(-16px) scale(1.04); }
-          100% { transform: translateY(-38px) scale(0.92); opacity: 0; }
+        @keyframes bubbleFormLetter {
+          0%   { opacity: 0;    transform: scale(0.1);                    filter: blur(4px); }
+          10%  { opacity: 0.95; transform: scale(1.12);                   filter: blur(0);   }
+          15%  { opacity: 0.92; transform: scale(1)    translateY(0);     filter: blur(0);   }
+          75%  { opacity: 0.92; transform: scale(1)    translateY(0);     filter: blur(0);   }
+          100% { opacity: 0;    transform: scale(0.4)  translateY(-18px); filter: blur(3px); }
         }
 
         /* --- [1번 페이지] 브랜드 강화 화면 [로고 및 본문 축소/하향, Slogan 줄임/상향] --- */
@@ -410,7 +434,6 @@ export function Splash() {
                   left: `${bubble.left}%`,
                   top: `${bubble.top}%`,
                   animationDelay: `${bubble.delay}s`,
-                  animationDuration: `${bubble.duration}s`,
                 }}
               />
             ))}

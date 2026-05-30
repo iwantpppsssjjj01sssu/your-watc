@@ -1,12 +1,12 @@
 {
-  "name": "GUNIT",
-  "short_name": "GUNIT",
+  "name": "왓씨(WATC)",
+  "short_name": "왓씨",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0B1118",
-  "theme_color": "#0B1118",
-  "description": "에어소프트 게임 일정, 팀원 모집, 초보자 가이드를 연결하는 커뮤니티 앱",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "description": "스마트 세탁 케어 서비스 — 수거·배송·의류관리를 한 번에",
   "icons": [
     {
       "src": "/launcherIcon.png",

@@ -4,7 +4,7 @@ import 'lenis/dist/lenis.css'
 import App from './App'
 import './styles/global.css'
 
-const savedThemeMode = localStorage.getItem('airsoft-theme')
+const savedThemeMode = localStorage.getItem('watc-theme')
 document.documentElement.dataset.theme = savedThemeMode === 'light' ? 'light' : 'dark'
 
 createRoot(document.getElementById('root')!).render(

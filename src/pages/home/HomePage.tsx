@@ -117,11 +117,9 @@ export function HomePage() {
   const [showKakaoSim, setShowKakaoSim] = useState<boolean>(false);
   const [showWatcSim, setShowWatcSim] = useState<boolean>(false);
 
-  // --- Typewriter Welcome Title & Circular Progress Stage States ---
-  const [typewrittenTitle, setTypewrittenTitle] = useState<string>("");
-  const [typewrittenSubtitle, setTypewrittenSubtitle] = useState<string>("");
+  // --- Circular Progress Stage States ---
   const [circleProgress, setCircleProgress] = useState<number>(0);
-  const [typewriterFinished, setTypewriterFinished] = useState<boolean>(false);
+  const [typewriterFinished] = useState<boolean>(true);
 
   const [profileName, setProfileName] = useState<string>("하은");
   const [profilePhone, setProfilePhone] = useState<string>("010-9876-5432");
@@ -316,50 +314,6 @@ export function HomePage() {
     };
   }, [activeTab, hasScrolled]);
 
-  // --- Typewriter welcome greeting effect ---
-  useEffect(() => {
-    if (activeTab === "home") {
-      setTypewrittenTitle("");
-      setTypewrittenSubtitle("");
-      setTypewriterFinished(false); // Reset reveal status
-
-      const titleText = "반가워요!";
-      const subtitleText = "당신을 위한 스마트 케어, 왓씨입니다.";
-
-      let titleIdx = 0;
-      let subtitleIdx = 0;
-      let titleInterval: number;
-      let subtitleInterval: number;
-
-      titleInterval = window.setInterval(() => {
-        if (titleIdx < titleText.length) {
-          const chunk = titleText.slice(titleIdx, titleIdx + 2);
-          setTypewrittenTitle((prev) => prev + chunk);
-          titleIdx += 2;
-        } else {
-          clearInterval(titleInterval);
-
-          setTimeout(() => {
-            subtitleInterval = window.setInterval(() => {
-              if (subtitleIdx < subtitleText.length) {
-                const chunk = subtitleText.slice(subtitleIdx, subtitleIdx + 4);
-                setTypewrittenSubtitle((prev) => prev + chunk);
-                subtitleIdx += 4;
-              } else {
-                clearInterval(subtitleInterval);
-                setTypewriterFinished(true);
-              }
-            }, 16);
-          }, 10);
-        }
-      }, 16);
-
-      return () => {
-        clearInterval(titleInterval);
-        clearInterval(subtitleInterval);
-      };
-    }
-  }, [activeTab]);
 
   useEffect(() => {
     if (activeTab !== "home") return;
@@ -1104,41 +1058,9 @@ export function HomePage() {
                 visibleSections[0] ? "visible" : ""
               }`}
             >
-              <h1 className="home_greeting_title">
-                {typewrittenTitle}
-                {typewrittenTitle !== "반가워요!" && (
-                  <span className="typewriter_cursor">|</span>
-                )}
-              </h1>
+              <h1 className="home_greeting_title">반가워요!</h1>
               <p className="home_subtitle_text">
-                {(() => {
-                  if (!typewrittenSubtitle) return "\u00A0";
-                  if (typewrittenSubtitle.includes("왓씨")) {
-                    const parts = typewrittenSubtitle.split("왓씨");
-                    return (
-                      <>
-                        {parts[0]}
-                        <span>왓씨</span>
-                        {parts[1]}
-                      </>
-                    );
-                  }
-                  if (
-                    typewrittenSubtitle.endsWith("당신을 위한 스마트 케어, 왓")
-                  ) {
-                    return (
-                      <>
-                        당신을 위한 스마트 케어, <span>왓</span>
-                      </>
-                    );
-                  }
-                  return typewrittenSubtitle;
-                })()}
-                {typewrittenTitle === "반가워요!" &&
-                  typewrittenSubtitle !==
-                    "당신을 위한 스마트 케어, 왓씨입니다." && (
-                    <span className="typewriter_cursor">|</span>
-                  )}
+                당신을 위한 스마트 케어, <span>왓씨</span>입니다.
               </p>
             </header>
 
