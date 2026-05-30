@@ -71,27 +71,31 @@ export function Splash() {
   }, []);
 
   // Animation phases:
-  // 0: 초기 버블 채우기 (5개 버블 표시)
+  // 0: 초기 버블 WC 로고
   // 1: f1 이미지 + watC 로고 노출
   // 2: 블루 커버 + WASHTHESEE 텍스트 스크롤
   // 3: WASHTHEC 모핑
-  // 4: WATC 완성 및 최종 브랜드 화면
+  // 4: WATC (대문자, 자라란 팝업)
+  // 5: WatC (브랜드 케이스, 자라란 팝업)
+  // 6: 최종 브랜드 화면
   const [phase, setPhase] = useState<number>(0);
 
   useEffect(() => {
-    const bubbleTimer = setTimeout(() => setPhase(1), 2200);
-    const imageTimer = setTimeout(() => setPhase(2), 4200);
-    const textAnimTimer = setTimeout(() => setPhase(3), 6000);
-    const morphTimer = setTimeout(() => setPhase(4), 8000);
-    const navTimer = setTimeout(() => {
-      navigate("/login");
-    }, 12200);
+    const bubbleTimer    = setTimeout(() => setPhase(1), 2200);
+    const imageTimer     = setTimeout(() => setPhase(2), 4200);
+    const textAnimTimer  = setTimeout(() => setPhase(3), 6000);
+    const morphTimer     = setTimeout(() => setPhase(4), 7800);
+    const watcTimer      = setTimeout(() => setPhase(5), 9300);
+    const brandTimer     = setTimeout(() => setPhase(6), 10800);
+    const navTimer       = setTimeout(() => navigate("/login"), 14500);
 
     return () => {
       clearTimeout(bubbleTimer);
       clearTimeout(imageTimer);
       clearTimeout(textAnimTimer);
       clearTimeout(morphTimer);
+      clearTimeout(watcTimer);
+      clearTimeout(brandTimer);
       clearTimeout(navTimer);
     };
   }, [navigate]);
@@ -106,11 +110,11 @@ export function Splash() {
       return "WASHTHESEE".split("").map((c, i) => ({
         char: c,
         isW: c === "W",
-        isSuffix: i >= 7, // "SEE" 마킹
-        keep: c === "W" || c === "A" || c === "T", // W, A, T만 살아남음
+        isSuffix: i >= 7,
+        keep: c === "W" || c === "A" || c === "T",
       }));
     }
-    if (phase === 3 || phase === 4) {
+    if (phase === 3) {
       return "WASHTHEC".split("").map((c) => ({
         char: c,
         isW: c === "W",
@@ -118,13 +122,23 @@ export function Splash() {
         keep: c === "W" || c === "A" || c === "T" || c === "C",
       }));
     }
-    // Phase 5: "WATC"
-    return "WATC".split("").map((c) => ({
-      char: c,
-      isW: c === "W",
-      isSuffix: false,
-      keep: true,
-    }));
+    if (phase === 4) {
+      return "WATC".split("").map((c) => ({
+        char: c,
+        isW: c === "W",
+        isSuffix: false,
+        keep: true,
+      }));
+    }
+    if (phase === 5) {
+      return ["W", "a", "t", "C"].map((c) => ({
+        char: c,
+        isW: c === "W",
+        isSuffix: false,
+        keep: true,
+      }));
+    }
+    return [];
   };
 
   return (
@@ -266,16 +280,28 @@ export function Splash() {
           100% { transform: translateY(0) rotateX(0deg); opacity: 1; filter: blur(0); }
         }
 
-        /* --- [자라란 모션] W-A-T-C 글자들이 한 글자씩 입체적으로 연속 팝업 --- */
+        /* --- [자라란 모션] WATC 글자 팝업 (phase 4) --- */
         .text_wrapper.watc-active .scroll_letter.zararan {
           animation: letterZararan 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
           opacity: 0;
         }
 
         @keyframes letterZararan {
-          0% { opacity: 0; transform: scale(0.6) translateY(12px); filter: brightness(0.5) blur(2px); }
-          50% { opacity: 0.8; transform: scale(1.22) translateY(-4px); filter: brightness(1.6) drop-shadow(0 0 15px rgba(255,255,255,0.9)); }
-          100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1) blur(0); }
+          0%   { opacity: 0; transform: scale(0.6) translateY(12px);  filter: brightness(0.5) blur(2px); }
+          50%  { opacity: 0.8; transform: scale(1.22) translateY(-4px); filter: brightness(1.6) drop-shadow(0 0 15px rgba(255,255,255,0.9)); }
+          100% { opacity: 1; transform: scale(1) translateY(0);        filter: brightness(1) blur(0); }
+        }
+
+        /* --- [롤인 모션] WatC 브랜드케이스 우아한 굴러내림 (phase 5) --- */
+        .text_wrapper.watc-lower-active .scroll_letter.roll-in {
+          animation: letterRollIn 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+          opacity: 0;
+        }
+
+        @keyframes letterRollIn {
+          0%   { opacity: 0; transform: rotateX(75deg) translateY(-10px) scale(0.85); filter: blur(4px) brightness(0.5); }
+          55%  { opacity: 1; transform: rotateX(-6deg) translateY(2px)   scale(1.04); filter: blur(0)   brightness(1.25); }
+          100% { opacity: 1; transform: rotateX(0deg)  translateY(0)     scale(1);    filter: blur(0)   brightness(1);    }
         }
 
         /* --- 고급스러운 피날레 펄싱 글로우 애니메이션 --- */
@@ -439,7 +465,7 @@ export function Splash() {
             ))}
           </div>
         )}
-        {phase >= 1 && phase < 4 && (
+        {phase >= 1 && phase < 6 && (
           <div className="splash_logo_container">
             <img
               src={f1Img}
@@ -455,40 +481,40 @@ export function Splash() {
         )}
       </div>
 
-      {/* PHASE 2 ~ 3: 블루 스크린 및 타이포 모션 */}
+      {/* PHASE 2 ~ 5: 블루 스크린 및 타이포 모션 */}
       <div
-        className={`blue_cover_layer ${phase >= 2 && phase < 4 ? "active" : ""} ${phase === 4 ? "fade-out" : ""}`}
+        className={`blue_cover_layer ${phase >= 2 && phase < 6 ? "active" : ""} ${phase === 6 ? "fade-out" : ""}`}
       >
-        {phase >= 2 && phase < 4 && (
+        {phase >= 2 && phase < 6 && (
           <div style={getScreenStyle(styles.textContainer)}>
             <div
-              key={`text-phase-${phase === 2 ? "see" : "c"}`}
-              className={`text_wrapper 
-                ${phase >= 3 ? "morphing-active" : ""} 
-                ${phase >= 4 ? "watc-active" : ""} 
-                ${phase === 3 ? "pulsing" : ""}
+              key={`text-phase-${phase}`}
+              className={`text_wrapper
+                ${phase >= 3 ? "morphing-active" : ""}
+                ${phase === 4 ? "watc-active" : ""}
+                ${phase === 5 ? "watc-lower-active" : ""}
+                ${phase === 3 || phase === 5 ? "pulsing" : ""}
               `}
             >
               {getWordLetters().map((item, idx) => {
                 const isEven = idx % 2 === 0;
 
-                // 박스 클래스명 동적 할당
                 let boxClass = "scroll_letter_box";
                 if (item.isW) boxClass += " wide-w";
                 if (item.isSuffix) boxClass += " suffix-letter";
 
-                // 자라란 애니메이션 클래스 & 지연 스타일 할당
                 let letterClass = "scroll_letter";
                 let customStyle = {};
-                if (phase >= 4) {
+                if (phase === 4) {
+                  // WATC: 아래서 팡 튀어오르는 자라란
                   letterClass += " zararan animate";
-                  let delay = 0;
-                  if (idx === 0) delay = 0.0;
-                  else if (idx === 1) delay = 0.15;
-                  else if (idx === 2)
-                    delay = 0.3; // T
-                  else if (idx === 3) delay = 0.45; // C
-                  customStyle = { animationDelay: `${delay}s` };
+                  const delays = [0, 0.15, 0.3, 0.45];
+                  customStyle = { animationDelay: `${delays[idx] ?? 0}s` };
+                } else if (phase === 5) {
+                  // WatC: 위에서 굴러내려오는 롤인
+                  letterClass += " roll-in animate";
+                  const delays = [0, 0.12, 0.24, 0.36];
+                  customStyle = { animationDelay: `${delays[idx] ?? 0}s` };
                 } else {
                   letterClass += ` ${isEven ? "scroll-up" : "scroll-down"} animate`;
                   customStyle = { animationDelay: `${idx * 0.08}s` };
@@ -507,8 +533,8 @@ export function Splash() {
         )}
       </div>
 
-      {/* PHASE 4: 최종 브랜드 화면 (흰 배경, a1.png, h1.png, Slogan) */}
-      {phase === 4 && (
+      {/* PHASE 6: 최종 브랜드 화면 (흰 배경, a1.png, h1.png, Slogan) */}
+      {phase === 6 && (
         <div
           style={getScreenStyle(styles.brandScreen)}
           onClick={() => navigate("/home")}

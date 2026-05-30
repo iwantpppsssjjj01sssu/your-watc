@@ -62,6 +62,7 @@ export function DeliveryPage() {
   const [selectedRiderIndex, setSelectedRiderIndex] = useState(0);
   const [showRiderModal, setShowRiderModal] = useState(false);
   const currentRider = ridersList[selectedRiderIndex];
+  const [expandedStep, setExpandedStep] = useState<number | null>(2); // 현재 단계 기본 열림
 
 
   useEffect(() => {
@@ -481,34 +482,184 @@ export function DeliveryPage() {
           </div>
         </section>
 
-        <section className="delivery_status_section">
-          <div className="delivery_section_header">
-            <div>
-              <p className="delivery_section_label">세탁 진행 상태</p>
-              <h2 className="delivery_section_title">현재 세탁 스테이지</h2>
-            </div>
-          </div>
+        {/* ── 통합 진행 타임라인 ── */}
+        {(() => {
+          const stages = [
+            {
+              id: 0,
+              status: "done" as const,
+              label: "수거 완료",
+              time: "05.27  02:30",
+              desc: "안심팩 밀봉 포장 및 세탁 공장 입고",
+              details: ["수거 마스터 도어픽업 완료", "안심팩 이중 밀봉 포장", "세탁 공장 안전 이송 완료"],
+              emoji: "📦",
+            },
+            {
+              id: 1,
+              status: "done" as const,
+              label: "세탁 완료",
+              time: "05.27  08:15",
+              desc: "프리미엄 저온 스팀 세탁 케어 완료",
+              details: ["소재별 전용 중성 세제 적용", "40°C 저온 스팀 정밀 세탁", "섬유 보호 마감 처리"],
+              emoji: "🫧",
+            },
+            {
+              id: 2,
+              status: "current" as const,
+              label: "건조 중",
+              time: null,
+              desc: "고온 열풍 정밀 건조 진행 중",
+              details: ["60°C 열풍 회전 건조 진행 중", "예상 완료까지 약 40분 남음", "섬유 손상 방지 세심 관리"],
+              emoji: "🌀",
+            },
+            {
+              id: 3,
+              status: "pending" as const,
+              label: "검수 완료",
+              time: null,
+              desc: "전문 검수팀 품질 검사 및 포장",
+              details: ["3단계 품질 검수 예정", "친환경 포장재 포장", "배송 준비 완료"],
+              emoji: "🔍",
+            },
+            {
+              id: 4,
+              status: "pending" as const,
+              label: "배송 출발",
+              time: null,
+              desc: "배송 마스터 배정 및 문 앞 배달",
+              details: ["배송 마스터 배정 예정", "실시간 GPS 경로 추적", "문 앞 안심 배달"],
+              emoji: "🚚",
+            },
+            {
+              id: 5,
+              status: "pending" as const,
+              label: "수령 완료",
+              time: null,
+              desc: "배달 완료 및 수령 확인",
+              details: ["도어 앞 배달 완료", "수령 확인 알림 발송", "세탁 서비스 완료"],
+              emoji: "🏠",
+            },
+          ];
 
-          <div className="delivery_step_list">
-            <div className="delivery_step_item delivery_step_item--active">
-              세탁 접수
-            </div>
-            <div className="delivery_step_item delivery_step_item--active">
-              세탁 중
-            </div>
-            <div className="delivery_step_item">건조 중</div>
-            <div className="delivery_step_item">검수 완료</div>
-          </div>
-        </section>
+          const doneCount = stages.filter(s => s.status === "done").length;
+          const progressPct = Math.round((doneCount / stages.length) * 100);
+          const currentStage = stages.find(s => s.status === "current");
 
-        <section className="delivery_status_section">
+          return (
+            <section className="laundry_stage_section">
+              {/* 헤더 + 진행률 */}
+              <div className="laundry_stage_top">
+                <div>
+                  <p className="delivery_section_label">주문 진행 현황</p>
+                  <h2 className="laundry_stage_main_title">세탁 · 배송 스테이지</h2>
+                  {currentStage && (
+                    <p className="laundry_stage_current_desc">
+                      현재 <strong>{currentStage.label}</strong> 단계입니다
+                    </p>
+                  )}
+                </div>
+                <div className="laundry_pct_badge">
+                  <svg viewBox="0 0 36 36" className="laundry_pct_ring">
+                    <circle cx="18" cy="18" r="14" fill="none" stroke="#e2e8f0" strokeWidth="3.5" />
+                    <circle
+                      cx="18" cy="18" r="14" fill="none"
+                      stroke="#2563eb" strokeWidth="3.5"
+                      strokeDasharray={`${progressPct * 0.88} 88`}
+                      strokeLinecap="round"
+                      transform="rotate(-90 18 18)"
+                    />
+                  </svg>
+                  <span className="laundry_pct_num">{progressPct}%</span>
+                </div>
+              </div>
+
+              {/* 타임라인 */}
+              <div className="laundry_timeline">
+                {stages.map((stage, idx) => {
+                  const isExpanded = expandedStep === stage.id;
+                  const isLast = idx === stages.length - 1;
+                  return (
+                    <div key={stage.id} className={`laundry_step laundry_step--${stage.status}`}>
+                      {/* 왼쪽: 도트 + 연결선 */}
+                      <div className="laundry_step_track">
+                        <div className={`laundry_dot laundry_dot--${stage.status}`}>
+                          {stage.status === "done" && (
+                            <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+                              <polyline points="3,8 6.5,11.5 13,4.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                          {stage.status === "current" && (
+                            <div className="laundry_dot_pulse_inner" />
+                          )}
+                          {stage.status === "pending" && (
+                            <span className="laundry_dot_num">{idx + 1}</span>
+                          )}
+                        </div>
+                        {!isLast && (
+                          <div className={`laundry_connector laundry_connector--${stage.status}`} />
+                        )}
+                      </div>
+
+                      {/* 오른쪽: 내용 카드 */}
+                      <div
+                        className={`laundry_step_card laundry_step_card--${stage.status} ${isExpanded ? "laundry_step_card--open" : ""}`}
+                        onClick={() => setExpandedStep(isExpanded ? null : stage.id)}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="laundry_card_row">
+                          <span className="laundry_card_emoji">{stage.emoji}</span>
+                          <div className="laundry_card_info">
+                            <div className="laundry_card_title_row">
+                              <span className="laundry_card_name">{stage.label}</span>
+                              <span className={`laundry_badge laundry_badge--${stage.status}`}>
+                                {stage.status === "done" && "완료"}
+                                {stage.status === "current" && "진행 중"}
+                                {stage.status === "pending" && "예정"}
+                              </span>
+                            </div>
+                            <p className="laundry_card_desc">{stage.desc}</p>
+                            {stage.time && (
+                              <span className="laundry_card_time">{stage.time}</span>
+                            )}
+                          </div>
+                          <svg
+                            viewBox="0 0 24 24" width="16" height="16" fill="none"
+                            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+                            className={`laundry_chevron ${isExpanded ? "laundry_chevron--open" : ""}`}
+                          >
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </div>
+
+                        {/* 확장 상세 */}
+                        {isExpanded && (
+                          <div className="laundry_detail">
+                            {stage.details.map((d, i) => (
+                              <div key={i} className="laundry_detail_row">
+                                <span className={`laundry_detail_dot laundry_detail_dot--${stage.status}`} />
+                                <span className="laundry_detail_text">{d}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })()}
+
+        {/* 배송 단계 확인 */}
+        <section className="delivery_section">
           <div className="delivery_section_header">
             <div>
               <p className="delivery_section_label">배송 진행</p>
               <h2 className="delivery_section_title">배송 단계 확인</h2>
             </div>
           </div>
-
           <div className="delivery_action_list">
             <div className="delivery_action_card">
               <p className="delivery_action_label">배송 출발</p>
@@ -525,6 +676,7 @@ export function DeliveryPage() {
           </div>
         </section>
 
+        {/* 수령 확인 */}
         <section className="delivery_status_section delivery_status_section--final">
           <div className="delivery_section_header">
             <div>
@@ -532,10 +684,9 @@ export function DeliveryPage() {
               <h2 className="delivery_section_title">수령 확인</h2>
             </div>
           </div>
-
           <div className="delivery_completion_card">
-            <p>배송 완료 알림</p>
-            <p>수령 확인</p>
+            <p>배송 완료 알림 수신 후 문 앞에서 수령해 주세요.</p>
+            <p>수령이 확인되면 세탁 서비스가 최종 완료됩니다.</p>
           </div>
         </section>
       </div>

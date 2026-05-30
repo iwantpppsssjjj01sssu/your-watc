@@ -18,6 +18,8 @@ import rvOuterImg from "../../asset/img/rv_outer.png";
 import rvShoesImg from "../../asset/img/rv_shoes.png";
 import rvBagImg from "../../asset/img/rv_bag.png";
 
+import riderJinwooImg from "../../asset/img/rider_jinwoo.png";
+
 import a1Img from "../../asset/img/a1.png";
 import b1Img from "../../asset/img/b1.png";
 import c1Img from "../../asset/img/c1.png";
@@ -26,6 +28,35 @@ import p1Img from "../../asset/img/p1.png";
 import q1Img from "../../asset/img/q1.png";
 
 import { BottomNav } from "../../components/BottomNav";
+
+// ── 커뮤니티 카드 정의 ──
+const COMMUNITY_CARDS = [
+  {
+    key: "community",
+    theme: "blue",
+    label: "왓씨 세탁 커뮤니티",
+    title1: "세탁 경험을 빠르게 공유하고",
+    title2: "솔루션을 찾아보세요.",
+    tags: ["#옷관리팁", "#얼룩제거", "#세탁노하우"],
+  },
+  {
+    key: "tips",
+    theme: "mint",
+    label: "세탁 노하우",
+    title1: "내 옷을 더 오래,",
+    title2: "더 예쁘게 관리하는 법",
+    tags: ["#울소재", "#손세탁", "#드라이"],
+  },
+  {
+    key: "popular",
+    theme: "purple",
+    label: "이번 주 인기 토픽",
+    title1: "가장 많이 공유된",
+    title2: "세탁 이야기 모아보기",
+    tags: ["#주간인기", "#베스트팁", "#추천글"],
+  },
+] as const;
+
 
 function LifeCardIcon({ type }: { type: "yarn" | "coat" | "shirt" }) {
   return (
@@ -101,9 +132,23 @@ export function HomePage() {
   const [selectedTag, setSelectedTag] = useState<string>("전체");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
+  const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
+  const [allReviewsTag, setAllReviewsTag] = useState<string>("전체");
+  const [showCommunityDetail, setShowCommunityDetail] = useState<string | null>(null);
+
+  // 커뮤니티 캐러셀 드래그 refs
+  const communityTrackRef = useRef<HTMLDivElement>(null);
+  const communityXRef = useRef<number>(0);
+  const communityDraggingRef = useRef<boolean>(false);
+  const communityDragStartRef = useRef<{ x: number; tx: number }>({ x: 0, tx: 0 });
+  const communityClickBlockRef = useRef<boolean>(false);
+  const [writeReviewStars, setWriteReviewStars] = useState<number>(0);
+  const [writeReviewText, setWriteReviewText] = useState<string>("");
+  const [writeReviewSubmitted, setWriteReviewSubmitted] = useState<boolean>(false);
 
   // --- Profile Edit Modal States (Interactive Dialog Form) ---
   const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
+  const [selectedTempImg, setSelectedTempImg] = useState<string>(i1Img);
 
   // --- Gift Modal States (Point & Coupon Gift flow) ---
   const [showGiftModal, setShowGiftModal] = useState<boolean>(false);
@@ -166,6 +211,8 @@ export function HomePage() {
   const [selectedScanPreset, setSelectedScanPreset] = useState<string>("shirt");
   const [scanProgress, setScanProgress] = useState<number>(0);
   const [capturedPhotoUrl, setCapturedPhotoUrl] = useState<string | null>(null);
+  const [aiAnalysisResult, setAiAnalysisResult] = useState<string | null>(null);
+  const [aiAnalysisError, setAiAnalysisError] = useState<boolean>(false);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectedLaundryType, setSelectedLaundryType] =
     useState<string>("일반 빨래"); // "일반 빨래" | "관리 의류" | "이불/리빙/기타"
@@ -182,8 +229,6 @@ export function HomePage() {
     Array(7).fill(false),
   );
   const [hasScrolled, setHasScrolled] = useState<boolean>(false);
-  const [communityCardsVisible, setCommunityCardsVisible] = useState<boolean[]>([false, false, false]);
-  const communityCardRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
   const [progressPercent, setProgressPercent] = useState<number>(1);
   const [reserveDate, setReserveDate] = useState<string>("5월 9일 목요일");
   const [reserveTime, setReserveTime] = useState<string>("2-4 PM 오후");
@@ -202,6 +247,7 @@ export function HomePage() {
   // const [gpsConnected] = useState(true);
   const [etaMinutes, setEtaMinutes] = useState(8);
   const [trackingActive, setTrackingActive] = useState(true);
+  const [showGpsDetail, setShowGpsDetail] = useState(false);
   const [satellites, setSatellites] = useState(11);
 
   useEffect(() => {
@@ -218,7 +264,7 @@ export function HomePage() {
           const next = prev + change;
           return next >= 9 && next <= 14 ? next : prev;
         });
-      }, 1500);
+      }, 8000);
     }
     return () => clearInterval(interval);
   }, [trackingActive]);
@@ -270,7 +316,6 @@ export function HomePage() {
     if (activeTab === "home") {
       setVisibleSections(Array(7).fill(false));
       setHasScrolled(false);
-      setCommunityCardsVisible([false, false, false]);
     }
   }, [activeTab]);
 
@@ -315,25 +360,27 @@ export function HomePage() {
   }, [activeTab, hasScrolled]);
 
 
+
+  // --- 커뮤니티 캐러셀 자동 스크롤 (RAF) ---
   useEffect(() => {
     if (activeTab !== "home") return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute("data-card-index"));
-          setCommunityCardsVisible((prev) => {
-            const next = [...prev];
-            next[index] = entry.isIntersecting;
-            return next;
-          });
-        });
-      },
-      { threshold: 0.15 },
-    );
-    communityCardRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-    return () => observer.disconnect();
+    const CARD_SET_WIDTH = 810; // 3장 × (258px + 12px gap) = 810px
+    const SPEED = 0.45;
+    let raf: number;
+    const tick = () => {
+      if (!communityDraggingRef.current) {
+        communityXRef.current -= SPEED;
+        if (communityXRef.current <= -CARD_SET_WIDTH) {
+          communityXRef.current += CARD_SET_WIDTH;
+        }
+        if (communityTrackRef.current) {
+          communityTrackRef.current.style.transform = `translateX(${communityXRef.current}px)`;
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [activeTab]);
 
   // --- Two-stage Circular & Numerical progress animation effect ---
@@ -404,26 +451,75 @@ export function HomePage() {
 
   const handleCameraCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setCapturedPhotoUrl(url);
+    if (!file) return;
 
-      setSimulatingScan(true);
-      setScanResult(false);
-      setScanProgress(0);
+    // 미리보기 URL 생성
+    const previewUrl = URL.createObjectURL(file);
+    setCapturedPhotoUrl(previewUrl);
+    setSimulatingScan(true);
+    setScanResult(false);
+    setScanProgress(0);
+    setAiAnalysisResult(null);
+    setAiAnalysisError(false);
 
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 10;
-        setScanProgress(progress);
-        if (progress >= 100) {
-          clearInterval(interval);
-          setSimulatingScan(false);
-          setScanResult(true);
-          triggerToast("🎉 AI 실제 의류 분석이 완료되었습니다!");
+    // base64로 변환 → AI API 전송
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      const dataUrl = ev.target?.result as string;
+
+      // 진행률 애니메이션 (API 응답 전까지 0→85% 천천히 진행)
+      let prog = 0;
+      const progressInterval = window.setInterval(() => {
+        prog += prog < 60 ? 3 : prog < 80 ? 1 : 0.3;
+        setScanProgress(Math.min(Math.round(prog), 85));
+      }, 120);
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: [
+              {
+                role: "user",
+                content:
+                  "첨부된 의류 사진을 분석해주세요. 다음 항목을 순서대로 알려주세요:\n1. 소재 추정 (육안 및 색상 기준)\n2. 권장 세탁 온도\n3. 건조 방법\n4. 주의사항\n5. 추천 왓씨 케어 코스",
+                attachments: [
+                  {
+                    type: file.type || "image/jpeg",
+                    dataUrl,
+                    name: file.name || "clothing.jpg",
+                    size: file.size,
+                  },
+                ],
+              },
+            ],
+          }),
+        });
+
+        clearInterval(progressInterval);
+
+        if (res.ok) {
+          const data = await res.json();
+          const text: string =
+            data.answer || data.message?.content || "";
+          setAiAnalysisResult(text.trim());
+        } else {
+          setAiAnalysisError(true);
         }
-      }, 150);
-    }
+      } catch {
+        clearInterval(progressInterval);
+        setAiAnalysisError(true);
+      }
+
+      setScanProgress(100);
+      setTimeout(() => {
+        setSimulatingScan(false);
+        setScanResult(true);
+        triggerToast("✨ AI 의류 소재 분석이 완료되었습니다!");
+      }, 400);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleAction = (actionName: string) => {
@@ -1043,6 +1139,181 @@ export function HomePage() {
             : undefined
         }
       >
+        {/* ===================================================== */}
+        {/* 리뷰 전체보기 상세 페이지 (고정 오버레이)            */}
+        {/* ===================================================== */}
+        {showAllReviews && (
+          <div className="review_all_overlay">
+            {/* 고정 헤더 */}
+            <header className="review_all_header">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => setShowAllReviews(false)}
+                aria-label="뒤로가기"
+              >
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <h1 className="review_all_title">고객 리뷰</h1>
+              <div style={{ width: 42 }} />
+            </header>
+
+            <div className="review_all_content">
+              {/* 요약 통계 */}
+              <div className="review_all_stats_box">
+                <div className="review_stat_score_col">
+                  <span className="review_stat_avg">5.0</span>
+                  <span className="review_stat_outof">/ 5.0</span>
+                </div>
+                <div className="review_stat_detail_col">
+                  <span className="review_stat_stars">★★★★★</span>
+                  <span className="review_stat_count">
+                    총 {Object.values(reviewsData).flat().length}개 리뷰
+                  </span>
+                  <div className="review_stat_bars">
+                    {[5,4,3,2,1].map(n => (
+                      <div key={n} className="review_bar_row">
+                        <span className="review_bar_label">{n}점</span>
+                        <div className="review_bar_track">
+                          <div
+                            className="review_bar_fill"
+                            style={{ width: n === 5 ? "100%" : "0%" }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 카테고리 필터 */}
+              <div className="review_all_tag_bar">
+                {reviewTags.map((tag) => (
+                  <button
+                    key={tag}
+                    className={`home_tag_pill ${allReviewsTag === tag ? "home_tag_pill--active" : ""}`}
+                    onClick={() => setAllReviewsTag(tag)}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+
+              {/* 리뷰 목록 */}
+              <div className="review_all_list">
+                {getReviewsForTag(allReviewsTag).map((rv, idx) => (
+                  <div key={`all-${rv.user}-${idx}`} className="review_all_card">
+                    <div className="review_all_card_top">
+                      <div className="review_all_user_row">
+                        <span className="review_all_stars">{rv.stars}</span>
+                        <span className="review_all_user">{rv.user}</span>
+                      </div>
+                      <span className="review_all_date">{rv.date}</span>
+                    </div>
+                    <p className="review_all_body">{rv.body}</p>
+                    <img
+                      src={rv.img}
+                      alt={`${rv.user} 리뷰 이미지`}
+                      className="review_all_img"
+                    />
+                    <div className="review_all_tags">
+                      {rv.tags.map((t: string) => (
+                        <span key={t} className="review_all_tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ===================================================== */}
+        {/* 커뮤니티 상세 페이지 (고정 오버레이)                 */}
+        {/* ===================================================== */}
+        {showCommunityDetail && (() => {
+          const card = COMMUNITY_CARDS.find(c => c.key === showCommunityDetail)!;
+          const imgMap: Record<string, string> = { community: d1Img, tips: e1Img, popular: m1Img };
+          const posts: Record<string, Array<{ title: string; author: string; date: string; excerpt: string; img: string; likes: number; comments: number; tags: string[] }>> = {
+            community: [
+              { title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!", author: "따뜻한봄날", date: "2026.05.28", excerpt: "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요.", img: b1Img, likes: 124, comments: 38, tags: ["#패딩세탁", "#보풀제거"] },
+              { title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기", author: "깔끔맘", date: "2026.05.25", excerpt: "과탄산소다 + 베이킹소다 1:1 비율로 미지근한 물에 담가두고 2시간 후 세탁하면 새 셔츠처럼 됩니다!", img: a1Img, likes: 89, comments: 22, tags: ["#교복관리", "#흰셔츠"] },
+              { title: "청바지 색 빠짐 없이 세탁하는 방법 정리", author: "데님러버", date: "2026.05.22", excerpt: "처음엔 소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본입니다.", img: q1Img, likes: 67, comments: 15, tags: ["#청바지", "#색빠짐방지"] },
+              { title: "명품 가방 집에서 세탁하다 망친 후기...", author: "반성중", date: "2026.05.18", excerpt: "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.", img: c1Img, likes: 201, comments: 76, tags: ["#명품케어", "#타산지석"] },
+            ],
+            tips: [
+              { title: "울 소재 옷, 절대 드라이어 넣으면 안 되는 이유", author: "패션피플", date: "2026.05.27", excerpt: "울은 열과 마찰에 약해 드라이어 1번에 반 사이즈씩 줄어들 수 있어요. 반드시 자연 건조, 그늘에서!", img: l1Img, likes: 156, comments: 45, tags: ["#울소재", "#드라이어주의"] },
+              { title: "세탁 표시 기호 완벽 해석 가이드 (저장해두세요)", author: "세탁마스터", date: "2026.05.24", excerpt: "△=표백가능, ○=드럼건조가능, 🅟=드라이클리닝. 이것만 알아도 세탁 실수 90% 줄일 수 있어요.", img: a1Img, likes: 203, comments: 89, tags: ["#세탁기호", "#세탁가이드"] },
+              { title: "손세탁 vs 세탁기, 옷감별 최적 선택법", author: "옷지킴이", date: "2026.05.20", excerpt: "실크·캐시미어는 손세탁, 면·폴리에스터는 세탁기. 중간 소재는 세탁기 울코스가 정답입니다.", img: b1Img, likes: 94, comments: 31, tags: ["#손세탁", "#세탁기선택"] },
+              { title: "세제 너무 많이 쓰면 오히려 독? 적정 사용량 공유", author: "환경지킴이", date: "2026.05.16", excerpt: "세제가 많으면 헹굼이 부족해 섬유에 잔류하고 피부 트러블을 유발합니다. 표준의 2/3만 써도 충분해요.", img: c1Img, likes: 77, comments: 19, tags: ["#세제량", "#친환경세탁"] },
+            ],
+            popular: [
+              { title: "이번주 1등! 캐시미어 니트 세탁 완전 후기 🏆", author: "니트마니아", date: "2026.05.28", excerpt: "왓씨 캐시미어 전용 코스 써봤는데 줄어들거나 뭉침 없이 폭신폭신하게 돌아왔어요. 진짜 최고입니다!!", img: l1Img, likes: 312, comments: 102, tags: ["#캐시미어", "#주간1위"] },
+              { title: "왓씨 이용 1년 후기 — 진짜 솔직하게 씁니다", author: "장기유저", date: "2026.05.26", excerpt: "처음엔 반신반의했는데 지금은 세탁소 완전 안 가요. 수거가 편리하고 품질도 꾸준히 좋습니다. 다만 가끔 배송이...", img: q1Img, likes: 289, comments: 95, tags: ["#왓씨후기", "#솔직리뷰"] },
+              { title: "세탁소 vs 왓씨 가격 완전 비교분석 (표 있음)", author: "꼼꼼분석러", date: "2026.05.23", excerpt: "셔츠 기준 동네세탁소 4,000원 vs 왓씨 3,800원+수거배송 포함. 품질도 왓씨가 더 좋았습니다.", img: a1Img, likes: 178, comments: 67, tags: ["#가격비교", "#데이터분석"] },
+              { title: "이불 세탁 완전 실패담... 집 세탁기로는 무리였어요", author: "실패의고수", date: "2026.05.19", excerpt: "구스다운 이불을 가정용 세탁기에 넣었더니 솜 뭉침이 심하게 생겼어요. 이건 진짜 전문 업체에 맡겨야 해요.", img: b1Img, likes: 145, comments: 53, tags: ["#이불세탁", "#실패후기"] },
+            ],
+          };
+          const currentPosts = posts[showCommunityDetail] ?? [];
+          return (
+            <div className="community_detail_overlay">
+              <header className="community_detail_header">
+                <button type="button" className="premium_back_btn" onClick={() => setShowCommunityDetail(null)} aria-label="뒤로가기">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <h1 className="community_detail_title">{card.label}</h1>
+                <div style={{ width: 42 }} />
+              </header>
+              <div className="community_detail_scroll">
+                {/* 카테고리 배너 */}
+                <div className={`community_detail_banner home_community_banner--${card.theme}`}>
+                  <div className="home_community_left">
+                    <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
+                    <h4 className="home_community_title_1">{card.title1}</h4>
+                    <h4 className="home_community_title_2">{card.title2}</h4>
+                    <div className="home_review_tags_bottom">
+                      {card.tags.map((t: string) => <span key={t} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{t}</span>)}
+                    </div>
+                  </div>
+                  <div className="home_community_right">
+                    <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
+                  </div>
+                </div>
+                {/* 게시글 목록 */}
+                <div className="community_post_list">
+                  {currentPosts.map((post, idx) => (
+                    <div key={idx} className="community_post_item" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
+                      <img src={post.img} alt={post.title} className="community_post_thumb" />
+                      <div className="community_post_body">
+                        <p className="community_post_title">{post.title}</p>
+                        <p className="community_post_meta">{post.author} · {post.date}</p>
+                        <p className="community_post_excerpt">{post.excerpt}</p>
+                        <div className="community_post_tags">
+                          {post.tags.map(t => <span key={t} className="community_post_tag">{t}</span>)}
+                        </div>
+                        <div className="community_post_footer">
+                          <span className="community_post_stat">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            {post.likes}
+                          </span>
+                          <span className="community_post_stat">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            {post.comments}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ---------------------------------------------------- */}
         {/* [1. HOME VIEW - First Photo Circular Progress Dashboard] */}
         {/* ---------------------------------------------------- */}
@@ -1307,7 +1578,7 @@ export function HomePage() {
                   <h3 className="home_review_title">실제 고객 리뷰</h3>
                   <button
                     className="home_review_more"
-                    onClick={() => handleAction("리뷰 전체 보기")}
+                    onClick={() => { setAllReviewsTag("전체"); setShowAllReviews(true); }}
                   >
                     전체보기&gt;
                   </button>
@@ -1359,76 +1630,158 @@ export function HomePage() {
                     </div>
                   ))}
                 </div>
+
+                {/* 리뷰 작성 영역 */}
+                <div className="home_write_review_box">
+                  {writeReviewSubmitted ? (
+                    <div className="home_write_review_success">
+                      <span className="home_write_review_success_icon">✓</span>
+                      <p className="home_write_review_success_text">
+                        리뷰가 등록되었어요!<br />소중한 경험을 공유해주셔서 감사합니다.
+                      </p>
+                      <button
+                        className="home_write_review_again_btn"
+                        onClick={() => {
+                          setWriteReviewSubmitted(false);
+                          setWriteReviewStars(0);
+                          setWriteReviewText("");
+                        }}
+                      >
+                        다시 작성하기
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="home_write_review_header">
+                        <span className="home_write_review_label">리뷰 남기기</span>
+                        <p className="home_write_review_sub">세탁 서비스 경험을 공유해주세요</p>
+                      </div>
+
+                      {/* 별점 선택 */}
+                      <div className="home_write_star_row">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <button
+                            key={s}
+                            type="button"
+                            className={`home_write_star_btn ${s <= writeReviewStars ? "home_write_star_btn--on" : ""}`}
+                            onClick={() => setWriteReviewStars(s)}
+                            aria-label={`별점 ${s}점`}
+                          >
+                            ★
+                          </button>
+                        ))}
+                        {writeReviewStars > 0 && (
+                          <span className="home_write_star_label">
+                            {["", "별로예요", "아쉬워요", "보통이에요", "좋아요", "최고예요"][writeReviewStars]}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* 텍스트 입력 */}
+                      <textarea
+                        className="home_write_review_textarea"
+                        placeholder="어떤 점이 좋으셨나요? 솔직한 후기가 다른 고객에게 큰 도움이 됩니다."
+                        value={writeReviewText}
+                        onChange={(e) => setWriteReviewText(e.target.value)}
+                        maxLength={300}
+                        rows={3}
+                      />
+                      <div className="home_write_review_char_count">
+                        {writeReviewText.length} / 300
+                      </div>
+
+                      {/* 등록 버튼 */}
+                      <button
+                        type="button"
+                        className={`home_write_review_submit ${writeReviewStars > 0 && writeReviewText.trim().length > 0 ? "home_write_review_submit--active" : ""}`}
+                        disabled={writeReviewStars === 0 || writeReviewText.trim().length === 0}
+                        onClick={() => {
+                          setWriteReviewSubmitted(true);
+                          triggerToast("리뷰가 등록되었습니다!");
+                        }}
+                      >
+                        리뷰 등록하기
+                      </button>
+                    </>
+                  )}
+                </div>
               </section>
 
-              {/* 왓씨 세탁 커뮤니티 배너 - 3장 카드 */}
-              <section className="home_community_section">
-                {(
-                  [
-                    {
-                      theme: "blue",
-                      label: "왓씨 세탁 커뮤니티",
-                      title1: "세탁 경험을 빠르게 공유하고",
-                      title2: "솔루션을 찾아보세요.",
-                      tags: ["#옷관리팁", "#얼룩제거", "#세탁노하우"],
-                      img: d1Img,
-                      action: "세탁 커뮤니티",
-                    },
-                    {
-                      theme: "mint",
-                      label: "세탁 노하우",
-                      title1: "내 옷을 더 오래,",
-                      title2: "더 예쁘게 관리하는 법",
-                      tags: ["#울소재", "#손세탁", "#드라이"],
-                      img: e1Img,
-                      action: "세탁 노하우",
-                    },
-                    {
-                      theme: "purple",
-                      label: "이번 주 인기 토픽",
-                      title1: "가장 많이 공유된",
-                      title2: "세탁 이야기 모아보기",
-                      tags: ["#주간인기", "#베스트팁", "#추천글"],
-                      img: m1Img,
-                      action: "인기 토픽",
-                    },
-                  ] as const
-                ).map((card, i) => (
-                  <div
-                    key={i}
-                    ref={(el) => {
-                      communityCardRefs.current[i] = el;
-                    }}
-                    data-card-index={String(i)}
-                    className={`home_community_banner home_community_banner--${card.theme} home_community_card_anim ${communityCardsVisible[i] ? "card-visible" : ""}`}
-                    onClick={() => handleAction(card.action)}
-                  >
-                    <div className="home_community_left">
-                      <span className={`home_community_label home_community_label--${card.theme}`}>
-                        {card.label}
-                      </span>
-                      <h4 className="home_community_title_1">{card.title1}</h4>
-                      <h4 className="home_community_title_2">{card.title2}</h4>
-                      <div className="home_review_tags_bottom">
-                        {card.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
+              {/* 왓씨 세탁 커뮤니티 — 드래그 가능 가로 캐러셀 */}
+              <section
+                className="home_community_section"
+                onMouseLeave={() => { communityDraggingRef.current = false; if (communityTrackRef.current) communityTrackRef.current.classList.remove("home_community_track--dragging"); }}
+                onMouseUp={() => { communityDraggingRef.current = false; if (communityTrackRef.current) communityTrackRef.current.classList.remove("home_community_track--dragging"); }}
+                onMouseMove={(e) => {
+                  if (!communityDraggingRef.current) return;
+                  const delta = e.clientX - communityDragStartRef.current.x;
+                  if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
+                  let nx = communityDragStartRef.current.tx + delta;
+                  const SET = 810;
+                  if (nx > 0) nx -= SET;
+                  if (nx < -SET) nx += SET;
+                  communityXRef.current = nx;
+                  if (communityTrackRef.current) communityTrackRef.current.style.transform = `translateX(${nx}px)`;
+                }}
+              >
+                <div
+                  ref={communityTrackRef}
+                  className="home_community_track"
+                  onMouseDown={(e) => {
+                    communityDraggingRef.current = true;
+                    communityClickBlockRef.current = false;
+                    communityDragStartRef.current = { x: e.clientX, tx: communityXRef.current };
+                    communityTrackRef.current?.classList.add("home_community_track--dragging");
+                    e.preventDefault();
+                  }}
+                  onTouchStart={(e) => {
+                    communityDraggingRef.current = true;
+                    communityClickBlockRef.current = false;
+                    communityDragStartRef.current = { x: e.touches[0].clientX, tx: communityXRef.current };
+                  }}
+                  onTouchMove={(e) => {
+                    if (!communityDraggingRef.current) return;
+                    const delta = e.touches[0].clientX - communityDragStartRef.current.x;
+                    if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
+                    let nx = communityDragStartRef.current.tx + delta;
+                    const SET = 810;
+                    if (nx > 0) nx -= SET;
+                    if (nx < -SET) nx += SET;
+                    communityXRef.current = nx;
+                    if (communityTrackRef.current) communityTrackRef.current.style.transform = `translateX(${nx}px)`;
+                  }}
+                  onTouchEnd={() => { communityDraggingRef.current = false; }}
+                >
+                  {([...COMMUNITY_CARDS, ...COMMUNITY_CARDS] as typeof COMMUNITY_CARDS[number][]).map((card, i) => {
+                    const imgMap: Record<string, string> = { community: d1Img, tips: e1Img, popular: m1Img };
+                    return (
+                      <div
+                        key={i}
+                        className={`home_community_banner home_community_banner--${card.theme}`}
+                        aria-hidden={i >= 3}
+                        onClick={() => {
+                          if (!communityClickBlockRef.current) {
+                            setShowCommunityDetail(card.key);
+                          }
+                        }}
+                      >
+                        <div className="home_community_left">
+                          <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
+                          <h4 className="home_community_title_1">{card.title1}</h4>
+                          <h4 className="home_community_title_2">{card.title2}</h4>
+                          <div className="home_review_tags_bottom">
+                            {card.tags.map((tag: string) => (
+                              <span key={tag} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{tag}</span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="home_community_right">
+                          <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="home_community_right">
-                      <img
-                        src={card.img}
-                        alt={card.label}
-                        className="home_community_3d_img"
-                      />
-                    </div>
-                  </div>
-                ))}
+                    );
+                  })}
+                </div>
               </section>
             </div>
           </>
@@ -2059,12 +2412,18 @@ export function HomePage() {
                           <div className="scanning_laser_line" />
                           <div className="scanning_loader_box">
                             <span className="scanning_loader_text">
-                              AI 섬유 구조 해독 중...
+                              {scanProgress < 30
+                                ? "이미지 업로드 중..."
+                                : scanProgress < 60
+                                  ? "AI 소재 패턴 분석 중..."
+                                  : scanProgress < 85
+                                    ? "세탁 케어 코스 도출 중..."
+                                    : "결과 생성 중..."}
                             </span>
                             <div className="scanning_progress_bar_bg">
                               <div
                                 className="scanning_progress_fill"
-                                style={{ width: `${scanProgress}%` }}
+                                style={{ width: `${scanProgress}%`, transition: "width 0.3s ease" }}
                               />
                             </div>
                             <span className="scanning_percentage">
@@ -2074,8 +2433,11 @@ export function HomePage() {
                         </div>
                       ) : scanResult ? (
                         <div className="scanner_result_overlay">
-                          <div className="result_badge">분석 완료</div>
+                          <div className={`result_badge ${aiAnalysisResult ? "result_badge--ai" : ""}`}>
+                            {aiAnalysisResult ? "✦ AI 실제 분석 완료" : "분석 완료"}
+                          </div>
 
+                          {/* 촬영한 실제 사진 */}
                           {capturedPhotoUrl && (
                             <div className="scanner_captured_preview">
                               <img
@@ -2086,40 +2448,48 @@ export function HomePage() {
                             </div>
                           )}
 
-                          <h4 className="result_cloth_name">
-                            {capturedPhotoUrl
-                              ? "🔍 스캔된 실제 의류 성분 분석"
-                              : selectedScanPreset === "shirt"
-                                ? "👔 100% 면 화이트 드레스 셔츠"
-                                : selectedScanPreset === "coat"
-                                  ? "🧥 캐시미어 혼방 도톰 가을 코트"
-                                  : "🛏️ 거위털 극세사 솜이불"}
-                          </h4>
-
-                          <div className="result_specs">
-                            <div className="spec_row">
-                              <span>소재 판정</span>
-                              <strong>
+                          {/* ── AI 실제 응답 ── */}
+                          {aiAnalysisResult ? (
+                            <div className="ai_real_result_box">
+                              <p className="ai_real_result_label">
+                                <span className="ai_real_result_badge">Gemini AI</span>
+                                실제 분석 결과
+                              </p>
+                              <div className="ai_real_result_text">
+                                {aiAnalysisResult.split("\n").map((line, i) =>
+                                  line.trim() ? (
+                                    <p key={i} className={line.startsWith("**") || /^\d+\./.test(line) ? "ai_result_section" : "ai_result_line"}>
+                                      {line.replace(/\*\*/g, "")}
+                                    </p>
+                                  ) : <br key={i} />
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            /* ── 폴백: 시뮬레이션 결과 ── */
+                            <>
+                              <h4 className="result_cloth_name">
                                 {capturedPhotoUrl
-                                  ? "천연 섬유 혼합 감지"
-                                  : "권장 섬유 표준"}
-                              </strong>
-                            </div>
-                            <div className="spec_row">
-                              <span>권장 온도</span>
-                              <strong>30°C 미온수 마일드</strong>
-                            </div>
-                            <div className="spec_row">
-                              <span>건조 방식</span>
-                              <strong>단독 저온 텀블러 회전</strong>
-                            </div>
-                            <div className="spec_row">
-                              <span>추천 코스</span>
-                              <strong className="blue_bold">
-                                왓씨 안심 에코 런드리
-                              </strong>
-                            </div>
-                          </div>
+                                  ? "🔍 의류 성분 분석 결과"
+                                  : selectedScanPreset === "shirt"
+                                    ? "👔 100% 면 화이트 드레스 셔츠"
+                                    : selectedScanPreset === "coat"
+                                      ? "🧥 캐시미어 혼방 가을 코트"
+                                      : "🛏️ 거위털 극세사 솜이불"}
+                              </h4>
+                              {aiAnalysisError && (
+                                <p className="ai_fallback_notice">
+                                  ※ AI 서버 미연결 — 기본 분석 결과입니다
+                                </p>
+                              )}
+                              <div className="result_specs">
+                                <div className="spec_row"><span>소재 판정</span><strong>천연 섬유 혼합 감지</strong></div>
+                                <div className="spec_row"><span>권장 온도</span><strong>30°C 미온수 마일드</strong></div>
+                                <div className="spec_row"><span>건조 방식</span><strong>단독 저온 텀블러 회전</strong></div>
+                                <div className="spec_row"><span>추천 코스</span><strong className="blue_bold">왓씨 안심 에코 런드리</strong></div>
+                              </div>
+                            </>
+                          )}
 
                           <button
                             type="button"
@@ -2128,6 +2498,8 @@ export function HomePage() {
                               setScanResult(false);
                               setScanProgress(0);
                               setCapturedPhotoUrl(null);
+                              setAiAnalysisResult(null);
+                              setAiAnalysisError(false);
                             }}
                           >
                             다시 촬영하기
@@ -2214,7 +2586,7 @@ export function HomePage() {
                           <div className="shutter_inner_circle" />
                         </button>
                         <span className="shutter_action_text">
-                          셔터를 눌러 실제 카메라 작동
+                          셔터를 눌러 사진 촬영 → AI 즉시 분석
                         </span>
                       </div>
                     )}
@@ -2697,8 +3069,13 @@ export function HomePage() {
                   </div>
                 </div>
 
-                {/* Accuracy check footer info */}
-                <div className="gps_accuracy_info_footer">
+                {/* Accuracy check footer + 상세보기 토글 */}
+                <div
+                  className="gps_accuracy_info_footer gps_accuracy_info_footer--clickable"
+                  onClick={() => setShowGpsDetail((v) => !v)}
+                  role="button"
+                  tabIndex={0}
+                >
                   <svg
                     viewBox="0 0 24 24"
                     width="12"
@@ -2715,7 +3092,104 @@ export function HomePage() {
                     <line x1="12" y1="8" x2="12.01" y2="8"></line>
                   </svg>
                   <span>실시간 GPS 위성 신호 강도 정상 (수신 상태 양호)</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      marginLeft: "auto",
+                      transition: "transform 0.3s ease",
+                      transform: showGpsDetail ? "rotate(180deg)" : "rotate(0deg)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
                 </div>
+
+                {/* 상세 정보 드로어 */}
+                {showGpsDetail && (
+                  <div className="gps_detail_drawer">
+                    {/* 라이더 정보 */}
+                    <div className="gps_detail_section">
+                      <p className="gps_detail_label">담당 라이더</p>
+                      <div className="gps_rider_row">
+                        <img
+                          src={riderJinwooImg}
+                          alt="라이더 진우"
+                          className="gps_rider_avatar"
+                        />
+                        <div className="gps_rider_info">
+                          <strong className="gps_rider_name">김진우 마스터</strong>
+                          <span className="gps_rider_meta">⭐ 4.98 · 배달 3,214건</span>
+                          <span className="gps_rider_vehicle">왓씨 전용 오토바이 · 안심팩 장착</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="gps_detail_divider" />
+
+                    {/* 경로 상세 */}
+                    <div className="gps_detail_section">
+                      <p className="gps_detail_label">배송 경로</p>
+                      <div className="gps_route_list">
+                        <div className="gps_route_item">
+                          <span className="gps_route_dot gps_route_dot--start" />
+                          <div>
+                            <p className="gps_route_place">세탁 공장</p>
+                            <p className="gps_route_addr">서울 반포동 왓씨 케어센터</p>
+                          </div>
+                        </div>
+                        <div className="gps_route_line" />
+                        <div className="gps_route_item">
+                          <span className="gps_route_dot gps_route_dot--current" />
+                          <div>
+                            <p className="gps_route_place">현재 위치</p>
+                            <p className="gps_route_addr">서초대로 158 인근 이동 중</p>
+                          </div>
+                        </div>
+                        <div className="gps_route_line" />
+                        <div className="gps_route_item">
+                          <span className="gps_route_dot gps_route_dot--end" />
+                          <div>
+                            <p className="gps_route_place">도착지 (우리집)</p>
+                            <p className="gps_route_addr">반포동 왓씨타워 410호</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="gps_detail_divider" />
+
+                    {/* 실시간 수치 */}
+                    <div className="gps_detail_section">
+                      <p className="gps_detail_label">실시간 현황</p>
+                      <div className="gps_detail_stats">
+                        <div className="gps_stat_item">
+                          <span className="gps_stat_label">이동 속도</span>
+                          <strong className="gps_stat_val">24 km/h</strong>
+                        </div>
+                        <div className="gps_stat_item">
+                          <span className="gps_stat_label">위성 수신</span>
+                          <strong className="gps_stat_val gps_stat_val--green">{satellites}개</strong>
+                        </div>
+                        <div className="gps_stat_item">
+                          <span className="gps_stat_label">GPS 정확도</span>
+                          <strong className="gps_stat_val gps_stat_val--green">±2m</strong>
+                        </div>
+                        <div className="gps_stat_item">
+                          <span className="gps_stat_label">도착 예정</span>
+                          <strong className="gps_stat_val gps_stat_val--blue">약 {etaMinutes}분</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
 
@@ -3059,50 +3533,70 @@ export function HomePage() {
                   </button>
                 </div>
 
-                {/* 착용 횟수 제어 시뮬레이터 */}
-                <div className="cycle_simulation_control">
-                  <div className="sim_text_row">
-                    <span>착용 횟수</span>
+                {/* 착용 횟수 — 슬라이더로 직접 조절 */}
+                <div className="cycle_slider_group">
+                  <div className="slider_label_row">
+                    <span>현재 착용 횟수</span>
                     <span className="font_bold highlight_blue">
-                      {wearCount}회 착용
+                      {wearCount} / {targetCycle}회
                     </span>
                   </div>
+                  {/* 진행 게이지 */}
+                  <div className="cycle_progress_track">
+                    <div
+                      className={`cycle_progress_fill ${wearCount >= targetCycle ? "cycle_progress_fill--over" : ""}`}
+                      style={{ width: `${Math.min((wearCount / targetCycle) * 100, 100)}%` }}
+                    />
+                    {[...Array(targetCycle - 1)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="cycle_progress_tick"
+                        style={{ left: `${((i + 1) / targetCycle) * 100}%` }}
+                      />
+                    ))}
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max={Math.max(targetCycle, wearCount, 10)}
+                    className="cycle_range_input"
+                    value={wearCount}
+                    onChange={(e) => setWearCount(parseInt(e.target.value))}
+                  />
                   <div className="sim_btn_row">
                     <button
                       type="button"
                       className="sim_btn"
-                      onClick={() => {
-                        if (wearCount > 0) setWearCount(wearCount - 1);
-                      }}
+                      onClick={() => { if (wearCount > 0) setWearCount(wearCount - 1); }}
                     >
-                      - 1회 착용
+                      − 1회
                     </button>
                     <button
                       type="button"
                       className="sim_btn"
                       onClick={() => setWearCount(wearCount + 1)}
                     >
-                      + 1회 착용
+                      + 1회
                     </button>
                   </div>
                 </div>
 
-                {/* 주기 설정 슬라이더 */}
-                <div className="cycle_slider_group">
-                  <div className="slider_label_row">
-                    <span>설정 세탁 주기</span>
-                    <span className="font_bold">
-                      {targetCycle}회 착용 후 세탁
-                    </span>
+                {/* 세탁 주기 설정 */}
+                <div className="cycle_target_row">
+                  <span className="cycle_target_label">설정 세탁 주기</span>
+                  <div className="cycle_target_controls">
+                    <button
+                      type="button"
+                      className="cycle_target_btn"
+                      onClick={() => setTargetCycle(Math.max(2, targetCycle - 1))}
+                    >−</button>
+                    <span className="cycle_target_value">{targetCycle}회마다 세탁</span>
+                    <button
+                      type="button"
+                      className="cycle_target_btn"
+                      onClick={() => setTargetCycle(Math.min(20, targetCycle + 1))}
+                    >+</button>
                   </div>
-                  <input
-                    type="range"
-                    min="2"
-                    max="10"
-                    className="cycle_range_input"
-                    value={targetCycle}
-                    onChange={(e) => setTargetCycle(parseInt(e.target.value))}
-                  />
                 </div>
 
                 {/* 세탁 필요 알림 위젯 */}
@@ -3652,17 +4146,12 @@ export function HomePage() {
               padding: "20px 20px 16px",
             }}
           >
-            <h3
-              className="profile_modal_title"
-              style={{
-                ...styles.modalTitle,
-                marginTop: 0,
-                marginBottom: "16px",
-                flexShrink: 0,
-              }}
-            >
-              👤 프로필 상세 설정
-            </h3>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexShrink: 0 }}>
+              <img src={selectedTempImg} alt="프로필 미리보기" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "2px solid #e2e8f0" }} />
+              <h3 className="profile_modal_title" style={{ ...styles.modalTitle, margin: 0 }}>
+                👤 프로필 상세 설정
+              </h3>
+            </div>
 
             {/* 입력 필드 스크롤 콘텐츠 영역 */}
             <div
@@ -3984,6 +4473,17 @@ export function HomePage() {
                       </span>
                     </div>
                   </button>
+
+                  {/* 선물하기 안내 */}
+                  <div className="gift_info_box">
+                    <p className="gift_info_title">🎁 선물하기란?</p>
+                    <ul className="gift_info_list">
+                      <li>나의 <strong>안심 포인트</strong> 또는 <strong>세탁 쿠폰</strong>을 다른 사람에게 보낼 수 있는 기능입니다.</li>
+                      <li><strong>카카오톡</strong>으로는 링크 형태의 선물 카드를 발송하며, 수령인이 링크를 열면 자동으로 적립됩니다.</li>
+                      <li><strong>WatC 직접 양도</strong>는 상대방의 전화번호 또는 WatC 회원 ID를 입력하면 즉시 이전됩니다.</li>
+                      <li>한 번 전송된 선물은 <strong>취소가 불가</strong>하니 수령인 정보를 꼭 확인해 주세요.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             ) : giftMethod === "kakao" ? (
