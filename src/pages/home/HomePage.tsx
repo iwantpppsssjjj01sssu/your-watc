@@ -29,6 +29,34 @@ import q1Img from "../../asset/img/q1.png";
 
 import { BottomNav } from "../../components/BottomNav";
 
+// 세탁 노하우 카드 전용 3D 세제병 SVG 일러스트
+const communityTipsImg = `data:image/svg+xml;utf8,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150">'
+  + '<defs>'
+  + '<linearGradient id="btl" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#059669"/><stop offset="45%" stop-color="#10b981"/><stop offset="100%" stop-color="#065f46"/></linearGradient>'
+  + '<linearGradient id="cap" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#94a3b8"/></linearGradient>'
+  + '<filter id="sh"><feDropShadow dx="3" dy="6" stdDeviation="5" flood-color="#065f46" flood-opacity="0.25"/></filter>'
+  + '</defs>'
+  + '<circle cx="22" cy="35" r="9" fill="#bbf7d0" opacity="0.55"/>'
+  + '<circle cx="98" cy="55" r="7" fill="#6ee7b7" opacity="0.5"/>'
+  + '<circle cx="18" cy="95" r="6" fill="#a7f3d0" opacity="0.4"/>'
+  + '<circle cx="102" cy="115" r="8" fill="#6ee7b7" opacity="0.45"/>'
+  + '<circle cx="88" cy="30" r="5" fill="#bbf7d0" opacity="0.5"/>'
+  + '<rect x="50" y="18" width="10" height="16" rx="4" fill="url(#cap)"/>'
+  + '<ellipse cx="55" cy="18" rx="7" ry="5" fill="#cbd5e1"/>'
+  + '<rect x="38" y="30" width="34" height="22" rx="8" fill="url(#cap)"/>'
+  + '<rect x="28" y="48" width="54" height="90" rx="16" fill="url(#btl)" filter="url(#sh)"/>'
+  + '<rect x="32" y="52" width="16" height="82" rx="8" fill="white" opacity="0.12"/>'
+  + '<rect x="34" y="75" width="46" height="44" rx="8" fill="white" opacity="0.92"/>'
+  + '<text x="57" y="91" font-size="9" font-weight="900" text-anchor="middle" fill="#059669" font-family="system-ui,sans-serif">WatC</text>'
+  + '<text x="57" y="103" font-size="6.5" font-weight="700" text-anchor="middle" fill="#064e3b" font-family="system-ui,sans-serif">세탁 노하우</text>'
+  + '<text x="57" y="113" font-size="5.5" text-anchor="middle" fill="#6b7280" font-family="system-ui,sans-serif">CARE TIPS</text>'
+  + '<circle cx="46" cy="62" r="4" fill="white" opacity="0.25"/>'
+  + '<circle cx="68" cy="57" r="3" fill="white" opacity="0.2"/>'
+  + '<circle cx="78" cy="65" r="2.5" fill="white" opacity="0.18"/>'
+  + '</svg>'
+)}`;
+
 // ── 커뮤니티 카드 정의 ──
 const COMMUNITY_CARDS = [
   {
@@ -54,6 +82,22 @@ const COMMUNITY_CARDS = [
     title1: "가장 많이 공유된",
     title2: "세탁 이야기 모아보기",
     tags: ["#주간인기", "#베스트팁", "#추천글"],
+  },
+  {
+    key: "qa",
+    theme: "rose",
+    label: "세탁 Q&A",
+    title1: "궁금한 세탁 고민,",
+    title2: "전문가가 답해드려요",
+    tags: ["#세탁질문", "#전문가답변", "#꿀팁"],
+  },
+  {
+    key: "event",
+    theme: "amber",
+    label: "이벤트 & 혜택",
+    title1: "왓씨 특별 혜택을",
+    title2: "놓치지 마세요!",
+    tags: ["#이벤트", "#할인쿠폰", "#적립포인트"],
   },
 ] as const;
 
@@ -135,6 +179,13 @@ export function HomePage() {
   const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
   const [allReviewsTag, setAllReviewsTag] = useState<string>("전체");
   const [showCommunityDetail, setShowCommunityDetail] = useState<string | null>(null);
+  const [communityFeedTab, setCommunityFeedTab] = useState<"all" | "hot" | "new" | "tips">("all");
+  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
+  const communityDetailScrollRef = useRef<HTMLDivElement>(null);
+  const [showWritePost, setShowWritePost] = useState<boolean>(false);
+  const [writeTitle, setWriteTitle] = useState<string>("");
+  const [writeContent, setWriteContent] = useState<string>("");
+  const [writeCategory, setWriteCategory] = useState<"hot" | "new" | "tips">("new");
 
   // 커뮤니티 캐러셀 드래그 refs
   const communityTrackRef = useRef<HTMLDivElement>(null);
@@ -180,6 +231,7 @@ export function HomePage() {
   const [showPricingDetail, setShowPricingDetail] = useState<boolean>(false);
   const [pricingTab, setPricingTab] = useState<"clothing" | "shoes" | "bedding" | "extra">("clothing");
   const [showActiveOrderDetail, setShowActiveOrderDetail] = useState<boolean>(false);
+  const [showContactUs, setShowContactUs] = useState<boolean>(false);
   const [showLaundryHistory, setShowLaundryHistory] = useState<boolean>(false);
   const [showUsageGuide, setShowUsageGuide] = useState<boolean>(false);
   const usageGuideScrollRef = useRef<HTMLDivElement>(null);
@@ -400,6 +452,18 @@ export function HomePage() {
 
 
 
+  // --- 커뮤니티 상세 열릴 때 스크롤 최상단 리셋 ---
+  useEffect(() => {
+    if (showCommunityDetail) {
+      const timer = setTimeout(() => {
+        if (communityDetailScrollRef.current) {
+          communityDetailScrollRef.current.scrollTop = 0;
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [showCommunityDetail]);
+
   // --- 이용방법 오버레이 열릴 때 내부 스크롤 최상단 리셋 ---
   useEffect(() => {
     if (showUsageGuide && usageGuideScrollRef.current) {
@@ -410,7 +474,7 @@ export function HomePage() {
   // --- 커뮤니티 캐러셀 자동 스크롤 (RAF) ---
   useEffect(() => {
     if (activeTab !== "home") return;
-    const CARD_SET_WIDTH = 810; // 3장 × (258px + 12px gap) = 810px
+    const CARD_SET_WIDTH = 1350; // 5장 × (258px + 12px gap) = 1350px
     const SPEED = 0.45;
     let raf: number;
     const tick = () => {
@@ -611,7 +675,7 @@ export function HomePage() {
         user: "스타일러",
         date: "26.05.15",
         body: `실크 블라우스 세탁을 집에서 하다가 망친 적이 있어서 맡겨봤는데 정말 새 옷처럼 실크 특유의 윤기가 살아서 돌아왔어요. 아주 만족합니다.`,
-        img: rvShirtsImg,
+        img: a1Img,
         tags: ["실크블라우스", "드라이클리닝"],
       },
       {
@@ -619,7 +683,7 @@ export function HomePage() {
         user: "패션피플",
         date: "26.05.10",
         body: `버버리 트렌치코트 오염이 심해서 걱정했는데 얼룩덜룩한 국물 때까지 깨끗하게 제거되고 스팀 서비스로 핏까지 완벽하게 잡아줬어요!`,
-        img: rvOuterImg,
+        img: b1Img,
         tags: ["명품케어", "트렌치코트"],
       },
       {
@@ -627,7 +691,7 @@ export function HomePage() {
         user: "데일리웨어",
         date: "26.05.08",
         body: `기본 슬랙스 바지 주름이 매번 칼처럼 잡혀서 옵니다. 출근할 때 매번 다림질 안 해도 돼서 아침 출근 준비 시간이 10분이나 단축되었어요.`,
-        img: rvShirtsImg,
+        img: c1Img,
         tags: ["바지주름", "다림질"],
       },
       {
@@ -635,7 +699,7 @@ export function HomePage() {
         user: "니트마니아",
         date: "26.05.03",
         body: `캐시미어 가디건 세탁 후 줄어들거나 털 뭉침 없이 보송보송하게 배송되었어요. 니트 전용 중성 세제로 부드럽게 세탁해주시는 게 느껴지네요.`,
-        img: rvOuterImg,
+        img: d1Img,
         tags: ["캐시미어니트", "중성세제"],
       },
       {
@@ -643,7 +707,7 @@ export function HomePage() {
         user: "정장핏",
         date: "26.04.28",
         body: `중요한 미팅이 있어서 서둘러 수트를 드라이클리닝 맡겼는데, 지정된 시간에 정확히 오고 포장도 습기 방지 커버로 정성스럽게 싸여서 왔어요.`,
-        img: rvOuterImg,
+        img: q1Img,
         tags: ["비즈니스수트", "커버포장"],
       },
     ],
@@ -661,7 +725,7 @@ export function HomePage() {
         user: "조깅러",
         date: "26.05.18",
         body: `진흙투성이가 된 런닝화를 맡겼는데, 메쉬 틈새 사이에 박혀 있던 흙먼지까지 강력하고 깨끗하게 흡입 세탁해주셔서 새 신발 신는 느낌이에요!`,
-        img: rvShoesImg,
+        img: p1Img,
         tags: ["런닝화", "흙먼지제거"],
       },
       {
@@ -669,7 +733,7 @@ export function HomePage() {
         user: "힐러버",
         date: "26.05.14",
         body: `세탁하기 까다로운 고급 스웨이드 로퍼를 맡겼는데 결이 다 상하지 않고 자연스럽게 스웨이드 질감을 살려서 클리닝해 주셨네요. 진정한 장인입니다.`,
-        img: rvShoesImg,
+        img: a1Img,
         tags: ["스웨이드로퍼", "질감복원"],
       },
       {
@@ -677,7 +741,7 @@ export function HomePage() {
         user: "등산매니아",
         date: "26.05.09",
         body: `등산 다니면서 끈적한 송진 가루와 흙으로 엉망이 된 등산화 방수 기능 손상 없이 프리미엄 클리닝 완료!`,
-        img: rvShoesImg,
+        img: b1Img,
         tags: ["아웃도어화", "방수보존"],
       },
       {
@@ -685,7 +749,7 @@ export function HomePage() {
         user: "가죽구두",
         date: "26.05.05",
         body: `신사용 가죽 구두를 맡겼더니 세탁 후 가죽 영양 크림 코팅까지 섬세하게 발라서 보내주셨습니다. 반짝반짝 광택이 예술이에요.`,
-        img: rvShoesImg,
+        img: c1Img,
         tags: ["정장구두", "영양코팅"],
       },
       {
@@ -693,7 +757,7 @@ export function HomePage() {
         user: "캔버스매니아",
         date: "26.04.30",
         body: `하얀색 캔버스 단화에 커피를 쏟아서 버려야 하나 고민했는데, 얼룩 자국 하나 남기지 않고 말끔하게 표백 세탁해 주셨습니다.`,
-        img: rvShoesImg,
+        img: d1Img,
         tags: ["캔버스화", "얼룩제거"],
       },
       {
@@ -701,7 +765,7 @@ export function HomePage() {
         user: "키즈맘",
         date: "26.04.25",
         body: `아이들이 놀이터에서 흙모래를 잔뜩 묻혀 온 아동 운동화들 한꺼번에 보냈는데, 신발 안쪽 깊은 곳까지 멸균 소독 살균이 잘 되어 냄새가 싹 사라졌습니다.`,
-        img: rvShoesImg,
+        img: q1Img,
         tags: ["아동운동화", "살균소독"],
       },
     ],
@@ -727,7 +791,7 @@ export function HomePage() {
         user: "뽀송조아",
         date: "26.05.13",
         body: `두꺼운 극세사 침구 세탁 건조가 집에서는 도저히 불가능했는데 왓씨 덕분에 살균 고온 건조까지 완벽하게 끝마치고 아기 솜털처럼 부드럽게 세탁되었습니다.`,
-        img: rvBeddingImg,
+        img: a1Img,
         tags: ["극세사이불", "고온살균"],
       },
       {
@@ -735,7 +799,7 @@ export function HomePage() {
         user: "신혼부부",
         date: "26.05.11",
         body: `호텔식 올 화이트 침구 세트를 클리닝 맡겼더니 눈부실 정도로 하얗고 뽀송하게 다림질되어 배송받았습니다.`,
-        img: rvBeddingImg,
+        img: b1Img,
         tags: ["호텔식침구", "오성급화이트"],
       },
       {
@@ -743,7 +807,7 @@ export function HomePage() {
         user: "베개베개",
         date: "26.05.07",
         body: `기능성 라텍스 및 솜 베개 커버와 솜 자체를 세탁 건조했는데 솜 뭉침이 1도 없고 땀 냄새와 노란 찌든 오염이 마술처럼 지워졌습니다.`,
-        img: rvBeddingImg,
+        img: c1Img,
         tags: ["기능성베개", "땀오염표백"],
       },
       {
@@ -751,7 +815,7 @@ export function HomePage() {
         user: "토퍼매니아",
         date: "26.05.04",
         body: `메모리폼 침대 토퍼 겉 커버 세탁을 신청했는데, 안감 얼룩까지 꼼꼼히 체크해 주시고 중성 세제로 정성껏 세탁되어 왔네요.`,
-        img: rvBeddingImg,
+        img: d1Img,
         tags: ["토퍼커버", "중성케어"],
       },
       {
@@ -777,7 +841,7 @@ export function HomePage() {
         user: "1인가구",
         date: "26.05.17",
         body: `원룸에 살아서 빨래 널 공간도 부족하고 눅눅한 냄새가 걱정이었는데, 왓씨에 3단 빨래 바구니째 맡기면 당일 오후에 산들바람 향이 솔솔 나는 뽀송한 상태로 문 앞에 안착해요.`,
-        img: rvBeddingImg,
+        img: rvShirtsImg,
         tags: ["원룸빨래", "실내건조해방"],
       },
       {
@@ -785,7 +849,7 @@ export function HomePage() {
         user: "워킹맘",
         date: "26.05.12",
         body: `매일매일 쏟아져 나오는 아기 옷, 가제 수건, 내의들을 일일이 삶고 건조하기 벅찼는데 유기농 유아 전용 세제 옵션을 제공해 주셔서 맘 놓고 삶음 빨래 대행하고 있습니다.`,
-        img: l1Img,
+        img: rvOuterImg,
         tags: ["아기옷세탁", "유기농세제"],
       },
       {
@@ -817,7 +881,7 @@ export function HomePage() {
         user: "미니멀리스트",
         date: "26.04.27",
         body: `빨래통 비우기부터 개기까지의 노동을 손가락 터치 1번으로 위탁하니 집안일 스트레스가 90% 줄었습니다. 옷 정리도 칼각으로 접혀서 와서 바로 서랍에 쏙 넣네요.`,
-        img: rvShirtsImg,
+        img: rvBagImg,
         tags: ["칼각접기", "노동비우기"],
       },
     ],
@@ -835,7 +899,7 @@ export function HomePage() {
         user: "모자매니아",
         date: "26.05.16",
         body: `아끼던 뉴에라 볼캡 모자가 이마 땀 얼룩과 화장품 때로 누렇게 오염됐고 챙 형태가 흐물해졌는데, 챙 보형틀 스팀 성형을 통해 새 모자 챙 핏으로 단단하게 복원해 주셨어요!`,
-        img: rvBagImg,
+        img: a1Img,
         tags: ["볼캡스팀", "땀얼룩제거"],
       },
       {
@@ -843,7 +907,7 @@ export function HomePage() {
         user: "가죽벨트",
         date: "26.05.12",
         body: `고급 소가죽 클래식 벨트의 테두리 유약(기리메)이 벗겨지고 갈라져서 슬펐는데 가죽 케어 전문 옵션으로 깔끔하게 메우고 검은색 오염까지 싹 지워주셨습니다.`,
-        img: rvBagImg,
+        img: b1Img,
         tags: ["가죽벨트", "복원케어"],
       },
       {
@@ -851,7 +915,7 @@ export function HomePage() {
         user: "실크스카프",
         date: "26.05.09",
         body: `에르메스 실크 스카프의 얇은 섬유 한 결 한 결을 우아하게 살려서 단 하나도 미어짐 없이 다림질 성형 코팅되어 배송받았습니다. 실크 케어는 여기가 명가입니다.`,
-        img: rvBagImg,
+        img: c1Img,
         tags: ["실크스카프", "명품스카프"],
       },
       {
@@ -859,7 +923,7 @@ export function HomePage() {
         user: "지갑컬렉터",
         date: "26.05.05",
         body: `손때와 기름 오염이 심하던 베이지색 가죽 지갑 클리닝을 맡겼는데, 염색 코팅 복원을 한 듯 아주 선명하고 산뜻한 본래의 스킨 컬러가 다시 나왔습니다.`,
-        img: rvBagImg,
+        img: d1Img,
         tags: ["가죽지갑", "지갑클리닝"],
       },
       {
@@ -867,7 +931,7 @@ export function HomePage() {
         user: "넥타이핏",
         date: "26.04.29",
         body: `매일 매는 양복 실크 넥타이들의 구겨진 매듭 부위 스팀 프레싱 가공으로 아주 납작하고 단정하게 정렬되었습니다. 직장인 가성비 만족도가 최고입니다.`,
-        img: rvBagImg,
+        img: q1Img,
         tags: ["실크넥타이", "스팀프레싱"],
       },
       {
@@ -1818,6 +1882,101 @@ export function HomePage() {
         )}
 
         {/* ===================================================== */}
+        {/* 문의하기 상세 페이지 오버레이                          */}
+        {/* ===================================================== */}
+        {showContactUs && (
+          <div className="active_order_overlay">
+            <header className="active_order_header">
+              <button type="button" className="premium_back_btn" onClick={() => setShowContactUs(false)} aria-label="뒤로가기">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <h1 className="active_order_header_title">문의하기</h1>
+              <div style={{ width: 42 }} />
+            </header>
+
+            <div className="active_order_scroll">
+              {/* 운영 시간 히어로 */}
+              <div style={{ background: "linear-gradient(135deg, #2563eb, #1d4ed8)", padding: "24px 20px", textAlign: "center" }}>
+                <p style={{ margin: "0 0 4px", fontSize: 12, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>왓씨 고객센터</p>
+                <p style={{ margin: "0 0 10px", fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.5px" }}>무엇을 도와드릴까요?</p>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px" }}>
+                  <span style={{ fontSize: 13, color: "#fff", fontWeight: 700 }}>⏰ 평일 09:00 – 18:00 (주말·공휴일 휴무)</span>
+                </div>
+              </div>
+
+              {/* 빠른 문의 채널 */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">빠른 문의 채널</h3>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  {[
+                    { icon: "📞", label: "전화 상담", desc: "1588-0000", action: () => triggerToast("전화 연결 중입니다."), bg: "#eff6ff", color: "#2563eb" },
+                    { icon: "💬", label: "카카오톡", desc: "@왓씨공식", action: () => triggerToast("카카오톡 채널로 이동합니다."), bg: "#fefce8", color: "#ca8a04" },
+                    { icon: "📧", label: "이메일 문의", desc: "cs@watc.kr", action: () => triggerToast("이메일 앱으로 이동합니다."), bg: "#f0fdf4", color: "#16a34a" },
+                    { icon: "💡", label: "자주 묻는 질문", desc: "FAQ 바로가기", action: () => {}, bg: "#fdf4ff", color: "#9333ea" },
+                  ].map((ch, i) => (
+                    <button key={i} type="button"
+                      style={{ background: ch.bg, border: `1px solid ${ch.color}22`, borderRadius: 16, padding: "16px 14px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, cursor: "pointer", fontFamily: "var(--font-pretendard)", textAlign: "left" }}
+                      onClick={ch.action}>
+                      <span style={{ fontSize: 28 }}>{ch.icon}</span>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: "#0f172a" }}>{ch.label}</span>
+                      <span style={{ fontSize: 11.5, color: ch.color, fontWeight: 700 }}>{ch.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 1:1 문의 양식 */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">1:1 문의 남기기</h3>
+                <div className="aod_info_card" style={{ padding: 0 }}>
+                  <div style={{ padding: "16px 16px 0" }}>
+                    <select style={{ width: "100%", height: 44, borderRadius: 10, border: "1.5px solid #e2e8f0", padding: "0 12px", fontSize: 13, color: "#1e293b", fontFamily: "var(--font-pretendard)", background: "#f8fafc", outline: "none", marginBottom: 10 }}>
+                      <option>문의 유형을 선택해주세요</option>
+                      <option>세탁 품질 관련</option>
+                      <option>수거·배달 관련</option>
+                      <option>결제·환불 관련</option>
+                      <option>서비스 이용 방법</option>
+                      <option>기타</option>
+                    </select>
+                    <textarea
+                      placeholder="문의 내용을 자세히 입력해주세요. (최소 20자)"
+                      rows={5}
+                      style={{ width: "100%", border: "1.5px solid #e2e8f0", borderRadius: 10, padding: "12px 14px", fontSize: 13, fontFamily: "var(--font-pretendard)", color: "#1e293b", resize: "none", outline: "none", boxSizing: "border-box", lineHeight: 1.6, background: "#f8fafc" }}
+                    />
+                  </div>
+                  <div style={{ padding: "12px 16px 16px" }}>
+                    <button type="button" style={{ width: "100%", height: 48, border: "none", borderRadius: 12, background: "linear-gradient(135deg, #2563eb, #1d4ed8)", color: "#fff", fontSize: 14, fontWeight: 800, fontFamily: "var(--font-pretendard)", cursor: "pointer" }}
+                      onClick={() => { setShowContactUs(false); triggerToast("✅ 문의가 접수되었습니다. 영업일 기준 1–2일 내 답변드립니다!"); }}>
+                      문의 제출하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* FAQ */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">자주 묻는 질문</h3>
+                <div className="aod_info_card">
+                  {[
+                    { q: "예약 취소는 언제까지 가능한가요?", a: "수거 예정 시간 2시간 전까지 앱에서 무료 취소 가능합니다." },
+                    { q: "세탁물이 손상되면 어떻게 되나요?", a: "왓씨는 세탁물 손상 시 전액 보상을 원칙으로 합니다. 고객센터로 문의 바랍니다." },
+                    { q: "세탁 완료 후 보관은 얼마나 되나요?", a: "배달 시도 후 7일간 보관하며, 이후 자동 폐기 처리됩니다." },
+                    { q: "포인트 유효기간이 있나요?", a: "왓씨 포인트는 마지막 적립일로부터 1년간 유효합니다." },
+                  ].map((faq, i) => (
+                    <div key={i} className="aod_info_row" style={{ flexDirection: "column", alignItems: "flex-start", gap: 6 }}>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: "#0f172a" }}>Q. {faq.q}</span>
+                      <span style={{ fontSize: 12.5, color: "#64748b", lineHeight: 1.5 }}>A. {faq.a}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ===================================================== */}
         {/* 진행 중인 주문 상세 오버레이                           */}
         {/* ===================================================== */}
         {showActiveOrderDetail && (
@@ -1845,54 +2004,11 @@ export function HomePage() {
                     <svg viewBox="0 0 64 64" className="aod_hero_ring">
                       <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="6" />
                       <circle cx="32" cy="32" r="26" fill="none" stroke="#ffffff" strokeWidth="6"
-                        strokeDasharray="163.36" strokeDashoffset="81.68"
+                        strokeDasharray="163.36" strokeDashoffset="55.54"
                         strokeLinecap="round" transform="rotate(-90 32 32)" />
                     </svg>
-                    <span className="aod_hero_pct">50%</span>
+                    <span className="aod_hero_pct">66%</span>
                   </div>
-                </div>
-              </div>
-
-              {/* 5단계 상세 타임라인 */}
-              <div className="aod_section">
-                <h3 className="aod_section_title">세탁 · 배송 진행 현황</h3>
-                <div className="aod_timeline">
-                  {[
-                    { emoji: "📦", label: "수거 완료",  status: "done",    time: "05.27  02:30", desc: "안심팩 포장 후 세탁 공장 입고" },
-                    { emoji: "🫧", label: "세탁 완료",  status: "done",    time: "05.27  08:15", desc: "저온 스팀 정밀 세탁 완료" },
-                    { emoji: "🌀", label: "건조 중",    status: "current", time: null,           desc: "고온 열풍 정밀 건조 진행 중 · 약 40분 소요" },
-                    { emoji: "🔍", label: "검수 완료",  status: "pending", time: null,           desc: "전문 검수팀 품질 검사 예정" },
-                    { emoji: "🚚", label: "배송 출발",  status: "pending", time: null,           desc: "배송 마스터 배정 및 문 앞 배달" },
-                  ].map((step, i, arr) => (
-                    <div key={i} className="aod_timeline_item">
-                      <div className="aod_tl_track">
-                        <div className={`aod_tl_dot aod_tl_dot--${step.status}`}>
-                          {step.status === "done" && (
-                            <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
-                              <polyline points="3,8 6.5,11.5 13,4.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                          {step.status === "current" && <div className="aod_tl_dot_inner" />}
-                        </div>
-                        {i < arr.length - 1 && <div className={`aod_tl_line aod_tl_line--${step.status}`} />}
-                      </div>
-                      <div className={`aod_tl_card aod_tl_card--${step.status}`}>
-                        <div className="aod_tl_card_top">
-                          <span className="aod_tl_emoji">{step.emoji}</span>
-                          <div className="aod_tl_info">
-                            <div className="aod_tl_name_row">
-                              <span className="aod_tl_name">{step.label}</span>
-                              <span className={`aod_tl_badge aod_tl_badge--${step.status}`}>
-                                {step.status === "done" ? "완료" : step.status === "current" ? "진행 중" : "대기"}
-                              </span>
-                            </div>
-                            <p className="aod_tl_desc">{step.desc}</p>
-                            {step.time && <span className="aod_tl_time">{step.time}</span>}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
 
@@ -1942,7 +2058,7 @@ export function HomePage() {
                 <button type="button" className="aod_btn_primary" onClick={() => { setShowActiveOrderDetail(false); setActiveTab("delivery"); }}>
                   실시간 배송 현황 보기
                 </button>
-                <button type="button" className="aod_btn_secondary" onClick={() => triggerToast("고객센터로 연결합니다.")}>
+                <button type="button" className="aod_btn_secondary" onClick={() => setShowContactUs(true)}>
                   문의하기
                 </button>
               </div>
@@ -2267,7 +2383,7 @@ export function HomePage() {
         {/* ===================================================== */}
         {showCommunityDetail && (() => {
           const card = COMMUNITY_CARDS.find(c => c.key === showCommunityDetail)!;
-          const imgMap: Record<string, string> = { community: d1Img, tips: e1Img, popular: m1Img };
+          const imgMap: Record<string, string> = { community: d1Img, tips: communityTipsImg, popular: m1Img, qa: l1Img, event: j1Img };
           const posts: Record<string, Array<{ title: string; author: string; date: string; excerpt: string; img: string; likes: number; comments: number; tags: string[] }>> = {
             community: [
               { title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!", author: "따뜻한봄날", date: "2026.05.28", excerpt: "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요.", img: b1Img, likes: 124, comments: 38, tags: ["#패딩세탁", "#보풀제거"] },
@@ -2287,10 +2403,46 @@ export function HomePage() {
               { title: "세탁소 vs 왓씨 가격 완전 비교분석 (표 있음)", author: "꼼꼼분석러", date: "2026.05.23", excerpt: "셔츠 기준 동네세탁소 4,000원 vs 왓씨 3,800원+수거배송 포함. 품질도 왓씨가 더 좋았습니다.", img: a1Img, likes: 178, comments: 67, tags: ["#가격비교", "#데이터분석"] },
               { title: "이불 세탁 완전 실패담... 집 세탁기로는 무리였어요", author: "실패의고수", date: "2026.05.19", excerpt: "구스다운 이불을 가정용 세탁기에 넣었더니 솜 뭉침이 심하게 생겼어요. 이건 진짜 전문 업체에 맡겨야 해요.", img: b1Img, likes: 145, comments: 53, tags: ["#이불세탁", "#실패후기"] },
             ],
+            qa: [
+              { title: "패딩 집에서 세탁해도 될까요? 드라이 필수인가요?", author: "패딩고민", date: "2026.05.29", excerpt: "거위털 패딩인데 세탁 표시 보면 드라이클리닝이라고 나와 있어요. 집에서 세탁하면 정말 안 되나요?", img: rvOuterImg, likes: 44, comments: 18, tags: ["#패딩세탁", "#질문"] },
+              { title: "흰 면티에 커피 쏟았는데 어떻게 해야 하나요 😭", author: "커피사고", date: "2026.05.27", excerpt: "방금 새 흰 티셔츠에 아이스 아메리카노를 쏟았어요. 지금 당장 어떻게 해야 하나요?", img: rvShirtsImg, likes: 37, comments: 22, tags: ["#얼룩제거", "#응급처치"] },
+              { title: "울 소재 니트 세탁 주기가 어떻게 되나요?", author: "니트질문자", date: "2026.05.24", excerpt: "울 소재 니트 자주 입는데 세탁을 얼마나 자주 해야 할지 모르겠어요. 냄새가 날 때만 하면 되나요?", img: d1Img, likes: 29, comments: 15, tags: ["#울니트", "#세탁주기"] },
+              { title: "왓씨 예약 취소는 언제까지 가능한가요?", author: "취소문의", date: "2026.05.22", excerpt: "내일 수거 예정인데 급한 일이 생겼어요. 오늘 취소해도 되는지 궁금합니다.", img: a1Img, likes: 12, comments: 8, tags: ["#취소문의", "#예약"] },
+            ],
+            event: [
+              { title: "🎁 6월 첫 이용 고객 50% 할인 이벤트!", author: "왓씨공식", date: "2026.06.01", excerpt: "이번 달 왓씨 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 예약하세요!", img: j1Img, likes: 231, comments: 45, tags: ["#이벤트", "#50%할인", "#신규혜택"] },
+              { title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF", author: "왓씨공식", date: "2026.05.30", excerpt: "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!", img: rvBeddingImg, likes: 187, comments: 34, tags: ["#이불특가", "#여름준비"] },
+              { title: "👥 친구 초대하면 둘 다 3,000P 적립!", author: "왓씨공식", date: "2026.05.25", excerpt: "친구 링크로 가입하면 나도 3,000P, 친구도 3,000P! 포인트로 바로 결제에 사용 가능합니다.", img: m1Img, likes: 156, comments: 28, tags: ["#친구초대", "#포인트적립"] },
+              { title: "⭐ 5월 우수 리뷰어 선정 — 상품권 증정!", author: "왓씨공식", date: "2026.05.20", excerpt: "우수 리뷰를 작성해 주신 고객분께 커피 기프티콘을 드립니다. 솔직한 후기 남겨주세요!", img: b1Img, likes: 98, comments: 19, tags: ["#리뷰이벤트", "#상품권"] },
+            ],
           };
+          // 커뮤니티 전용 피드 데이터
+          const communityAllPosts = [
+            { id: 0, category: "hot",  badge: "🔥 HOT",   title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!", author: "따뜻한봄날", avatar: "🧸", date: "05.28", excerpt: "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요!", img: b1Img, likes: 124, comments: 38, tags: ["#패딩세탁", "#보풀제거"], views: 1204 },
+            { id: 1, category: "new",  badge: "🆕 NEW",   title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기", author: "깔끔맘", avatar: "👩", date: "05.25", excerpt: "과탄산소다 + 베이킹소다 1:1 비율로 2시간 담가두면 새 셔츠가 됩니다!", img: a1Img, likes: 89, comments: 22, tags: ["#교복관리", "#흰셔츠"], views: 782 },
+            { id: 2, category: "tips", badge: "💡 팁",    title: "청바지 색 빠짐 없이 세탁하는 방법 총정리", author: "데님러버", avatar: "👖", date: "05.22", excerpt: "소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본!", img: q1Img, likes: 67, comments: 15, tags: ["#청바지", "#색빠짐방지"], views: 534 },
+            { id: 3, category: "hot",  badge: "😱 실패담", title: "명품 가방 집에서 세탁하다 망친 후기...", author: "반성중", avatar: "😅", date: "05.18", excerpt: "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.", img: c1Img, likes: 201, comments: 76, tags: ["#명품케어", "#타산지석"], views: 2103 },
+            { id: 4, category: "tips", badge: "💡 팁",    title: "세탁기 안에서 나는 퀴퀴한 냄새 없애는 법", author: "냄새제거왕", avatar: "🌬️", date: "05.15", excerpt: "구연산 + 뜨거운 물 세탁기 통돌리기로 3회 반복하면 완전히 사라져요!", img: d1Img, likes: 143, comments: 29, tags: ["#세탁기관리", "#냄새제거"], views: 1567 },
+            { id: 5, category: "new",  badge: "🆕 NEW",   title: "왓씨 이용 첫 후기 — 정말 다시 쓰고 싶어요", author: "첫경험자", avatar: "🌟", date: "05.12", excerpt: "수거부터 배달까지 진짜 손 하나 안 대도 됐어요. 옷도 새 옷 느낌. 강추합니다!", img: a1Img, likes: 55, comments: 11, tags: ["#첫경험", "#왓씨후기"], views: 423 },
+          ];
+
+          const feedTabs: { key: "all" | "hot" | "new" | "tips"; label: string }[] = [
+            { key: "all",  label: "전체" },
+            { key: "hot",  label: "🔥 인기" },
+            { key: "new",  label: "🆕 최신" },
+            { key: "tips", label: "💡 팁" },
+          ];
+
+          const visiblePosts = communityFeedTab === "all"
+            ? communityAllPosts
+            : communityAllPosts.filter(p => p.category === communityFeedTab);
+
+          const isCommunity = showCommunityDetail === "community";
           const currentPosts = posts[showCommunityDetail] ?? [];
+
           return (
-            <div className="community_detail_overlay">
+            <div className="community_detail_overlay" key={`comm-${showCommunityDetail}`}>
+              {/* 헤더 */}
               <header className="community_detail_header">
                 <button type="button" className="premium_back_btn" onClick={() => setShowCommunityDetail(null)} aria-label="뒤로가기">
                   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -2298,49 +2450,257 @@ export function HomePage() {
                   </svg>
                 </button>
                 <h1 className="community_detail_title">{card.label}</h1>
-                <div style={{ width: 42 }} />
+                {isCommunity ? (
+                  <button type="button" className="comm_write_btn" onClick={() => setShowWritePost(true)}>✏️</button>
+                ) : (
+                  <div style={{ width: 42 }} />
+                )}
               </header>
-              <div className="community_detail_scroll">
-                {/* 카테고리 배너 */}
-                <div className={`community_detail_banner home_community_banner--${card.theme}`}>
-                  <div className="home_community_left">
-                    <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
-                    <h4 className="home_community_title_1">{card.title1}</h4>
-                    <h4 className="home_community_title_2">{card.title2}</h4>
-                    <div className="home_review_tags_bottom">
-                      {card.tags.map((t: string) => <span key={t} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{t}</span>)}
-                    </div>
-                  </div>
-                  <div className="home_community_right">
-                    <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
-                  </div>
-                </div>
-                {/* 게시글 목록 */}
-                <div className="community_post_list">
-                  {currentPosts.map((post, idx) => (
-                    <div key={idx} className="community_post_item" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
-                      <img src={post.img} alt={post.title} className="community_post_thumb" />
-                      <div className="community_post_body">
-                        <p className="community_post_title">{post.title}</p>
-                        <p className="community_post_meta">{post.author} · {post.date}</p>
-                        <p className="community_post_excerpt">{post.excerpt}</p>
-                        <div className="community_post_tags">
-                          {post.tags.map(t => <span key={t} className="community_post_tag">{t}</span>)}
-                        </div>
-                        <div className="community_post_footer">
-                          <span className="community_post_stat">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                            {post.likes}
-                          </span>
-                          <span className="community_post_stat">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                            {post.comments}
-                          </span>
+
+              <div className="community_detail_scroll" ref={communityDetailScrollRef}>
+                {isCommunity ? (
+                  /* ── 왓씨 세탁 커뮤니티 전용 피드 ── */
+                  <>
+                    {/* 커뮤니티 히어로 */}
+                    <div className="comm_hero">
+                      <div className="comm_hero_info">
+                        <div className="comm_hero_icon">🧺</div>
+                        <div>
+                          <h2 className="comm_hero_title">왓씨 세탁 커뮤니티</h2>
+                          <p className="comm_hero_desc">세탁 경험을 나누고 솔루션을 찾아요</p>
                         </div>
                       </div>
+                      <div className="comm_hero_stats">
+                        <div className="comm_stat"><strong>4.2만</strong><span>멤버</span></div>
+                        <div className="comm_stat"><strong>하루 38</strong><span>게시글</span></div>
+                        <div className="comm_stat"><strong>9.4k</strong><span>댓글</span></div>
+                      </div>
                     </div>
-                  ))}
-                </div>
+
+                    {/* 검색바 */}
+                    <div className="comm_search_row">
+                      <div className="comm_search_box">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <span className="comm_search_placeholder">세탁 노하우 검색...</span>
+                      </div>
+                    </div>
+
+                    {/* 필터 탭 */}
+                    <div className="comm_feed_tabs">
+                      {feedTabs.map(t => (
+                        <button key={t.key} type="button"
+                          className={`comm_feed_tab ${communityFeedTab === t.key ? "comm_feed_tab--active" : ""}`}
+                          onClick={() => setCommunityFeedTab(t.key)}>
+                          {t.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* 피드 */}
+                    <div className="comm_feed_list">
+                      {visiblePosts.map((post, idx) => {
+                        const isLiked = likedPosts.has(post.id);
+                        return (
+                          <div key={idx} className="comm_post_card" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
+                            {/* 작성자 행 */}
+                            <div className="comm_post_top">
+                              <div className="comm_avatar">{post.avatar}</div>
+                              <div className="comm_post_author_info">
+                                <span className="comm_author">{post.author}</span>
+                                <span className="comm_date">{post.date} · 조회 {post.views.toLocaleString()}</span>
+                              </div>
+                              <span className="comm_badge">{post.badge}</span>
+                            </div>
+                            {/* 본문 */}
+                            <h3 className="comm_post_title">{post.title}</h3>
+                            <p className="comm_post_excerpt">{post.excerpt}</p>
+                            {/* 이미지 */}
+                            <img src={post.img} alt={post.title} className="comm_post_img" />
+                            {/* 태그 */}
+                            <div className="comm_post_tags">
+                              {post.tags.map(t => <span key={t} className="comm_tag">{t}</span>)}
+                            </div>
+                            {/* 액션 */}
+                            <div className="comm_post_actions">
+                              <button type="button" className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setLikedPosts(prev => {
+                                    const next = new Set(prev);
+                                    isLiked ? next.delete(post.id) : next.add(post.id);
+                                    return next;
+                                  });
+                                }}>
+                                {isLiked ? "❤️" : "🤍"} {post.likes + (isLiked ? 1 : 0)}
+                              </button>
+                              <button type="button" className="comm_action_btn"
+                                onClick={(e) => { e.stopPropagation(); triggerToast("댓글 기능은 준비 중입니다."); }}>
+                                💬 {post.comments}
+                              </button>
+                              <button type="button" className="comm_action_btn"
+                                onClick={(e) => { e.stopPropagation(); triggerToast("링크가 복사되었습니다."); }}>
+                                🔗 공유
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* 글쓰기 플로팅 버튼 */}
+                    <button type="button" className="comm_fab" onClick={() => setShowWritePost(true)}>
+                      ✏️ 글쓰기
+                    </button>
+
+                    {/* 글쓰기 오버레이 */}
+                    {showWritePost && (
+                      <div className="write_post_overlay">
+                        <header className="write_post_header">
+                          <button type="button" className="premium_back_btn"
+                            onClick={() => { setShowWritePost(false); setWriteTitle(""); setWriteContent(""); }}
+                            aria-label="닫기">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                          </button>
+                          <h1 className="write_post_title">글쓰기</h1>
+                          <button type="button" className="write_submit_btn"
+                            disabled={writeTitle.trim().length === 0 || writeContent.trim().length === 0}
+                            onClick={() => {
+                              setShowWritePost(false);
+                              setWriteTitle("");
+                              setWriteContent("");
+                              triggerToast("✅ 게시글이 등록되었습니다!");
+                            }}>
+                            등록
+                          </button>
+                        </header>
+
+                        <div className="write_post_body">
+                          {/* 카테고리 */}
+                          <div className="write_category_row">
+                            {[
+                              { key: "new",  label: "🆕 일반" },
+                              { key: "tips", label: "💡 팁" },
+                              { key: "hot",  label: "🔥 후기" },
+                            ].map(c => (
+                              <button key={c.key} type="button"
+                                className={`write_category_btn ${writeCategory === c.key ? "write_category_btn--active" : ""}`}
+                                onClick={() => setWriteCategory(c.key as "hot" | "new" | "tips")}>
+                                {c.label}
+                              </button>
+                            ))}
+                          </div>
+
+                          {/* 제목 */}
+                          <input
+                            type="text"
+                            className="write_title_input"
+                            placeholder="제목을 입력해주세요"
+                            value={writeTitle}
+                            onChange={e => setWriteTitle(e.target.value)}
+                            maxLength={60}
+                          />
+                          <div className="write_char_count">{writeTitle.length}/60</div>
+
+                          {/* 본문 */}
+                          <textarea
+                            className="write_content_input"
+                            placeholder={"세탁 경험을 자유롭게 공유해주세요.\n사진과 함께 올리면 더 많은 도움이 됩니다."}
+                            value={writeContent}
+                            onChange={e => setWriteContent(e.target.value)}
+                            rows={10}
+                          />
+                          <div className="write_char_count">{writeContent.length}자</div>
+
+                          {/* 태그 안내 */}
+                          <div className="write_tag_hint">
+                            <p className="write_tag_hint_title">💬 이런 내용을 공유해보세요</p>
+                            <div className="write_suggest_tags">
+                              {["#세탁후기", "#세탁노하우", "#옷관리팁", "#얼룩제거", "#드라이클리닝", "#왓씨이용"].map(t => (
+                                <button key={t} type="button" className="write_suggest_tag"
+                                  onClick={() => setWriteContent(prev => prev + " " + t)}>
+                                  {t}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  /* ── 다른 카드들 — 피드 스타일 ── */
+                  <>
+                    {/* 헤더 배너 */}
+                    <div className={`community_detail_banner home_community_banner--${card.theme}`}>
+                      <div className="home_community_left">
+                        <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
+                        <h4 className="home_community_title_1">{card.title1}</h4>
+                        <h4 className="home_community_title_2">{card.title2}</h4>
+                        <div className="home_review_tags_bottom">
+                          {card.tags.map((t: string) => <span key={t} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{t}</span>)}
+                        </div>
+                      </div>
+                      <div className="home_community_right">
+                        <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
+                      </div>
+                    </div>
+
+                    {/* 게시글 피드 */}
+                    {currentPosts.length > 0 ? (
+                      <div className="comm_feed_list" style={{ paddingBottom: 32 }}>
+                        {currentPosts.map((post, idx) => {
+                          const isLiked = likedPosts.has(idx + 100);
+                          return (
+                            <div key={idx} className="comm_post_card" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
+                              <div className="comm_post_top">
+                                <div className="comm_avatar">👤</div>
+                                <div className="comm_post_author_info">
+                                  <span className="comm_author">{post.author}</span>
+                                  <span className="comm_date">{post.date}</span>
+                                </div>
+                              </div>
+                              <h3 className="comm_post_title">{post.title}</h3>
+                              <p className="comm_post_excerpt">{post.excerpt}</p>
+                              <img src={post.img} alt={post.title} className="comm_post_img" />
+                              <div className="comm_post_tags">
+                                {post.tags.map(t => <span key={t} className="comm_tag">{t}</span>)}
+                              </div>
+                              <div className="comm_post_actions">
+                                <button type="button" className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setLikedPosts(prev => {
+                                      const next = new Set(prev);
+                                      isLiked ? next.delete(idx + 100) : next.add(idx + 100);
+                                      return next;
+                                    });
+                                  }}>
+                                  {isLiked ? "❤️" : "🤍"} {post.likes + (isLiked ? 1 : 0)}
+                                </button>
+                                <button type="button" className="comm_action_btn"
+                                  onClick={(e) => { e.stopPropagation(); triggerToast("댓글 기능은 준비 중입니다."); }}>
+                                  💬 {post.comments}
+                                </button>
+                                <button type="button" className="comm_action_btn"
+                                  onClick={(e) => { e.stopPropagation(); triggerToast("링크가 복사되었습니다."); }}>
+                                  🔗 공유
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div style={{ padding: "48px 20px", textAlign: "center" }}>
+                        <p style={{ fontSize: 32, marginBottom: 12 }}>📭</p>
+                        <p style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 6px" }}>아직 게시글이 없어요</p>
+                        <p style={{ fontSize: 13, color: "#94a3b8", margin: 0 }}>첫 번째 글을 남겨보세요!</p>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           );
@@ -2813,7 +3173,7 @@ export function HomePage() {
                   const delta = e.clientX - communityDragStartRef.current.x;
                   if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
                   let nx = communityDragStartRef.current.tx + delta;
-                  const SET = 810;
+                  const SET = 1350;
                   if (nx > 0) nx -= SET;
                   if (nx < -SET) nx += SET;
                   communityXRef.current = nx;
@@ -2840,7 +3200,7 @@ export function HomePage() {
                     const delta = e.touches[0].clientX - communityDragStartRef.current.x;
                     if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
                     let nx = communityDragStartRef.current.tx + delta;
-                    const SET = 810;
+                    const SET = 1350;
                     if (nx > 0) nx -= SET;
                     if (nx < -SET) nx += SET;
                     communityXRef.current = nx;
@@ -2849,7 +3209,7 @@ export function HomePage() {
                   onTouchEnd={() => { communityDraggingRef.current = false; }}
                 >
                   {([...COMMUNITY_CARDS, ...COMMUNITY_CARDS] as typeof COMMUNITY_CARDS[number][]).map((card, i) => {
-                    const imgMap: Record<string, string> = { community: d1Img, tips: e1Img, popular: m1Img };
+                    const imgMap: Record<string, string> = { community: d1Img, tips: communityTipsImg, popular: m1Img, qa: l1Img, event: j1Img };
                     return (
                       <div
                         key={i}
