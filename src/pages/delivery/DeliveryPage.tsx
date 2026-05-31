@@ -64,6 +64,8 @@ export function DeliveryPage() {
   const currentRider = ridersList[selectedRiderIndex];
   const [expandedStep, setExpandedStep] = useState<number | null>(2); // 현재 단계 기본 열림
   const [receiptToast, setReceiptToast] = useState(false);
+  const [notiImminent, setNotiImminent] = useState(true);  // 도착 임박 알림
+  const [notiComplete, setNotiComplete] = useState(true);  // 도착 완료 알림
 
   const showReceiptToast = () => {
     setReceiptToast(true);
@@ -180,13 +182,46 @@ export function DeliveryPage() {
         </p>
 
         <section className="delivery_summary_cards">
+          {/* 예약 정보 확인 */}
           <div className="delivery_summary_card delivery_summary_card--active">
-            <p className="delivery_summary_label">수거 요청 접수</p>
-            <strong>예약 정보 확인</strong>
+            <div className="dscard_top">
+              <span className="dscard_badge dscard_badge--blue">예약 완료</span>
+            </div>
+            <p className="dscard_title">예약 정보 확인</p>
+            <div className="dscard_rows">
+              <div className="dscard_row">
+                <span>주문번호</span>
+                <strong>WTC-8311-9C94</strong>
+              </div>
+              <div className="dscard_row">
+                <span>예약일</span>
+                <strong>05.27 (월)</strong>
+              </div>
+              <div className="dscard_row">
+                <span>세탁 종류</span>
+                <strong>아우터 · 가죽</strong>
+              </div>
+            </div>
           </div>
+
+          {/* 라이더 정보 확인 */}
           <div className="delivery_summary_card">
-            <p className="delivery_summary_label">라이더 배정</p>
-            <p>라이더 정보 확인</p>
+            <div className="dscard_top">
+              <span className="dscard_badge dscard_badge--green">라이더 배정됨</span>
+            </div>
+            <p className="dscard_title">라이더 정보</p>
+            <div className="dscard_rider_row">
+              <img
+                src={currentRider.img}
+                alt={currentRider.name}
+                className="dscard_rider_img"
+              />
+              <div className="dscard_rider_info">
+                <strong>{currentRider.name}</strong>
+                <span>⭐ {currentRider.rating}</span>
+                <span className="dscard_rider_eta">{currentRider.eta}</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -462,15 +497,11 @@ export function DeliveryPage() {
 
             {/* 도착 정보 카드 */}
             <article className="arrival_info_card">
-              {/* 상단: 레이블 + ETA 뱃지 */}
+              {/* 상단: 레이블만 */}
               <div className="arrival_top_row">
                 <div className="arrival_label_group">
                   <span className="arrival_section_label">ARRIVAL INFO</span>
                   <h3 className="arrival_title">도착 정보</h3>
-                </div>
-                <div className="arrival_eta_badge">
-                  <span className="arrival_eta_icon">🕐</span>
-                  <span className="arrival_eta_text">약 {etaMinutes}분 후 도착</span>
                 </div>
               </div>
 
@@ -482,7 +513,12 @@ export function DeliveryPage() {
                 </div>
                 <div className="arrival_progress_labels">
                   <span>세탁 공장 출발</span>
-                  <span className="arrival_progress_now">현재 이동 중</span>
+                  <div className="arrival_progress_center">
+                    <span className="arrival_progress_now">현재 이동 중</span>
+                    <span className="arrival_eta_inline">
+                      🕐 약 {etaMinutes}분 후 도착
+                    </span>
+                  </div>
                   <span>우리집</span>
                 </div>
               </div>
@@ -503,16 +539,28 @@ export function DeliveryPage() {
 
               {/* 알림 상태 배지 */}
               <div className="arrival_noti_row">
-                <div className="arrival_noti_item arrival_noti_item--on">
-                  <span className="arrival_noti_dot" />
+                <button
+                  type="button"
+                  className={`arrival_noti_item ${notiImminent ? "arrival_noti_item--on" : "arrival_noti_item--off"}`}
+                  onClick={() => setNotiImminent((v) => !v)}
+                >
+                  <span className={`arrival_noti_dot ${notiImminent ? "" : "arrival_noti_dot--off"}`} />
                   <span>도착 임박 알림</span>
-                  <span className="arrival_noti_status">ON</span>
-                </div>
-                <div className="arrival_noti_item arrival_noti_item--on">
-                  <span className="arrival_noti_dot" />
+                  <span className={`arrival_noti_status ${notiImminent ? "" : "arrival_noti_status--off"}`}>
+                    {notiImminent ? "ON" : "OFF"}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className={`arrival_noti_item ${notiComplete ? "arrival_noti_item--on" : "arrival_noti_item--off"}`}
+                  onClick={() => setNotiComplete((v) => !v)}
+                >
+                  <span className={`arrival_noti_dot ${notiComplete ? "" : "arrival_noti_dot--off"}`} />
                   <span>도착 완료 알림</span>
-                  <span className="arrival_noti_status">ON</span>
-                </div>
+                  <span className={`arrival_noti_status ${notiComplete ? "" : "arrival_noti_status--off"}`}>
+                    {notiComplete ? "ON" : "OFF"}
+                  </span>
+                </button>
               </div>
             </article>
 
@@ -753,18 +801,51 @@ export function DeliveryPage() {
               <h2 className="delivery_section_title">배송 단계 확인</h2>
             </div>
           </div>
-          <div className="delivery_action_list">
-            <div className="delivery_action_card">
-              <p className="delivery_action_label">배송 출발</p>
-              <strong>출발 준비 완료</strong>
+
+          {/* 가로 스텝 표시 */}
+          <div className="dstep_track">
+            {[
+              { icon: "🏭", label: "세탁 완료",  sub: "05.27  08:15", status: "done" },
+              { icon: "🌀", label: "건조 중",    sub: "진행 중",     status: "current" },
+              { icon: "🚀", label: "배송 출발",  sub: "대기 중",     status: "pending" },
+              { icon: "🏠", label: "문 앞 배달", sub: "예정",        status: "pending" },
+            ].map((step, i, arr) => (
+              <div key={i} className="dstep_item">
+                <div className={`dstep_icon_wrap dstep_icon_wrap--${step.status}`}>
+                  <span className="dstep_icon">{step.icon}</span>
+                  {step.status === "current" && <span className="dstep_pulse" />}
+                </div>
+                {i < arr.length - 1 && (
+                  <div className={`dstep_connector ${step.status === "done" ? "dstep_connector--done" : ""}`} />
+                )}
+                <p className={`dstep_label ${step.status === "current" ? "dstep_label--current" : step.status === "done" ? "dstep_label--done" : ""}`}>{step.label}</p>
+                <p className="dstep_sub">{step.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* 상세 정보 카드 3개 */}
+          <div className="dinfo_grid">
+            <div className="dinfo_card dinfo_card--blue">
+              <span className="dinfo_icon">🌀</span>
+              <div>
+                <p className="dinfo_label">현재 단계</p>
+                <p className="dinfo_val">건조 중</p>
+              </div>
             </div>
-            <div className="delivery_action_card">
-              <p className="delivery_action_label">실시간 위치 확인</p>
-              <strong>경로를 따라 위치 확인 가능</strong>
+            <div className="dinfo_card dinfo_card--green">
+              <span className="dinfo_icon">🚀</span>
+              <div>
+                <p className="dinfo_label">배송 출발</p>
+                <p className="dinfo_val">준비 예정</p>
+              </div>
             </div>
-            <div className="delivery_action_card">
-              <p className="delivery_action_label">배송 예상 시간 안내</p>
-              <strong>약 25분 후 도착 예정</strong>
+            <div className="dinfo_card dinfo_card--orange">
+              <span className="dinfo_icon">⏱</span>
+              <div>
+                <p className="dinfo_label">도착 예정</p>
+                <p className="dinfo_val">오늘 밤 11시</p>
+              </div>
             </div>
           </div>
         </section>

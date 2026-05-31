@@ -417,6 +417,7 @@ export function Splash() {
         }
 
         .brand_slogan {
+          font-family: var(--font-pretendard);
           font-size: clamp(18px, 5vw, 20px);
           font-weight: 600;
           color: #1e293b;

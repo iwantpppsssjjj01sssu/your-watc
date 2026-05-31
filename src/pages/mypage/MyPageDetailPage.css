@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 20px;
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -132,6 +132,7 @@
 .menu_detail_content {
   display: flex;
   flex-direction: column;
+  padding-bottom: 90px; /* fixed 버튼 공간 확보 */
 }
 
 .menu_section_body {
@@ -1083,15 +1084,14 @@
 }
 
 .mypagedetail_floating_action_bar {
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   max-width: 880px;
-  margin: 0 auto;
-  padding: 16px 20px 24px;
-  background: linear-gradient(to top, rgba(248, 250, 252, 0.96), transparent);
+  padding: 12px 20px 20px;
+  background: linear-gradient(to top, rgba(248, 250, 252, 1) 70%, transparent);
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -1456,6 +1456,65 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* 적립 내역 헤더 */
+.point_history_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.point_history_toggle_btn {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.point_history_toggle_btn:hover { background: #dbeafe; }
+
+.point_history_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.point_history_list--open {
+  animation: pointHistoryExpand 0.25s ease forwards;
+}
+
+@keyframes pointHistoryExpand {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.point_history_card--animated {
+  animation: pointCardIn 0.22s ease forwards;
+  opacity: 0;
+}
+
+@keyframes pointCardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.point_history_closed_hint {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #e2e8f0;
 }
 
 .point_history_card {

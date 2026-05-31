@@ -35,8 +35,11 @@
   background: var(--color-black);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  font-family: var(--font-pretendard);
 }
 
 html,
@@ -67,7 +70,7 @@ body {
 
 /* 모든 페이지 좌우 여백을 기기 너비에 맞춰 유동적으로 반응하는 HSL 패딩으로 지정 */
 :root {
-  --page-horizontal-padding: clamp(16px, 6vw, 25px);
+  --page-horizontal-padding: 20px;
 }
 
 body {

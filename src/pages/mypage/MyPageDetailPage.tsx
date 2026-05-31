@@ -581,6 +581,9 @@ export function MyPageDetailPage() {
   // 6. 아코디언 상태
   const [openAccordionIdx, setOpenAccordionIdx] = useState<number | null>(0);
 
+  // 포인트 적립 내역 펼치기 상태
+  const [pointHistoryOpen, setPointHistoryOpen] = useState<boolean>(false);
+
   // FAQ 아코디언 상태
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(null);
 
@@ -1851,47 +1854,49 @@ export function MyPageDetailPage() {
             </section>
 
             <section className="menu_section_body">
-              <h2 className="body_section_title">
-                📦 나의 안심 포인트 적립 내역
-              </h2>
-
-              <div className="point_history_list">
-                <div className="point_history_card">
-                  <div className="point_card_header">
-                    <span className="point_date">2026.05.27</span>
-                    <span className="point_val type_earn">+50P</span>
-                  </div>
-                  <h4>매일 출석체크 챌린지 4일차 보너스</h4>
-                  <p>안심 출석체크 스탬프 판 누적 적립 성공</p>
-                </div>
-
-                <div className="point_history_card">
-                  <div className="point_card_header">
-                    <span className="point_date">2026.05.20</span>
-                    <span className="point_val type_earn">+100P</span>
-                  </div>
-                  <h4>생활빨래 프리미엄 M팩 클리닝 완료 보너스</h4>
-                  <p>주문 번호: #WT-20260520-001 보상 적립</p>
-                </div>
-
-                <div className="point_history_card">
-                  <div className="point_card_header">
-                    <span className="point_date">2026.05.12</span>
-                    <span className="point_val type_earn">+5,000P</span>
-                  </div>
-                  <h4>친구 초대 이벤트 친구 첫 가입 변환 성공</h4>
-                  <p>친구 추천 아이디: WATC-FRIEND-LOVE 보너스</p>
-                </div>
-
-                <div className="point_history_card">
-                  <div className="point_card_header">
-                    <span className="point_date">2026.04.15</span>
-                    <span className="point_val type_use">-2,000P</span>
-                  </div>
-                  <h4>와이셔츠 단품 칼각 드레스 프레스 세탁 차감</h4>
-                  <p>주문 할인 결제 포인트 사용 처리 완료</p>
-                </div>
+              {/* 적립 내역 헤더 + 토글 버튼 */}
+              <div className="point_history_header">
+                <h2 className="body_section_title" style={{ margin: 0 }}>
+                  📦 나의 안심 포인트 적립 내역
+                </h2>
+                <button
+                  type="button"
+                  className="point_history_toggle_btn"
+                  onClick={() => setPointHistoryOpen((v) => !v)}
+                >
+                  {pointHistoryOpen ? "접기 ▲" : "펼쳐보기 ▼"}
+                </button>
               </div>
+
+              {/* 펼쳐진 상태일 때만 표시 */}
+              {pointHistoryOpen && (
+                <div className="point_history_list point_history_list--open">
+                  {[
+                    { date: "2026.05.27", val: "+50P",     type: "earn", title: "매일 출석체크 챌린지 4일차 보너스",       desc: "안심 출석체크 스탬프 판 누적 적립 성공" },
+                    { date: "2026.05.20", val: "+100P",    type: "earn", title: "생활빨래 프리미엄 M팩 클리닝 완료 보너스", desc: "주문 번호: #WT-20260520-001 보상 적립" },
+                    { date: "2026.05.12", val: "+5,000P",  type: "earn", title: "친구 초대 이벤트 친구 첫 가입 변환 성공", desc: "친구 추천 아이디: WATC-FRIEND-LOVE 보너스" },
+                    { date: "2026.04.15", val: "-2,000P",  type: "use",  title: "와이셔츠 단품 칼각 드레스 프레스 세탁 차감", desc: "주문 할인 결제 포인트 사용 처리 완료" },
+                    { date: "2026.04.02", val: "+200P",    type: "earn", title: "세탁 서비스 이용 완료 보너스",             desc: "주문 번호: #WT-20260402-003 보상 적립" },
+                    { date: "2026.03.18", val: "+50P",     type: "earn", title: "리뷰 작성 감사 포인트",                    desc: "서비스 이용 후기 작성 완료 보상" },
+                  ].map((h, i) => (
+                    <div key={i} className="point_history_card point_history_card--animated" style={{ animationDelay: `${i * 0.05}s` }}>
+                      <div className="point_card_header">
+                        <span className="point_date">{h.date}</span>
+                        <span className={`point_val ${h.type === "earn" ? "type_earn" : "type_use"}`}>{h.val}</span>
+                      </div>
+                      <h4>{h.title}</h4>
+                      <p>{h.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* 닫힌 상태일 때 안내 */}
+              {!pointHistoryOpen && (
+                <div className="point_history_closed_hint">
+                  총 6건의 적립·사용 내역이 있습니다. 위 버튼을 눌러 확인하세요.
+                </div>
+              )}
             </section>
           </div>
         )}
@@ -1993,7 +1998,7 @@ export function MyPageDetailPage() {
           <button
             type="button"
             className={`mypagedetail_cta_btn ${currentMenu === "invite-friend" ? "is-subtle" : ""}`}
-            onClick={() => navigate("/home?tab=reserve")}
+            onClick={() => navigate("/home?tab=reserve&from=" + (currentMenu ?? "mypage"))}
             style={{
               background:
                 currentMenu === "invite-friend"
