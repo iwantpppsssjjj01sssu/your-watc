@@ -11,7 +11,8 @@
       "Bash(xargs grep -l \"하이라이트\\\\|highlight\\\\|Highlight\")",
       "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|highlight\")",
       "Bash(xargs grep -l \"4강\\\\|대진표\\\\|MVP 투표\")",
-      "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|Highlight\\\\|highlight\")"
+      "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|Highlight\\\\|highlight\")",
+      "Bash(node -e ' *)"
     ]
   }
 }

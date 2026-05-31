@@ -652,9 +652,60 @@
 }
 
 .laundry_step_card--current {
-  background: #eff6ff;
-  border-color: #2563eb;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #eff6ff 100%);
+  background-size: 200% 200%;
+  border: 2px dashed #2563eb !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+  animation:
+    currentCardShimmer 3s ease-in-out infinite,
+    currentCardGlow    2s ease-in-out infinite;
+  position: relative;
+  overflow: visible;
+}
+
+@keyframes currentCardShimmer {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes currentCardGlow {
+  0%, 100% { box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12); }
+  50%       { box-shadow: 0 6px 28px rgba(37, 99, 235, 0.35),
+                           0 0 16px  rgba(37, 99, 235, 0.18); }
+}
+
+/* 반짝이는 별 파티클 (::before / ::after) */
+.laundry_step_card--current::before,
+.laundry_step_card--current::after {
+  content: "✦";
+  position: absolute;
+  font-size: 12px;
+  color: #2563eb;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.laundry_step_card--current::before {
+  top: -6px; right: 16px;
+  animation: sparkle1 2.2s ease-in-out infinite;
+}
+
+.laundry_step_card--current::after {
+  top: 8px; right: 6px;
+  font-size: 8px;
+  animation: sparkle2 2.2s ease-in-out 0.8s infinite;
+}
+
+@keyframes sparkle1 {
+  0%, 100% { opacity: 0; transform: scale(0.6) translateY(0); }
+  40%       { opacity: 1; transform: scale(1.2) translateY(-4px); }
+  70%       { opacity: 0.6; }
+}
+
+@keyframes sparkle2 {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50%       { opacity: 1; transform: scale(1.3) rotate(30deg); }
 }
 
 .laundry_step_card--pending {
@@ -859,6 +910,563 @@
 
 .delivery_completion_card p:last-child {
   margin-bottom: 0;
+}
+
+/* ── 수령 확인 리디자인 ── */
+.delivery_receipt_section {
+  margin-bottom: 24px;
+}
+
+.delivery_receipt_card {
+  background: linear-gradient(160deg, #f0fdf4 0%, #ffffff 60%);
+  border: 1.5px solid #bbf7d0;
+  border-radius: 24px;
+  padding: 22px 20px 20px;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 상단 아이콘 + 타이틀 행 */
+.receipt_icon_row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.receipt_icon_circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.receipt_title_group {
+  flex: 1;
+}
+
+.receipt_label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #10b981;
+  letter-spacing: 0.8px;
+  margin: 0 0 2px;
+}
+
+.receipt_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #064e3b;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.receipt_status_badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+/* 수령 절차 스텝 */
+.receipt_steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #ffffff;
+  border: 1px solid #d1fae5;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.receipt_step_item {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.receipt_step_left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.receipt_step_num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.receipt_step_line {
+  flex: 1;
+  width: 2px;
+  background: #d1fae5;
+  margin: 4px 0;
+  min-height: 20px;
+}
+
+.receipt_step_content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 16px;
+  flex: 1;
+}
+
+.receipt_step_item:last-child .receipt_step_content {
+  padding-bottom: 0;
+}
+
+.receipt_step_icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.receipt_step_text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.receipt_step_desc {
+  font-size: 11.5px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* 확인 버튼 */
+.receipt_confirm_btn {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-pretendard);
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.receipt_confirm_btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+.receipt_confirm_btn--disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ── 수거 방식 진행 카드 ── */
+.collection_method_card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.collection_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.collection_section_label {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+.collection_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.collection_done_badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #059669;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 5px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* 선택된 방식 강조 */
+.collection_selected_card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1.5px solid #2563eb;
+  border-radius: 16px;
+  padding: 16px 14px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
+}
+
+.collection_selected_icon_wrap {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+}
+
+.collection_selected_icon { font-size: 24px; }
+
+.collection_selected_info { flex: 1; min-width: 0; }
+
+.collection_selected_label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0 0 2px;
+  letter-spacing: 0.2px;
+}
+
+.collection_selected_name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.collection_selected_desc {
+  font-size: 11.5px;
+  color: #475569;
+  margin: 0;
+}
+
+.collection_check_circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* 다른 옵션 그리드 */
+.collection_options_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.collection_option_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+  opacity: 0.65;
+}
+
+.collection_option_icon { font-size: 20px; }
+
+.collection_option_label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.collection_option_desc {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ── 도착 정보 카드 ── */
+.arrival_info_card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.arrival_top_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.arrival_label_group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.arrival_section_label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 0.8px;
+}
+
+.arrival_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.arrival_eta_badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.arrival_eta_icon { font-size: 16px; }
+
+.arrival_eta_text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1d4ed8;
+  white-space: nowrap;
+}
+
+/* 진행 바 */
+.arrival_progress_wrap { display: flex; flex-direction: column; gap: 6px; }
+
+.arrival_progress_track {
+  position: relative;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.arrival_progress_fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  width: 62%;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  border-radius: 4px;
+}
+
+.arrival_progress_dot {
+  position: absolute;
+  top: 50%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+  animation: arrivalDotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes arrivalDotPulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4); }
+  50%       { box-shadow: 0 2px 16px rgba(37, 99, 235, 0.7), 0 0 0 5px rgba(37, 99, 235, 0.12); }
+}
+
+.arrival_progress_labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.arrival_progress_now {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+/* 주소 행 */
+.arrival_address_row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.arrival_address_icon_wrap {
+  width: 32px;
+  height: 32px;
+  background: #eff6ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.arrival_address_label {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 700;
+  margin: 0 0 2px;
+  letter-spacing: 0.3px;
+}
+
+.arrival_address_text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* 알림 배지 */
+.arrival_noti_row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arrival_noti_item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.arrival_noti_item--on { color: #1e293b; }
+
+.arrival_noti_dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  flex-shrink: 0;
+  animation: notiDotBlink 2s ease-in-out infinite;
+}
+
+@keyframes notiDotBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.arrival_noti_status {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 800;
+  color: #10b981;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.receipt_notice {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 수령 확인 토스트 */
+.receipt_toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1e293b;
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22);
+  animation: receiptToastIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes receiptToastIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.receipt_toast_icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.receipt_toast_title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px;
+}
+
+.receipt_toast_desc {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0;
 }
 
 .delivery_tab_bar {

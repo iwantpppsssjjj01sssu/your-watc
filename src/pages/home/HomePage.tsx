@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
@@ -161,12 +161,37 @@ export function HomePage() {
   const [giftMethod, setGiftMethod] = useState<"kakao" | "watc" | null>(null);
   const [showKakaoSim, setShowKakaoSim] = useState<boolean>(false);
   const [showWatcSim, setShowWatcSim] = useState<boolean>(false);
+  const [receivedGiftCount, setReceivedGiftCount] = useState<number>(0);
+  const [showReceiveSuccess, setShowReceiveSuccess] = useState<boolean>(false);
+
+  const handleGiftReceive = () => {
+    setReceivedGiftCount((prev) => prev + 1);
+    setShowReceiveSuccess(true);
+    setTimeout(() => {
+      setShowReceiveSuccess(false);
+      setShowGiftModal(false);
+      setGiftMethod(null);
+      setGiftRecipient("");
+    }, 2000);
+  };
+
+  // --- Point Detail & Mini Game States ---
+  const [showPointDetail, setShowPointDetail] = useState<boolean>(false);
+  const [showPricingDetail, setShowPricingDetail] = useState<boolean>(false);
+  const [pricingTab, setPricingTab] = useState<"clothing" | "shoes" | "bedding" | "extra">("clothing");
+  const [showActiveOrderDetail, setShowActiveOrderDetail] = useState<boolean>(false);
+  const [totalScore, setTotalScore] = useState<number>(800);
+  const [gameActive, setGameActive] = useState<boolean>(false);
+  const [gameTimeLeft, setGameTimeLeft] = useState<number>(15);
+  const [gameEarned, setGameEarned] = useState<number>(0);
+  const [gameDone, setGameDone] = useState<boolean>(false);
+  const [bubbleStates, setBubbleStates] = useState<boolean[]>(Array(9).fill(false));
 
   // --- Circular Progress Stage States ---
   const [circleProgress, setCircleProgress] = useState<number>(0);
   const [typewriterFinished] = useState<boolean>(true);
 
-  const [profileName, setProfileName] = useState<string>("하은");
+  const [profileName, setProfileName] = useState<string>("세나");
   const [profilePhone, setProfilePhone] = useState<string>("010-9876-5432");
   const [profileAddress, setProfileAddress] = useState<string>(
     "서울특별시 서초구 반포동 왓씨타워 410호",
@@ -538,7 +563,6 @@ export function HomePage() {
       setShowReserveDetail(true);
       triggerToast("✨ 60초 신속 세탁 예약을 시작합니다!");
     } else if (actionName === "AI 세탁 가이드") {
-      setActiveTab("reserve");
       setShowAiGuideDetail(true);
       triggerToast("📸 AI 세탁 가이드 스캐너를 작동합니다.");
     } else if (actionName === "수거배송 상세조회") {
@@ -1231,6 +1255,451 @@ export function HomePage() {
         )}
 
         {/* ===================================================== */}
+        {/* 진행 중인 주문 상세 오버레이                           */}
+        {/* ===================================================== */}
+        {showActiveOrderDetail && (
+          <div className="active_order_overlay">
+            <header className="active_order_header">
+              <button type="button" className="premium_back_btn" onClick={() => setShowActiveOrderDetail(false)} aria-label="뒤로가기">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <h1 className="active_order_header_title">진행 중인 주문</h1>
+              <div style={{ width: 42 }} />
+            </header>
+
+            <div className="active_order_scroll">
+              {/* 주문 요약 히어로 */}
+              <div className="aod_hero">
+                <div className="aod_hero_left">
+                  <span className="aod_hero_label">현재 진행 단계</span>
+                  <p className="aod_hero_stage">🌀 건조 중</p>
+                  <span className="aod_hero_order_num">WTC-20260527-8311</span>
+                </div>
+                <div className="aod_hero_right">
+                  <div className="aod_hero_pct_ring_wrap">
+                    <svg viewBox="0 0 64 64" className="aod_hero_ring">
+                      <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="6" />
+                      <circle cx="32" cy="32" r="26" fill="none" stroke="#ffffff" strokeWidth="6"
+                        strokeDasharray="163.36" strokeDashoffset="81.68"
+                        strokeLinecap="round" transform="rotate(-90 32 32)" />
+                    </svg>
+                    <span className="aod_hero_pct">50%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5단계 상세 타임라인 */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">세탁 · 배송 진행 현황</h3>
+                <div className="aod_timeline">
+                  {[
+                    { emoji: "📦", label: "수거 완료",  status: "done",    time: "05.27  02:30", desc: "안심팩 포장 후 세탁 공장 입고" },
+                    { emoji: "🫧", label: "세탁 완료",  status: "done",    time: "05.27  08:15", desc: "저온 스팀 정밀 세탁 완료" },
+                    { emoji: "🌀", label: "건조 중",    status: "current", time: null,           desc: "고온 열풍 정밀 건조 진행 중 · 약 40분 소요" },
+                    { emoji: "🔍", label: "검수 완료",  status: "pending", time: null,           desc: "전문 검수팀 품질 검사 예정" },
+                    { emoji: "🚚", label: "배송 출발",  status: "pending", time: null,           desc: "배송 마스터 배정 및 문 앞 배달" },
+                  ].map((step, i, arr) => (
+                    <div key={i} className="aod_timeline_item">
+                      <div className="aod_tl_track">
+                        <div className={`aod_tl_dot aod_tl_dot--${step.status}`}>
+                          {step.status === "done" && (
+                            <svg viewBox="0 0 16 16" width="10" height="10" fill="none">
+                              <polyline points="3,8 6.5,11.5 13,4.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                          {step.status === "current" && <div className="aod_tl_dot_inner" />}
+                        </div>
+                        {i < arr.length - 1 && <div className={`aod_tl_line aod_tl_line--${step.status}`} />}
+                      </div>
+                      <div className={`aod_tl_card aod_tl_card--${step.status}`}>
+                        <div className="aod_tl_card_top">
+                          <span className="aod_tl_emoji">{step.emoji}</span>
+                          <div className="aod_tl_info">
+                            <div className="aod_tl_name_row">
+                              <span className="aod_tl_name">{step.label}</span>
+                              <span className={`aod_tl_badge aod_tl_badge--${step.status}`}>
+                                {step.status === "done" ? "완료" : step.status === "current" ? "진행 중" : "대기"}
+                              </span>
+                            </div>
+                            <p className="aod_tl_desc">{step.desc}</p>
+                            {step.time && <span className="aod_tl_time">{step.time}</span>}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 주문 품목 */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">세탁 품목</h3>
+                <div className="aod_items_list">
+                  {[
+                    { name: "아우터 코트", type: "드라이클리닝", qty: 1, price: "19,900원" },
+                    { name: "드레스 셔츠", type: "기본 세탁",    qty: 2, price: "4,900원 × 2" },
+                  ].map((item, i) => (
+                    <div key={i} className="aod_item_row">
+                      <div className="aod_item_info">
+                        <p className="aod_item_name">{item.name}</p>
+                        <p className="aod_item_type">{item.type} · {item.qty}벌</p>
+                      </div>
+                      <span className="aod_item_price">{item.price}</span>
+                    </div>
+                  ))}
+                  <div className="aod_item_total_row">
+                    <span>총 결제금액</span>
+                    <strong>29,700원</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* 배송 정보 */}
+              <div className="aod_section">
+                <h3 className="aod_section_title">배송 정보</h3>
+                <div className="aod_info_card">
+                  {[
+                    { label: "배달지",    val: "반포동 왓씨타워 410호" },
+                    { label: "수거 방식", val: "문 앞 수거" },
+                    { label: "도착 예정", val: "오늘 저녁 11시 (예정)" },
+                    { label: "담당 라이더", val: "김진우 마스터 · ⭐ 4.98" },
+                  ].map((row, i) => (
+                    <div key={i} className="aod_info_row">
+                      <span className="aod_info_label">{row.label}</span>
+                      <span className="aod_info_val">{row.val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 하단 액션 버튼 */}
+              <div className="aod_actions">
+                <button type="button" className="aod_btn_primary" onClick={() => { setShowActiveOrderDetail(false); setActiveTab("delivery"); }}>
+                  실시간 배송 현황 보기
+                </button>
+                <button type="button" className="aod_btn_secondary" onClick={() => triggerToast("고객센터로 연결합니다.")}>
+                  문의하기
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ===================================================== */}
+        {/* 세탁 종류별 요금표 오버레이                            */}
+        {/* ===================================================== */}
+        {showPricingDetail && (() => {
+          type PricingTab = "clothing" | "shoes" | "bedding" | "extra";
+          const tabs: { key: PricingTab; label: string; emoji: string }[] = [
+            { key: "clothing", label: "의류",   emoji: "👔" },
+            { key: "shoes",    label: "신발",   emoji: "👟" },
+            { key: "bedding",  label: "침구류", emoji: "🛏️" },
+            { key: "extra",    label: "추가요금", emoji: "➕" },
+          ];
+
+          const pricingData: Record<PricingTab, { columns: string[]; rows: (string | number)[][]; note?: string }> = {
+            clothing: {
+              columns: ["품목", "기본 세탁", "드라이클리닝", "스팀 케어"],
+              rows: [
+                ["셔츠 · 블라우스",  "4,900원",  "8,900원", "6,900원"],
+                ["바지 · 슬랙스",    "5,900원",  "9,900원", "7,900원"],
+                ["원피스 · 스커트",  "7,900원", "12,900원", "9,900원"],
+                ["코트 · 자켓",     "12,900원", "19,900원","15,900원"],
+                ["패딩 · 점퍼",     "14,900원", "22,900원","17,900원"],
+                ["정장 상하의",     "19,900원", "29,900원","24,900원"],
+                ["니트 · 스웨터",    "6,900원", "10,900원", "8,900원"],
+                ["실크 · 린넨",      "8,900원", "14,900원","11,900원"],
+              ],
+            },
+            shoes: {
+              columns: ["품목", "일반 클리닝", "프리미엄", "명품 케어"],
+              rows: [
+                ["운동화 · 스니커즈", "12,900원", "19,900원", "—"],
+                ["구두 · 로퍼",       "15,900원", "24,900원", "34,900원"],
+                ["부츠",             "18,900원", "28,900원", "39,900원"],
+                ["슬리퍼 · 샌들",     "9,900원", "14,900원", "—"],
+                ["아동화",            "8,900원", "12,900원", "—"],
+              ],
+              note: "* 명품 케어는 Hermès · Chanel · Louis Vuitton 등 하이엔드 브랜드에 한해 적용됩니다.",
+            },
+            bedding: {
+              columns: ["품목", "일반 세탁", "구스다운", "살균 케어"],
+              rows: [
+                ["이불 (싱글)",       "19,900원", "39,900원", "29,900원"],
+                ["이불 (더블)",       "29,900원", "59,900원", "39,900원"],
+                ["이불 (킹)",         "39,900원", "79,900원", "49,900원"],
+                ["베개 (1개)",         "9,900원", "15,900원", "12,900원"],
+                ["토퍼 커버",         "24,900원",        "—", "34,900원"],
+                ["러그 · 카펫 (소)", "29,900원",        "—", "39,900원"],
+              ],
+              note: "* 이불류 무게에 따라 추가 요금이 부과될 수 있습니다. (기준 무게: 싱글 3kg / 더블 5kg)",
+            },
+            extra: {
+              columns: ["항목", "적용 기준", "추가 금액"],
+              rows: [
+                ["급행 배송",         "당일 처리",          "+30%"],
+                ["보풀 제거",         "개당 적용",        "+2,000원"],
+                ["얼룩 전처리",       "부위당 적용",      "+3,000원"],
+                ["스팀 다림질",       "개당 적용",        "+2,500원"],
+                ["고급 향 마감",      "선택 적용",        "+2,000원"],
+                ["안심팩 포장",       "기본 제공",              "무료"],
+                ["무게 초과",         "1kg 당",          "+3,000원"],
+                ["명품 라벨 검수",    "브랜드 확인 시",    "+5,000원"],
+              ],
+            },
+          };
+
+          const current = pricingData[pricingTab];
+
+          return (
+            <div className="pricing_overlay">
+              <header className="pricing_header">
+                <button type="button" className="premium_back_btn" onClick={() => setShowPricingDetail(false)} aria-label="뒤로가기">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <h1 className="pricing_header_title">세탁 종류별 요금</h1>
+                <div style={{ width: 42 }} />
+              </header>
+
+              {/* 탭 */}
+              <div className="pricing_tab_bar">
+                {tabs.map(t => (
+                  <button
+                    key={t.key}
+                    type="button"
+                    className={`pricing_tab_btn ${pricingTab === t.key ? "pricing_tab_btn--active" : ""}`}
+                    onClick={() => setPricingTab(t.key)}
+                  >
+                    <span>{t.emoji}</span>
+                    <span>{t.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="pricing_scroll">
+                {/* 안내 배너 */}
+                <div className="pricing_banner">
+                  <span className="pricing_banner_emoji">
+                    {tabs.find(t => t.key === pricingTab)?.emoji}
+                  </span>
+                  <div>
+                    <p className="pricing_banner_title">{tabs.find(t => t.key === pricingTab)?.label} 세탁 요금</p>
+                    <p className="pricing_banner_sub">VAT 포함 · 수거배송비 별도 (기본 2,900원)</p>
+                  </div>
+                </div>
+
+                {/* 요금 테이블 */}
+                <div className="pricing_table_wrap">
+                  <table className="pricing_table">
+                    <thead>
+                      <tr>
+                        {current.columns.map((col, ci) => (
+                          <th key={ci} className={ci === 0 ? "pricing_th pricing_th--item" : "pricing_th"}>
+                            {col}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {current.rows.map((row, ri) => (
+                        <tr key={ri} className={ri % 2 === 0 ? "pricing_tr" : "pricing_tr pricing_tr--alt"}>
+                          {row.map((cell, ci) => (
+                            <td
+                              key={ci}
+                              className={
+                                ci === 0
+                                  ? "pricing_td pricing_td--label"
+                                  : cell === "—"
+                                    ? "pricing_td pricing_td--na"
+                                    : cell === "무료"
+                                      ? "pricing_td pricing_td--free"
+                                      : "pricing_td pricing_td--price"
+                              }
+                            >
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* 주석 */}
+                {current.note && (
+                  <p className="pricing_note">{current.note}</p>
+                )}
+
+                {/* 하단 안내 */}
+                <div className="pricing_footer_box">
+                  <p className="pricing_footer_title">💡 요금 안내</p>
+                  <ul className="pricing_footer_list">
+                    <li>모든 가격은 <strong>VAT 포함</strong> 기준입니다.</li>
+                    <li>수거·배송비 <strong>2,900원</strong>이 별도 청구됩니다.</li>
+                    <li>3만원 이상 주문 시 <strong>배송비 무료</strong>입니다.</li>
+                    <li>실제 요금은 소재·상태에 따라 변동될 수 있습니다.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* ===================================================== */}
+        {/* ===================================================== */}
+        {/* 포인트 상세 & 미니게임 오버레이                        */}
+        {/* ===================================================== */}
+        {showPointDetail && (() => {
+          const pointHistory = [
+            { label: "세탁 서비스 이용 완료", date: "2026.05.27", amount: 100, icon: "🧺" },
+            { label: "고객 리뷰 작성", date: "2026.05.25", amount: 50, icon: "✍️" },
+            { label: "친구 초대 성공", date: "2026.05.20", amount: 200, icon: "👥" },
+            { label: "첫 이용 보너스", date: "2026.05.15", amount: 300, icon: "🎁" },
+            { label: "AI 소재 분석 이용", date: "2026.05.10", amount: 50, icon: "🔬" },
+            { label: "출석 체크 (7일 연속)", date: "2026.05.07", amount: 100, icon: "📅" },
+          ];
+          const earnMethods = [
+            { label: "세탁 서비스 이용", reward: "+100P", icon: "🧺", desc: "매 이용 시마다 적립" },
+            { label: "리뷰 작성", reward: "+50P", icon: "✍️", desc: "이용 후 리뷰 남기기" },
+            { label: "친구 초대", reward: "+200P", icon: "👥", desc: "링크로 친구 초대 성공 시" },
+            { label: "AI 소재 분석", reward: "+30P", icon: "🔬", desc: "하루 1회 한정" },
+            { label: "출석 체크", reward: "+10P", icon: "📅", desc: "매일 앱 방문 시" },
+            { label: "버블 게임", reward: "+최대 90P", icon: "🫧", desc: "하루 1회 미니게임" },
+          ];
+
+          const startGame = () => {
+            setGameActive(true);
+            setGameEarned(0);
+            setGameDone(false);
+            setGameTimeLeft(15);
+            // 버블 랜덤 표시
+            const interval = window.setInterval(() => {
+              setBubbleStates(() => Array(9).fill(null).map(() => Math.random() > 0.45));
+            }, 700);
+            // 타이머
+            let t = 15;
+            const countdown = window.setInterval(() => {
+              t -= 1;
+              setGameTimeLeft(t);
+              if (t <= 0) {
+                clearInterval(countdown);
+                clearInterval(interval);
+                setBubbleStates(Array(9).fill(false));
+                setGameActive(false);
+                setGameDone(true);
+                setTotalScore(prev => prev + gameEarned);
+              }
+            }, 1000);
+          };
+
+          const popBubble = (idx: number) => {
+            if (!gameActive || !bubbleStates[idx]) return;
+            setBubbleStates(prev => { const n = [...prev]; n[idx] = false; return n; });
+            setGameEarned(prev => prev + 10);
+          };
+
+          return (
+            <div className="point_detail_overlay">
+              {/* 헤더 */}
+              <header className="point_detail_header">
+                <button type="button" className="premium_back_btn" onClick={() => { setShowPointDetail(false); setGameActive(false); setGameDone(false); }} aria-label="뒤로가기">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <h1 className="point_detail_title">왓씨 포인트</h1>
+                <div style={{ width: 42 }} />
+              </header>
+
+              <div className="point_detail_scroll">
+                {/* 현재 포인트 배지 */}
+                <div className="point_hero_box">
+                  <p className="point_hero_label">현재 보유 포인트</p>
+                  <div className="point_hero_score">{totalScore.toLocaleString()}<span className="point_hero_unit">점</span></div>
+                  <div className="point_hero_bar_track">
+                    <div className="point_hero_bar_fill" style={{ width: `${Math.min((totalScore / 1000) * 100, 100)}%` }} />
+                  </div>
+                  <p className="point_hero_next">다음 등급까지 {Math.max(0, 1000 - totalScore)}점 남음 · 실버 → 골드</p>
+                </div>
+
+                {/* 적립 내역 */}
+                <div className="point_section">
+                  <h3 className="point_section_title">적립 내역</h3>
+                  <div className="point_history_list">
+                    {pointHistory.map((h, i) => (
+                      <div key={i} className="point_history_item">
+                        <span className="point_history_icon">{h.icon}</span>
+                        <div className="point_history_info">
+                          <p className="point_history_label">{h.label}</p>
+                          <p className="point_history_date">{h.date}</p>
+                        </div>
+                        <span className="point_history_amount">+{h.amount}P</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 포인트 획득 방법 */}
+                <div className="point_section">
+                  <h3 className="point_section_title">포인트 더 모으기</h3>
+                  <div className="point_earn_grid">
+                    {earnMethods.map((m, i) => (
+                      <div key={i} className="point_earn_card" onClick={() => triggerToast(`${m.label} 기능으로 이동합니다!`)}>
+                        <span className="point_earn_icon">{m.icon}</span>
+                        <p className="point_earn_label">{m.label}</p>
+                        <p className="point_earn_desc">{m.desc}</p>
+                        <span className="point_earn_reward">{m.reward}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 버블 팝 미니게임 */}
+                <div className="point_section">
+                  <h3 className="point_section_title">🫧 버블 팝 미니게임</h3>
+                  <p className="point_game_desc">15초 안에 버블을 최대한 많이 터뜨리세요! 버블 1개 = 10P</p>
+
+                  {gameDone ? (
+                    <div className="point_game_result">
+                      <p className="point_game_result_emoji">🎉</p>
+                      <p className="point_game_result_score">+{gameEarned}P 획득!</p>
+                      <p className="point_game_result_sub">총 {totalScore.toLocaleString()}점 보유 중</p>
+                      <button className="point_game_replay_btn" onClick={startGame}>다시 하기</button>
+                    </div>
+                  ) : gameActive ? (
+                    <div className="point_game_area">
+                      <div className="point_game_hud">
+                        <span className="point_game_timer">⏱ {gameTimeLeft}초</span>
+                        <span className="point_game_earned">+{gameEarned}P</span>
+                      </div>
+                      <div className="point_bubble_grid">
+                        {bubbleStates.map((visible, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            className={`point_bubble ${visible ? "point_bubble--visible" : ""}`}
+                            onClick={() => popBubble(idx)}
+                          >
+                            🫧
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <button className="point_game_start_btn" onClick={startGame}>
+                      게임 시작하기
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* 커뮤니티 상세 페이지 (고정 오버레이)                 */}
         {/* ===================================================== */}
         {showCommunityDetail && (() => {
@@ -2312,6 +2781,8 @@ export function HomePage() {
               </div>
             ) : showAiGuideDetail ? (
               <div className="ai_guide_detail_wrapper">
+
+
                 {/* 실제 카메라 구동을 위한 숨김 인풋 */}
                 <input
                   type="file"
@@ -2328,9 +2799,12 @@ export function HomePage() {
                     className="premium_back_btn"
                     onClick={() => {
                       setShowAiGuideDetail(false);
+                      setActiveTab("home");
                       setScanResult(false);
                       setScanProgress(0);
                       setCapturedPhotoUrl(null);
+                      setAiAnalysisResult(null);
+                      setAiAnalysisError(false);
                     }}
                     aria-label="뒤로가기"
                   >
@@ -3916,47 +4390,37 @@ export function HomePage() {
                 </div>
               </div>
 
-              {/* 오른쪽 점수 카드 */}
+              {/* 오른쪽 점수 카드 — 리디자인 */}
               <div
                 className="mypage_score_card"
-                onClick={() => navigate("/mypage/detail/point-history")}
+                onClick={() => setShowPointDetail(true)}
               >
-                <div className="mypage_gauge_container">
-                  <svg className="mypage_gauge_svg" viewBox="0 0 100 50">
-                    {/* Gauge Background path (semi-circle) */}
-                    <path
-                      d="M 10 50 A 40 40 0 0 1 90 50"
-                      fill="none"
-                      stroke="#e2e8f0"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                    />
-                    {/* Active Blue Gauge path (semi-circle) */}
-                    <path
-                      d="M 10 50 A 40 40 0 0 1 90 50"
-                      fill="none"
-                      stroke="#2563eb"
-                      strokeWidth="11"
-                      strokeLinecap="round"
-                      strokeDasharray="125.66"
-                      strokeDashoffset="31.41" /* 80% filled to match standard arc style in Figma */
-                    />
-                  </svg>
-                  {/* 왓씨 코인 오버레이 (r1Img) */}
-                  <div className="mypage_gauge_coins">
-                    <img
-                      src={r1Img}
-                      alt="왓씨 코인 1"
-                      className="mypage_gauge_coin coin_1"
-                    />
-                    <img
-                      src={r1Img}
-                      alt="왓씨 코인 2"
-                      className="mypage_gauge_coin coin_2"
+                {/* 배경 장식 원 */}
+                <div className="score_deco_circle score_deco_circle--1" />
+                <div className="score_deco_circle score_deco_circle--2" />
+
+                {/* 상단: 라벨 + 등급 배지 */}
+                <div className="score_top_row">
+                  <span className="score_top_label">왓씨 포인트</span>
+                  <span className="score_tier_badge">🥈 실버</span>
+                </div>
+
+                {/* 메인 점수 */}
+                <div className="score_main_row">
+                  <span className="score_number">{totalScore.toLocaleString()}</span>
+                  <span className="score_unit">점</span>
+                </div>
+
+                {/* 다음 등급 진행바 */}
+                <div className="score_progress_wrap">
+                  <div className="score_progress_track">
+                    <div
+                      className="score_progress_fill"
+                      style={{ width: `${Math.min((totalScore / 1000) * 100, 100)}%` }}
                     />
                   </div>
+                  <span className="score_next_label">🏆 골드까지 {Math.max(0, 1000 - totalScore)}점</span>
                 </div>
-                <span className="mypage_score_val">800점</span>
               </div>
             </section>
 
@@ -4024,6 +4488,93 @@ export function HomePage() {
                     </button>
                   </div>
                 </div>
+
+                {receivedGiftCount > 0 && (
+                  <>
+                    <div className="mypage_wallet_vertical_line" />
+                    <div className="mypage_wallet_column">
+                      <span className="mypage_wallet_label">받은 선물</span>
+                      <span className="mypage_wallet_val received_gift_val">
+                        {receivedGiftCount}개
+                      </span>
+                      <div className="mypage_wallet_btn_row">
+                        <span className="received_gift_new_badge">NEW</span>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </section>
+
+            {/* 진행 중인 주문 카드 */}
+            <section className="mypage_active_order_section">
+              <div className="mypage_active_order_header_row">
+                <h3 className="mypage_active_order_title">진행 중인 주문</h3>
+                <button
+                  type="button"
+                  className="mypage_active_order_all_btn"
+                  onClick={() => setShowActiveOrderDetail(true)}
+                >
+                  전체보기
+                </button>
+              </div>
+
+              <div className="mypage_active_order_card" onClick={() => setActiveTab("delivery")} role="button" tabIndex={0}>
+                {/* 주문번호 + 상태 배지 */}
+                <div className="mao_top_row">
+                  <span className="mao_order_num">주문번호 WTC-20260527-8311</span>
+                  <span className="mao_status_badge mao_status_badge--drying">건조 중</span>
+                </div>
+
+                {/* 5단계 스테퍼 */}
+                <div className="mao_stepper">
+                  {[
+                    { label: "수거", done: true },
+                    { label: "세탁", done: true },
+                    { label: "건조", done: false, current: true },
+                    { label: "검수", done: false },
+                    { label: "배송", done: false },
+                  ].map((s, i, arr) => (
+                    <div key={i} className="mao_stepper_item">
+                      <div className={`mao_dot ${s.done ? "mao_dot--done" : s.current ? "mao_dot--current" : "mao_dot--pending"}`}>
+                        {s.done && (
+                          <svg viewBox="0 0 16 16" width="9" height="9" fill="none">
+                            <polyline points="3,8 6.5,11.5 13,4.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className={`mao_step_label ${s.current ? "mao_step_label--current" : s.done ? "mao_step_label--done" : ""}`}>{s.label}</span>
+                      {i < arr.length - 1 && (
+                        <div className={`mao_connector ${s.done ? "mao_connector--done" : ""}`} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* 진행률 바 */}
+                <div className="mao_progress_track">
+                  <div className="mao_progress_fill" style={{ width: "50%" }} />
+                </div>
+
+                {/* 세탁 품목 + 예상 도착 */}
+                <div className="mao_info_row">
+                  <div className="mao_items">
+                    <span className="mao_items_label">세탁 품목</span>
+                    <span className="mao_items_val">아우터 코트 1건 · 셔츠 2건</span>
+                  </div>
+                  <div className="mao_eta">
+                    <span className="mao_eta_label">도착 예정</span>
+                    <span className="mao_eta_val">오늘 저녁 11시</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <button type="button" className="mao_cta_btn" onClick={(e) => { e.stopPropagation(); setActiveTab("delivery"); }}>
+                  실시간 배송 현황 보기
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
               </div>
             </section>
 
@@ -4032,7 +4583,7 @@ export function HomePage() {
               <div className="mypage_menu_group">
                 <div
                   className="mypage_menu_item"
-                  onClick={() => navigate("/mypage/detail/active-orders")}
+                  onClick={() => setShowActiveOrderDetail(true)}
                 >
                   <span>진행 중 주문</span>
                   <span className="mypage_arrow">&gt;</span>
@@ -4056,7 +4607,7 @@ export function HomePage() {
                 </div>
                 <div
                   className="mypage_menu_item"
-                  onClick={() => navigate("/mypage/detail/price-category")}
+                  onClick={() => { setPricingTab("clothing"); setShowPricingDetail(true); }}
                 >
                   <span>세탁 종류별 요금</span>
                   <span className="mypage_arrow">&gt;</span>
@@ -4407,6 +4958,15 @@ export function HomePage() {
             className="gift_modal_card animate_scale_up"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 수령 완료 오버레이 */}
+            {showReceiveSuccess && (
+              <div className="receive_success_overlay">
+                <div className="receive_success_icon">✓</div>
+                <p className="receive_success_title">수령되었습니다!</p>
+                <p className="receive_success_sub">받은 선물 {receivedGiftCount}개</p>
+              </div>
+            )}
+
             <div className="gift_modal_header">
               <h2>
                 {giftType === "point"
@@ -4516,23 +5076,38 @@ export function HomePage() {
                   </div>
                 ) : (
                   <div className="gift_input_group">
-                    <label className="gift_label">보낼 쿠폰 수량</label>
-                    <div className="gift_amount_preset">
-                      {[1, 2].map((num) => {
-                        const disabled = userCoupons < num;
-                        return (
-                          <button
-                            key={num}
-                            type="button"
-                            className={`gift_amt_btn ${giftCouponCount === num ? "active" : ""}`}
-                            disabled={disabled}
-                            onClick={() => setGiftCouponCount(num)}
-                          >
-                            {num}장
-                          </button>
-                        );
-                      })}
+                    <div className="gift_coupon_label_row">
+                      <label className="gift_label">보낼 쿠폰 수량</label>
+                      <span className="gift_coupon_stock">보유 {userCoupons}장</span>
                     </div>
+                    <div className="gift_coupon_stepper">
+                      <button
+                        type="button"
+                        className="gift_coupon_step_btn"
+                        onClick={() => setGiftCouponCount(c => Math.max(1, c - 1))}
+                        disabled={giftCouponCount <= 1}
+                      >−</button>
+                      <input
+                        type="number"
+                        className="gift_coupon_step_input"
+                        min={1}
+                        max={userCoupons}
+                        value={giftCouponCount}
+                        onChange={(e) => {
+                          const v = parseInt(e.target.value) || 1;
+                          setGiftCouponCount(Math.min(Math.max(1, v), userCoupons));
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="gift_coupon_step_btn"
+                        onClick={() => setGiftCouponCount(c => Math.min(userCoupons, c + 1))}
+                        disabled={giftCouponCount >= userCoupons}
+                      >+</button>
+                    </div>
+                    {giftCouponCount > userCoupons && (
+                      <p className="gift_coupon_warn">보유 수량({userCoupons}장)을 초과했습니다.</p>
+                    )}
                   </div>
                 )}
 
@@ -4557,8 +5132,7 @@ export function HomePage() {
                     </div>
                     <div className="kakao_preview_body">
                       <h4 className="kakao_preview_title">
-                        🎁 {giftRecipient ? giftRecipient : "친구"}님!{" "}
-                        {profileName}님이 보낸 세탁 선물이 도착했어요!
+                        🎁 {giftRecipient ? giftRecipient : "하은"}님! {profileName}님이 보낸 세탁선물이 도착했어요
                       </h4>
                       <p className="kakao_preview_desc">
                         {giftType === "point"
@@ -4566,9 +5140,13 @@ export function HomePage() {
                           : `안심 세탁 쿠폰 ${giftCouponCount}장`}
                       </p>
                     </div>
-                    <div className="kakao_preview_action">
+                    <button
+                      type="button"
+                      className="kakao_preview_action"
+                      onClick={handleGiftReceive}
+                    >
                       WatC 앱에서 안심 수령하기
-                    </div>
+                    </button>
                   </div>
                 </div>
 
@@ -4652,23 +5230,38 @@ export function HomePage() {
                   </div>
                 ) : (
                   <div className="gift_input_group">
-                    <label className="gift_label">보낼 쿠폰 수량</label>
-                    <div className="gift_amount_preset">
-                      {[1, 2].map((num) => {
-                        const disabled = userCoupons < num;
-                        return (
-                          <button
-                            key={num}
-                            type="button"
-                            className={`gift_amt_btn ${giftCouponCount === num ? "active" : ""}`}
-                            disabled={disabled}
-                            onClick={() => setGiftCouponCount(num)}
-                          >
-                            {num}장
-                          </button>
-                        );
-                      })}
+                    <div className="gift_coupon_label_row">
+                      <label className="gift_label">보낼 쿠폰 수량</label>
+                      <span className="gift_coupon_stock">보유 {userCoupons}장</span>
                     </div>
+                    <div className="gift_coupon_stepper">
+                      <button
+                        type="button"
+                        className="gift_coupon_step_btn"
+                        onClick={() => setGiftCouponCount(c => Math.max(1, c - 1))}
+                        disabled={giftCouponCount <= 1}
+                      >−</button>
+                      <input
+                        type="number"
+                        className="gift_coupon_step_input"
+                        min={1}
+                        max={userCoupons}
+                        value={giftCouponCount}
+                        onChange={(e) => {
+                          const v = parseInt(e.target.value) || 1;
+                          setGiftCouponCount(Math.min(Math.max(1, v), userCoupons));
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="gift_coupon_step_btn"
+                        onClick={() => setGiftCouponCount(c => Math.min(userCoupons, c + 1))}
+                        disabled={giftCouponCount >= userCoupons}
+                      >+</button>
+                    </div>
+                    {giftCouponCount > userCoupons && (
+                      <p className="gift_coupon_warn">보유 수량({userCoupons}장)을 초과했습니다.</p>
+                    )}
                   </div>
                 )}
 

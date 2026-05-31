@@ -1370,6 +1370,429 @@
   cursor: grabbing;
 }
 
+/* ══════════════════════════════════════════ */
+/* 세탁 종류별 요금표 오버레이                */
+/* ══════════════════════════════════════════ */
+.pricing_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: communityDetailSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-width: min(880px, 100%);
+  margin: 0 auto;
+  left: 0; right: 0;
+}
+
+.pricing_header {
+  position: sticky; top: 0;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  z-index: 10; flex-shrink: 0; box-sizing: border-box;
+}
+
+.pricing_header_title {
+  font-size: 17px; font-weight: 700; color: #0f172a;
+  margin: 0; letter-spacing: -0.3px; flex: 1; text-align: center;
+}
+
+/* 탭 바 */
+.pricing_tab_bar {
+  display: flex;
+  gap: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0;
+  padding: 0 16px;
+}
+
+.pricing_tab_btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.pricing_tab_btn span:first-child { font-size: 18px; }
+
+.pricing_tab_btn--active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+/* 스크롤 영역 */
+.pricing_scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 안내 배너 */
+.pricing_banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.pricing_banner_emoji { font-size: 28px; flex-shrink: 0; }
+
+.pricing_banner_title {
+  font-size: 14px; font-weight: 800; color: #1e3a8a;
+  margin: 0 0 3px;
+}
+
+.pricing_banner_sub {
+  font-size: 11px; color: #3b82f6; font-weight: 600; margin: 0;
+}
+
+/* 요금 테이블 */
+.pricing_table_wrap {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.pricing_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing_th {
+  padding: 11px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #475569;
+  background: #f8fafc;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  letter-spacing: -0.2px;
+}
+
+.pricing_th--item {
+  text-align: left;
+  padding-left: 14px;
+  min-width: 100px;
+}
+
+.pricing_tr { background: #ffffff; }
+.pricing_tr--alt { background: #fafafa; }
+
+.pricing_td {
+  padding: 11px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.pricing_tr:last-child .pricing_td { border-bottom: none; }
+
+.pricing_td--label {
+  text-align: left;
+  padding-left: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 12.5px;
+}
+
+.pricing_td--price {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pricing_td--na {
+  color: #cbd5e1;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pricing_td--free {
+  font-weight: 800;
+  color: #16a34a;
+}
+
+/* 주석 */
+.pricing_note {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+  padding: 10px 14px;
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+}
+
+/* 하단 안내 */
+.pricing_footer_box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.pricing_footer_title {
+  font-size: 13px; font-weight: 800; color: #1e293b;
+  margin: 0 0 10px;
+}
+
+.pricing_footer_list {
+  margin: 0; padding-left: 16px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+
+.pricing_footer_list li {
+  font-size: 12px; color: #475569; line-height: 1.5;
+}
+
+.pricing_footer_list strong {
+  font-weight: 800; color: #2563eb;
+}
+
+/* ══════════════════════════════════════════ */
+/* 포인트 상세 & 미니게임 오버레이            */
+/* ══════════════════════════════════════════ */
+.point_detail_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: communityDetailSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-width: min(880px, 100%);
+  margin: 0 auto;
+  left: 0; right: 0;
+}
+
+.point_detail_header {
+  position: sticky; top: 0;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  z-index: 10; flex-shrink: 0; box-sizing: border-box;
+}
+
+.point_detail_title {
+  font-size: 17px; font-weight: 700; color: #0f172a;
+  margin: 0; letter-spacing: -0.3px; flex: 1; text-align: center;
+}
+
+.point_detail_scroll { flex: 1; overflow-y: auto; padding-bottom: 48px; }
+
+/* 히어로 배지 */
+.point_hero_box {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  padding: 28px 24px 24px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.point_hero_label {
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+  margin: 0 0 6px; letter-spacing: 0.3px;
+}
+
+.point_hero_score {
+  font-size: 56px; font-weight: 900; letter-spacing: -2px;
+  line-height: 1; margin-bottom: 16px;
+}
+
+.point_hero_unit { font-size: 24px; font-weight: 700; margin-left: 4px; }
+
+.point_hero_bar_track {
+  width: 100%; height: 8px; background: rgba(255,255,255,0.25);
+  border-radius: 4px; overflow: hidden; margin-bottom: 10px;
+}
+
+.point_hero_bar_fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), #ffffff);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.point_hero_next {
+  font-size: 12px; color: rgba(255,255,255,0.8);
+  margin: 0; font-weight: 500;
+}
+
+/* 섹션 공통 */
+.point_section {
+  padding: 20px 16px 0;
+}
+
+.point_section_title {
+  font-size: 16px; font-weight: 800; color: #0f172a;
+  margin: 0 0 14px; letter-spacing: -0.3px;
+}
+
+/* 적립 내역 */
+.point_history_list {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid #f1f5f9; border-radius: 16px; overflow: hidden;
+}
+
+.point_history_item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f8fafc;
+  background: #ffffff;
+}
+
+.point_history_item:last-child { border-bottom: none; }
+
+.point_history_icon { font-size: 20px; flex-shrink: 0; }
+
+.point_history_info { flex: 1; min-width: 0; }
+
+.point_history_label {
+  font-size: 13px; font-weight: 700; color: #1e293b; margin: 0 0 2px;
+}
+
+.point_history_date { font-size: 11px; color: #94a3b8; margin: 0; }
+
+.point_history_amount {
+  font-size: 14px; font-weight: 800; color: #2563eb; flex-shrink: 0;
+}
+
+/* 획득 방법 그리드 */
+.point_earn_grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.point_earn_card {
+  background: #f8fafc; border: 1px solid #f1f5f9;
+  border-radius: 14px; padding: 14px 12px;
+  display: flex; flex-direction: column; gap: 3px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.point_earn_card:hover { background: #eff6ff; border-color: #bfdbfe; }
+
+.point_earn_icon { font-size: 22px; }
+
+.point_earn_label { font-size: 13px; font-weight: 700; color: #0f172a; margin: 4px 0 0; }
+
+.point_earn_desc { font-size: 11px; color: #64748b; margin: 0; }
+
+.point_earn_reward {
+  font-size: 13px; font-weight: 800; color: #2563eb;
+  margin-top: 6px;
+}
+
+/* 게임 영역 */
+.point_game_desc {
+  font-size: 13px; color: #64748b; margin: 0 0 16px; line-height: 1.5;
+}
+
+.point_game_start_btn {
+  width: 100%; height: 52px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff; border: none; border-radius: 16px;
+  font-size: 16px; font-weight: 800;
+  font-family: var(--font-pretendard);
+  cursor: pointer; letter-spacing: -0.3px;
+  transition: transform 0.15s ease;
+}
+
+.point_game_start_btn:active { transform: scale(0.97); }
+
+.point_game_area { display: flex; flex-direction: column; gap: 12px; }
+
+.point_game_hud {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #f8fafc; border-radius: 12px; padding: 10px 16px;
+}
+
+.point_game_timer { font-size: 15px; font-weight: 800; color: #0f172a; }
+
+.point_game_earned { font-size: 18px; font-weight: 900; color: #2563eb; }
+
+.point_bubble_grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+
+.point_bubble {
+  width: 100%; aspect-ratio: 1;
+  background: #f1f5f9; border: 2px solid #e2e8f0;
+  border-radius: 50%; font-size: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none;
+  opacity: 0; transform: scale(0.5);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.point_bubble--visible {
+  opacity: 1; transform: scale(1);
+  animation: bubblePop 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes bubblePop {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+/* 게임 결과 */
+.point_game_result {
+  text-align: center; padding: 24px 0;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+
+.point_game_result_emoji { font-size: 48px; margin: 0; }
+
+.point_game_result_score {
+  font-size: 28px; font-weight: 900; color: #2563eb; margin: 0;
+}
+
+.point_game_result_sub { font-size: 13px; color: #64748b; margin: 0; }
+
+.point_game_replay_btn {
+  margin-top: 10px;
+  background: none; border: 1.5px solid #2563eb;
+  color: #2563eb; border-radius: 10px; padding: 8px 20px;
+  font-size: 13px; font-weight: 700;
+  font-family: var(--font-pretendard); cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.point_game_replay_btn:hover { background: #eff6ff; }
+
 /* ── 커뮤니티 상세 오버레이 ── */
 .community_detail_overlay {
   position: fixed;
@@ -3653,72 +4076,129 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Right Score Card */
+/* Right Score Card — 리디자인 */
 .mypage_score_card {
-  background-color: #f4f6fa;
+  background: linear-gradient(145deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
   border-radius: 24px;
   flex: 0.75;
   height: 192px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+  justify-content: space-between;
+  padding: 16px 14px 14px;
   box-sizing: border-box;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mypage_score_card:active {
   transform: scale(0.97);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
 }
 
-.mypage_gauge_container {
-  position: relative;
-  width: 90px;
-  height: 52px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.mypage_gauge_svg {
-  width: 100%;
-  height: 100%;
-}
-
-.mypage_gauge_coins {
+/* 배경 장식 원 */
+.score_deco_circle {
   position: absolute;
-  bottom: 0px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+}
+
+.score_deco_circle--1 {
+  width: 100px;
+  height: 100px;
+  top: -30px;
+  right: -30px;
+}
+
+.score_deco_circle--2 {
+  width: 60px;
+  height: 60px;
+  bottom: -10px;
+  left: -10px;
+}
+
+/* 상단 행 */
+.score_top_row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-}
-
-.mypage_gauge_coin {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.15));
-}
-
-.coin_1 {
-  transform: translateX(4px);
-  z-index: 2;
-}
-
-.coin_2 {
-  transform: translateX(-4px) scale(0.9);
-  opacity: 0.95;
+  position: relative;
   z-index: 1;
 }
 
-.mypage_score_val {
-  font-size: 20px;
+.score_top_label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.3px;
+}
+
+.score_tier_badge {
+  font-size: 10px;
   font-weight: 800;
-  color: #000000;
-  letter-spacing: -0.3px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 3px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.2px;
+}
+
+/* 메인 점수 */
+.score_main_row {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+.score_number {
+  font-size: 42px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.score_unit {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+}
+
+/* 진행바 */
+.score_progress_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.score_progress_track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.score_progress_fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.score_next_label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* Wallet Point/Coupon Card */
@@ -3805,6 +4285,448 @@
   background-color: #e2e8f0;
   margin: 0 20px;
 }
+
+/* ══════════════════════════════════════════ */
+/* 진행 중인 주문 상세 오버레이               */
+/* ══════════════════════════════════════════ */
+.active_order_overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: #f8fafc;
+  display: flex; flex-direction: column; overflow: hidden;
+  animation: communityDetailSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-width: min(880px, 100%); margin: 0 auto; left: 0; right: 0;
+}
+
+.active_order_header {
+  position: sticky; top: 0; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  z-index: 10; flex-shrink: 0; box-sizing: border-box;
+}
+
+.active_order_header_title {
+  font-size: 17px; font-weight: 700; color: #0f172a;
+  margin: 0; letter-spacing: -0.3px; flex: 1; text-align: center;
+}
+
+.active_order_scroll { flex: 1; overflow-y: auto; padding-bottom: 48px; }
+
+/* 히어로 */
+.aod_hero {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 60%, #3b82f6 100%);
+  padding: 24px 20px 22px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.aod_hero_left { display: flex; flex-direction: column; gap: 6px; }
+
+.aod_hero_label {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.7);
+  letter-spacing: 0.4px; margin: 0;
+}
+
+.aod_hero_stage {
+  font-size: 24px; font-weight: 900; color: #ffffff;
+  margin: 0; letter-spacing: -0.5px;
+}
+
+.aod_hero_order_num {
+  font-size: 11px; color: rgba(255,255,255,0.55);
+  font-weight: 600; font-variant-numeric: tabular-nums;
+}
+
+/* 히어로 원형 진행률 */
+.aod_hero_ring_wrap { position: relative; width: 64px; height: 64px; }
+
+.aod_hero_right { position: relative; }
+
+.aod_hero_pct_ring_wrap { position: relative; width: 64px; height: 64px; }
+
+.aod_hero_ring { width: 64px; height: 64px; display: block; }
+
+.aod_hero_pct {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 900; color: #ffffff;
+}
+
+/* 섹션 공통 */
+.aod_section { padding: 20px 16px 0; }
+
+.aod_section_title {
+  font-size: 15px; font-weight: 800; color: #0f172a;
+  margin: 0 0 14px; letter-spacing: -0.3px;
+}
+
+/* 상세 타임라인 */
+.aod_timeline { display: flex; flex-direction: column; gap: 0; }
+
+.aod_timeline_item { display: flex; gap: 10px; align-items: stretch; }
+
+.aod_tl_track {
+  display: flex; flex-direction: column; align-items: center;
+  width: 28px; flex-shrink: 0;
+}
+
+.aod_tl_dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.aod_tl_dot--done    { background: #2563eb; box-shadow: 0 2px 8px rgba(37,99,235,0.3); }
+.aod_tl_dot--current { background: #2563eb; animation: maoCurrentPulse 1.8s ease-in-out infinite; }
+.aod_tl_dot--pending { background: #f1f5f9; border: 2px solid #e2e8f0; }
+
+.aod_tl_dot_inner {
+  width: 9px; height: 9px; border-radius: 50%; background: #ffffff;
+  animation: laundryInnerBlink 1s ease-in-out infinite alternate;
+}
+
+.aod_tl_line {
+  flex: 1; width: 2px; background: #e2e8f0; margin: 3px 0;
+}
+
+.aod_tl_line--done { background: #2563eb; }
+.aod_tl_line--current { background: linear-gradient(to bottom, #2563eb 50%, #e2e8f0 100%); }
+
+/* 타임라인 카드 */
+.aod_tl_card {
+  flex: 1; padding: 12px 14px; margin-bottom: 10px;
+  border-radius: 14px; border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.aod_tl_card--current {
+  background: #eff6ff; border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.1);
+}
+
+.aod_tl_card--pending { background: #f8fafc; opacity: 0.65; }
+
+.aod_tl_card_top { display: flex; gap: 10px; align-items: flex-start; }
+
+.aod_tl_emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.aod_tl_info { flex: 1; min-width: 0; }
+
+.aod_tl_name_row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+
+.aod_tl_name { font-size: 13px; font-weight: 800; color: #0f172a; }
+
+.aod_tl_badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px;
+}
+
+.aod_tl_badge--done    { background: #dcfce7; color: #15803d; }
+.aod_tl_badge--current { background: #2563eb; color: #ffffff; }
+.aod_tl_badge--pending { background: #f1f5f9; color: #94a3b8; }
+
+.aod_tl_desc { font-size: 11.5px; color: #64748b; margin: 0 0 3px; line-height: 1.45; }
+
+.aod_tl_time { font-size: 11px; color: #94a3b8; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* 품목 리스트 */
+.aod_items_list {
+  background: #ffffff; border: 1px solid #e2e8f0;
+  border-radius: 16px; overflow: hidden;
+}
+
+.aod_item_row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid #f8fafc;
+}
+
+.aod_item_info { display: flex; flex-direction: column; gap: 2px; }
+
+.aod_item_name { font-size: 13px; font-weight: 700; color: #1e293b; margin: 0; }
+
+.aod_item_type { font-size: 11px; color: #64748b; margin: 0; }
+
+.aod_item_price { font-size: 13px; font-weight: 700; color: #0f172a; }
+
+.aod_item_total_row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px;
+  background: #f8fafc;
+  font-size: 13px; color: #475569; font-weight: 600;
+}
+
+.aod_item_total_row strong { font-size: 15px; font-weight: 900; color: #2563eb; }
+
+/* 배송 정보 카드 */
+.aod_info_card {
+  background: #ffffff; border: 1px solid #e2e8f0;
+  border-radius: 16px; overflow: hidden;
+}
+
+.aod_info_row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border-bottom: 1px solid #f8fafc;
+  font-size: 13px;
+}
+
+.aod_info_row:last-child { border-bottom: none; }
+
+.aod_info_label { color: #64748b; font-weight: 600; }
+
+.aod_info_val { color: #0f172a; font-weight: 700; text-align: right; }
+
+/* 하단 버튼 */
+.aod_actions {
+  padding: 20px 16px 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.aod_btn_primary {
+  width: 100%; height: 50px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff; font-size: 14px; font-weight: 800;
+  font-family: var(--font-pretendard); cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+  transition: transform 0.15s ease;
+}
+
+.aod_btn_primary:active { transform: scale(0.97); }
+
+.aod_btn_secondary {
+  width: 100%; height: 46px; border: 1.5px solid #e2e8f0;
+  border-radius: 14px; background: #ffffff;
+  color: #475569; font-size: 14px; font-weight: 700;
+  font-family: var(--font-pretendard); cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.aod_btn_secondary:hover { background: #f8fafc; }
+
+/* ── 진행 중인 주문 카드 ── */
+.mypage_active_order_section {
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+.mypage_active_order_header_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mypage_active_order_title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.mypage_active_order_all_btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  padding: 0;
+}
+
+.mypage_active_order_card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.mypage_active_order_card:active {
+  transform: scale(0.985);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+/* 주문번호 + 상태 배지 */
+.mao_top_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.mao_order_num {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+}
+
+.mao_status_badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.mao_status_badge--drying {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  animation: maoBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes maoBadgePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+/* 5단계 스테퍼 */
+.mao_stepper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.mao_stepper_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  flex: 1;
+}
+
+.mao_dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.mao_dot--done {
+  background: #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.mao_dot--current {
+  background: #2563eb;
+  box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  animation: maoCurrentPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes maoCurrentPulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(37, 99, 235, 0.45); }
+  50%       { box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+}
+
+.mao_dot--pending {
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+}
+
+.mao_step_label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mao_step_label--done    { color: #2563eb; font-weight: 700; }
+.mao_step_label--current { color: #1d4ed8; font-weight: 800; }
+
+/* 스텝 사이 연결선 — 절대 위치로 스테퍼 항목 위에 배치 */
+.mao_connector {
+  position: absolute;
+  top: 12px;
+  left: calc(50% + 12px);
+  right: calc(-50% + 12px);
+  height: 2px;
+  background: #e2e8f0;
+}
+
+.mao_connector--done { background: #2563eb; }
+
+/* 진행률 바 */
+.mao_progress_track {
+  width: 100%;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mao_progress_fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* 품목 + ETA */
+.mao_info_row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.mao_items, .mao_eta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mao_items_label, .mao_eta_label {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.mao_items_val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.mao_eta_val {
+  font-size: 12px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+/* CTA 버튼 */
+.mao_cta_btn {
+  width: 100%;
+  height: 44px;
+  border: 1.5px solid #2563eb;
+  background: #ffffff;
+  color: #2563eb;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-pretendard);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease;
+}
+
+.mao_cta_btn:hover { background: #eff6ff; }
+.mao_cta_btn:active { transform: scale(0.97); }
 
 /* Menu list */
 .mypage_menu_section {
@@ -6109,6 +7031,86 @@
   margin-bottom: 8px;
 }
 
+/* 쿠폰 수량 사용자 지정 스테퍼 */
+.gift_coupon_label_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.gift_coupon_stock {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.gift_coupon_stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  height: 52px;
+}
+
+.gift_coupon_step_btn {
+  width: 52px;
+  height: 100%;
+  border: none;
+  background: none;
+  font-size: 22px;
+  font-weight: 400;
+  color: #2563eb;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+  font-family: var(--font-pretendard);
+}
+
+.gift_coupon_step_btn:disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.gift_coupon_step_btn:not(:disabled):hover {
+  background: #eff6ff;
+}
+
+.gift_coupon_step_input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  font-family: var(--font-pretendard);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.gift_coupon_step_input::-webkit-inner-spin-button,
+.gift_coupon_step_input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gift_coupon_warn {
+  font-size: 11px;
+  color: #ef4444;
+  font-weight: 600;
+  margin: 6px 0 0;
+}
+
 .gift_text_input {
   width: 100%;
   height: 46px;
@@ -6225,6 +7227,7 @@
 }
 
 .kakao_preview_action {
+  width: 100%;
   background-color: #ffffff;
   color: #3c1e1e;
   text-align: center;
@@ -6233,6 +7236,86 @@
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  transition: background 0.15s ease;
+}
+
+.kakao_preview_action:hover { background: #f9f3f3; }
+.kakao_preview_action:active { transform: scale(0.97); }
+
+/* 수령 완료 오버레이 */
+.receive_success_overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 10;
+  animation: receiveSuccessIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes receiveSuccessIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.receive_success_icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+.receive_success_title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.receive_success_sub {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+  margin: 0;
+  background: #eff6ff;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+/* 받은 선물 카운터 */
+.received_gift_val {
+  color: #10b981 !important;
+}
+
+.received_gift_new_badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #10b981;
+  padding: 2px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+  animation: newBadgePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes newBadgePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
 }
 
 /* Action Buttons */

@@ -63,6 +63,12 @@ export function DeliveryPage() {
   const [showRiderModal, setShowRiderModal] = useState(false);
   const currentRider = ridersList[selectedRiderIndex];
   const [expandedStep, setExpandedStep] = useState<number | null>(2); // 현재 단계 기본 열림
+  const [receiptToast, setReceiptToast] = useState(false);
+
+  const showReceiptToast = () => {
+    setReceiptToast(true);
+    setTimeout(() => setReceiptToast(false), 2800);
+  };
 
 
   useEffect(() => {
@@ -454,21 +460,108 @@ export function DeliveryPage() {
               )}
             </article>
 
-            <article className="delivery_card">
-              <h3>도착 정보</h3>
-              <ul className="delivery_list">
-                <li>도착 임박 알림</li>
-                <li>도착 완료 알림</li>
-              </ul>
+            {/* 도착 정보 카드 */}
+            <article className="arrival_info_card">
+              {/* 상단: 레이블 + ETA 뱃지 */}
+              <div className="arrival_top_row">
+                <div className="arrival_label_group">
+                  <span className="arrival_section_label">ARRIVAL INFO</span>
+                  <h3 className="arrival_title">도착 정보</h3>
+                </div>
+                <div className="arrival_eta_badge">
+                  <span className="arrival_eta_icon">🕐</span>
+                  <span className="arrival_eta_text">약 {etaMinutes}분 후 도착</span>
+                </div>
+              </div>
+
+              {/* 진행 바 */}
+              <div className="arrival_progress_wrap">
+                <div className="arrival_progress_track">
+                  <div className="arrival_progress_fill" />
+                  <div className="arrival_progress_dot" />
+                </div>
+                <div className="arrival_progress_labels">
+                  <span>세탁 공장 출발</span>
+                  <span className="arrival_progress_now">현재 이동 중</span>
+                  <span>우리집</span>
+                </div>
+              </div>
+
+              {/* 도착지 주소 */}
+              <div className="arrival_address_row">
+                <div className="arrival_address_icon_wrap">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="arrival_address_label">배달지</p>
+                  <p className="arrival_address_text">반포동 왓씨타워 410호</p>
+                </div>
+              </div>
+
+              {/* 알림 상태 배지 */}
+              <div className="arrival_noti_row">
+                <div className="arrival_noti_item arrival_noti_item--on">
+                  <span className="arrival_noti_dot" />
+                  <span>도착 임박 알림</span>
+                  <span className="arrival_noti_status">ON</span>
+                </div>
+                <div className="arrival_noti_item arrival_noti_item--on">
+                  <span className="arrival_noti_dot" />
+                  <span>도착 완료 알림</span>
+                  <span className="arrival_noti_status">ON</span>
+                </div>
+              </div>
             </article>
 
-            <article className="delivery_card">
-              <h3>수거 방식 진행</h3>
-              <div className="delivery_pill_group">
-                <span className="delivery_pill">문 앞 수거</span>
-                <span className="delivery_pill">경비실 수거</span>
-                <span className="delivery_pill">택배함 수거</span>
-                <span className="delivery_pill">직접 전달</span>
+            {/* 수거 방식 진행 */}
+            <article className="collection_method_card">
+              {/* 헤더 */}
+              <div className="collection_header">
+                <div>
+                  <span className="collection_section_label">COLLECTION METHOD</span>
+                  <h3 className="collection_title">수거 방식 진행</h3>
+                </div>
+                <span className="collection_done_badge">
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  수거 완료
+                </span>
+              </div>
+
+              {/* 선택된 방식 강조 카드 */}
+              <div className="collection_selected_card">
+                <div className="collection_selected_icon_wrap">
+                  <span className="collection_selected_icon">🚪</span>
+                </div>
+                <div className="collection_selected_info">
+                  <p className="collection_selected_label">현재 선택된 수거 방식</p>
+                  <p className="collection_selected_name">문 앞 수거</p>
+                  <p className="collection_selected_desc">공동현관 문 앞에서 직접 수거합니다</p>
+                </div>
+                <div className="collection_check_circle">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* 다른 옵션들 */}
+              <div className="collection_options_grid">
+                {[
+                  { icon: "🏢", label: "경비실 수거", desc: "경비실에 맡기기" },
+                  { icon: "📦", label: "택배함 수거", desc: "무인 택배함 이용" },
+                  { icon: "🤝", label: "직접 전달",  desc: "마스터와 직접 만남" },
+                ].map((opt) => (
+                  <div key={opt.label} className="collection_option_item">
+                    <span className="collection_option_icon">{opt.icon}</span>
+                    <span className="collection_option_label">{opt.label}</span>
+                    <span className="collection_option_desc">{opt.desc}</span>
+                  </div>
+                ))}
               </div>
             </article>
 
@@ -677,16 +770,72 @@ export function DeliveryPage() {
         </section>
 
         {/* 수령 확인 */}
-        <section className="delivery_status_section delivery_status_section--final">
-          <div className="delivery_section_header">
-            <div>
-              <p className="delivery_section_label">배송 완료</p>
-              <h2 className="delivery_section_title">수령 확인</h2>
+        <section className="delivery_receipt_section">
+          <div className="delivery_receipt_card">
+            {/* 상단 아이콘 영역 */}
+            <div className="receipt_icon_row">
+              <div className="receipt_icon_circle">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+              </div>
+              <div className="receipt_title_group">
+                <p className="receipt_label">LAST STEP</p>
+                <h3 className="receipt_title">수령 확인</h3>
+              </div>
+              <span className="receipt_status_badge">대기 중</span>
             </div>
-          </div>
-          <div className="delivery_completion_card">
-            <p>배송 완료 알림 수신 후 문 앞에서 수령해 주세요.</p>
-            <p>수령이 확인되면 세탁 서비스가 최종 완료됩니다.</p>
+
+            {/* 수령 절차 스텝 */}
+            <div className="receipt_steps">
+              {[
+                { icon: "🔔", step: "01", text: "배송 완료 알림 수신", desc: "앱 푸시 알림 및 문자로 안내됩니다" },
+                { icon: "🚪", step: "02", text: "문 앞에서 세탁물 수령", desc: "안심팩 포장 상태를 확인해 주세요" },
+                { icon: "✅", step: "03", text: "수령 확인 버튼 클릭", desc: "확인 시 포인트 100P가 자동 적립됩니다" },
+              ].map((s, i) => (
+                <div key={i} className="receipt_step_item">
+                  <div className="receipt_step_left">
+                    <span className="receipt_step_num">{s.step}</span>
+                    {i < 2 && <div className="receipt_step_line" />}
+                  </div>
+                  <div className="receipt_step_content">
+                    <span className="receipt_step_icon">{s.icon}</span>
+                    <div>
+                      <p className="receipt_step_text">{s.text}</p>
+                      <p className="receipt_step_desc">{s.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* 수령 확인 토스트 */}
+            {receiptToast && (
+              <div className="receipt_toast">
+                <span className="receipt_toast_icon">🚚</span>
+                <div>
+                  <p className="receipt_toast_title">아직 배송이 완료되지 않았어요</p>
+                  <p className="receipt_toast_desc">배달 완료 후 수령 확인이 가능합니다</p>
+                </div>
+              </div>
+            )}
+
+            {/* 수령 확인 버튼 — 배달 완료 전 비활성 */}
+            <button
+              type="button"
+              className="receipt_confirm_btn receipt_confirm_btn--disabled"
+              onClick={showReceiptToast}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              수령 확인하기
+            </button>
+
+            <p className="receipt_notice">
+              배송 완료 후 수령 확인 버튼이 활성화됩니다.
+            </p>
           </div>
         </section>
       </div>
