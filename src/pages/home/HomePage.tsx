@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
@@ -9,14 +9,12 @@ import k1Img from "../../asset/img/k1.png"; // 3D Smart Phone Illustration
 import k11Img from "../../asset/img/k1-1.png"; // 3D Smartphone Hand
 import l1Img from "../../asset/img/l1.png"; // 3D Glass Metallic Ring
 import m1Img from "../../asset/img/m1.png"; // 3D Community Scene
-import o1Img from "../../asset/img/o1.png"; // Bedding Duvet Photo
-import r1Img from "../../asset/img/r1.png";
 
-import rvBeddingImg from "../../asset/img/rv_bedding.png";
-import rvShirtsImg from "../../asset/img/rv_shirts.png";
-import rvOuterImg from "../../asset/img/rv_outer.png";
-import rvShoesImg from "../../asset/img/rv_shoes.png";
-import rvBagImg from "../../asset/img/rv_bag.png";
+import reviewBeddingImg from "../../asset/img/review-bedding.png";
+import reviewShirtsImg from "../../asset/img/review-shirts.png";
+import reviewOuterImg from "../../asset/img/review-outer.png";
+import reviewShoesImg from "../../asset/img/review-shoes.png";
+import reviewBagImg from "../../asset/img/review-bag.png";
 
 import riderJinwooImg from "../../asset/img/rider_jinwoo.png";
 
@@ -26,6 +24,53 @@ import c1Img from "../../asset/img/c1.png";
 import d1Img from "../../asset/img/d1.png";
 import p1Img from "../../asset/img/p1.png";
 import q1Img from "../../asset/img/q1.png";
+
+import reviewCoatImg from "../../asset/img/review-coat.png";
+import reviewKnitImg from "../../asset/img/review-knit.png";
+import reviewLeatherImg from "../../asset/img/review-leather.png";
+import reviewSuedeImg from "../../asset/img/review-suede.png";
+import reviewSneakersImg from "../../asset/img/review-sneakers.png";
+import reviewBlouseImg from "../../asset/img/review-blouse.png";
+import reviewOutdoorImg from "../../asset/img/review-outdoor.png";
+import reviewSlacksImg from "../../asset/img/review-slacks.png";
+import reviewCanvasImg from "../../asset/img/review-canvas.png";
+import reviewDuvetImg from "../../asset/img/review-duvet.png";
+import reviewPriceImg from "../../asset/img/review-price.png";
+import reviewSuitImg from "../../asset/img/review-suit.png";
+import reviewPetImg from "../../asset/img/review-pet.png";
+import reviewCommunityImg from "../../asset/img/review-community.png";
+import reviewBabyfootImg from "../../asset/img/review-babyfoot.png";
+import reviewPantsImg from "../../asset/img/review-pants.png";
+import reviewBeltImg from "../../asset/img/review-belt.png";
+import reviewCashmereImg from "../../asset/img/review-cashmere.png";
+import reviewPinkBagImg from "../../asset/img/review-pink-bag.png";
+import reviewClutchImg from "../../asset/img/review-clutch.png";
+import reviewMountainImg from "../../asset/img/review-mountain.png";
+import reviewLatexImg from "../../asset/img/review-latex.png";
+import reviewPadpadImg from "../../asset/img/review-padpad.png";
+import reviewWhitebedImg from "../../asset/img/review-whitebed.png";
+import reviewGreybedImg from "../../asset/img/review-greybed.png";
+import reviewDogBeddingImg from "../../asset/img/review-dog-bedding.png";
+import reviewPetCushionImg from "../../asset/img/review-pet-cushion.png";
+import reviewScratchPadImg from "../../asset/img/review-scratch-pad.png";
+import reviewDogPaddingImg from "../../asset/img/review-dog-padding.png";
+import reviewSilkScarfImg from "../../asset/img/review-silk-scarf.png";
+import reviewFashionerImg from "../../asset/img/review-fashioner.png";
+import reviewCapImg from "../../asset/img/review-cap.png";
+import reviewWalletImg from "../../asset/img/review-wallet.png";
+import reviewSuitFitImg from "../../asset/img/review-suit-fit.png";
+import reviewNecktieImg from "../../asset/img/review-necktie.png";
+import reviewLaundryMasterImg from "../../asset/img/review-laundry-master.png";
+import reviewWorkingMomImg from "../../asset/img/review-working-mom.png";
+import reviewWeekendLaundryImg from "../../asset/img/review-weekend-laundry.png";
+import reviewPetWalkImg from "../../asset/img/review-pet-walk.png";
+import reviewTowelsImg from "../../asset/img/review-towels.png";
+import reviewSportswearImg from "../../asset/img/review-sportswear.png";
+import reviewLuxuryBagImg from "../../asset/img/review-luxury-bag.png";
+import beanieImg from "../../asset/img/비니.png";
+import nyangjoCatImg from "../../asset/img/냥이조아.png";
+import reviewCampingGearImg from "../../asset/img/review-camping-gear.png";
+import reviewTableRunnerImg from "../../asset/img/review-table-runner.png";
 
 import { BottomNav } from "../../components/BottomNav";
 
@@ -178,6 +223,10 @@ export function HomePage() {
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
   const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
   const [allReviewsTag, setAllReviewsTag] = useState<string>("전체");
+  const homeReviewSwiperRef = useRef<HTMLDivElement>(null);
+  const reviewAllContentRef = useRef<HTMLDivElement>(null);
+  const reviewAllListRef = useRef<HTMLDivElement>(null);
+  const reviewAllOpeningRef = useRef<boolean>(false);
   const [showCommunityDetail, setShowCommunityDetail] = useState<string | null>(null);
   const [communityFeedTab, setCommunityFeedTab] = useState<"all" | "hot" | "new" | "tips">("all");
   const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
@@ -317,7 +366,6 @@ export function HomePage() {
   const [visibleSections, setVisibleSections] = useState<boolean[]>(
     Array(7).fill(false),
   );
-  const [hasScrolled, setHasScrolled] = useState<boolean>(false);
   const [progressPercent, setProgressPercent] = useState<number>(1);
   const [reserveDate, setReserveDate] = useState<string>("5월 9일 목요일");
   const [reserveTime, setReserveTime] = useState<string>("2-4 PM 오후");
@@ -406,38 +454,34 @@ export function HomePage() {
   useEffect(() => {
     if (activeTab === "home") {
       setVisibleSections(Array(7).fill(false));
-      setHasScrolled(false);
     }
   }, [activeTab]);
 
   useEffect(() => {
     if (activeTab !== "home") return;
 
-    const handleScroll = () => {
-      if (window.scrollY > 5 && !hasScrolled) {
-        setHasScrolled(true);
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        setVisibleSections((prev) => {
-          const next = [...prev];
-          entries.forEach((entry) => {
-            const index = Number(
-              entry.target.getAttribute("data-section-index"),
-            );
-            if (entry.isIntersecting && !next[index]) {
-              if (index < 2 || hasScrolled) {
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const indexStr = entry.target.getAttribute("data-section-index");
+            if (indexStr !== null) {
+              const index = Number(indexStr);
+              setVisibleSections((prev) => {
+                const next = [...prev];
                 next[index] = true;
-              }
+                return next;
+              });
+              // 한 번 등장한 섹션은 더 이상 관찰하지 않아 애니메이션이 다시 실행되지 않도록 함
+              obs.unobserve(entry.target);
             }
-          });
-          return next;
+          }
         });
       },
-      { threshold: 0.1 },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -60px 0px", // 화면 하단에서 60px 위에 도달했을 때 세련되게 등장
+      }
     );
 
     sectionRefs.current.forEach((section) => {
@@ -446,9 +490,8 @@ export function HomePage() {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
     };
-  }, [activeTab, hasScrolled]);
+  }, [activeTab]);
 
 
 
@@ -470,6 +513,35 @@ export function HomePage() {
       usageGuideScrollRef.current.scrollTop = 0;
     }
   }, [showUsageGuide]);
+
+  useEffect(() => {
+    homeReviewSwiperRef.current?.scrollTo({ left: 0, behavior: "auto" });
+  }, [selectedTag]);
+
+  // 오버레이 열릴 때 → 항상 맨 위부터
+  useEffect(() => {
+    if (!showAllReviews) return;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      reviewAllContentRef.current?.scrollTo({ top: 0, behavior: "auto" });
+      reviewAllOpeningRef.current = false;
+    });
+  }, [showAllReviews]);
+
+  // 태그 변경 시 → 리스트 위치로 이동
+  useEffect(() => {
+    if (!showAllReviews) return;
+    if (reviewAllOpeningRef.current) return;
+
+    requestAnimationFrame(() => {
+      const content = reviewAllContentRef.current;
+      const list = reviewAllListRef.current;
+      if (!content || !list) return;
+      content.scrollTo({ top: list.offsetTop, behavior: "smooth" });
+    });
+  }, [allReviewsTag]);
 
   // --- 커뮤니티 캐러셀 자동 스크롤 (RAF) ---
   useEffect(() => {
@@ -659,7 +731,7 @@ export function HomePage() {
         user: "깔끔러버님",
         date: "26.05.02",
         body: `셔츠 칼라 찌든 때가 감쪽같이 사라졌어요! 세탁소 오고 가는 시간 아껴서 집 앞 수거배송 받는게 이렇게 편리한 줄 이제야 알았습니다.`,
-        img: rvShirtsImg,
+        img: reviewShirtsImg,
         tags: ["셔츠크리닝", "수거배송"],
       },
       {
@@ -667,7 +739,7 @@ export function HomePage() {
         user: "빨래고수님",
         date: "26.05.20",
         body: `겨울 롱코트 두 벌과 패딩 맡겼는데 보풀 제거 서비스까지 꼼꼼히 챙겨서 돌려주셨네요. 세탁 품질과 포장 상태가 대기업 서비스 이상입니다.`,
-        img: rvOuterImg,
+        img: reviewOuterImg,
         tags: ["프리미엄케어", "아우터"],
       },
       {
@@ -675,7 +747,7 @@ export function HomePage() {
         user: "스타일러",
         date: "26.05.15",
         body: `실크 블라우스 세탁을 집에서 하다가 망친 적이 있어서 맡겨봤는데 정말 새 옷처럼 실크 특유의 윤기가 살아서 돌아왔어요. 아주 만족합니다.`,
-        img: a1Img,
+        img: reviewBlouseImg,
         tags: ["실크블라우스", "드라이클리닝"],
       },
       {
@@ -683,7 +755,7 @@ export function HomePage() {
         user: "패션피플",
         date: "26.05.10",
         body: `버버리 트렌치코트 오염이 심해서 걱정했는데 얼룩덜룩한 국물 때까지 깨끗하게 제거되고 스팀 서비스로 핏까지 완벽하게 잡아줬어요!`,
-        img: b1Img,
+        img: reviewCoatImg,
         tags: ["명품케어", "트렌치코트"],
       },
       {
@@ -691,7 +763,7 @@ export function HomePage() {
         user: "데일리웨어",
         date: "26.05.08",
         body: `기본 슬랙스 바지 주름이 매번 칼처럼 잡혀서 옵니다. 출근할 때 매번 다림질 안 해도 돼서 아침 출근 준비 시간이 10분이나 단축되었어요.`,
-        img: c1Img,
+        img: reviewPantsImg,
         tags: ["바지주름", "다림질"],
       },
       {
@@ -699,7 +771,7 @@ export function HomePage() {
         user: "니트마니아",
         date: "26.05.03",
         body: `캐시미어 가디건 세탁 후 줄어들거나 털 뭉침 없이 보송보송하게 배송되었어요. 니트 전용 중성 세제로 부드럽게 세탁해주시는 게 느껴지네요.`,
-        img: d1Img,
+        img: reviewKnitImg,
         tags: ["캐시미어니트", "중성세제"],
       },
       {
@@ -707,7 +779,7 @@ export function HomePage() {
         user: "정장핏",
         date: "26.04.28",
         body: `중요한 미팅이 있어서 서둘러 수트를 드라이클리닝 맡겼는데, 지정된 시간에 정확히 오고 포장도 습기 방지 커버로 정성스럽게 싸여서 왔어요.`,
-        img: q1Img,
+        img: reviewSuitFitImg,
         tags: ["비즈니스수트", "커버포장"],
       },
     ],
@@ -717,7 +789,7 @@ export function HomePage() {
         user: "스니커즈왕",
         date: "26.03.10",
         body: `신발 세탁 품질이 좋아서 자주 맡겨요. 찌든 때가 싹 빠져서 원래의 새하얀 신발 색감이 완전히 살아났습니다. 가죽 상한 데도 전혀 없네요.`,
-        img: rvShoesImg,
+        img: reviewShoesImg,
         tags: ["스니커즈", "백색가죽"],
       },
       {
@@ -725,7 +797,7 @@ export function HomePage() {
         user: "조깅러",
         date: "26.05.18",
         body: `진흙투성이가 된 런닝화를 맡겼는데, 메쉬 틈새 사이에 박혀 있던 흙먼지까지 강력하고 깨끗하게 흡입 세탁해주셔서 새 신발 신는 느낌이에요!`,
-        img: p1Img,
+        img: reviewSneakersImg,
         tags: ["런닝화", "흙먼지제거"],
       },
       {
@@ -733,7 +805,7 @@ export function HomePage() {
         user: "힐러버",
         date: "26.05.14",
         body: `세탁하기 까다로운 고급 스웨이드 로퍼를 맡겼는데 결이 다 상하지 않고 자연스럽게 스웨이드 질감을 살려서 클리닝해 주셨네요. 진정한 장인입니다.`,
-        img: a1Img,
+        img: reviewSuedeImg,
         tags: ["스웨이드로퍼", "질감복원"],
       },
       {
@@ -741,7 +813,7 @@ export function HomePage() {
         user: "등산매니아",
         date: "26.05.09",
         body: `등산 다니면서 끈적한 송진 가루와 흙으로 엉망이 된 등산화 방수 기능 손상 없이 프리미엄 클리닝 완료!`,
-        img: b1Img,
+        img: reviewMountainImg,
         tags: ["아웃도어화", "방수보존"],
       },
       {
@@ -749,7 +821,7 @@ export function HomePage() {
         user: "가죽구두",
         date: "26.05.05",
         body: `신사용 가죽 구두를 맡겼더니 세탁 후 가죽 영양 크림 코팅까지 섬세하게 발라서 보내주셨습니다. 반짝반짝 광택이 예술이에요.`,
-        img: c1Img,
+        img: reviewLeatherImg,
         tags: ["정장구두", "영양코팅"],
       },
       {
@@ -757,7 +829,7 @@ export function HomePage() {
         user: "캔버스매니아",
         date: "26.04.30",
         body: `하얀색 캔버스 단화에 커피를 쏟아서 버려야 하나 고민했는데, 얼룩 자국 하나 남기지 않고 말끔하게 표백 세탁해 주셨습니다.`,
-        img: d1Img,
+        img: reviewCanvasImg,
         tags: ["캔버스화", "얼룩제거"],
       },
       {
@@ -765,7 +837,7 @@ export function HomePage() {
         user: "키즈맘",
         date: "26.04.25",
         body: `아이들이 놀이터에서 흙모래를 잔뜩 묻혀 온 아동 운동화들 한꺼번에 보냈는데, 신발 안쪽 깊은 곳까지 멸균 소독 살균이 잘 되어 냄새가 싹 사라졌습니다.`,
-        img: q1Img,
+        img: reviewBabyfootImg,
         tags: ["아동운동화", "살균소독"],
       },
     ],
@@ -775,7 +847,7 @@ export function HomePage() {
         user: "행복이님",
         date: "26.04.15",
         body: `맡기까지 제가 원했던 게 다 담겨서 좋았어요. 처음으로 산 비싼 새 이불이라 걱정했는데, 어디하나 망가진 곳 없이 폭신하게 와서 만족해요.`,
-        img: rvBeddingImg,
+        img: reviewBeddingImg,
         tags: ["일반이불", "새이불케어"],
       },
       {
@@ -783,7 +855,7 @@ export function HomePage() {
         user: "꿀잠러",
         date: "26.05.19",
         body: `겨우내 덮었던 두꺼운 거위털 구스 이불을 맡겼는데, 거위털 쏠림이나 숨 죽음 전혀 없이 방방하고 보송보송하게 부풀려서 가져다주셨습니다. 향기도 너무 좋아요!`,
-        img: o1Img,
+        img: reviewDuvetImg,
         tags: ["구스이불", "다운복원"],
       },
       {
@@ -791,7 +863,7 @@ export function HomePage() {
         user: "뽀송조아",
         date: "26.05.13",
         body: `두꺼운 극세사 침구 세탁 건조가 집에서는 도저히 불가능했는데 왓씨 덕분에 살균 고온 건조까지 완벽하게 끝마치고 아기 솜털처럼 부드럽게 세탁되었습니다.`,
-        img: a1Img,
+        img: reviewLatexImg,
         tags: ["극세사이불", "고온살균"],
       },
       {
@@ -799,7 +871,7 @@ export function HomePage() {
         user: "신혼부부",
         date: "26.05.11",
         body: `호텔식 올 화이트 침구 세트를 클리닝 맡겼더니 눈부실 정도로 하얗고 뽀송하게 다림질되어 배송받았습니다.`,
-        img: b1Img,
+        img: reviewWhitebedImg,
         tags: ["호텔식침구", "오성급화이트"],
       },
       {
@@ -807,7 +879,7 @@ export function HomePage() {
         user: "베개베개",
         date: "26.05.07",
         body: `기능성 라텍스 및 솜 베개 커버와 솜 자체를 세탁 건조했는데 솜 뭉침이 1도 없고 땀 냄새와 노란 찌든 오염이 마술처럼 지워졌습니다.`,
-        img: c1Img,
+        img: reviewPadpadImg,
         tags: ["기능성베개", "땀오염표백"],
       },
       {
@@ -815,7 +887,7 @@ export function HomePage() {
         user: "토퍼매니아",
         date: "26.05.04",
         body: `메모리폼 침대 토퍼 겉 커버 세탁을 신청했는데, 안감 얼룩까지 꼼꼼히 체크해 주시고 중성 세제로 정성껏 세탁되어 왔네요.`,
-        img: d1Img,
+        img: reviewGreybedImg,
         tags: ["토퍼커버", "중성케어"],
       },
       {
@@ -823,7 +895,7 @@ export function HomePage() {
         user: "효도빨래",
         date: "26.04.29",
         body: `부모님 댁에 있는 묵직한 전통 솜 한실 이불을 대행 수거해서 맡겼는데 묵은 냄새를 완벽 탈취해주시고 원형 보존하여 세탁해 주셨습니다.`,
-        img: o1Img,
+        img: reviewDuvetImg,
         tags: ["한실이불", "탈취완료"],
       },
     ],
@@ -833,7 +905,7 @@ export function HomePage() {
         user: "생활의달인",
         date: "26.05.02",
         body: `수거배송이 약속된 요일과 시간에 단 1분도 오차 없이 정확히 와서 놀랐습니다. 봉투에 툭 던져두면 다음날 칼배송되니 빨래 해방입니다!`,
-        img: rvShirtsImg,
+        img: reviewLaundryMasterImg,
         tags: ["비대면수거", "칼배송"],
       },
       {
@@ -841,7 +913,7 @@ export function HomePage() {
         user: "1인가구",
         date: "26.05.17",
         body: `원룸에 살아서 빨래 널 공간도 부족하고 눅눅한 냄새가 걱정이었는데, 왓씨에 3단 빨래 바구니째 맡기면 당일 오후에 산들바람 향이 솔솔 나는 뽀송한 상태로 문 앞에 안착해요.`,
-        img: rvShirtsImg,
+        img: reviewShirtsImg,
         tags: ["원룸빨래", "실내건조해방"],
       },
       {
@@ -849,7 +921,7 @@ export function HomePage() {
         user: "워킹맘",
         date: "26.05.12",
         body: `매일매일 쏟아져 나오는 아기 옷, 가제 수건, 내의들을 일일이 삶고 건조하기 벅찼는데 유기농 유아 전용 세제 옵션을 제공해 주셔서 맘 놓고 삶음 빨래 대행하고 있습니다.`,
-        img: rvOuterImg,
+        img: reviewWorkingMomImg,
         tags: ["아기옷세탁", "유기농세제"],
       },
       {
@@ -857,7 +929,7 @@ export function HomePage() {
         user: "수건부자",
         date: "26.05.10",
         body: `집에서 빨면 뻣뻣해지고 쿰쿰해지던 수건들이 왓씨 세탁만 거치면 촘촘한 올이 한올 한올 살아나서 엄청 도톰하고 부드러워져요. 타월 관리는 이만한 곳이 없습니다.`,
-        img: o1Img,
+        img: reviewTowelsImg,
         tags: ["호텔타월", "올복원기술"],
       },
       {
@@ -865,7 +937,7 @@ export function HomePage() {
         user: "주말빨래방",
         date: "26.05.06",
         body: `주말마다 2-3시간씩 코인 빨래방 지키고 앉아있는 시간이 너무 아까웠는데 그 시간에 가족들과 브런치 먹고 취미 생활할 수 있어서 행복합니다. 돈값 그 이상이에요.`,
-        img: i1Img,
+        img: reviewWeekendLaundryImg,
         tags: ["코인빨래안녕", "시간절약"],
       },
       {
@@ -873,7 +945,7 @@ export function HomePage() {
         user: "헬스매니아",
         date: "26.05.02",
         body: `땀이 많이 배어 기능성 원단이 상하기 쉬운 피트니스 전용 의류와 등산복 세탁을 매번 안심하고 진행합니다. 땀 전용 기능성 아웃도어 전용 런드리 짱입니다.`,
-        img: p1Img,
+        img: reviewSportswearImg,
         tags: ["기능성웨어", "스포츠런드리"],
       },
       {
@@ -881,7 +953,7 @@ export function HomePage() {
         user: "미니멀리스트",
         date: "26.04.27",
         body: `빨래통 비우기부터 개기까지의 노동을 손가락 터치 1번으로 위탁하니 집안일 스트레스가 90% 줄었습니다. 옷 정리도 칼각으로 접혀서 와서 바로 서랍에 쏙 넣네요.`,
-        img: rvBagImg,
+        img: reviewBagImg,
         tags: ["칼각접기", "노동비우기"],
       },
     ],
@@ -891,7 +963,7 @@ export function HomePage() {
         user: "패션러",
         date: "26.02.20",
         body: `실크 머플러와 악세서리 가공 처리가 만족스러워요. 모 혼방 목도리의 거칠거칠한 결이 에센스 트리트먼트로 부드럽게 돌아와서 착용감이 매우 좋아졌습니다.`,
-        img: rvBagImg,
+        img: reviewFashionerImg,
         tags: ["머플러", "가공처리"],
       },
       {
@@ -899,7 +971,7 @@ export function HomePage() {
         user: "모자매니아",
         date: "26.05.16",
         body: `아끼던 뉴에라 볼캡 모자가 이마 땀 얼룩과 화장품 때로 누렇게 오염됐고 챙 형태가 흐물해졌는데, 챙 보형틀 스팀 성형을 통해 새 모자 챙 핏으로 단단하게 복원해 주셨어요!`,
-        img: a1Img,
+        img: reviewCapImg,
         tags: ["볼캡스팀", "땀얼룩제거"],
       },
       {
@@ -907,7 +979,7 @@ export function HomePage() {
         user: "가죽벨트",
         date: "26.05.12",
         body: `고급 소가죽 클래식 벨트의 테두리 유약(기리메)이 벗겨지고 갈라져서 슬펐는데 가죽 케어 전문 옵션으로 깔끔하게 메우고 검은색 오염까지 싹 지워주셨습니다.`,
-        img: b1Img,
+        img: reviewBeltImg,
         tags: ["가죽벨트", "복원케어"],
       },
       {
@@ -915,7 +987,7 @@ export function HomePage() {
         user: "실크스카프",
         date: "26.05.09",
         body: `에르메스 실크 스카프의 얇은 섬유 한 결 한 결을 우아하게 살려서 단 하나도 미어짐 없이 다림질 성형 코팅되어 배송받았습니다. 실크 케어는 여기가 명가입니다.`,
-        img: c1Img,
+        img: reviewSilkScarfImg,
         tags: ["실크스카프", "명품스카프"],
       },
       {
@@ -923,7 +995,7 @@ export function HomePage() {
         user: "지갑컬렉터",
         date: "26.05.05",
         body: `손때와 기름 오염이 심하던 베이지색 가죽 지갑 클리닝을 맡겼는데, 염색 코팅 복원을 한 듯 아주 선명하고 산뜻한 본래의 스킨 컬러가 다시 나왔습니다.`,
-        img: d1Img,
+        img: reviewWalletImg,
         tags: ["가죽지갑", "지갑클리닝"],
       },
       {
@@ -931,7 +1003,7 @@ export function HomePage() {
         user: "넥타이핏",
         date: "26.04.29",
         body: `매일 매는 양복 실크 넥타이들의 구겨진 매듭 부위 스팀 프레싱 가공으로 아주 납작하고 단정하게 정렬되었습니다. 직장인 가성비 만족도가 최고입니다.`,
-        img: q1Img,
+        img: reviewNecktieImg,
         tags: ["실크넥타이", "스팀프레싱"],
       },
       {
@@ -939,7 +1011,7 @@ export function HomePage() {
         user: "겨울준비",
         date: "26.04.24",
         body: `캐시미어 100% 겨울 목도리 보관 전 마지막 클리닝 완료! 보풀도 하나하나 털깎이 빗으로 손질해주셔서 너무 기분 좋게 옷장에 들여놓을 수 있게 되었습니다.`,
-        img: r1Img,
+        img: reviewCashmereImg,
         tags: ["보풀손질", "목도리클리닝"],
       },
     ],
@@ -949,7 +1021,7 @@ export function HomePage() {
         user: "가방마니아",
         date: "26.03.05",
         body: `가방 세탁 후 모양이 무너지지 않고 원형 그대로 빵빵하게 각이 잘 살아있고, 천연 가죽 부위가 딱딱해지지 않고 아주 쫀득하고 부드럽게 스팀 복원됐어요.`,
-        img: rvBagImg,
+        img: reviewBagImg,
         tags: ["가죽가방", "가방각복원"],
       },
       {
@@ -957,7 +1029,7 @@ export function HomePage() {
         user: "명품백러버",
         date: "26.05.18",
         body: `샤넬 클래식 백 캔버스 원단 오염 부위 부분 부분 붓 터치 클리닝 정밀 복원 완료! 명품 가방 전용 케어실이 따로 있다고 들어서 믿고 맡겼는데 돈 아깝지 않네요.`,
-        img: m1Img,
+        img: reviewLuxuryBagImg,
         tags: ["명품가방", "정밀캔버스케어"],
       },
       {
@@ -965,7 +1037,7 @@ export function HomePage() {
         user: "백팩러",
         date: "26.05.15",
         body: `프라다 나일론 백팩 지퍼 틈새의 누적 먼지와 버클 금속 부위 얼룩 제거가 잘 되어 은은한 매트 블랙 특유의 원단 광택이 다시 세련되게 올라와서 신나요.`,
-        img: q1Img,
+        img: reviewSuitImg,
         tags: ["나일론백팩", "원단광택복원"],
       },
       {
@@ -973,7 +1045,7 @@ export function HomePage() {
         user: "에코프렌들리",
         date: "26.05.11",
         body: `때가 꼬질꼬질 타서 버리기 직전이었던 면 100% 흰색 디자이너 에코백 황변 때와 손잡이 찌든 때를 완전 뽀얗고 산뜻하게 하이 화이트 표백 세탁해 주셨어요!`,
-        img: p1Img,
+        img: reviewPriceImg,
         tags: ["에코백표백", "황변제거"],
       },
       {
@@ -981,7 +1053,7 @@ export function HomePage() {
         user: "여행자",
         date: "26.05.08",
         body: `가죽 클러치 백 모서리 까진 부분 가죽 필러 약재 성형과 염색까지 세심하게 서비스 해주셔서 정말 감사드립니다. 스크래치가 감쪽같이 티 나지 않게 되었습니다.`,
-        img: o1Img,
+        img: reviewClutchImg,
         tags: ["가죽클러치", "필러코팅염색"],
       },
       {
@@ -989,7 +1061,7 @@ export function HomePage() {
         user: "숄더백조아",
         date: "26.05.04",
         body: `숄더 토트백 바닥면 징 주변 금속 녹슬기 시작하던 부위를 특수 약품으로 환원 청소해주시고 바닥 천 이물질 오염도 물때 자국 없이 깨끗하게 흡입 탈수 완료되었습니다.`,
-        img: b1Img,
+        img: reviewOutdoorImg,
         tags: ["금속케어", "토트백바닥"],
       },
       {
@@ -997,7 +1069,7 @@ export function HomePage() {
         user: "지갑앤백",
         date: "26.04.26",
         body: `귀여운 파스텔 핑크 미니 크로스백 화장품 파운데이션 가루 흘려서 엉망진창이었는데 안감 내피를 다 들어내서 아주 깨끗하게 수성 드라이 런드리 복원되었습니다.`,
-        img: a1Img,
+        img: reviewPinkBagImg,
         tags: ["미니크로스", "화장품얼룩"],
       },
     ],
@@ -1007,7 +1079,7 @@ export function HomePage() {
         user: "집꾸미기",
         date: "26.04.01",
         body: `거실 암막 커튼과 데코 쿠션을 맡겼는데, 촉감도 아주 찰랑거리고 부드러워졌고 미세먼지가 다 빨려 들어가서 방 안의 공기 자체가 맑아진 느낌이 들어요.`,
-        img: rvBeddingImg,
+        img: reviewBeddingImg,
         tags: ["암막커튼", "미세먼지스팀"],
       },
       {
@@ -1015,7 +1087,7 @@ export function HomePage() {
         user: "인테리어러",
         date: "26.05.19",
         body: `가벼운 린넨 커튼 빨았더니 집에서 빨면 쭈글쭈글해지던 것이 왓씨 대형 플랫 프레싱으로 넓고 팽팽하게 펴져서 배송받자마자 걸었더니 주름 핏이 기가 막힙니다.`,
-        img: o1Img,
+        img: reviewDuvetImg,
         tags: ["린넨커튼", "플랫프레싱"],
       },
       {
@@ -1023,7 +1095,7 @@ export function HomePage() {
         user: "소파러버",
         date: "26.05.14",
         body: `소파 위의 대형 패브릭 패드 세탁 건조가 너무 부드럽고 풍성하게 잘 되었어요. 몸에 닿는 촉감이 완전히 실크 패드처럼 부드러워서 아이가 매일 부비적댑니다.`,
-        img: c1Img,
+        img: reviewSlacksImg,
         tags: ["소파패드", "촉감복원"],
       },
       {
@@ -1031,7 +1103,7 @@ export function HomePage() {
         user: "식탁매트",
         date: "26.05.10",
         body: `파스타 소스와 커피 자국으로 얼룩덜룩했던 패브릭 식탁 러너와 키친매트를 맡겼는데, 색감이 죽지 않고 얼룩 때만 귀신같이 탈색시켜 깨끗하게 배송되었습니다.`,
-        img: d1Img,
+        img: reviewTableRunnerImg,
         tags: ["식탁러너", "얼룩표백"],
       },
       {
@@ -1039,7 +1111,7 @@ export function HomePage() {
         user: "캠핑러",
         date: "26.05.06",
         body: `야외 캠핑에서 불 그을림 탄 냄새와 기름때 범벅이 된 캠핑 체어 및 캔버스 스킨 커버 탈취 살균 세탁! 묵은 캠핑 냄새가 싹 날아가고 보송한 풀잎 향만 가득해요.`,
-        img: p1Img,
+        img: reviewCampingGearImg,
         tags: ["캠핑커버", "탄내제거"],
       },
       {
@@ -1047,7 +1119,7 @@ export function HomePage() {
         user: "러그매니아",
         date: "26.05.01",
         body: `거실 원형 러그 틈새에 박힌 과자 부스러기와 머리카락들이 진공 고압 초강력 세척으로 완전 멸균 청소되어 왔습니다. 발로 밟을 때 기분 좋은 탄성이 느껴져요.`,
-        img: b1Img,
+        img: reviewOutdoorImg,
         tags: ["원형러그", "고압세척"],
       },
       {
@@ -1055,7 +1127,7 @@ export function HomePage() {
         user: "계절맞이",
         date: "26.04.28",
         body: `집안 분위기 전환을 위해 대형 창 커튼 4장을 한꺼번에 수거 의뢰했는데 무거운 부피임에도 왓씨 도어가드가 집 문 앞까지 들어주고 가져다주어 손가락 하나 안 아팠습니다.`,
-        img: a1Img,
+        img: reviewBlouseImg,
         tags: ["대형커튼", "도어가드배송"],
       },
     ],
@@ -1065,7 +1137,7 @@ export function HomePage() {
         user: "펫집사",
         date: "26.04.18",
         body: `강아지 침구와 헝겊 장난감들의 묵은 찌든 냄새와 강아지 털들이 99% 완벽히 제거되어 왔습니다. 친환경 세제라 댕댕이가 물고 뜯어도 맘이 너무 놓여요.`,
-        img: rvBeddingImg,
+        img: reviewDogBeddingImg,
         tags: ["애견이불", "친환경펫런드리"],
       },
       {
@@ -1073,15 +1145,15 @@ export function HomePage() {
         user: "댕댕이맘",
         date: "26.05.17",
         body: `강아지가 오줌 실수를 해서 얼룩진 대형 마약방석 세탁을 집에서는 감당 못했는데 특수 펫 살균 세탁 코스로 흔적 자국과 오줌 암모니아 향 완벽히 탈취 청소 완료!`,
-        img: o1Img,
+        img: reviewPetCushionImg,
         tags: ["마약방석", "암모니아탈취"],
       },
       {
         stars: "★★★★★",
-        user: "집사일기",
+        user: "집사러",
         date: "26.05.13",
         body: `캣타워용 양모 스크래치 패드와 숨집 내부 패브릭 발판 털들을 정교하게 솔질 세탁해 주셨습니다. 고양이 털뭉치 날림 없이 정밀하게 스팀 세탁이 되어 최고예요.`,
-        img: c1Img,
+        img: reviewScratchPadImg,
         tags: ["캣타워패드", "정밀털제거"],
       },
       {
@@ -1089,7 +1161,7 @@ export function HomePage() {
         user: "댕댕패션",
         date: "26.05.11",
         body: `귀여운 강아지 패딩과 패브릭 산책용 네임택 옷들을 세탁했는데, 아기 옷처럼 부드럽고 피부 자극 없는 중성 오가닉 향으로 배송되어 산책할 때 애기가 너무 편안해합니다.`,
-        img: d1Img,
+        img: reviewDogPaddingImg,
         tags: ["반려견의류", "피부무자극"],
       },
       {
@@ -1097,7 +1169,7 @@ export function HomePage() {
         user: "펫하우스",
         date: "26.05.07",
         body: `켄넬용 쿠션과 야외 펫 매트의 흙발 자국과 쿰쿰한 야외 펫 냄새를 말끔하고 청량한 향기로 세탁하고 초고온 스팀 살균까지 마쳐 안심하고 켄넬에 다시 깔아주었네요.`,
-        img: rvShirtsImg,
+        img: reviewShirtsImg,
         tags: ["켄넬매트", "초고온스팀"],
       },
       {
@@ -1105,7 +1177,7 @@ export function HomePage() {
         user: "냥이조아",
         date: "26.05.03",
         body: `고양이들이 꾹꾹이하며 노는 패브릭 숨구멍 방석 세탁! 솜이 고르게 분산되어 볼륨이 풍성하게 살아났고, 왓씨 특유의 깨끗한 포장으로 털 날림 없이 안전하게 왔습니다.`,
-        img: p1Img,
+        img: nyangjoCatImg,
         tags: ["고양이쿠션", "볼륨복원"],
       },
       {
@@ -1113,7 +1185,7 @@ export function HomePage() {
         user: "산책러",
         date: "26.04.25",
         body: `산책 중 하네스와 리쉬줄 오염이 심해서 세탁 코스로 의뢰했는데 리드줄 섬유의 탄력을 고스란히 살리고 금속 고리 버클 부분 윤활 크리닝까지 완료해 주셨네요. 감동입니다.`,
-        img: r1Img,
+        img: reviewPetWalkImg,
         tags: ["하네스세탁", "리드줄케어"],
       },
     ],
@@ -1123,15 +1195,15 @@ export function HomePage() {
         user: "다용도러",
         date: "26.05.08",
         body: `여행용 패브릭 트래블 파우치와 비니 모자들도 부드럽게 세탁되어 기대 이상입니다. 파우치 안의 쏟아진 샴푸 자국까지 말끔하게 날아갔어요.`,
-        img: rvBagImg,
+        img: reviewBagImg,
         tags: ["파우치클리닝", "모자세탁"],
       },
       {
         stars: "★★★★★",
         user: "유모차세탁",
         date: "26.05.16",
-        body: `아이 유모차 바스켓 천 커버와 분리형 패브릭 차양막을 통째로 맡겼는데 황사 가루와 주스 쏟은 오염이 다 빠져서 정말 개운합니다. 유모차용 베이비 런드리도 인정해요!`,
-        img: m1Img,
+        body: `아이 유모차 바스켓 천 커버 and 분리형 패브릭 차양막을 통째로 맡겼는데 황사 가루와 주스 쏟은 오염이 다 빠져서 정말 개운합니다. 유모차용 베이비 런드리도 인정해요!`,
+        img: reviewCommunityImg,
         tags: ["유모차시트", "베이비클리닝"],
       },
       {
@@ -1139,7 +1211,7 @@ export function HomePage() {
         user: "골프러버",
         date: "26.05.12",
         body: `골프 보스턴 백 내부의 신발 냄새와 먼지 구덩이 오염 세탁 클리닝! 외형 가죽 스킨 주름도 다림질 펴주시고 하드 쉐입 원형 유지까지 섬세하게 관리해 주셨습니다.`,
-        img: q1Img,
+        img: reviewSuitImg,
         tags: ["골프백케어", "각성형복원"],
       },
       {
@@ -1147,7 +1219,7 @@ export function HomePage() {
         user: "여행러",
         date: "26.05.09",
         body: `수하물 수송 중 쓸림과 검은 기름때로 난리가 난 명품 캐리어 겉 천 커버와 내부 안감 드라이 세탁! 껌 자국까지 특수 헤라 약품으로 완전 제거 완료되었습니다.`,
-        img: p1Img,
+        img: reviewPriceImg,
         tags: ["캐리어커버", "기름오염제거"],
       },
       {
@@ -1155,7 +1227,7 @@ export function HomePage() {
         user: "아기엄마",
         date: "26.05.05",
         body: `차량용 아기 카시트 겉 커버와 헤드레스트 솜 패드 세탁을 신청했습니다. 유아 피부 저자극 특수 아토 세제와 진드기 고온 멸균 분사 가공으로 쾌적 그 자체입니다.`,
-        img: a1Img,
+        img: reviewBlouseImg,
         tags: ["카시트커버", "아토세제멸균"],
       },
       {
@@ -1163,7 +1235,7 @@ export function HomePage() {
         user: "모자조아",
         date: "26.04.30",
         body: `울 100% 뜨개질 털비니와 니트 모자를 세탁했는데 실 풀림이나 보풀 발생 1개도 없이 아주 쫀쫀하게 섬유 탄성을 살려 수축 방지 클리닝 완수되었습니다.`,
-        img: b1Img,
+        img: beanieImg,
         tags: ["털비니", "수축방지케어"],
       },
       {
@@ -1171,7 +1243,7 @@ export function HomePage() {
         user: "요가마니아",
         date: "26.04.24",
         body: `매일 땀 흘리며 사용하는 요가 매트 대형 타월과 명상용 두꺼운 패브릭 방석 세탁! 땀 전용 고농축 시트러스 향 살균으로 매일 수련할 때 맑은 향이 올라와 집중이 잘 돼요.`,
-        img: r1Img,
+        img: reviewPetImg,
         tags: ["요가매트타월", "시트러스살균"],
       },
     ],
@@ -1197,6 +1269,12 @@ export function HomePage() {
       return Object.values(reviewsData).flat();
     }
     return reviewsData[tag] || [];
+  };
+
+  const openAllReviews = () => {
+    reviewAllOpeningRef.current = true;
+    setAllReviewsTag("전체");
+    setShowAllReviews(true);
   };
 
   const isReserveLanding =
@@ -1447,7 +1525,7 @@ export function HomePage() {
               <div style={{ width: 42 }} />
             </header>
 
-            <div className="review_all_content">
+            <div className="review_all_content" ref={reviewAllContentRef}>
               {/* 요약 통계 */}
               <div className="review_all_stats_box">
                 <div className="review_stat_score_col">
@@ -1489,7 +1567,7 @@ export function HomePage() {
               </div>
 
               {/* 리뷰 목록 */}
-              <div className="review_all_list">
+              <div className="review_all_list" ref={reviewAllListRef}>
                 {getReviewsForTag(allReviewsTag).map((rv, idx) => (
                   <div key={`all-${rv.user}-${idx}`} className="review_all_card">
                     <div className="review_all_card_top">
@@ -2404,14 +2482,14 @@ export function HomePage() {
               { title: "이불 세탁 완전 실패담... 집 세탁기로는 무리였어요", author: "실패의고수", date: "2026.05.19", excerpt: "구스다운 이불을 가정용 세탁기에 넣었더니 솜 뭉침이 심하게 생겼어요. 이건 진짜 전문 업체에 맡겨야 해요.", img: b1Img, likes: 145, comments: 53, tags: ["#이불세탁", "#실패후기"] },
             ],
             qa: [
-              { title: "패딩 집에서 세탁해도 될까요? 드라이 필수인가요?", author: "패딩고민", date: "2026.05.29", excerpt: "거위털 패딩인데 세탁 표시 보면 드라이클리닝이라고 나와 있어요. 집에서 세탁하면 정말 안 되나요?", img: rvOuterImg, likes: 44, comments: 18, tags: ["#패딩세탁", "#질문"] },
-              { title: "흰 면티에 커피 쏟았는데 어떻게 해야 하나요 😭", author: "커피사고", date: "2026.05.27", excerpt: "방금 새 흰 티셔츠에 아이스 아메리카노를 쏟았어요. 지금 당장 어떻게 해야 하나요?", img: rvShirtsImg, likes: 37, comments: 22, tags: ["#얼룩제거", "#응급처치"] },
+              { title: "패딩 집에서 세탁해도 될까요? 드라이 필수인가요?", author: "패딩고민", date: "2026.05.29", excerpt: "거위털 패딩인데 세탁 표시 보면 드라이클리닝이라고 나와 있어요. 집에서 세탁하면 정말 안 되나요?", img: reviewOuterImg, likes: 44, comments: 18, tags: ["#패딩세탁", "#질문"] },
+              { title: "흰 면티에 커피 쏟았는데 어떻게 해야 하나요 😭", author: "커피사고", date: "2026.05.27", excerpt: "방금 새 흰 티셔츠에 아이스 아메리카노를 쏟았어요. 지금 당장 어떻게 해야 하나요?", img: reviewShirtsImg, likes: 37, comments: 22, tags: ["#얼룩제거", "#응급처치"] },
               { title: "울 소재 니트 세탁 주기가 어떻게 되나요?", author: "니트질문자", date: "2026.05.24", excerpt: "울 소재 니트 자주 입는데 세탁을 얼마나 자주 해야 할지 모르겠어요. 냄새가 날 때만 하면 되나요?", img: d1Img, likes: 29, comments: 15, tags: ["#울니트", "#세탁주기"] },
               { title: "왓씨 예약 취소는 언제까지 가능한가요?", author: "취소문의", date: "2026.05.22", excerpt: "내일 수거 예정인데 급한 일이 생겼어요. 오늘 취소해도 되는지 궁금합니다.", img: a1Img, likes: 12, comments: 8, tags: ["#취소문의", "#예약"] },
             ],
             event: [
               { title: "🎁 6월 첫 이용 고객 50% 할인 이벤트!", author: "왓씨공식", date: "2026.06.01", excerpt: "이번 달 왓씨 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 예약하세요!", img: j1Img, likes: 231, comments: 45, tags: ["#이벤트", "#50%할인", "#신규혜택"] },
-              { title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF", author: "왓씨공식", date: "2026.05.30", excerpt: "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!", img: rvBeddingImg, likes: 187, comments: 34, tags: ["#이불특가", "#여름준비"] },
+              { title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF", author: "왓씨공식", date: "2026.05.30", excerpt: "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!", img: reviewBeddingImg, likes: 187, comments: 34, tags: ["#이불특가", "#여름준비"] },
               { title: "👥 친구 초대하면 둘 다 3,000P 적립!", author: "왓씨공식", date: "2026.05.25", excerpt: "친구 링크로 가입하면 나도 3,000P, 친구도 3,000P! 포인트로 바로 결제에 사용 가능합니다.", img: m1Img, likes: 156, comments: 28, tags: ["#친구초대", "#포인트적립"] },
               { title: "⭐ 5월 우수 리뷰어 선정 — 상품권 증정!", author: "왓씨공식", date: "2026.05.20", excerpt: "우수 리뷰를 작성해 주신 고객분께 커피 기프티콘을 드립니다. 솔직한 후기 남겨주세요!", img: b1Img, likes: 98, comments: 19, tags: ["#리뷰이벤트", "#상품권"] },
             ],
@@ -2865,7 +2943,7 @@ export function HomePage() {
                   sectionRefs.current[2] = el;
                 }}
                 data-section-index="2"
-                className={`home_columns_section home_fade_section ${!hasScrolled ? "stagger-2" : "stagger-scroll-2"} ${
+                className={`home_columns_section home_fade_section stagger-2 ${
                   visibleSections[2] ? "visible" : ""
                 }`}
               >
@@ -2906,7 +2984,7 @@ export function HomePage() {
                   sectionRefs.current[3] = el;
                 }}
                 data-section-index="3"
-                className={`home_sub_columns_section home_fade_section ${!hasScrolled ? "stagger-3" : "stagger-scroll-3"} ${
+                className={`home_sub_columns_section home_fade_section stagger-3 ${
                   visibleSections[3] ? "visible" : ""
                 }`}
               >
@@ -2937,53 +3015,60 @@ export function HomePage() {
                     <p className="home_info_card_title">세탁 종류<br />안내</p>
                     <p className="home_info_card_sub">의류별 케어 가이드</p>
                   </div>
-                  {/* 3D 와이셔츠 SVG 일러스트 */}
-                  {/* 3D 와이셔츠 SVG 일러스트 */}
+                  {/* 긴팔 드레스셔츠 SVG */}
                   <svg
                     className="home_info_card_img home_info_card_img--guide"
-                    viewBox="0 0 100 130"
+                    viewBox="0 0 120 150"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <defs>
-                      <linearGradient id="shirtBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <linearGradient id="sBody" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stopColor="#ffffff" />
                         <stop offset="100%" stopColor="#dbeafe" />
                       </linearGradient>
-                      <linearGradient id="shirtShadow" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#bfdbfe" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#eff6ff" stopOpacity="0.3" />
+                      <linearGradient id="sShade" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#bfdbfe" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="#eff6ff" stopOpacity="0" />
                       </linearGradient>
-                      <filter id="shirtSoft">
-                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="#1d4ed8" floodOpacity="0.18" />
+                      <linearGradient id="sSleeve" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#dbeafe" />
+                        <stop offset="100%" stopColor="#bfdbfe" />
+                      </linearGradient>
+                      <filter id="sDrop">
+                        <feDropShadow dx="2" dy="5" stdDeviation="4" floodColor="#1d4ed8" floodOpacity="0.14" />
                       </filter>
                     </defs>
-                    {/* 몸통 — 더 길게 */}
-                    <path d="M18 38 L18 122 L82 122 L82 38 L65 28 L50 34 L35 28 Z" fill="url(#shirtBody)" filter="url(#shirtSoft)" />
-                    {/* 왼쪽 소매 — 길게 */}
-                    <path d="M18 38 L2 28 L4 62 L18 65 Z" fill="#dbeafe" />
-                    {/* 오른쪽 소매 — 길게 */}
-                    <path d="M82 38 L98 28 L96 62 L82 65 Z" fill="#dbeafe" />
-                    {/* 그림자 (왼쪽 패널) */}
-                    <path d="M18 38 L18 122 L50 122 L50 34 Z" fill="url(#shirtShadow)" />
+                    {/* 왼쪽 긴 소매 */}
+                    <path d="M38,32 L12,38 L10,120 L26,124 L38,114 Z" fill="url(#sSleeve)" />
+                    {/* 오른쪽 긴 소매 */}
+                    <path d="M82,32 L108,38 L110,120 L94,124 L82,114 Z" fill="#c7d9f5" />
+                    {/* 몸통 */}
+                    <path d="M38,26 L38,146 L82,146 L82,26 L72,18 L60,24 L48,18 Z" fill="url(#sBody)" filter="url(#sDrop)" />
+                    {/* 왼쪽 음영 */}
+                    <path d="M38,26 L60,24 L60,146 L38,146 Z" fill="url(#sShade)" />
                     {/* 왼쪽 칼라 */}
-                    <path d="M35 28 L50 34 L50 48 L38 36 Z" fill="#93c5fd" />
+                    <path d="M48,18 L60,24 L60,44 L44,30 Z" fill="#93c5fd" />
                     {/* 오른쪽 칼라 */}
-                    <path d="M65 28 L50 34 L50 48 L62 36 Z" fill="#bfdbfe" />
-                    {/* 칼라 테두리 */}
-                    <path d="M35 28 L50 48 L65 28" fill="none" stroke="#60a5fa" strokeWidth="1" />
-                    {/* 단추 4개 */}
-                    <circle cx="50" cy="58" r="2" fill="#93c5fd" />
-                    <circle cx="50" cy="70" r="2" fill="#93c5fd" />
-                    <circle cx="50" cy="82" r="2" fill="#93c5fd" />
-                    <circle cx="50" cy="94" r="2" fill="#93c5fd" />
-                    {/* 버튼홀 선 */}
-                    <line x1="50" y1="48" x2="50" y2="122" stroke="#93c5fd" strokeWidth="0.7" strokeDasharray="2 2" />
-                    {/* 소매 커프스 왼쪽 */}
-                    <rect x="3" y="58" width="7" height="6" rx="2" fill="#93c5fd" />
-                    {/* 소매 커프스 오른쪽 */}
-                    <rect x="90" y="58" width="7" height="6" rx="2" fill="#93c5fd" />
+                    <path d="M72,18 L60,24 L60,44 L76,30 Z" fill="#bfdbfe" />
+                    {/* 칼라 V라인 */}
+                    <path d="M48,18 L60,45 L72,18" fill="none" stroke="#60a5fa" strokeWidth="1.2" strokeLinejoin="round" />
+                    {/* 플라켓 점선 */}
+                    <line x1="60" y1="45" x2="60" y2="146" stroke="#93c5fd" strokeWidth="0.9" strokeDasharray="2.5,2.5" />
+                    {/* 단추 5개 */}
+                    <circle cx="60" cy="58"  r="2.2" fill="#93c5fd" />
+                    <circle cx="60" cy="74"  r="2.2" fill="#93c5fd" />
+                    <circle cx="60" cy="90"  r="2.2" fill="#93c5fd" />
+                    <circle cx="60" cy="106" r="2.2" fill="#93c5fd" />
+                    <circle cx="60" cy="122" r="2.2" fill="#93c5fd" />
+                    {/* 왼쪽 커프스 */}
+                    <rect x="9"  y="115" width="17" height="9" rx="3" fill="#93c5fd" />
+                    {/* 오른쪽 커프스 */}
+                    <rect x="94" y="115" width="17" height="9" rx="3" fill="#93c5fd" />
+                    {/* 커프스 단추 */}
+                    <circle cx="17.5" cy="119.5" r="1.5" fill="#60a5fa" />
+                    <circle cx="102.5" cy="119.5" r="1.5" fill="#60a5fa" />
                     {/* 밑단 */}
-                    <rect x="18" y="119" width="64" height="3" rx="1.5" fill="#93c5fd" opacity="0.5" />
+                    <rect x="38" y="143" width="44" height="3" rx="1.5" fill="#93c5fd" opacity="0.4" />
                   </svg>
                 </div>
               </section>
@@ -2994,7 +3079,7 @@ export function HomePage() {
                   sectionRefs.current[4] = el;
                 }}
                 data-section-index="4"
-                className={`home_guide_full_section home_fade_section ${!hasScrolled ? "stagger-4" : "stagger-scroll-4"} ${
+                className={`home_guide_full_section home_fade_section stagger-4 ${
                   visibleSections[4] ? "visible" : ""
                 }`}
               >
@@ -3026,7 +3111,7 @@ export function HomePage() {
                   sectionRefs.current[5] = el;
                 }}
                 data-section-index="5"
-                className={`home_reviews_section home_fade_section ${!hasScrolled ? "stagger-5" : "stagger-scroll-5"} ${
+                className={`home_reviews_section home_fade_section stagger-5 ${
                   visibleSections[5] ? "visible" : ""
                 }`}
               >
@@ -3034,7 +3119,7 @@ export function HomePage() {
                   <h3 className="home_review_title">실제 고객 리뷰</h3>
                   <button
                     className="home_review_more"
-                    onClick={() => { setAllReviewsTag("전체"); setShowAllReviews(true); }}
+                    onClick={openAllReviews}
                   >
                     전체보기&gt;
                   </button>
@@ -3054,7 +3139,7 @@ export function HomePage() {
                 </div>
 
                 {/* [가로 터치 스크롤 Swiper 카드 슬라이더] */}
-                <div className="home_review_swiper_container">
+                <div className="home_review_swiper_container" ref={homeReviewSwiperRef}>
                   {getReviewsForTag(selectedTag).map((rv, idx) => (
                     <div
                       className="home_review_slide_card"
@@ -3289,21 +3374,21 @@ export function HomePage() {
                           title: "일반 빨래",
                           desc: "기본 세탁, 일상 의류, 타올 및 일상 생활 빨래",
                           priceText: "기본 19,000원",
-                          img: rvShirtsImg,
+                          img: reviewShirtsImg,
                         },
                         {
                           id: "관리 의류",
                           title: "관리 의류",
                           desc: "드라이클리닝, 아우터, 실크, 정장 등 고급 섬세 세탁",
                           priceText: "기본 25,000원",
-                          img: rvOuterImg,
+                          img: reviewOuterImg,
                         },
                         {
                           id: "이불/리빙/기타",
                           title: "이불/리빙/기타",
                           desc: "이불, 침구류, 커튼 등 부피가 큰 생활 리빙 케어",
                           priceText: "기본 30,000원",
-                          img: rvBeddingImg,
+                          img: reviewBeddingImg,
                         },
                       ].map((item) => (
                         <div
@@ -4134,21 +4219,21 @@ export function HomePage() {
                               <>
                                 {selectedScanPreset === "shirt" && (
                                   <img
-                                    src={rvShirtsImg}
+                                    src={reviewShirtsImg}
                                     alt="셔츠 실물"
                                     className="sim_feed_img"
                                   />
                                 )}
                                 {selectedScanPreset === "coat" && (
                                   <img
-                                    src={rvOuterImg}
+                                    src={reviewOuterImg}
                                     alt="코트 실물"
                                     className="sim_feed_img"
                                   />
                                 )}
                                 {selectedScanPreset === "bedding" && (
                                   <img
-                                    src={rvBeddingImg}
+                                    src={reviewBeddingImg}
                                     alt="이불 실물"
                                     className="sim_feed_img"
                                   />

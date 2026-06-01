@@ -37,39 +37,6 @@ export function Splash() {
       : {}),
   });
 
-  const initialBubbles = useMemo(() => {
-    // ─── W 획 경로 (좌상단 → 좌하단 → 중앙피크 → 우하단 → 우상단) ───
-    // x: 30~52%, y: 43~57%  ← 가로로 넓고 납작한 비율
-    const wPoints = [
-      { left: 30, top: 43 }, // 좌측 상단 코너
-      { left: 33, top: 50 }, // 좌외측 획 중간
-      { left: 36, top: 57 }, // 좌측 하단 골
-      { left: 41, top: 47 }, // 중앙 피크 (W 특유의 솟은 부분)
-      { left: 46, top: 57 }, // 우측 하단 골
-      { left: 49, top: 50 }, // 우외측 획 중간
-      { left: 52, top: 43 }, // 우측 상단 코너
-    ];
-    // ─── C 호 경로 (상단 팁 → 12시 → 9시 → 6시 → 하단 팁) ───
-    // x: 57~71%, y: 43~57%  ← W와 정확히 동일한 높이 범위
-    const cPoints = [
-      { left: 71, top: 44 }, // 상단 개구부 (1시 방향)
-      { left: 65, top: 43 }, // 12시 (호 정상)
-      { left: 58, top: 46 }, // 10시 (상단 좌측 호)
-      { left: 57, top: 50 }, // 9시 (최좌측 닫힘)
-      { left: 58, top: 54 }, // 8시 (하단 좌측 호)
-      { left: 65, top: 57 }, // 6시 (호 바닥)
-      { left: 71, top: 56 }, // 하단 개구부 (5시 방향)
-    ];
-    return [...wPoints, ...cPoints].map((pt, index) => ({
-      id: index,
-      size: 18,
-      left: pt.left,
-      top: pt.top,
-      delay: index * 0.025,
-      type: index % 3,
-    }));
-  }, []);
-
   // Animation phases:
   // 0: 초기 버블 WC 로고
   // 1: f1 이미지 + watC 로고 노출
@@ -336,48 +303,139 @@ export function Splash() {
           transform: scale(1) translateY(0);
         }
 
-        .initial_bubble_container {
+        /* --- Phase 0: WC 버블 상승 컨테이너 --- */
+        .splash_3d_container {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           overflow: hidden;
-          pointer-events: none;
-          z-index: 12;
+          background: #ffffff;
+          z-index: 100;
+          opacity: 1;
+          transform: scale(1);
+          transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .initial_bubble {
+        .splash_3d_container.fade-out {
+          opacity: 0;
+          transform: scale(1.05);
+          pointer-events: none;
+        }
+
+        /* 비누방울 */
+        .splash_ambient_bubble {
           position: absolute;
           border-radius: 50%;
-          opacity: 0;
+          background: radial-gradient(circle at 35% 30%,
+            rgba(255,255,255,0.95) 0%,
+            rgba(210,225,255,0.55) 28%,
+            rgba(190,215,255,0.35) 55%,
+            rgba(220,200,255,0.22) 78%,
+            rgba(200,240,255,0.15) 100%
+          );
+          border: 1px solid rgba(180,200,255,0.45);
           box-shadow:
-            inset -2px -2px 6px rgba(255,255,255,0.6),
-            inset 2px 2px 4px rgba(37,99,235,0.3),
-            0 2px 8px rgba(37,99,235,0.15);
-          animation: bubbleFormLetter 1.8s ease-in-out forwards;
+            inset -3px -3px 8px rgba(255,255,255,0.88),
+            inset  2px  2px  6px rgba(160,185,255,0.4),
+            0 3px 12px rgba(120,150,255,0.12);
+          animation: ambientBubbleFloat ease-in-out forwards;
+          pointer-events: none;
+          z-index: 2;
         }
 
-        .initial_bubble.bubble_type_0 {
-          background: radial-gradient(circle at 35% 35%, rgba(37, 99, 235, 0.35) 0%, rgba(37, 99, 235, 0.08) 70%, transparent 100%);
-          border: 1px solid rgba(37, 99, 235, 0.25);
+        @keyframes ambientBubbleFloat {
+          0%   { transform: translateY(0) scale(1); opacity: 0.18; }
+          35%  { opacity: 0.34; }
+          72%  { opacity: 0.16; }
+          100% { transform: translateY(-16vh) scale(0.9); opacity: 0; }
         }
 
-        .initial_bubble.bubble_type_1 {
-          background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.22) 0%, rgba(37, 99, 235, 0.06) 80%, transparent 100%);
-          border: 1px solid rgba(37, 99, 235, 0.18);
+        .splash_c_morph_bubble {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 112px;
+          height: 112px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%) scale(0.84);
+          background: radial-gradient(circle at 34% 28%,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(219, 234, 254, 0.62) 38%,
+            rgba(147, 197, 253, 0.25) 68%,
+            rgba(191, 219, 254, 0.18) 100%
+          );
+          border: 2px solid rgba(147, 197, 253, 0.48);
+          box-shadow:
+            inset -8px -10px 24px rgba(255, 255, 255, 0.86),
+            inset 7px 8px 18px rgba(96, 165, 250, 0.22),
+            0 18px 48px rgba(59, 130, 246, 0.13);
+          animation: cBubbleMorph 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          z-index: 5;
         }
 
-        .initial_bubble.bubble_type_2 {
-          background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.4) 0%, rgba(240, 246, 255, 0.2) 40%, transparent 100%);
-          border: 1px solid rgba(37, 99, 235, 0.3);
+        .splash_c_morph_bubble::before {
+          content: "";
+          position: absolute;
+          top: 20px;
+          left: 24px;
+          width: 24px;
+          height: 13px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.78);
+          filter: blur(0.2px);
+          transform: rotate(-24deg);
+          animation: cBubbleShine 2.2s ease forwards;
+        }
+
+        @keyframes cBubbleMorph {
+          0% {
+            opacity: 0.28;
+            transform: translate(-50%, -50%) scale(0.84);
+          }
+          45% {
+            opacity: 0.86;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          68% {
+            opacity: 1;
+            background: radial-gradient(circle at 34% 28%,
+              rgba(255, 255, 255, 0.9) 0%,
+              rgba(219, 234, 254, 0.48) 42%,
+              rgba(147, 197, 253, 0.18) 72%
+            );
+            border: 3px solid rgba(37, 99, 235, 0.42);
+            border-right-color: rgba(37, 99, 235, 0.42);
+          }
+          100% {
+            width: 98px;
+            height: 98px;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            background: transparent;
+            border: 12px solid #2563eb;
+            border-right-color: transparent;
+            box-shadow:
+              0 18px 44px rgba(37, 99, 235, 0.16),
+              inset 0 0 12px rgba(255, 255, 255, 0.58);
+          }
+        }
+
+        @keyframes cBubbleShine {
+          0%, 58% { opacity: 0.76; }
+          100% { opacity: 0; transform: rotate(-24deg) translateY(-8px); }
+        }
+
+        @keyframes gentleFloat3D {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50%       { transform: translateY(-9px) scale(1.012); }
         }
 
         @keyframes bubbleFormLetter {
-          0%   { opacity: 0;    transform: scale(0.1);                    filter: blur(4px); }
-          10%  { opacity: 0.95; transform: scale(1.12);                   filter: blur(0);   }
-          15%  { opacity: 0.92; transform: scale(1)    translateY(0);     filter: blur(0);   }
-          75%  { opacity: 0.92; transform: scale(1)    translateY(0);     filter: blur(0);   }
-          100% { opacity: 0;    transform: scale(0.4)  translateY(-18px); filter: blur(3px); }
+          0%   { opacity: 0;    transform: scale(0.1);  filter: blur(4px); }
+          12%  { opacity: 0.92; transform: scale(1.1);  filter: blur(0); }
+          80%  { opacity: 0.88; transform: scale(1);    filter: blur(0); }
+          100% { opacity: 0;    transform: scale(0.5) translateY(-20px); filter: blur(3px); }
         }
 
         /* --- [1번 페이지] 브랜드 강화 화면 [로고 및 본문 축소/하향, Slogan 줄임/상향] --- */
@@ -447,23 +505,40 @@ export function Splash() {
         Skip
       </button>
 
-      {/* PHASE 0: 초기 버블 채우기 */}
+      {/* PHASE 0: 3D 홀로그램 버블 스플래시 */}
       <div style={getScreenStyle(styles.baseScreen)}>
-        {phase === 0 && (
-          <div className="initial_bubble_container">
-            {initialBubbles.map((bubble) => (
+        {phase <= 1 && (
+          <div className={`splash_3d_container ${phase === 1 ? "fade-out" : ""}`}>
+
+            {/* 비눗방울 30개 — 위로 올라가다 사라짐 */}
+            {[
+              { size: 28, left:  "8%", dur: "2.25s", delay: "0.00s", top: "26%" },
+              { size: 16, left: "18%", dur: "2.45s", delay: "0.12s", top: "56%" },
+              { size: 38, left: "28%", dur: "2.30s", delay: "0.05s", top: "78%" },
+              { size: 22, left: "39%", dur: "2.55s", delay: "0.18s", top: "34%" },
+              { size: 46, left: "52%", dur: "2.35s", delay: "0.08s", top: "70%" },
+              { size: 14, left: "64%", dur: "2.50s", delay: "0.20s", top: "22%" },
+              { size: 32, left: "73%", dur: "2.28s", delay: "0.10s", top: "48%" },
+              { size: 18, left: "84%", dur: "2.48s", delay: "0.16s", top: "82%" },
+              { size: 40, left: "92%", dur: "2.38s", delay: "0.04s", top: "38%" },
+              { size: 20, left: "12%", dur: "2.62s", delay: "0.24s", top: "86%" },
+              { size: 34, left: "58%", dur: "2.42s", delay: "0.14s", top: "12%" },
+              { size: 24, left: "88%", dur: "2.58s", delay: "0.22s", top: "64%" },
+            ].map((b, i) => (
               <div
-                key={`initial-bubble-${bubble.id}`}
-                className={`initial_bubble bubble_type_${bubble.type}`}
+                key={`bbl-${i}`}
+                className="splash_ambient_bubble"
                 style={{
-                  width: `${bubble.size}px`,
-                  height: `${bubble.size}px`,
-                  left: `${bubble.left}%`,
-                  top: `${bubble.top}%`,
-                  animationDelay: `${bubble.delay}s`,
+                  width:             b.size,
+                  height:            b.size,
+                  left:              b.left,
+                  top:               b.top,
+                  animationDuration: b.dur,
+                  animationDelay:    b.delay,
                 }}
               />
             ))}
+            <div className="splash_c_morph_bubble" aria-hidden="true" />
           </div>
         )}
         {phase >= 1 && phase < 6 && (

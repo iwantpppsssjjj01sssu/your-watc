@@ -65,7 +65,7 @@ export function AgreementPage() {
             <span style={styles.titleHighlight}>시작해볼까요?</span>
           </h1>
           <p style={styles.subtitle}>
-            더 편리한 세탁 경험을 위해
+            더 스마트한 세탁 경험을 위해
             <br />
             서비스 이용 약관에 동의해주세요.
           </p>
@@ -315,17 +315,22 @@ const styles: Record<string, any> = {
   },
   titleGroup: { display: "flex", flexDirection: "column", gap: "2px" },
   title: {
-    fontSize: "34px",
+    fontSize: "36px",
     fontWeight: 700,
     color: "#0F172A",
     margin: 0,
-    lineHeight: "1.05",
+    lineHeight: "1.35",
   },
   titleHighlight: { color: "#2563EB" },
   subtitle: {
-    margin: "12px 0 0 0",
-    fontSize: "20px",
+    margin: "1px 0 14px 0",
+    fontSize: "21px",
+    fontWeight: 500,
     color: "rgba(71, 85, 105, 0.9)",
+    lineHeight: "1.55",
+    letterSpacing: "-0.2px",
+    textAlign: "left" as const,
+    wordBreak: "keep-all",
   },
   agreementCard: {
     padding: "18px",

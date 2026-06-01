@@ -177,6 +177,13 @@ export default defineConfig(({ mode }) => {
       outDir: "docs",
     },
 
+    server: {
+      host: true,      // 0.0.0.0 — 모바일 등 네트워크 기기 접근 허용
+      port: 5173,
+      strictPort: false, // 5173 사용 중이면 자동으로 다음 포트 사용
+      cors: true,
+    },
+
     plugins: [
       react(),
       {

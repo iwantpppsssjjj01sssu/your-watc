@@ -544,21 +544,25 @@
 .home_info_card:active { transform: scale(0.97); }
 
 .home_info_card--amber {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.22);
-}
-
-.home_info_card--teal {
   background: linear-gradient(135deg, #bfdbfe 0%, #eff6ff 100%);
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.1);
 }
 
-.home_info_card--teal .home_info_card_badge { color: #2563eb; background: rgba(37,99,235,0.12); }
-.home_info_card--teal .home_info_card_title { color: #1e3a8a; }
-.home_info_card--teal .home_info_card_sub   { color: #3b82f6; }
+.home_info_card--amber .home_info_card_badge { color: #2563eb; background: rgba(37,99,235,0.12); }
+.home_info_card--amber .home_info_card_title { color: #1e3a8a; }
+.home_info_card--amber .home_info_card_sub   { color: #3b82f6; }
 
-.home_info_card--amber:hover { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.32); }
-.home_info_card--teal:hover  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.18); }
+.home_info_card--teal {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.22);
+}
+
+.home_info_card--teal .home_info_card_badge { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.18); }
+.home_info_card--teal .home_info_card_title { color: #ffffff; }
+.home_info_card--teal .home_info_card_sub   { color: rgba(255,255,255,0.75); }
+
+.home_info_card--amber:hover { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.18); }
+.home_info_card--teal:hover  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.32); }
 
 .home_info_card_text { z-index: 2; }
 
@@ -701,39 +705,39 @@
   transition-delay: 0ms;
 }
 .home_fade_section.stagger-1 {
-  transition-delay: 200ms;
+  transition-delay: 150ms; /* 페이지 로드 시 대시보드가 헤더 직후 부드럽게 나타나도록 지연 */
 }
 .home_fade_section.stagger-2 {
-  transition-delay: 400ms;
+  transition-delay: 80ms; /* 화면 진입 시 아주 빠르고 기민하게 애니메이션 반응 */
 }
 .home_fade_section.stagger-3 {
-  transition-delay: 600ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-4 {
-  transition-delay: 800ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-5 {
-  transition-delay: 1000ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-6 {
-  transition-delay: 1200ms;
+  transition-delay: 80ms;
 }
 
-/* 스크롤 감지 후 기민하게 적용될 2차 고속 그룹 순차 지연(Stagger-Scroll) 클래스 */
+/* 스크롤 감지 후 기민하게 적용될 2차 고속 그룹 순차 지연(Stagger-Scroll) 클래스 (호환성 유지) */
 .home_fade_section.stagger-scroll-2 {
-  transition-delay: 0ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-scroll-3 {
-  transition-delay: 150ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-scroll-4 {
-  transition-delay: 300ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-scroll-5 {
-  transition-delay: 450ms;
+  transition-delay: 80ms;
 }
 .home_fade_section.stagger-scroll-6 {
-  transition-delay: 600ms;
+  transition-delay: 80ms;
 }
 
 .home_guide_right {
@@ -861,10 +865,11 @@
 }
 
 .home_review_title {
-  font-size: 16px;
+  font-size: 21px; /* 글씨 크기 대폭 확대 */
   font-weight: 800;
   color: #000000;
   margin: 0 0 4px 0;
+  letter-spacing: -0.4px;
 }
 
 .home_review_more {

@@ -112,6 +112,243 @@ function SocialPermissionModal({
   );
 }
 
+interface ForgotPasswordModalProps {
+  onClose: () => void;
+  onAutoFill: () => void;
+}
+
+function ForgotPasswordModal({
+  onClose,
+  onAutoFill,
+}: ForgotPasswordModalProps) {
+  const [emailInput, setEmailInput] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput.trim()) {
+      alert("이메일 주소를 입력해주세요.");
+      return;
+    }
+    setStatus("sending");
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setStatus("success");
+  };
+
+  return (
+    <div style={styles.modalOverlay}>
+      <div style={{ ...styles.modalContent, padding: "28px 24px" }}>
+        <p style={{ ...styles.modalTitle, fontSize: "17px", marginBottom: "12px" }}>
+          비밀번호 찾기
+        </p>
+
+        {status === "idle" && (
+          <form onSubmit={handleSend} style={{ textAlign: "left" }}>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#64748B",
+                marginBottom: "20px",
+                lineHeight: "1.5",
+                textAlign: "center",
+              }}
+            >
+              가입하신 이메일 주소를 입력하시면
+              <br />
+              비밀번호 재설정 링크를 보내드립니다.
+            </p>
+
+            <div
+              style={{
+                ...styles.inputWrapper,
+                marginBottom: "16px",
+                height: "46px",
+              }}
+            >
+              <input
+                type="email"
+                placeholder="example@email.com"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                style={{ ...styles.input, fontSize: "14px" }}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                height: "44px",
+                backgroundColor: "#2563EB",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "10px",
+                fontWeight: "700",
+                fontSize: "14px",
+                cursor: "pointer",
+                marginBottom: "12px",
+              }}
+            >
+              재설정 링크 전송
+            </button>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                margin: "8px 0",
+              }}
+            >
+              <div style={{ flex: 1, height: "1px", backgroundColor: "#E2E8F0" }}></div>
+              <span style={{ fontSize: "11px", color: "#94A3B8" }}>또는</span>
+              <div style={{ flex: 1, height: "1px", backgroundColor: "#E2E8F0" }}></div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                onAutoFill();
+                onClose();
+              }}
+              style={{
+                width: "100%",
+                height: "44px",
+                backgroundColor: "#EFF6FF",
+                color: "#2563EB",
+                border: "1px solid #BFDBFE",
+                borderRadius: "10px",
+                fontWeight: "700",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              테스트 계정으로 로그인하기
+            </button>
+          </form>
+        )}
+
+        {status === "sending" && (
+          <div
+            style={{
+              padding: "20px 0",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                border: "3px solid #E2E8F0",
+                borderTop: "3px solid #2563EB",
+                borderRadius: "50%",
+                animation: "spin 1s linear infinite",
+                marginBottom: "16px",
+              }}
+            ></div>
+            <p style={{ fontSize: "14px", color: "#475569", fontWeight: "600" }}>
+              이메일을 발송하고 있습니다...
+            </p>
+          </div>
+        )}
+
+        {status === "success" && (
+          <div style={{ padding: "10px 0" }}>
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                backgroundColor: "#DCFCE7",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 16px auto",
+                color: "#16A34A",
+              }}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#1E293B",
+                fontWeight: "700",
+                marginBottom: "8px",
+              }}
+            >
+              전송 완료!
+            </p>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#64748B",
+                marginBottom: "20px",
+                lineHeight: "1.5",
+              }}
+            >
+              <strong>{emailInput}</strong> 주소로
+              <br />
+              비밀번호 재설정 이메일이 발송되었습니다.
+            </p>
+            <button
+              onClick={onClose}
+              style={{
+                width: "100%",
+                height: "44px",
+                backgroundColor: "#2563EB",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "10px",
+                fontWeight: "700",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              로그인 화면으로 돌아가기
+            </button>
+          </div>
+        )}
+
+        {status === "idle" && (
+          <div style={{ textAlign: "center" }}>
+            <button
+              onClick={onClose}
+              style={{
+                marginTop: "16px",
+                background: "none",
+                border: "none",
+                color: "#94A3B8",
+                fontSize: "13px",
+                fontWeight: "600",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              닫기
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(DUMMY_EMAIL);
@@ -119,6 +356,7 @@ export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false);
 
   const isFormValid = email.trim().length > 0 && password.trim().length > 0;
 
@@ -164,6 +402,10 @@ export function LoginPage() {
           padding-left: 0 !important;
           padding-right: 0 !important;
         }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
       `}</style>
       {/* [가로 풀 배너 교정 핵심 위치]
         부모의 padding 여백을 상쇄하는 음수 마진(-20px)과 폭 확장을 적용하여
@@ -194,7 +436,9 @@ export function LoginPage() {
         <div style={styles.inputGroup}>
           <div style={styles.passwordHeader}>
             <label style={styles.label}>PASSWORD</label>
-            <span style={styles.forgotPassword}>비밀번호를 잊으셨나요?</span>
+            <span style={styles.forgotPassword} onClick={() => setShowForgotModal(true)}>
+              비밀번호를 잊으셨나요?
+            </span>
           </div>
           <div style={styles.inputWrapper}>
             <span style={styles.icon}>
@@ -306,6 +550,13 @@ export function LoginPage() {
         <SocialPermissionModal
           onConfirm={handleSocialConfirm}
           onCancel={handleSocialCancel}
+        />
+      )}
+
+      {showForgotModal && (
+        <ForgotPasswordModal
+          onClose={() => setShowForgotModal(false)}
+          onAutoFill={handleAutoFillDummy}
         />
       )}
 

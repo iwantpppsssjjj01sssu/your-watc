@@ -12,7 +12,16 @@
       "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|highlight\")",
       "Bash(xargs grep -l \"4강\\\\|대진표\\\\|MVP 투표\")",
       "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|Highlight\\\\|highlight\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(ipconfig)",
+      "Bash(findstr /R \"IPv4.*192\\\\|IPv4.*10\\\\.\")",
+      "Bash(findstr \"IPv4\")",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":5174\")",
+      "Bash(taskkill /PID 2596 /F)",
+      "PowerShell(Get-ChildItem \"c:\\\\박수진\\\\your-watc\\\\src\\\\asset\" -Recurse | Where-Object { $_.Name -match \"review|coat|trench\" } | Select-Object FullName)",
+      "Read(//c/�ڼ���/your-watc/src/asset/**)",
+      "PowerShell(Get-ChildItem \"c:\\\\박수진\\\\your-watc\\\\src\\\\asset\\\\icons\" | Where-Object { $_.Name -match \"coat|review|rv\" } | Select-Object Name)"
     ]
   }
 }
