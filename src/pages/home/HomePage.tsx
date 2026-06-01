@@ -5680,7 +5680,9 @@ export function HomePage() {
                                     ))}
                                   </div>
                                 </section>
-
+                              )}
+                            </>
+                          )}
                         </div>
 
                         {/* 팔레트 그리드 */}
