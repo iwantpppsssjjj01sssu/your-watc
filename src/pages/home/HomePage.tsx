@@ -12,6 +12,7 @@ import m1Img from "../../asset/img/m1.png"; // 3D Community Scene
 
 import reviewBeddingImg from "../../asset/img/review-bedding.png";
 import reviewShirtsImg from "../../asset/img/review-shirts.png";
+import reviewShirtPaddingImg from "../../asset/img/review_shirt_padding.png";
 import reviewOuterImg from "../../asset/img/review-outer.png";
 import reviewShoesImg from "../../asset/img/review-shoes.png";
 import reviewBagImg from "../../asset/img/review-bag.png";
@@ -22,7 +23,7 @@ import a1Img from "../../asset/img/a1.png";
 import b1Img from "../../asset/img/b1.png";
 import c1Img from "../../asset/img/c1.png";
 import d1Img from "../../asset/img/d1.png";
-import p1Img from "../../asset/img/p1.png";
+import priceTagImg from "../../asset/img/price-tag-3d.svg";
 import q1Img from "../../asset/img/q1.png";
 
 import reviewCoatImg from "../../asset/img/review-coat.png";
@@ -33,9 +34,11 @@ import reviewSneakersImg from "../../asset/img/review-sneakers.png";
 import reviewBlouseImg from "../../asset/img/review-blouse.png";
 import reviewOutdoorImg from "../../asset/img/review-outdoor.png";
 import reviewSlacksImg from "../../asset/img/review-slacks.png";
+import reviewFabricPadImg from "../../asset/img/review-fabric-pad.svg";
 import reviewCanvasImg from "../../asset/img/review-canvas.png";
 import reviewDuvetImg from "../../asset/img/review-duvet.png";
 import reviewPriceImg from "../../asset/img/review-price.png";
+import reviewEcoShoulderBagImg from "../../asset/img/review_eco_shoulder_bag.png";
 import reviewSuitImg from "../../asset/img/review-suit.png";
 import reviewPetImg from "../../asset/img/review-pet.png";
 import reviewCommunityImg from "../../asset/img/review-community.png";
@@ -68,38 +71,41 @@ import reviewTowelsImg from "../../asset/img/review-towels.png";
 import reviewSportswearImg from "../../asset/img/review-sportswear.png";
 import reviewLuxuryBagImg from "../../asset/img/review-luxury-bag.png";
 import beanieImg from "../../asset/img/비니.png";
-import nyangjoCatImg from "../../asset/img/냥이조아.png";
+import nyangjoCatImg from "../../asset/img/review-cat.png";
 import reviewCampingGearImg from "../../asset/img/review-camping-gear.png";
 import reviewTableRunnerImg from "../../asset/img/review-table-runner.png";
+import guideShirtImg from "../../asset/img/guide-shirt.png";
+import reviewFoldedClothesImg from "../../asset/img/review-folded-clothes.png";
+import reviewBlackBackpackImg from "../../asset/img/review-black-backpack.png";
 
 import { BottomNav } from "../../components/BottomNav";
 
 // 세탁 노하우 카드 전용 3D 세제병 SVG 일러스트
 const communityTipsImg = `data:image/svg+xml;utf8,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150">'
-  + '<defs>'
-  + '<linearGradient id="btl" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#059669"/><stop offset="45%" stop-color="#10b981"/><stop offset="100%" stop-color="#065f46"/></linearGradient>'
-  + '<linearGradient id="cap" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#94a3b8"/></linearGradient>'
-  + '<filter id="sh"><feDropShadow dx="3" dy="6" stdDeviation="5" flood-color="#065f46" flood-opacity="0.25"/></filter>'
-  + '</defs>'
-  + '<circle cx="22" cy="35" r="9" fill="#bbf7d0" opacity="0.55"/>'
-  + '<circle cx="98" cy="55" r="7" fill="#6ee7b7" opacity="0.5"/>'
-  + '<circle cx="18" cy="95" r="6" fill="#a7f3d0" opacity="0.4"/>'
-  + '<circle cx="102" cy="115" r="8" fill="#6ee7b7" opacity="0.45"/>'
-  + '<circle cx="88" cy="30" r="5" fill="#bbf7d0" opacity="0.5"/>'
-  + '<rect x="50" y="18" width="10" height="16" rx="4" fill="url(#cap)"/>'
-  + '<ellipse cx="55" cy="18" rx="7" ry="5" fill="#cbd5e1"/>'
-  + '<rect x="38" y="30" width="34" height="22" rx="8" fill="url(#cap)"/>'
-  + '<rect x="28" y="48" width="54" height="90" rx="16" fill="url(#btl)" filter="url(#sh)"/>'
-  + '<rect x="32" y="52" width="16" height="82" rx="8" fill="white" opacity="0.12"/>'
-  + '<rect x="34" y="75" width="46" height="44" rx="8" fill="white" opacity="0.92"/>'
-  + '<text x="57" y="91" font-size="9" font-weight="900" text-anchor="middle" fill="#059669" font-family="system-ui,sans-serif">WatC</text>'
-  + '<text x="57" y="103" font-size="6.5" font-weight="700" text-anchor="middle" fill="#064e3b" font-family="system-ui,sans-serif">세탁 노하우</text>'
-  + '<text x="57" y="113" font-size="5.5" text-anchor="middle" fill="#6b7280" font-family="system-ui,sans-serif">CARE TIPS</text>'
-  + '<circle cx="46" cy="62" r="4" fill="white" opacity="0.25"/>'
-  + '<circle cx="68" cy="57" r="3" fill="white" opacity="0.2"/>'
-  + '<circle cx="78" cy="65" r="2.5" fill="white" opacity="0.18"/>'
-  + '</svg>'
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150">' +
+    "<defs>" +
+    '<linearGradient id="btl" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#059669"/><stop offset="45%" stop-color="#10b981"/><stop offset="100%" stop-color="#065f46"/></linearGradient>' +
+    '<linearGradient id="cap" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#94a3b8"/></linearGradient>' +
+    '<filter id="sh"><feDropShadow dx="3" dy="6" stdDeviation="5" flood-color="#065f46" flood-opacity="0.25"/></filter>' +
+    "</defs>" +
+    '<circle cx="22" cy="35" r="9" fill="#bbf7d0" opacity="0.55"/>' +
+    '<circle cx="98" cy="55" r="7" fill="#6ee7b7" opacity="0.5"/>' +
+    '<circle cx="18" cy="95" r="6" fill="#a7f3d0" opacity="0.4"/>' +
+    '<circle cx="102" cy="115" r="8" fill="#6ee7b7" opacity="0.45"/>' +
+    '<circle cx="88" cy="30" r="5" fill="#bbf7d0" opacity="0.5"/>' +
+    '<rect x="50" y="18" width="10" height="16" rx="4" fill="url(#cap)"/>' +
+    '<ellipse cx="55" cy="18" rx="7" ry="5" fill="#cbd5e1"/>' +
+    '<rect x="38" y="30" width="34" height="22" rx="8" fill="url(#cap)"/>' +
+    '<rect x="28" y="48" width="54" height="90" rx="16" fill="url(#btl)" filter="url(#sh)"/>' +
+    '<rect x="32" y="52" width="16" height="82" rx="8" fill="white" opacity="0.12"/>' +
+    '<rect x="34" y="75" width="46" height="44" rx="8" fill="white" opacity="0.92"/>' +
+    '<text x="57" y="91" font-size="9" font-weight="900" text-anchor="middle" fill="#059669" font-family="system-ui,sans-serif">WatC</text>' +
+    '<text x="57" y="103" font-size="6.5" font-weight="700" text-anchor="middle" fill="#064e3b" font-family="system-ui,sans-serif">세탁 노하우</text>' +
+    '<text x="57" y="113" font-size="5.5" text-anchor="middle" fill="#6b7280" font-family="system-ui,sans-serif">CARE TIPS</text>' +
+    '<circle cx="46" cy="62" r="4" fill="white" opacity="0.25"/>' +
+    '<circle cx="68" cy="57" r="3" fill="white" opacity="0.2"/>' +
+    '<circle cx="78" cy="65" r="2.5" fill="white" opacity="0.18"/>' +
+    "</svg>",
 )}`;
 
 // ── 커뮤니티 카드 정의 ──
@@ -108,8 +114,8 @@ const COMMUNITY_CARDS = [
     key: "community",
     theme: "blue",
     label: "왓씨 세탁 커뮤니티",
-    title1: "세탁 경험을 빠르게 공유하고",
-    title2: "솔루션을 찾아보세요.",
+    title1: "세탁경험을 빠르게",
+    title2: "공유하고 솔루션을 찾아보세요",
     tags: ["#옷관리팁", "#얼룩제거", "#세탁노하우"],
   },
   {
@@ -145,7 +151,6 @@ const COMMUNITY_CARDS = [
     tags: ["#이벤트", "#할인쿠폰", "#적립포인트"],
   },
 ] as const;
-
 
 function LifeCardIcon({ type }: { type: "yarn" | "coat" | "shirt" }) {
   return (
@@ -227,24 +232,35 @@ export function HomePage() {
   const reviewAllContentRef = useRef<HTMLDivElement>(null);
   const reviewAllListRef = useRef<HTMLDivElement>(null);
   const reviewAllOpeningRef = useRef<boolean>(false);
-  const [showCommunityDetail, setShowCommunityDetail] = useState<string | null>(null);
-  const [communityFeedTab, setCommunityFeedTab] = useState<"all" | "hot" | "new" | "tips">("all");
+  const [showCommunityDetail, setShowCommunityDetail] = useState<string | null>(
+    null,
+  );
+  const [communityFeedTab, setCommunityFeedTab] = useState<
+    "all" | "hot" | "new" | "tips"
+  >("all");
   const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
   const communityDetailScrollRef = useRef<HTMLDivElement>(null);
   const [showWritePost, setShowWritePost] = useState<boolean>(false);
   const [writeTitle, setWriteTitle] = useState<string>("");
   const [writeContent, setWriteContent] = useState<string>("");
-  const [writeCategory, setWriteCategory] = useState<"hot" | "new" | "tips">("new");
+  const [writeCategory, setWriteCategory] = useState<"hot" | "new" | "tips">(
+    "new",
+  );
 
   // 커뮤니티 캐러셀 드래그 refs
   const communityTrackRef = useRef<HTMLDivElement>(null);
   const communityXRef = useRef<number>(0);
   const communityDraggingRef = useRef<boolean>(false);
-  const communityDragStartRef = useRef<{ x: number; tx: number }>({ x: 0, tx: 0 });
+  const communityDragStartRef = useRef<{ x: number; tx: number }>({
+    x: 0,
+    tx: 0,
+  });
   const communityClickBlockRef = useRef<boolean>(false);
   const [writeReviewStars, setWriteReviewStars] = useState<number>(0);
   const [writeReviewText, setWriteReviewText] = useState<string>("");
-  const [writeReviewSubmitted, setWriteReviewSubmitted] = useState<boolean>(false);
+  const [writeReviewSubmitted, setWriteReviewSubmitted] =
+    useState<boolean>(false);
+  const [showWriteReview, setShowWriteReview] = useState<boolean>(false);
 
   // --- Profile Edit Modal States (Interactive Dialog Form) ---
   const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
@@ -278,25 +294,35 @@ export function HomePage() {
   // --- Point Detail & Mini Game States ---
   const [showPointDetail, setShowPointDetail] = useState<boolean>(false);
   const [showPricingDetail, setShowPricingDetail] = useState<boolean>(false);
-  const [pricingTab, setPricingTab] = useState<"clothing" | "shoes" | "bedding" | "extra">("clothing");
-  const [showActiveOrderDetail, setShowActiveOrderDetail] = useState<boolean>(false);
+  const [pricingTab, setPricingTab] = useState<
+    "clothing" | "shoes" | "bedding" | "extra"
+  >("clothing");
+  const [showActiveOrderDetail, setShowActiveOrderDetail] =
+    useState<boolean>(false);
   const [showContactUs, setShowContactUs] = useState<boolean>(false);
   const [showLaundryHistory, setShowLaundryHistory] = useState<boolean>(false);
   const [showUsageGuide, setShowUsageGuide] = useState<boolean>(false);
+  const [showMembershipTier, setShowMembershipTier] = useState<boolean>(false);
   const usageGuideScrollRef = useRef<HTMLDivElement>(null);
+  const pricingScrollRef = useRef<HTMLDivElement>(null);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState<null | {
-    date: string; category: string; desc: string;
-    status: string; statusColor: string; price: string;
+    date: string;
+    category: string;
+    desc: string;
+    status: string;
+    statusColor: string;
+    price: string;
   }>(null);
   const [totalScore, setTotalScore] = useState<number>(800);
   const [gameActive, setGameActive] = useState<boolean>(false);
   const [gameTimeLeft, setGameTimeLeft] = useState<number>(15);
   const [gameEarned, setGameEarned] = useState<number>(0);
   const [gameDone, setGameDone] = useState<boolean>(false);
-  const [bubbleStates, setBubbleStates] = useState<boolean[]>(Array(9).fill(false));
+  const [bubbleStates, setBubbleStates] = useState<boolean[]>(
+    Array(9).fill(false),
+  );
 
   // --- Circular Progress Stage States ---
-  const [circleProgress, setCircleProgress] = useState<number>(0);
   const [typewriterFinished] = useState<boolean>(true);
 
   const [profileName, setProfileName] = useState<string>("세나");
@@ -342,6 +368,8 @@ export function HomePage() {
   const [showReserveConfirm, setShowReserveConfirm] = useState<boolean>(false);
   const [showOrderReceived, setShowOrderReceived] = useState<boolean>(false);
   const [reserveFrom, setReserveFrom] = useState<string | null>(null); // 어디서 왔는지 추적
+  const [reserveDetailFromHome, setReserveDetailFromHome] =
+    useState<boolean>(false);
   const [showAiGuideDetail, setShowAiGuideDetail] = useState<boolean>(false);
   const [simulatingScan, setSimulatingScan] = useState<boolean>(false);
   const [scanResult, setScanResult] = useState<boolean>(false);
@@ -353,8 +381,9 @@ export function HomePage() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectedLaundryType, setSelectedLaundryType] =
     useState<string>("일반 빨래"); // "일반 빨래" | "관리 의류" | "이불/리빙/기타"
-  const [selectedLaundryOptions, setSelectedLaundryOptions] =
-    useState<string[]>(["일반"]);
+  const [selectedLaundryOptions, setSelectedLaundryOptions] = useState<
+    string[]
+  >(["일반"]);
   const [selectedScent, setSelectedScent] = useState<string>("무향");
   const [reserveAddress, setReserveAddress] = useState<string>(
     "서울특별시 서초구 반포동 왓씨타워 410호",
@@ -366,7 +395,9 @@ export function HomePage() {
   const [visibleSections, setVisibleSections] = useState<boolean[]>(
     Array(7).fill(false),
   );
-  const [progressPercent, setProgressPercent] = useState<number>(1);
+  const progressDigitRef = useRef<HTMLSpanElement>(null);
+  const progressCircleRef = useRef<SVGCircleElement>(null);
+  const [progressCompleted, setProgressCompleted] = useState<boolean>(false);
   const [reserveDate, setReserveDate] = useState<string>("5월 9일 목요일");
   const [reserveTime, setReserveTime] = useState<string>("2-4 PM 오후");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
@@ -382,7 +413,7 @@ export function HomePage() {
     lng: 127.039211,
   });
   // const [gpsConnected] = useState(true);
-  const [etaMinutes, setEtaMinutes] = useState(8);
+  const [etaMinutes, setEtaMinutes] = useState(10);
   const [trackingActive, setTrackingActive] = useState(true);
   const [showGpsDetail, setShowGpsDetail] = useState(false);
   const [satellites, setSatellites] = useState(11);
@@ -443,6 +474,9 @@ export function HomePage() {
     ) {
       setActiveTab(requestedTab);
       if (from) setReserveFrom(from);
+      if (requestedTab === "reserve") {
+        setReserveDetailFromHome(false);
+      }
     }
   }, [location.search]);
 
@@ -481,7 +515,7 @@ export function HomePage() {
       {
         threshold: 0.12,
         rootMargin: "0px 0px -60px 0px", // 화면 하단에서 60px 위에 도달했을 때 세련되게 등장
-      }
+      },
     );
 
     sectionRefs.current.forEach((section) => {
@@ -492,8 +526,6 @@ export function HomePage() {
       observer.disconnect();
     };
   }, [activeTab]);
-
-
 
   // --- 커뮤니티 상세 열릴 때 스크롤 최상단 리셋 ---
   useEffect(() => {
@@ -509,10 +541,45 @@ export function HomePage() {
 
   // --- 이용방법 오버레이 열릴 때 내부 스크롤 최상단 리셋 ---
   useEffect(() => {
-    if (showUsageGuide && usageGuideScrollRef.current) {
-      usageGuideScrollRef.current.scrollTop = 0;
+    if (showUsageGuide) {
+      // 1. 즉시 리셋
+      if (usageGuideScrollRef.current) {
+        usageGuideScrollRef.current.scrollTop = 0;
+      }
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      // 2. 애니메이션 진행 및 레이아웃 렌더링 주기에 맞춘 다단계 리셋 (500ms 동안 수시로 리셋하여 최상단 유지 보장)
+      const intervals = [10, 30, 50, 80, 120, 180, 250, 300, 350, 400, 500];
+      const timers = intervals.map((delay) =>
+        setTimeout(() => {
+          if (usageGuideScrollRef.current) {
+            usageGuideScrollRef.current.scrollTop = 0;
+          }
+        }, delay),
+      );
+
+      return () => {
+        timers.forEach(clearTimeout);
+      };
     }
   }, [showUsageGuide]);
+
+  // --- 가격표 오버레이 열릴 때 내부 스크롤 최상단 리셋 ---
+  useEffect(() => {
+    if (showPricingDetail) {
+      if (pricingScrollRef.current) {
+        pricingScrollRef.current.scrollTop = 0;
+      }
+      const timer = setTimeout(() => {
+        if (pricingScrollRef.current) {
+          pricingScrollRef.current.scrollTop = 0;
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [showPricingDetail, pricingTab]);
 
   useEffect(() => {
     homeReviewSwiperRef.current?.scrollTo({ left: 0, behavior: "auto" });
@@ -569,32 +636,51 @@ export function HomePage() {
   useEffect(() => {
     if (activeTab === "home") {
       if (!typewriterFinished) {
-        setProgressPercent(1);
-        setCircleProgress(0);
+        setProgressCompleted(false);
+        if (progressDigitRef.current) progressDigitRef.current.innerText = "1";
+        if (progressCircleRef.current) {
+          progressCircleRef.current.style.strokeDashoffset = "439.8";
+        }
         return;
       }
 
-      setProgressPercent(1);
-      setCircleProgress(0);
-
+      setProgressCompleted(false);
       const endNum = 66;
-      const duration = 1200; // 숫자 + 링 동시 1.2초
+      const duration = 1200; // 1.2s smooth count-up
       const startTime = performance.now();
       let animationFrameId: number;
 
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const t = Math.min(elapsed / duration, 1);
-        // ease-out cubic
+        // ease-out cubic for ultra-smooth velocity deceleration
         const eased = 1 - Math.pow(1 - t, 3);
-        setProgressPercent(Math.floor(1 + (endNum - 1) * eased));
-        setCircleProgress(eased * endNum);
+        const currentPercent = Math.floor(1 + (endNum - 1) * eased);
+        const currentProgress = eased * endNum;
+
+        // Direct DOM update for perfect 60fps animations with no React overhead
+        if (progressDigitRef.current) {
+          progressDigitRef.current.innerText = String(currentPercent);
+        }
+        if (progressCircleRef.current) {
+          progressCircleRef.current.style.strokeDashoffset = String(
+            439.8 * (1 - currentProgress / 100),
+          );
+        }
 
         if (t < 1) {
           animationFrameId = requestAnimationFrame(animate);
         } else {
-          setProgressPercent(endNum);
-          setCircleProgress(endNum);
+          if (progressDigitRef.current) {
+            progressDigitRef.current.innerText = String(endNum);
+          }
+          if (progressCircleRef.current) {
+            progressCircleRef.current.style.strokeDashoffset = String(
+              439.8 * (1 - endNum / 100),
+            );
+          }
+          // Trigger the sparkle flash class
+          setProgressCompleted(true);
         }
       };
 
@@ -658,8 +744,7 @@ export function HomePage() {
 
         if (res.ok) {
           const data = await res.json();
-          const text: string =
-            data.answer || data.message?.content || "";
+          const text: string = data.answer || data.message?.content || "";
           setAiAnalysisResult(text.trim());
         } else {
           setAiAnalysisError(true);
@@ -692,6 +777,7 @@ export function HomePage() {
     } else if (actionName === "60초 세탁 신청" || actionName === "예약하기") {
       setActiveTab("reserve");
       setShowReserveDetail(true);
+      setReserveDetailFromHome(true);
       triggerToast("✨ 60초 신속 세탁 예약을 시작합니다!");
     } else if (actionName === "AI 세탁 가이드") {
       setShowAiGuideDetail(true);
@@ -715,9 +801,12 @@ export function HomePage() {
     ) {
       navigate("/mypage/detail/history");
       triggerToast("📁 주문 이력 및 세탁 내역서로 이동합니다.");
-    } else if (actionName === "가격표" || actionName === "세탁 종류 안내") {
+    } else if (actionName === "가격표") {
       setPricingTab("clothing");
       setShowPricingDetail(true);
+    } else if (actionName === "세탁 종류 안내") {
+      setActiveTab("care");
+      triggerToast("👔 의류별 케어 가이드로 이동합니다.");
     } else {
       triggerToast(`✨ [${actionName}] 서비스 페이지로 안내합니다.`);
     }
@@ -913,7 +1002,7 @@ export function HomePage() {
         user: "1인가구",
         date: "26.05.17",
         body: `원룸에 살아서 빨래 널 공간도 부족하고 눅눅한 냄새가 걱정이었는데, 왓씨에 3단 빨래 바구니째 맡기면 당일 오후에 산들바람 향이 솔솔 나는 뽀송한 상태로 문 앞에 안착해요.`,
-        img: reviewShirtsImg,
+        img: reviewShirtPaddingImg,
         tags: ["원룸빨래", "실내건조해방"],
       },
       {
@@ -950,10 +1039,10 @@ export function HomePage() {
       },
       {
         stars: "★★★★★",
-        user: "미니멀리스트",
+        user: "삶고단수",
         date: "26.04.27",
         body: `빨래통 비우기부터 개기까지의 노동을 손가락 터치 1번으로 위탁하니 집안일 스트레스가 90% 줄었습니다. 옷 정리도 칼각으로 접혀서 와서 바로 서랍에 쏙 넣네요.`,
-        img: reviewBagImg,
+        img: reviewFoldedClothesImg,
         tags: ["칼각접기", "노동비우기"],
       },
     ],
@@ -1037,7 +1126,7 @@ export function HomePage() {
         user: "백팩러",
         date: "26.05.15",
         body: `프라다 나일론 백팩 지퍼 틈새의 누적 먼지와 버클 금속 부위 얼룩 제거가 잘 되어 은은한 매트 블랙 특유의 원단 광택이 다시 세련되게 올라와서 신나요.`,
-        img: reviewSuitImg,
+        img: reviewBlackBackpackImg,
         tags: ["나일론백팩", "원단광택복원"],
       },
       {
@@ -1045,7 +1134,7 @@ export function HomePage() {
         user: "에코프렌들리",
         date: "26.05.11",
         body: `때가 꼬질꼬질 타서 버리기 직전이었던 면 100% 흰색 디자이너 에코백 황변 때와 손잡이 찌든 때를 완전 뽀얗고 산뜻하게 하이 화이트 표백 세탁해 주셨어요!`,
-        img: reviewPriceImg,
+        img: reviewEcoShoulderBagImg,
         tags: ["에코백표백", "황변제거"],
       },
       {
@@ -1095,7 +1184,7 @@ export function HomePage() {
         user: "소파러버",
         date: "26.05.14",
         body: `소파 위의 대형 패브릭 패드 세탁 건조가 너무 부드럽고 풍성하게 잘 되었어요. 몸에 닿는 촉감이 완전히 실크 패드처럼 부드러워서 아이가 매일 부비적댑니다.`,
-        img: reviewSlacksImg,
+        img: reviewFabricPadImg,
         tags: ["소파패드", "촉감복원"],
       },
       {
@@ -1305,10 +1394,26 @@ export function HomePage() {
         {showOrderReceived && (
           <div className="active_order_overlay">
             <header className="active_order_header">
-              <button type="button" className="premium_back_btn"
-                onClick={() => { setShowOrderReceived(false); setShowReserveDetail(false); setActiveTab("home"); }}
-                aria-label="홈으로">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => {
+                  setShowOrderReceived(false);
+                  setShowReserveDetail(false);
+                  setActiveTab("home");
+                }}
+                aria-label="홈으로"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -1318,36 +1423,190 @@ export function HomePage() {
 
             <div className="active_order_scroll">
               {/* 접수 히어로 */}
-              <div style={{ background: "linear-gradient(135deg, #10b981 0%, #059669 100%)", padding: "28px 20px 24px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(255,255,255,0.2)", border: "3px solid rgba(255,255,255,0.5)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>
+              <div
+                style={{
+                  background:
+                    "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  padding: "28px 20px 24px",
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.2)",
+                    border: "3px solid rgba(255,255,255,0.5)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 28,
+                  }}
+                >
                   📋
                 </div>
-                <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.5px" }}>예약이 접수되었어요!</h2>
-                <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.5 }}>수거 마스터가 곧 배정될 예정입니다</p>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", background: "rgba(255,255,255,0.15)", padding: "4px 12px", borderRadius: 8 }}>예약번호 WTC-20260601-0527</span>
+                <h2
+                  style={{
+                    margin: 0,
+                    fontSize: 22,
+                    fontWeight: 900,
+                    color: "#ffffff",
+                    letterSpacing: "-0.5px",
+                  }}
+                >
+                  예약이 접수되었어요!
+                </h2>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  수거 마스터가 곧 배정될 예정입니다
+                </p>
+                <span
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "rgba(255,255,255,0.6)",
+                    background: "rgba(255,255,255,0.15)",
+                    padding: "4px 12px",
+                    borderRadius: 8,
+                  }}
+                >
+                  예약번호 WTC-20260601-0527
+                </span>
               </div>
 
               {/* 진행 단계 */}
               <div className="aod_section">
                 <h3 className="aod_section_title">주문 진행 단계</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 0, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 0,
+                    background: "#ffffff",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: 16,
+                  }}
+                >
                   {[
-                    { emoji: "✅", step: "예약 접수",    desc: "예약이 정상 접수되었습니다",              status: "done",    time: "방금 전" },
-                    { emoji: "🔍", step: "마스터 배정",  desc: "수거 담당 마스터가 배정됩니다",          status: "current", time: "곧 완료 예정" },
-                    { emoji: "🚪", step: "수거 예정",    desc: `${reserveDate} ${reserveTime} 문 앞 방문`, status: "pending", time: reserveDate },
-                    { emoji: "🧺", step: "세탁·케어",    desc: "전문 세탁 공장에서 정밀 케어",           status: "pending", time: "수거 당일" },
-                    { emoji: "🏠", step: "배달 완료",    desc: "깨끗하게 포장하여 문 앞 배달",           status: "pending", time: "수거 다음날" },
+                    {
+                      emoji: "✅",
+                      step: "예약 접수",
+                      desc: "예약이 정상 접수되었습니다",
+                      status: "done",
+                      time: "방금 전",
+                    },
+                    {
+                      emoji: "🔍",
+                      step: "마스터 배정",
+                      desc: "수거 담당 마스터가 배정됩니다",
+                      status: "current",
+                      time: "곧 완료 예정",
+                    },
+                    {
+                      emoji: "🚪",
+                      step: "수거 예정",
+                      desc: `${reserveDate} ${reserveTime} 문 앞 방문`,
+                      status: "pending",
+                      time: reserveDate,
+                    },
+                    {
+                      emoji: "🧺",
+                      step: "세탁·케어",
+                      desc: "전문 세탁 공장에서 정밀 케어",
+                      status: "pending",
+                      time: "수거 당일",
+                    },
+                    {
+                      emoji: "🏠",
+                      step: "배달 완료",
+                      desc: "깨끗하게 포장하여 문 앞 배달",
+                      status: "pending",
+                      time: "수거 다음날",
+                    },
                   ].map((s, i, arr) => (
-                    <div key={i} style={{ display: "flex", gap: 12, padding: "14px 16px", borderBottom: i < arr.length - 1 ? "1px solid #f8fafc" : "none" }}>
-                      <div style={{ width: 36, height: 36, borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, background: s.status === "done" ? "#dcfce7" : s.status === "current" ? "#eff6ff" : "#f8fafc" }}>
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        gap: 12,
+                        padding: "14px 16px",
+                        borderBottom:
+                          i < arr.length - 1 ? "1px solid #f8fafc" : "none",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          flexShrink: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 18,
+                          background:
+                            s.status === "done"
+                              ? "#dcfce7"
+                              : s.status === "current"
+                                ? "#eff6ff"
+                                : "#f8fafc",
+                        }}
+                      >
                         {s.emoji}
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                          <span style={{ fontSize: 13, fontWeight: 800, color: s.status === "current" ? "#2563eb" : s.status === "done" ? "#16a34a" : "#94a3b8" }}>{s.step}</span>
-                          <span style={{ fontSize: 11, color: "#94a3b8", fontWeight: 600 }}>{s.time}</span>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginBottom: 3,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 800,
+                              color:
+                                s.status === "current"
+                                  ? "#2563eb"
+                                  : s.status === "done"
+                                    ? "#16a34a"
+                                    : "#94a3b8",
+                            }}
+                          >
+                            {s.step}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: 11,
+                              color: "#94a3b8",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {s.time}
+                          </span>
                         </div>
-                        <p style={{ margin: 0, fontSize: 11.5, color: "#64748b", lineHeight: 1.45 }}>{s.desc}</p>
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: 11.5,
+                            color: "#64748b",
+                            lineHeight: 1.45,
+                          }}
+                        >
+                          {s.desc}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -1359,11 +1618,17 @@ export function HomePage() {
                 <h3 className="aod_section_title">예약 요약</h3>
                 <div className="aod_info_card">
                   {[
-                    { label: "수거 예정일", val: `${reserveDate}  ${reserveTime}` },
-                    { label: "세탁 종류",   val: selectedLaundryType },
-                    { label: "세탁 옵션",   val: selectedLaundryOptions.join(", ") },
-                    { label: "수거 장소",   val: collectionSpot },
-                    { label: "배달 주소",   val: reserveAddress },
+                    {
+                      label: "수거 예정일",
+                      val: `${reserveDate}  ${reserveTime}`,
+                    },
+                    { label: "세탁 종류", val: selectedLaundryType },
+                    {
+                      label: "세탁 옵션",
+                      val: selectedLaundryOptions.join(", "),
+                    },
+                    { label: "수거 장소", val: collectionSpot },
+                    { label: "배달 주소", val: reserveAddress },
                   ].map((row, i) => (
                     <div key={i} className="aod_info_row">
                       <span className="aod_info_label">{row.label}</span>
@@ -1375,10 +1640,34 @@ export function HomePage() {
 
               {/* 안내 박스 */}
               <div className="aod_section">
-                <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 14, padding: "14px 16px" }}>
-                  <p style={{ margin: "0 0 6px", fontSize: 13, fontWeight: 800, color: "#15803d" }}>💡 알림 안내</p>
-                  <p style={{ margin: 0, fontSize: 12, color: "#64748b", lineHeight: 1.6 }}>
-                    마스터 배정 완료 시 앱 알림으로 안내드립니다.<br />
+                <div
+                  style={{
+                    background: "#f0fdf4",
+                    border: "1px solid #bbf7d0",
+                    borderRadius: 14,
+                    padding: "14px 16px",
+                  }}
+                >
+                  <p
+                    style={{
+                      margin: "0 0 6px",
+                      fontSize: 13,
+                      fontWeight: 800,
+                      color: "#15803d",
+                    }}
+                  >
+                    💡 알림 안내
+                  </p>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: 12,
+                      color: "#64748b",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    마스터 배정 완료 시 앱 알림으로 안내드립니다.
+                    <br />
                     수거 당일 방문 30분 전 사전 알림이 발송됩니다.
                   </p>
                 </div>
@@ -1386,8 +1675,15 @@ export function HomePage() {
 
               {/* 버튼 */}
               <div className="aod_actions">
-                <button type="button" className="aod_btn_secondary"
-                  onClick={() => { setShowOrderReceived(false); setShowReserveDetail(false); setActiveTab("home"); }}>
+                <button
+                  type="button"
+                  className="aod_btn_secondary"
+                  onClick={() => {
+                    setShowOrderReceived(false);
+                    setShowReserveDetail(false);
+                    setActiveTab("home");
+                  }}
+                >
                   홈으로 돌아가기
                 </button>
               </div>
@@ -1403,13 +1699,24 @@ export function HomePage() {
             {/* 상단 성공 히어로 */}
             <div className="rc_hero">
               <div className="rc_check_circle">
-                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="32"
+                  height="32"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
               <h1 className="rc_title">예약이 완료되었습니다!</h1>
               <p className="rc_sub">아래 예약 정보를 확인해주세요</p>
-              <span className="rc_order_num">예약번호 WTC-20260601-{Math.floor(Math.random()*9000+1000)}</span>
+              <span className="rc_order_num">
+                예약번호 WTC-20260601-{Math.floor(Math.random() * 9000 + 1000)}
+              </span>
             </div>
 
             <div className="rc_body">
@@ -1418,12 +1725,21 @@ export function HomePage() {
                 <h3 className="rc_section_title">📋 예약 정보</h3>
                 <div className="rc_info_card">
                   {[
-                    { label: "예약 일시",   val: `2026.06.01  ${new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}` },
-                    { label: "수거 예정",   val: `${reserveDate}  ${reserveTime}` },
-                    { label: "세탁 종류",   val: selectedLaundryType },
-                    { label: "세탁 옵션",   val: selectedLaundryOptions.join(", ") },
-                    { label: "수거 장소",   val: collectionSpot },
-                    { label: "배달 주소",   val: reserveAddress },
+                    {
+                      label: "예약 일시",
+                      val: `2026.06.01  ${new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}`,
+                    },
+                    {
+                      label: "수거 예정",
+                      val: `${reserveDate}  ${reserveTime}`,
+                    },
+                    { label: "세탁 종류", val: selectedLaundryType },
+                    {
+                      label: "세탁 옵션",
+                      val: selectedLaundryOptions.join(", "),
+                    },
+                    { label: "수거 장소", val: collectionSpot },
+                    { label: "배달 주소", val: reserveAddress },
                   ].map((row, i) => (
                     <div key={i} className="rc_info_row">
                       <span className="rc_info_label">{row.label}</span>
@@ -1438,16 +1754,41 @@ export function HomePage() {
                 <h3 className="rc_section_title">📅 배송 일정 (예상)</h3>
                 <div className="rc_timeline">
                   {[
-                    { dot: "pickup",  emoji: "🚪", step: "수거",   date: `${reserveDate}`, time: reserveTime,     desc: "담당 마스터가 문 앞에서 수거" },
-                    { dot: "wash",   emoji: "🧺", step: "세탁",   date: "수거 당일 내",  time: "팩토리 케어",   desc: "스마트 팩토리 전문 세탁 케어" },
-                    { dot: "done",   emoji: "🏠", step: "배달",   date: "수거 다음날",   time: "오후 중",       desc: "세탁 완료 후 문 앞 안전 배달" },
+                    {
+                      dot: "pickup",
+                      emoji: "🚪",
+                      step: "수거",
+                      date: `${reserveDate}`,
+                      time: reserveTime,
+                      desc: "담당 마스터가 문 앞에서 수거",
+                    },
+                    {
+                      dot: "wash",
+                      emoji: "🧺",
+                      step: "세탁",
+                      date: "수거 당일 내",
+                      time: "팩토리 케어",
+                      desc: "스마트 팩토리 전문 세탁 케어",
+                    },
+                    {
+                      dot: "done",
+                      emoji: "🏠",
+                      step: "배달",
+                      date: "수거 다음날",
+                      time: "오후 중",
+                      desc: "세탁 완료 후 문 앞 안전 배달",
+                    },
                   ].map((s, i) => (
                     <div key={i} className="rc_timeline_item">
-                      <div className={`rc_tl_dot rc_tl_dot--${s.dot}`}>{s.emoji}</div>
+                      <div className={`rc_tl_dot rc_tl_dot--${s.dot}`}>
+                        {s.emoji}
+                      </div>
                       <div className="rc_tl_content">
                         <div className="rc_tl_top">
                           <span className="rc_tl_step">{s.step}</span>
-                          <span className="rc_tl_date">{s.date} · {s.time}</span>
+                          <span className="rc_tl_date">
+                            {s.date} · {s.time}
+                          </span>
                         </div>
                         <p className="rc_tl_desc">{s.desc}</p>
                       </div>
@@ -1462,13 +1803,21 @@ export function HomePage() {
                 <div className="rc_rider_grid">
                   <div className="rc_rider_card">
                     <span className="rc_rider_role">수거 담당</span>
-                    <img src={riderJinwooImg} alt="수거 기사" className="rc_rider_avatar" />
+                    <img
+                      src={riderJinwooImg}
+                      alt="수거 기사"
+                      className="rc_rider_avatar"
+                    />
                     <span className="rc_rider_name">김진우 마스터</span>
                     <span className="rc_rider_rating">⭐ 4.98</span>
                   </div>
                   <div className="rc_rider_card">
                     <span className="rc_rider_role">배달 담당</span>
-                    <img src={riderJinwooImg} alt="배달 기사" className="rc_rider_avatar" />
+                    <img
+                      src={riderJinwooImg}
+                      alt="배달 기사"
+                      className="rc_rider_avatar"
+                    />
                     <span className="rc_rider_name">최윤서 마스터</span>
                     <span className="rc_rider_rating">⭐ 5.0</span>
                   </div>
@@ -1517,7 +1866,16 @@ export function HomePage() {
                 onClick={() => setShowAllReviews(false)}
                 aria-label="뒤로가기"
               >
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -1538,7 +1896,7 @@ export function HomePage() {
                     총 {Object.values(reviewsData).flat().length}개 리뷰
                   </span>
                   <div className="review_stat_bars">
-                    {[5,4,3,2,1].map(n => (
+                    {[5, 4, 3, 2, 1].map((n) => (
                       <div key={n} className="review_bar_row">
                         <span className="review_bar_label">{n}점</span>
                         <div className="review_bar_track">
@@ -1569,7 +1927,10 @@ export function HomePage() {
               {/* 리뷰 목록 */}
               <div className="review_all_list" ref={reviewAllListRef}>
                 {getReviewsForTag(allReviewsTag).map((rv, idx) => (
-                  <div key={`all-${rv.user}-${idx}`} className="review_all_card">
+                  <div
+                    key={`all-${rv.user}-${idx}`}
+                    className="review_all_card"
+                  >
                     <div className="review_all_card_top">
                       <div className="review_all_user_row">
                         <span className="review_all_stars">{rv.stars}</span>
@@ -1585,7 +1946,9 @@ export function HomePage() {
                     />
                     <div className="review_all_tags">
                       {rv.tags.map((t: string) => (
-                        <span key={t} className="review_all_tag">{t}</span>
+                        <span key={t} className="review_all_tag">
+                          {t}
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -1601,8 +1964,25 @@ export function HomePage() {
         {showUsageGuide && (
           <div className="active_order_overlay" key="usage-guide-overlay">
             <header className="active_order_header">
-              <button type="button" className="premium_back_btn" onClick={() => { setShowUsageGuide(false); window.scrollTo({ top: 0, behavior: "instant" }); }} aria-label="뒤로가기">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => {
+                  setShowUsageGuide(false);
+                  window.scrollTo({ top: 0, behavior: "instant" });
+                }}
+                aria-label="뒤로가기"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -1612,32 +1992,147 @@ export function HomePage() {
 
             <div className="active_order_scroll" ref={usageGuideScrollRef}>
               {/* 히어로 */}
-              <div style={{ background: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)", padding: "32px 20px 28px", textAlign: "center" }}>
-                <p style={{ margin: "0 0 8px", fontSize: 13, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>스마트 세탁 케어 서비스</p>
-                <h2 style={{ margin: "0 0 12px", fontSize: 26, fontWeight: 900, color: "#fff", letterSpacing: "-1px" }}>왓씨(WatC)</h2>
-                <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>수거부터 배달까지 한 번에,<br/>문 앞에서 시작되는 프리미엄 세탁 경험</p>
+              <div
+                style={{
+                  background:
+                    "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+                  padding: "32px 20px 28px",
+                  textAlign: "center",
+                }}
+              >
+                <p
+                  style={{
+                    margin: "0 0 8px",
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.75)",
+                    fontWeight: 600,
+                  }}
+                >
+                  스마트 세탁 케어 서비스
+                </p>
+                <h2
+                  style={{
+                    margin: "0 0 12px",
+                    fontSize: 26,
+                    fontWeight: 900,
+                    color: "#fff",
+                    letterSpacing: "-1px",
+                  }}
+                >
+                  왓씨(WatC)
+                </h2>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  수거부터 배달까지 한 번에,
+                  <br />문 앞에서 시작되는 프리미엄 세탁 경험
+                </p>
               </div>
 
               {/* 이용 단계 */}
               <div className="aod_section">
                 <h3 className="aod_section_title">이용 방법 (4단계)</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 12 }}
+                >
                   {[
-                    { step: "01", emoji: "📱", title: "앱에서 예약",       desc: "세탁 종류·옵션·수거 날짜를 선택하고 60초 만에 예약 완료" },
-                    { step: "02", emoji: "🚪", title: "문 앞 수거",        desc: "담당 마스터가 지정 시간에 방문해 안심팩에 포장 후 수거" },
-                    { step: "03", emoji: "🧺", title: "전문 세탁 케어",    desc: "소재별 전용 세제·온도·코스로 스마트 팩토리에서 정밀 케어" },
-                    { step: "04", emoji: "🏠", title: "문 앞 배달",        desc: "세탁 완료 후 깔끔히 포장해 문 앞으로 안전하게 배달" },
+                    {
+                      step: "01",
+                      emoji: "📱",
+                      title: "앱에서 예약",
+                      desc: "세탁 종류·옵션·수거 날짜를 선택하고 60초 만에 예약 완료",
+                    },
+                    {
+                      step: "02",
+                      emoji: "🚪",
+                      title: "문 앞 수거",
+                      desc: "담당 마스터가 지정 시간에 방문해 안심팩에 포장 후 수거",
+                    },
+                    {
+                      step: "03",
+                      emoji: "🧺",
+                      title: "전문 세탁 케어",
+                      desc: "소재별 전용 세제·온도·코스로 스마트 팩토리에서 정밀 케어",
+                    },
+                    {
+                      step: "04",
+                      emoji: "🏠",
+                      title: "문 앞 배달",
+                      desc: "세탁 완료 후 깔끔히 포장해 문 앞으로 안전하게 배달",
+                    },
                   ].map((s, i) => (
-                    <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "16px 16px" }}>
-                      <div style={{ width: 40, height: 40, borderRadius: 12, background: "#eff6ff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        gap: 14,
+                        alignItems: "flex-start",
+                        background: "#ffffff",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: 16,
+                        padding: "16px 16px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 12,
+                          background: "#eff6ff",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
                         <span style={{ fontSize: 22 }}>{s.emoji}</span>
                       </div>
                       <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                          <span style={{ fontSize: 10, fontWeight: 800, color: "#2563eb", background: "#eff6ff", padding: "2px 7px", borderRadius: 6 }}>STEP {s.step}</span>
-                          <span style={{ fontSize: 14, fontWeight: 800, color: "#0f172a" }}>{s.title}</span>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8,
+                            marginBottom: 4,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: 10,
+                              fontWeight: 800,
+                              color: "#2563eb",
+                              background: "#eff6ff",
+                              padding: "2px 7px",
+                              borderRadius: 6,
+                            }}
+                          >
+                            STEP {s.step}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: 14,
+                              fontWeight: 800,
+                              color: "#0f172a",
+                            }}
+                          >
+                            {s.title}
+                          </span>
                         </div>
-                        <p style={{ margin: 0, fontSize: 12.5, color: "#64748b", lineHeight: 1.55 }}>{s.desc}</p>
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: 12.5,
+                            color: "#64748b",
+                            lineHeight: 1.55,
+                          }}
+                        >
+                          {s.desc}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -1647,19 +2142,76 @@ export function HomePage() {
               {/* 서비스 특징 */}
               <div className="aod_section">
                 <h3 className="aod_section_title">왓씨만의 특징</h3>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: 10,
+                  }}
+                >
                   {[
-                    { emoji: "🌿", title: "친환경 세제",   desc: "자연 유래 성분만 사용" },
-                    { emoji: "🔬", title: "AI 소재 분석",  desc: "사진 찍으면 최적 코스 추천" },
-                    { emoji: "📡", title: "실시간 GPS",     desc: "수거·배달 경로 실시간 확인" },
-                    { emoji: "🛡️", title: "안심 보장",     desc: "분실·손상 시 100% 보상" },
-                    { emoji: "⚡", title: "당일 배달",      desc: "급행 신청 시 당일 완료" },
-                    { emoji: "♻️", title: "포인트 적립",    desc: "이용마다 왓씨 포인트 적립" },
+                    {
+                      emoji: "🌿",
+                      title: "친환경 세제",
+                      desc: "자연 유래 성분만 사용",
+                    },
+                    {
+                      emoji: "🔬",
+                      title: "AI 소재 분석",
+                      desc: "사진 찍으면 최적 코스 추천",
+                    },
+                    {
+                      emoji: "📡",
+                      title: "실시간 GPS",
+                      desc: "수거·배달 경로 실시간 확인",
+                    },
+                    {
+                      emoji: "🛡️",
+                      title: "안심 보장",
+                      desc: "분실·손상 시 100% 보상",
+                    },
+                    {
+                      emoji: "⚡",
+                      title: "당일 배달",
+                      desc: "급행 신청 시 당일 완료",
+                    },
+                    {
+                      emoji: "♻️",
+                      title: "포인트 적립",
+                      desc: "이용마다 왓씨 포인트 적립",
+                    },
                   ].map((f, i) => (
-                    <div key={i} style={{ background: "#f8fafc", border: "1px solid #f1f5f9", borderRadius: 14, padding: "14px 12px", textAlign: "center" }}>
+                    <div
+                      key={i}
+                      style={{
+                        background: "#f8fafc",
+                        border: "1px solid #f1f5f9",
+                        borderRadius: 14,
+                        padding: "14px 12px",
+                        textAlign: "center",
+                      }}
+                    >
                       <span style={{ fontSize: 26 }}>{f.emoji}</span>
-                      <p style={{ margin: "8px 0 4px", fontSize: 12.5, fontWeight: 800, color: "#1e293b" }}>{f.title}</p>
-                      <p style={{ margin: 0, fontSize: 11, color: "#64748b", lineHeight: 1.4 }}>{f.desc}</p>
+                      <p
+                        style={{
+                          margin: "8px 0 4px",
+                          fontSize: 12.5,
+                          fontWeight: 800,
+                          color: "#1e293b",
+                        }}
+                      >
+                        {f.title}
+                      </p>
+                      <p
+                        style={{
+                          margin: 0,
+                          fontSize: 11,
+                          color: "#64748b",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {f.desc}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -1670,9 +2222,9 @@ export function HomePage() {
                 <h3 className="aod_section_title">요금 안내</h3>
                 <div className="aod_info_card">
                   {[
-                    { label: "일반 빨래",  val: "19,000원~" },
-                    { label: "관리 의류",  val: "25,000원~" },
-                    { label: "침구류",     val: "30,000원~" },
+                    { label: "일반 빨래", val: "19,000원~" },
+                    { label: "관리 의류", val: "25,000원~" },
+                    { label: "침구류", val: "30,000원~" },
                     { label: "수거·배달비", val: "2,900원 (3만원↑ 무료)" },
                     { label: "급행 서비스", val: "+30% 추가" },
                   ].map((row, i) => (
@@ -1687,16 +2239,56 @@ export function HomePage() {
               {/* FAQ */}
               <div className="aod_section">
                 <h3 className="aod_section_title">자주 묻는 질문</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 10 }}
+                >
                   {[
-                    { q: "수거 가능한 시간대는?",          a: "오전 7시 ~ 오후 10시 사이 원하는 시간대를 선택할 수 있어요." },
-                    { q: "세탁 완료까지 얼마나 걸리나요?", a: "기본 당일 ~ 익일 배달. 급행 신청 시 동일 날 배달 가능해요." },
-                    { q: "의류가 손상되면 어떻게 되나요?", a: "전액 보상 제도를 운영합니다. 고객센터로 연락해 주세요." },
-                    { q: "최소 주문 금액이 있나요?",        a: "최소 주문 금액은 없으나, 수거·배달비 2,900원이 부과됩니다." },
+                    {
+                      q: "수거 가능한 시간대는?",
+                      a: "오전 7시 ~ 오후 10시 사이 원하는 시간대를 선택할 수 있어요.",
+                    },
+                    {
+                      q: "세탁 완료까지 얼마나 걸리나요?",
+                      a: "기본 당일 ~ 익일 배달. 급행 신청 시 동일 날 배달 가능해요.",
+                    },
+                    {
+                      q: "의류가 손상되면 어떻게 되나요?",
+                      a: "전액 보상 제도를 운영합니다. 고객센터로 연락해 주세요.",
+                    },
+                    {
+                      q: "최소 주문 금액이 있나요?",
+                      a: "최소 주문 금액은 없으나, 수거·배달비 2,900원이 부과됩니다.",
+                    },
                   ].map((faq, i) => (
-                    <div key={i} style={{ background: "#f8fafc", border: "1px solid #f1f5f9", borderRadius: 14, padding: "14px 16px" }}>
-                      <p style={{ margin: "0 0 6px", fontSize: 13, fontWeight: 800, color: "#0f172a" }}>Q. {faq.q}</p>
-                      <p style={{ margin: 0, fontSize: 12.5, color: "#475569", lineHeight: 1.55 }}>A. {faq.a}</p>
+                    <div
+                      key={i}
+                      style={{
+                        background: "#f8fafc",
+                        border: "1px solid #f1f5f9",
+                        borderRadius: 14,
+                        padding: "14px 16px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: "0 0 6px",
+                          fontSize: 13,
+                          fontWeight: 800,
+                          color: "#0f172a",
+                        }}
+                      >
+                        Q. {faq.q}
+                      </p>
+                      <p
+                        style={{
+                          margin: 0,
+                          fontSize: 12.5,
+                          color: "#475569",
+                          lineHeight: 1.55,
+                        }}
+                      >
+                        A. {faq.a}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -1704,7 +2296,14 @@ export function HomePage() {
 
               {/* CTA */}
               <div className="aod_actions">
-                <button type="button" className="aod_btn_primary" onClick={() => { setShowUsageGuide(false); handleAction("예약하기"); }}>
+                <button
+                  type="button"
+                  className="aod_btn_primary"
+                  onClick={() => {
+                    setShowUsageGuide(false);
+                    handleAction("예약하기");
+                  }}
+                >
                   지금 바로 예약하기
                 </button>
               </div>
@@ -1715,171 +2314,339 @@ export function HomePage() {
         {/* ===================================================== */}
         {/* 세탁 이력 항목 상세 오버레이                           */}
         {/* ===================================================== */}
-        {selectedHistoryItem && (() => {
-          const item = selectedHistoryItem;
-          const detailMap: Record<string, {
-            items: { name: string; type: string; qty: number; price: string }[];
-            rider: string; riderRating: string;
-            pickup: string; deliver: string;
-            options: string[]; note: string;
-          }> = {
-            "05.27": {
+        {selectedHistoryItem &&
+          (() => {
+            const item = selectedHistoryItem;
+            const detailMap: Record<
+              string,
+              {
+                items: {
+                  name: string;
+                  type: string;
+                  qty: number;
+                  price: string;
+                }[];
+                rider: string;
+                riderRating: string;
+                pickup: string;
+                deliver: string;
+                options: string[];
+                note: string;
+              }
+            > = {
+              "05.27": {
+                items: [
+                  {
+                    name: "구스다운 아웃도어 패딩",
+                    type: "드라이클리닝",
+                    qty: 1,
+                    price: "22,900원",
+                  },
+                ],
+                rider: "김진우 마스터",
+                riderRating: "4.98",
+                pickup: "05.27  02:10",
+                deliver: "05.27  10:30",
+                options: ["살균", "고급향 마감"],
+                note: "털 뭉침 없이 완벽히 복원",
+              },
+              "05.14": {
+                items: [
+                  {
+                    name: "생활빨래 안심팩",
+                    type: "기본 세탁",
+                    qty: 1,
+                    price: "19,000원",
+                  },
+                ],
+                rider: "최윤서 마스터",
+                riderRating: "5.0",
+                pickup: "05.14  09:00",
+                deliver: "05.14  18:40",
+                options: ["친환경"],
+                note: "청결 완료, 향기 매우 좋음",
+              },
+              "04.29": {
+                items: [
+                  {
+                    name: "캐시미어 가디건",
+                    type: "울/캐시미어 케어",
+                    qty: 1,
+                    price: "15,900원",
+                  },
+                  {
+                    name: "울 코트",
+                    type: "드라이클리닝",
+                    qty: 1,
+                    price: "15,900원",
+                  },
+                ],
+                rider: "박진우 마스터",
+                riderRating: "4.8",
+                pickup: "04.29  10:00",
+                deliver: "04.30  09:20",
+                options: ["울/캐시미어", "보풀 제거"],
+                note: "섬세 소재 전용 세탁 완료",
+              },
+              "04.11": {
+                items: [
+                  {
+                    name: "구스다운 이불 (더블)",
+                    type: "구스다운 케어",
+                    qty: 1,
+                    price: "59,900원",
+                  },
+                ],
+                rider: "김진우 마스터",
+                riderRating: "4.98",
+                pickup: "04.11  08:30",
+                deliver: "04.11  19:00",
+                options: ["살균", "다운 복원"],
+                note: "다운 볼륨 완전 복원, 냄새 제거",
+              },
+              "03.28": {
+                items: [
+                  {
+                    name: "스웨이드 로퍼",
+                    type: "프리미엄 신발 클리닝",
+                    qty: 1,
+                    price: "24,900원",
+                  },
+                  {
+                    name: "운동화",
+                    type: "일반 신발 클리닝",
+                    qty: 1,
+                    price: "9,900원",
+                  },
+                ],
+                rider: "최윤서 마스터",
+                riderRating: "5.0",
+                pickup: "03.28  11:00",
+                deliver: "03.28  20:30",
+                options: ["질감 복원"],
+                note: "스웨이드 결 살아있음",
+              },
+              "03.12": {
+                items: [
+                  {
+                    name: "생활빨래 안심팩",
+                    type: "기본 세탁",
+                    qty: 1,
+                    price: "19,000원",
+                  },
+                ],
+                rider: "박진우 마스터",
+                riderRating: "4.8",
+                pickup: "03.12  09:30",
+                deliver: "03.12  18:00",
+                options: ["일반"],
+                note: "정상 완료",
+              },
+            };
+            const detail = detailMap[item.date] ?? {
               items: [
-                { name: "구스다운 아웃도어 패딩", type: "드라이클리닝", qty: 1, price: "22,900원" },
+                {
+                  name: item.desc,
+                  type: item.category,
+                  qty: 1,
+                  price: item.price,
+                },
               ],
-              rider: "김진우 마스터", riderRating: "4.98",
-              pickup: "05.27  02:10", deliver: "05.27  10:30",
-              options: ["살균", "고급향 마감"],
-              note: "털 뭉침 없이 완벽히 복원",
-            },
-            "05.14": {
-              items: [
-                { name: "생활빨래 안심팩", type: "기본 세탁", qty: 1, price: "19,000원" },
-              ],
-              rider: "최윤서 마스터", riderRating: "5.0",
-              pickup: "05.14  09:00", deliver: "05.14  18:40",
-              options: ["친환경"],
-              note: "청결 완료, 향기 매우 좋음",
-            },
-            "04.29": {
-              items: [
-                { name: "캐시미어 가디건", type: "울/캐시미어 케어", qty: 1, price: "15,900원" },
-                { name: "울 코트",        type: "드라이클리닝",    qty: 1, price: "15,900원" },
-              ],
-              rider: "박진우 마스터", riderRating: "4.8",
-              pickup: "04.29  10:00", deliver: "04.30  09:20",
-              options: ["울/캐시미어", "보풀 제거"],
-              note: "섬세 소재 전용 세탁 완료",
-            },
-            "04.11": {
-              items: [
-                { name: "구스다운 이불 (더블)", type: "구스다운 케어", qty: 1, price: "59,900원" },
-              ],
-              rider: "김진우 마스터", riderRating: "4.98",
-              pickup: "04.11  08:30", deliver: "04.11  19:00",
-              options: ["살균", "다운 복원"],
-              note: "다운 볼륨 완전 복원, 냄새 제거",
-            },
-            "03.28": {
-              items: [
-                { name: "스웨이드 로퍼", type: "프리미엄 신발 클리닝", qty: 1, price: "24,900원" },
-                { name: "운동화",        type: "일반 신발 클리닝",    qty: 1, price: "9,900원" },
-              ],
-              rider: "최윤서 마스터", riderRating: "5.0",
-              pickup: "03.28  11:00", deliver: "03.28  20:30",
-              options: ["질감 복원"],
-              note: "스웨이드 결 살아있음",
-            },
-            "03.12": {
-              items: [
-                { name: "생활빨래 안심팩", type: "기본 세탁", qty: 1, price: "19,000원" },
-              ],
-              rider: "박진우 마스터", riderRating: "4.8",
-              pickup: "03.12  09:30", deliver: "03.12  18:00",
-              options: ["일반"],
-              note: "정상 완료",
-            },
-          };
-          const detail = detailMap[item.date] ?? {
-            items: [{ name: item.desc, type: item.category, qty: 1, price: item.price }],
-            rider: "담당 마스터", riderRating: "4.9",
-            pickup: item.date, deliver: item.date,
-            options: ["기본"], note: "-",
-          };
-          const totalPrice = detail.items.reduce((sum, it) => {
-            return sum + parseInt(it.price.replace(/[^0-9]/g, ""));
-          }, 0);
+              rider: "담당 마스터",
+              riderRating: "4.9",
+              pickup: item.date,
+              deliver: item.date,
+              options: ["기본"],
+              note: "-",
+            };
+            const totalPrice = detail.items.reduce((sum, it) => {
+              return sum + parseInt(it.price.replace(/[^0-9]/g, ""));
+            }, 0);
 
-          return (
-            <div className="active_order_overlay">
-              <header className="active_order_header">
-                <button type="button" className="premium_back_btn" onClick={() => setSelectedHistoryItem(null)} aria-label="뒤로가기">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <h1 className="active_order_header_title">세탁 이력 상세</h1>
-                <div style={{ width: 42 }} />
-              </header>
+            return (
+              <div className="active_order_overlay">
+                <header className="active_order_header">
+                  <button
+                    type="button"
+                    className="premium_back_btn"
+                    onClick={() => setSelectedHistoryItem(null)}
+                    aria-label="뒤로가기"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <h1 className="active_order_header_title">세탁 이력 상세</h1>
+                  <div style={{ width: 42 }} />
+                </header>
 
-              <div className="active_order_scroll">
-                {/* 상태 히어로 */}
-                <div style={{
-                  background: item.statusColor === "#2563eb"
-                    ? "linear-gradient(135deg, #2563eb, #1d4ed8)"
-                    : "linear-gradient(135deg, #16a34a, #15803d)",
-                  padding: "22px 20px", color: "#fff",
-                }}>
-                  <p style={{ margin: "0 0 4px", fontSize: 11, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>{item.date} · {item.category}</p>
-                  <p style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 900, letterSpacing: "-0.5px" }}>{item.desc}</p>
-                  <span style={{ fontSize: 11, fontWeight: 800, background: "rgba(255,255,255,0.2)", padding: "3px 10px", borderRadius: 8 }}>{item.status}</span>
-                </div>
+                <div className="active_order_scroll">
+                  {/* 상태 히어로 */}
+                  <div
+                    style={{
+                      background:
+                        item.statusColor === "#2563eb"
+                          ? "linear-gradient(135deg, #2563eb, #1d4ed8)"
+                          : "linear-gradient(135deg, #16a34a, #15803d)",
+                      padding: "22px 20px",
+                      color: "#fff",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: "0 0 4px",
+                        fontSize: 11,
+                        color: "rgba(255,255,255,0.7)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {item.date} · {item.category}
+                    </p>
+                    <p
+                      style={{
+                        margin: "0 0 8px",
+                        fontSize: 20,
+                        fontWeight: 900,
+                        letterSpacing: "-0.5px",
+                      }}
+                    >
+                      {item.desc}
+                    </p>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 800,
+                        background: "rgba(255,255,255,0.2)",
+                        padding: "3px 10px",
+                        borderRadius: 8,
+                      }}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
 
-                {/* 세탁 품목 */}
-                <div className="aod_section">
-                  <h3 className="aod_section_title">세탁 품목</h3>
-                  <div className="aod_items_list">
-                    {detail.items.map((it, i) => (
-                      <div key={i} className="aod_item_row">
-                        <div className="aod_item_info">
-                          <p className="aod_item_name">{it.name}</p>
-                          <p className="aod_item_type">{it.type} · {it.qty}벌</p>
+                  {/* 세탁 품목 */}
+                  <div className="aod_section">
+                    <h3 className="aod_section_title">세탁 품목</h3>
+                    <div className="aod_items_list">
+                      {detail.items.map((it, i) => (
+                        <div key={i} className="aod_item_row">
+                          <div className="aod_item_info">
+                            <p className="aod_item_name">{it.name}</p>
+                            <p className="aod_item_type">
+                              {it.type} · {it.qty}벌
+                            </p>
+                          </div>
+                          <span className="aod_item_price">{it.price}</span>
                         </div>
-                        <span className="aod_item_price">{it.price}</span>
+                      ))}
+                      <div className="aod_item_total_row">
+                        <span>총 결제금액</span>
+                        <strong>{totalPrice.toLocaleString()}원</strong>
                       </div>
-                    ))}
-                    <div className="aod_item_total_row">
-                      <span>총 결제금액</span>
-                      <strong>{totalPrice.toLocaleString()}원</strong>
                     </div>
                   </div>
-                </div>
 
-                {/* 선택 옵션 */}
-                <div className="aod_section">
-                  <h3 className="aod_section_title">세탁 옵션</h3>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    {detail.options.map(opt => (
-                      <span key={opt} style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", background: "#eff6ff", padding: "5px 12px", borderRadius: 8 }}>{opt}</span>
-                    ))}
+                  {/* 선택 옵션 */}
+                  <div className="aod_section">
+                    <h3 className="aod_section_title">세탁 옵션</h3>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      {detail.options.map((opt) => (
+                        <span
+                          key={opt}
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: "#2563eb",
+                            background: "#eff6ff",
+                            padding: "5px 12px",
+                            borderRadius: 8,
+                          }}
+                        >
+                          {opt}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* 수거·배달 정보 */}
-                <div className="aod_section">
-                  <h3 className="aod_section_title">수거 · 배달 정보</h3>
-                  <div className="aod_info_card">
-                    {[
-                      { label: "수거 시각",  val: detail.pickup },
-                      { label: "배달 시각",  val: detail.deliver },
-                      { label: "담당 라이더", val: `${detail.rider} ⭐ ${detail.riderRating}` },
-                      { label: "배달지",     val: "반포동 왓씨타워 410호" },
-                    ].map((row, i) => (
-                      <div key={i} className="aod_info_row">
-                        <span className="aod_info_label">{row.label}</span>
-                        <span className="aod_info_val">{row.val}</span>
-                      </div>
-                    ))}
+                  {/* 수거·배달 정보 */}
+                  <div className="aod_section">
+                    <h3 className="aod_section_title">수거 · 배달 정보</h3>
+                    <div className="aod_info_card">
+                      {[
+                        { label: "수거 시각", val: detail.pickup },
+                        { label: "배달 시각", val: detail.deliver },
+                        {
+                          label: "담당 라이더",
+                          val: `${detail.rider} ⭐ ${detail.riderRating}`,
+                        },
+                        { label: "배달지", val: "반포동 왓씨타워 410호" },
+                      ].map((row, i) => (
+                        <div key={i} className="aod_info_row">
+                          <span className="aod_info_label">{row.label}</span>
+                          <span className="aod_info_val">{row.val}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* 세탁소 메모 */}
-                <div className="aod_section">
-                  <h3 className="aod_section_title">세탁소 완료 메모</h3>
-                  <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 14, padding: "14px 16px" }}>
-                    <p style={{ margin: 0, fontSize: 13, color: "#334155", lineHeight: 1.6 }}>💬 {detail.note}</p>
+                  {/* 세탁소 메모 */}
+                  <div className="aod_section">
+                    <h3 className="aod_section_title">세탁소 완료 메모</h3>
+                    <div
+                      style={{
+                        background: "#f8fafc",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: 14,
+                        padding: "14px 16px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: 0,
+                          fontSize: 13,
+                          color: "#334155",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        💬 {detail.note}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* 액션 버튼 */}
-                <div className="aod_actions">
-                  <button type="button" className="aod_btn_secondary" onClick={() => triggerToast("재세탁 신청을 접수합니다.")}>재세탁 신청하기</button>
-                  <button type="button" className="aod_btn_secondary" onClick={() => { setShowLaundryHistory(true); setSelectedHistoryItem(null); }}>목록으로 돌아가기</button>
+                  {/* 액션 버튼 */}
+                  <div className="aod_actions">
+                    <button
+                      type="button"
+                      className="aod_btn_secondary"
+                      onClick={() => triggerToast("재세탁 신청을 접수합니다.")}
+                    >
+                      재세탁 신청하기
+                    </button>
+                    <button
+                      type="button"
+                      className="aod_btn_secondary"
+                      onClick={() => {
+                        setShowLaundryHistory(true);
+                        setSelectedHistoryItem(null);
+                      }}
+                    >
+                      목록으로 돌아가기
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
 
         {/* ===================================================== */}
         {/* 세탁 이력 관리 상세 오버레이                           */}
@@ -1887,8 +2654,22 @@ export function HomePage() {
         {showLaundryHistory && (
           <div className="active_order_overlay">
             <header className="active_order_header">
-              <button type="button" className="premium_back_btn" onClick={() => setShowLaundryHistory(false)} aria-label="뒤로가기">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => setShowLaundryHistory(false)}
+                aria-label="뒤로가기"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -1898,15 +2679,42 @@ export function HomePage() {
 
             <div className="active_order_scroll">
               {/* 요약 통계 */}
-              <div style={{ background: "linear-gradient(135deg, #2563eb, #1d4ed8)", padding: "22px 20px", display: "flex", gap: 20, alignItems: "center" }}>
+              <div
+                style={{
+                  background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                  padding: "22px 20px",
+                  display: "flex",
+                  gap: 20,
+                  alignItems: "center",
+                }}
+              >
                 {[
                   { label: "누적 세탁 횟수", val: "24회" },
                   { label: "이번 달", val: "3회" },
                   { label: "등록 의류", val: `${registeredClothes.length}벌` },
                 ].map((s, i) => (
                   <div key={i} style={{ flex: 1, textAlign: "center" }}>
-                    <p style={{ margin: "0 0 4px", fontSize: 11, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>{s.label}</p>
-                    <p style={{ margin: 0, fontSize: 22, fontWeight: 900, color: "#ffffff", letterSpacing: "-1px" }}>{s.val}</p>
+                    <p
+                      style={{
+                        margin: "0 0 4px",
+                        fontSize: 11,
+                        color: "rgba(255,255,255,0.7)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {s.label}
+                    </p>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: 22,
+                        fontWeight: 900,
+                        color: "#ffffff",
+                        letterSpacing: "-1px",
+                      }}
+                    >
+                      {s.val}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -1916,21 +2724,100 @@ export function HomePage() {
                 <h3 className="aod_section_title">전체 이력</h3>
                 <div className="aod_items_list">
                   {[
-                    { date: "05.27", category: "아우터 · 가죽", desc: "구스다운 아웃도어 패딩 외 1벌", status: "배송출발", statusColor: "#2563eb", price: "22,900원" },
-                    { date: "05.14", category: "일반 세탁",     desc: "안심 생활빨래 안심팩 1회",     status: "완료",    statusColor: "#16a34a", price: "19,000원" },
-                    { date: "04.29", category: "관리 의류",     desc: "캐시미어 가디건, 울 코트",    status: "완료",    statusColor: "#16a34a", price: "31,800원" },
-                    { date: "04.11", category: "침구류",        desc: "구스다운 이불 (더블)",        status: "완료",    statusColor: "#16a34a", price: "59,900원" },
-                    { date: "03.28", category: "신발",          desc: "스웨이드 로퍼, 운동화",      status: "완료",    statusColor: "#16a34a", price: "34,800원" },
-                    { date: "03.12", category: "일반 세탁",     desc: "안심 생활빨래 안심팩 1회",    status: "완료",    statusColor: "#16a34a", price: "19,000원" },
+                    {
+                      date: "05.27",
+                      category: "아우터 · 가죽",
+                      desc: "구스다운 아웃도어 패딩 외 1벌",
+                      status: "배송출발",
+                      statusColor: "#2563eb",
+                      price: "22,900원",
+                    },
+                    {
+                      date: "05.14",
+                      category: "일반 세탁",
+                      desc: "안심 생활빨래 안심팩 1회",
+                      status: "완료",
+                      statusColor: "#16a34a",
+                      price: "19,000원",
+                    },
+                    {
+                      date: "04.29",
+                      category: "관리 의류",
+                      desc: "캐시미어 가디건, 울 코트",
+                      status: "완료",
+                      statusColor: "#16a34a",
+                      price: "31,800원",
+                    },
+                    {
+                      date: "04.11",
+                      category: "침구류",
+                      desc: "구스다운 이불 (더블)",
+                      status: "완료",
+                      statusColor: "#16a34a",
+                      price: "59,900원",
+                    },
+                    {
+                      date: "03.28",
+                      category: "신발",
+                      desc: "스웨이드 로퍼, 운동화",
+                      status: "완료",
+                      statusColor: "#16a34a",
+                      price: "34,800원",
+                    },
+                    {
+                      date: "03.12",
+                      category: "일반 세탁",
+                      desc: "안심 생활빨래 안심팩 1회",
+                      status: "완료",
+                      statusColor: "#16a34a",
+                      price: "19,000원",
+                    },
                   ].map((item, i) => (
-                    <div key={i} className="aod_item_row" style={{ cursor: "pointer" }} onClick={() => setSelectedHistoryItem(item)}>
+                    <div
+                      key={i}
+                      className="aod_item_row"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setSelectedHistoryItem(item)}
+                    >
                       <div className="aod_item_info">
                         <p className="aod_item_name">{item.desc}</p>
-                        <p className="aod_item_type">{item.date} · {item.category}</p>
+                        <p className="aod_item_type">
+                          {item.date} · {item.category}
+                        </p>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
-                        <span style={{ fontSize: 12, fontWeight: 800, color: item.statusColor, background: item.statusColor === "#2563eb" ? "#eff6ff" : "#f0fdf4", padding: "2px 8px", borderRadius: 6 }}>{item.status}</span>
-                        <span style={{ fontSize: 12, fontWeight: 700, color: "#0f172a" }}>{item.price}</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-end",
+                          gap: 4,
+                          flexShrink: 0,
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 800,
+                            color: item.statusColor,
+                            background:
+                              item.statusColor === "#2563eb"
+                                ? "#eff6ff"
+                                : "#f0fdf4",
+                            padding: "2px 8px",
+                            borderRadius: 6,
+                          }}
+                        >
+                          {item.status}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: "#0f172a",
+                          }}
+                        >
+                          {item.price}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -1949,7 +2836,9 @@ export function HomePage() {
                   ].map((m, i) => (
                     <div key={i} className="aod_info_row">
                       <span className="aod_info_label">{m.month}</span>
-                      <span style={{ fontSize: 13, color: "#64748b" }}>{m.count}</span>
+                      <span style={{ fontSize: 13, color: "#64748b" }}>
+                        {m.count}
+                      </span>
                       <span className="aod_info_val">{m.amount}</span>
                     </div>
                   ))}
@@ -1965,8 +2854,22 @@ export function HomePage() {
         {showContactUs && (
           <div className="active_order_overlay">
             <header className="active_order_header">
-              <button type="button" className="premium_back_btn" onClick={() => setShowContactUs(false)} aria-label="뒤로가기">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => setShowContactUs(false)}
+                aria-label="뒤로가기"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -1976,30 +2879,133 @@ export function HomePage() {
 
             <div className="active_order_scroll">
               {/* 운영 시간 히어로 */}
-              <div style={{ background: "linear-gradient(135deg, #2563eb, #1d4ed8)", padding: "24px 20px", textAlign: "center" }}>
-                <p style={{ margin: "0 0 4px", fontSize: 12, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>왓씨 고객센터</p>
-                <p style={{ margin: "0 0 10px", fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.5px" }}>무엇을 도와드릴까요?</p>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px" }}>
-                  <span style={{ fontSize: 13, color: "#fff", fontWeight: 700 }}>⏰ 평일 09:00 – 18:00 (주말·공휴일 휴무)</span>
+              <div
+                style={{
+                  background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                  padding: "24px 20px",
+                  textAlign: "center",
+                }}
+              >
+                <p
+                  style={{
+                    margin: "0 0 4px",
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.75)",
+                    fontWeight: 600,
+                  }}
+                >
+                  왓씨 고객센터
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 10px",
+                    fontSize: 20,
+                    fontWeight: 900,
+                    color: "#fff",
+                    letterSpacing: "-0.5px",
+                  }}
+                >
+                  무엇을 도와드릴까요?
+                </p>
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    background: "rgba(255,255,255,0.15)",
+                    borderRadius: 10,
+                    padding: "6px 14px",
+                  }}
+                >
+                  <span
+                    style={{ fontSize: 13, color: "#fff", fontWeight: 700 }}
+                  >
+                    ⏰ 평일 09:00 – 18:00 (주말·공휴일 휴무)
+                  </span>
                 </div>
               </div>
 
               {/* 빠른 문의 채널 */}
               <div className="aod_section">
                 <h3 className="aod_section_title">빠른 문의 채널</h3>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: 10,
+                  }}
+                >
                   {[
-                    { icon: "📞", label: "전화 상담", desc: "1588-0000", action: () => triggerToast("전화 연결 중입니다."), bg: "#eff6ff", color: "#2563eb" },
-                    { icon: "💬", label: "카카오톡", desc: "@왓씨공식", action: () => triggerToast("카카오톡 채널로 이동합니다."), bg: "#fefce8", color: "#ca8a04" },
-                    { icon: "📧", label: "이메일 문의", desc: "cs@watc.kr", action: () => triggerToast("이메일 앱으로 이동합니다."), bg: "#f0fdf4", color: "#16a34a" },
-                    { icon: "💡", label: "자주 묻는 질문", desc: "FAQ 바로가기", action: () => {}, bg: "#fdf4ff", color: "#9333ea" },
+                    {
+                      icon: "📞",
+                      label: "전화 상담",
+                      desc: "1588-0000",
+                      action: () => triggerToast("전화 연결 중입니다."),
+                      bg: "#eff6ff",
+                      color: "#2563eb",
+                    },
+                    {
+                      icon: "💬",
+                      label: "카카오톡",
+                      desc: "@왓씨공식",
+                      action: () => triggerToast("카카오톡 채널로 이동합니다."),
+                      bg: "#fefce8",
+                      color: "#ca8a04",
+                    },
+                    {
+                      icon: "📧",
+                      label: "이메일 문의",
+                      desc: "cs@watc.kr",
+                      action: () => triggerToast("이메일 앱으로 이동합니다."),
+                      bg: "#f0fdf4",
+                      color: "#16a34a",
+                    },
+                    {
+                      icon: "💡",
+                      label: "자주 묻는 질문",
+                      desc: "FAQ 바로가기",
+                      action: () => {},
+                      bg: "#fdf4ff",
+                      color: "#9333ea",
+                    },
                   ].map((ch, i) => (
-                    <button key={i} type="button"
-                      style={{ background: ch.bg, border: `1px solid ${ch.color}22`, borderRadius: 16, padding: "16px 14px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, cursor: "pointer", fontFamily: "var(--font-pretendard)", textAlign: "left" }}
-                      onClick={ch.action}>
+                    <button
+                      key={i}
+                      type="button"
+                      style={{
+                        background: ch.bg,
+                        border: `1px solid ${ch.color}22`,
+                        borderRadius: 16,
+                        padding: "16px 14px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: 6,
+                        cursor: "pointer",
+                        fontFamily: "var(--font-pretendard)",
+                        textAlign: "left",
+                      }}
+                      onClick={ch.action}
+                    >
                       <span style={{ fontSize: 28 }}>{ch.icon}</span>
-                      <span style={{ fontSize: 13, fontWeight: 800, color: "#0f172a" }}>{ch.label}</span>
-                      <span style={{ fontSize: 11.5, color: ch.color, fontWeight: 700 }}>{ch.desc}</span>
+                      <span
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 800,
+                          color: "#0f172a",
+                        }}
+                      >
+                        {ch.label}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 11.5,
+                          color: ch.color,
+                          fontWeight: 700,
+                        }}
+                      >
+                        {ch.desc}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -2010,7 +3016,21 @@ export function HomePage() {
                 <h3 className="aod_section_title">1:1 문의 남기기</h3>
                 <div className="aod_info_card" style={{ padding: 0 }}>
                   <div style={{ padding: "16px 16px 0" }}>
-                    <select style={{ width: "100%", height: 44, borderRadius: 10, border: "1.5px solid #e2e8f0", padding: "0 12px", fontSize: 13, color: "#1e293b", fontFamily: "var(--font-pretendard)", background: "#f8fafc", outline: "none", marginBottom: 10 }}>
+                    <select
+                      style={{
+                        width: "100%",
+                        height: 44,
+                        borderRadius: 10,
+                        border: "1.5px solid #e2e8f0",
+                        padding: "0 12px",
+                        fontSize: 13,
+                        color: "#1e293b",
+                        fontFamily: "var(--font-pretendard)",
+                        background: "#f8fafc",
+                        outline: "none",
+                        marginBottom: 10,
+                      }}
+                    >
                       <option>문의 유형을 선택해주세요</option>
                       <option>세탁 품질 관련</option>
                       <option>수거·배달 관련</option>
@@ -2021,12 +3041,44 @@ export function HomePage() {
                     <textarea
                       placeholder="문의 내용을 자세히 입력해주세요. (최소 20자)"
                       rows={5}
-                      style={{ width: "100%", border: "1.5px solid #e2e8f0", borderRadius: 10, padding: "12px 14px", fontSize: 13, fontFamily: "var(--font-pretendard)", color: "#1e293b", resize: "none", outline: "none", boxSizing: "border-box", lineHeight: 1.6, background: "#f8fafc" }}
+                      style={{
+                        width: "100%",
+                        border: "1.5px solid #e2e8f0",
+                        borderRadius: 10,
+                        padding: "12px 14px",
+                        fontSize: 13,
+                        fontFamily: "var(--font-pretendard)",
+                        color: "#1e293b",
+                        resize: "none",
+                        outline: "none",
+                        boxSizing: "border-box",
+                        lineHeight: 1.6,
+                        background: "#f8fafc",
+                      }}
                     />
                   </div>
                   <div style={{ padding: "12px 16px 16px" }}>
-                    <button type="button" style={{ width: "100%", height: 48, border: "none", borderRadius: 12, background: "linear-gradient(135deg, #2563eb, #1d4ed8)", color: "#fff", fontSize: 14, fontWeight: 800, fontFamily: "var(--font-pretendard)", cursor: "pointer" }}
-                      onClick={() => { setShowContactUs(false); triggerToast("✅ 문의가 접수되었습니다. 영업일 기준 1–2일 내 답변드립니다!"); }}>
+                    <button
+                      type="button"
+                      style={{
+                        width: "100%",
+                        height: 48,
+                        border: "none",
+                        borderRadius: 12,
+                        background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                        color: "#fff",
+                        fontSize: 14,
+                        fontWeight: 800,
+                        fontFamily: "var(--font-pretendard)",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setShowContactUs(false);
+                        triggerToast(
+                          "✅ 문의가 접수되었습니다. 영업일 기준 1–2일 내 답변드립니다!",
+                        );
+                      }}
+                    >
                       문의 제출하기
                     </button>
                   </div>
@@ -2038,14 +3090,50 @@ export function HomePage() {
                 <h3 className="aod_section_title">자주 묻는 질문</h3>
                 <div className="aod_info_card">
                   {[
-                    { q: "예약 취소는 언제까지 가능한가요?", a: "수거 예정 시간 2시간 전까지 앱에서 무료 취소 가능합니다." },
-                    { q: "세탁물이 손상되면 어떻게 되나요?", a: "왓씨는 세탁물 손상 시 전액 보상을 원칙으로 합니다. 고객센터로 문의 바랍니다." },
-                    { q: "세탁 완료 후 보관은 얼마나 되나요?", a: "배달 시도 후 7일간 보관하며, 이후 자동 폐기 처리됩니다." },
-                    { q: "포인트 유효기간이 있나요?", a: "왓씨 포인트는 마지막 적립일로부터 1년간 유효합니다." },
+                    {
+                      q: "예약 취소는 언제까지 가능한가요?",
+                      a: "수거 예정 시간 2시간 전까지 앱에서 무료 취소 가능합니다.",
+                    },
+                    {
+                      q: "세탁물이 손상되면 어떻게 되나요?",
+                      a: "왓씨는 세탁물 손상 시 전액 보상을 원칙으로 합니다. 고객센터로 문의 바랍니다.",
+                    },
+                    {
+                      q: "세탁 완료 후 보관은 얼마나 되나요?",
+                      a: "배달 시도 후 7일간 보관하며, 이후 자동 폐기 처리됩니다.",
+                    },
+                    {
+                      q: "포인트 유효기간이 있나요?",
+                      a: "왓씨 포인트는 마지막 적립일로부터 1년간 유효합니다.",
+                    },
                   ].map((faq, i) => (
-                    <div key={i} className="aod_info_row" style={{ flexDirection: "column", alignItems: "flex-start", gap: 6 }}>
-                      <span style={{ fontSize: 13, fontWeight: 800, color: "#0f172a" }}>Q. {faq.q}</span>
-                      <span style={{ fontSize: 12.5, color: "#64748b", lineHeight: 1.5 }}>A. {faq.a}</span>
+                    <div
+                      key={i}
+                      className="aod_info_row"
+                      style={{
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: 6,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 800,
+                          color: "#0f172a",
+                        }}
+                      >
+                        Q. {faq.q}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 12.5,
+                          color: "#64748b",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        A. {faq.a}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -2060,8 +3148,22 @@ export function HomePage() {
         {showActiveOrderDetail && (
           <div className="active_order_overlay">
             <header className="active_order_header">
-              <button type="button" className="premium_back_btn" onClick={() => setShowActiveOrderDetail(false)} aria-label="뒤로가기">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                type="button"
+                className="premium_back_btn"
+                onClick={() => setShowActiveOrderDetail(false)}
+                aria-label="뒤로가기"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
@@ -2080,10 +3182,26 @@ export function HomePage() {
                 <div className="aod_hero_right">
                   <div className="aod_hero_pct_ring_wrap">
                     <svg viewBox="0 0 64 64" className="aod_hero_ring">
-                      <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="6" />
-                      <circle cx="32" cy="32" r="26" fill="none" stroke="#ffffff" strokeWidth="6"
-                        strokeDasharray="163.36" strokeDashoffset="55.54"
-                        strokeLinecap="round" transform="rotate(-90 32 32)" />
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.25)"
+                        strokeWidth="6"
+                      />
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        fill="none"
+                        stroke="#ffffff"
+                        strokeWidth="6"
+                        strokeDasharray="163.36"
+                        strokeDashoffset="55.54"
+                        strokeLinecap="round"
+                        transform="rotate(-90 32 32)"
+                      />
                     </svg>
                     <span className="aod_hero_pct">66%</span>
                   </div>
@@ -2095,13 +3213,25 @@ export function HomePage() {
                 <h3 className="aod_section_title">세탁 품목</h3>
                 <div className="aod_items_list">
                   {[
-                    { name: "아우터 코트", type: "드라이클리닝", qty: 1, price: "19,900원" },
-                    { name: "드레스 셔츠", type: "기본 세탁",    qty: 2, price: "4,900원 × 2" },
+                    {
+                      name: "아우터 코트",
+                      type: "드라이클리닝",
+                      qty: 1,
+                      price: "19,900원",
+                    },
+                    {
+                      name: "드레스 셔츠",
+                      type: "기본 세탁",
+                      qty: 2,
+                      price: "4,900원 × 2",
+                    },
                   ].map((item, i) => (
                     <div key={i} className="aod_item_row">
                       <div className="aod_item_info">
                         <p className="aod_item_name">{item.name}</p>
-                        <p className="aod_item_type">{item.type} · {item.qty}벌</p>
+                        <p className="aod_item_type">
+                          {item.type} · {item.qty}벌
+                        </p>
                       </div>
                       <span className="aod_item_price">{item.price}</span>
                     </div>
@@ -2118,7 +3248,7 @@ export function HomePage() {
                 <h3 className="aod_section_title">배송 정보</h3>
                 <div className="aod_info_card">
                   {[
-                    { label: "배달지",    val: "반포동 왓씨타워 410호" },
+                    { label: "배달지", val: "반포동 왓씨타워 410호" },
                     { label: "수거 방식", val: "문 앞 수거" },
                     { label: "도착 예정", val: "오늘 저녁 11시 (예정)" },
                     { label: "담당 라이더", val: "김진우 마스터 · ⭐ 4.98" },
@@ -2133,10 +3263,21 @@ export function HomePage() {
 
               {/* 하단 액션 버튼 */}
               <div className="aod_actions">
-                <button type="button" className="aod_btn_primary" onClick={() => { setShowActiveOrderDetail(false); setActiveTab("delivery"); }}>
+                <button
+                  type="button"
+                  className="aod_btn_primary"
+                  onClick={() => {
+                    setShowActiveOrderDetail(false);
+                    setActiveTab("delivery");
+                  }}
+                >
                   실시간 배송 현황 보기
                 </button>
-                <button type="button" className="aod_btn_secondary" onClick={() => setShowContactUs(true)}>
+                <button
+                  type="button"
+                  className="aod_btn_secondary"
+                  onClick={() => setShowContactUs(true)}
+                >
                   문의하기
                 </button>
               </div>
@@ -2147,622 +3288,1078 @@ export function HomePage() {
         {/* ===================================================== */}
         {/* 세탁 종류별 요금표 오버레이                            */}
         {/* ===================================================== */}
-        {showPricingDetail && (() => {
-          type PricingTab = "clothing" | "shoes" | "bedding" | "extra";
-          const tabs: { key: PricingTab; label: string; emoji: string }[] = [
-            { key: "clothing", label: "의류",   emoji: "👔" },
-            { key: "shoes",    label: "신발",   emoji: "👟" },
-            { key: "bedding",  label: "침구류", emoji: "🛏️" },
-            { key: "extra",    label: "추가요금", emoji: "➕" },
-          ];
+        {showPricingDetail &&
+          (() => {
+            type PricingTab = "clothing" | "shoes" | "bedding" | "extra";
+            const tabs: { key: PricingTab; label: string; emoji: string }[] = [
+              { key: "clothing", label: "의류", emoji: "👔" },
+              { key: "shoes", label: "신발", emoji: "👟" },
+              { key: "bedding", label: "침구류", emoji: "🛏️" },
+              { key: "extra", label: "추가요금", emoji: "➕" },
+            ];
 
-          const pricingData: Record<PricingTab, { columns: string[]; rows: (string | number)[][]; note?: string }> = {
-            clothing: {
-              columns: ["품목", "기본 세탁", "드라이클리닝", "스팀 케어"],
-              rows: [
-                ["셔츠 · 블라우스",  "4,900원",  "8,900원", "6,900원"],
-                ["바지 · 슬랙스",    "5,900원",  "9,900원", "7,900원"],
-                ["원피스 · 스커트",  "7,900원", "12,900원", "9,900원"],
-                ["코트 · 자켓",     "12,900원", "19,900원","15,900원"],
-                ["패딩 · 점퍼",     "14,900원", "22,900원","17,900원"],
-                ["정장 상하의",     "19,900원", "29,900원","24,900원"],
-                ["니트 · 스웨터",    "6,900원", "10,900원", "8,900원"],
-                ["실크 · 린넨",      "8,900원", "14,900원","11,900원"],
-              ],
-            },
-            shoes: {
-              columns: ["품목", "일반 클리닝", "프리미엄", "명품 케어"],
-              rows: [
-                ["운동화 · 스니커즈", "12,900원", "19,900원", "—"],
-                ["구두 · 로퍼",       "15,900원", "24,900원", "34,900원"],
-                ["부츠",             "18,900원", "28,900원", "39,900원"],
-                ["슬리퍼 · 샌들",     "9,900원", "14,900원", "—"],
-                ["아동화",            "8,900원", "12,900원", "—"],
-              ],
-              note: "* 명품 케어는 Hermès · Chanel · Louis Vuitton 등 하이엔드 브랜드에 한해 적용됩니다.",
-            },
-            bedding: {
-              columns: ["품목", "일반 세탁", "구스다운", "살균 케어"],
-              rows: [
-                ["이불 (싱글)",       "19,900원", "39,900원", "29,900원"],
-                ["이불 (더블)",       "29,900원", "59,900원", "39,900원"],
-                ["이불 (킹)",         "39,900원", "79,900원", "49,900원"],
-                ["베개 (1개)",         "9,900원", "15,900원", "12,900원"],
-                ["토퍼 커버",         "24,900원",        "—", "34,900원"],
-                ["러그 · 카펫 (소)", "29,900원",        "—", "39,900원"],
-              ],
-              note: "* 이불류 무게에 따라 추가 요금이 부과될 수 있습니다. (기준 무게: 싱글 3kg / 더블 5kg)",
-            },
-            extra: {
-              columns: ["항목", "적용 기준", "추가 금액"],
-              rows: [
-                ["급행 배송",         "당일 처리",          "+30%"],
-                ["보풀 제거",         "개당 적용",        "+2,000원"],
-                ["얼룩 전처리",       "부위당 적용",      "+3,000원"],
-                ["스팀 다림질",       "개당 적용",        "+2,500원"],
-                ["고급 향 마감",      "선택 적용",        "+2,000원"],
-                ["안심팩 포장",       "기본 제공",              "무료"],
-                ["무게 초과",         "1kg 당",          "+3,000원"],
-                ["명품 라벨 검수",    "브랜드 확인 시",    "+5,000원"],
-              ],
-            },
-          };
+            const pricingData: Record<
+              PricingTab,
+              { columns: string[]; rows: (string | number)[][]; note?: string }
+            > = {
+              clothing: {
+                columns: ["품목", "기본 세탁", "드라이클리닝", "스팀 케어"],
+                rows: [
+                  ["셔츠 · 블라우스", "4,900원", "8,900원", "6,900원"],
+                  ["바지 · 슬랙스", "5,900원", "9,900원", "7,900원"],
+                  ["원피스 · 스커트", "7,900원", "12,900원", "9,900원"],
+                  ["코트 · 자켓", "12,900원", "19,900원", "15,900원"],
+                  ["패딩 · 점퍼", "14,900원", "22,900원", "17,900원"],
+                  ["정장 상하의", "19,900원", "29,900원", "24,900원"],
+                  ["니트 · 스웨터", "6,900원", "10,900원", "8,900원"],
+                  ["실크 · 린넨", "8,900원", "14,900원", "11,900원"],
+                ],
+              },
+              shoes: {
+                columns: ["품목", "일반 클리닝", "프리미엄", "명품 케어"],
+                rows: [
+                  ["운동화 · 스니커즈", "12,900원", "19,900원", "—"],
+                  ["구두 · 로퍼", "15,900원", "24,900원", "34,900원"],
+                  ["부츠", "18,900원", "28,900원", "39,900원"],
+                  ["슬리퍼 · 샌들", "9,900원", "14,900원", "—"],
+                  ["아동화", "8,900원", "12,900원", "—"],
+                ],
+                note: "* 명품 케어는 Hermès · Chanel · Louis Vuitton 등 하이엔드 브랜드에 한해 적용됩니다.",
+              },
+              bedding: {
+                columns: ["품목", "일반 세탁", "구스다운", "살균 케어"],
+                rows: [
+                  ["이불 (싱글)", "19,900원", "39,900원", "29,900원"],
+                  ["이불 (더블)", "29,900원", "59,900원", "39,900원"],
+                  ["이불 (킹)", "39,900원", "79,900원", "49,900원"],
+                  ["베개 (1개)", "9,900원", "15,900원", "12,900원"],
+                  ["토퍼 커버", "24,900원", "—", "34,900원"],
+                  ["러그 · 카펫 (소)", "29,900원", "—", "39,900원"],
+                ],
+                note: "* 이불류 무게에 따라 추가 요금이 부과될 수 있습니다. (기준 무게: 싱글 3kg / 더블 5kg)",
+              },
+              extra: {
+                columns: ["항목", "적용 기준", "추가 금액"],
+                rows: [
+                  ["급행 배송", "당일 처리", "+30%"],
+                  ["보풀 제거", "개당 적용", "+2,000원"],
+                  ["얼룩 전처리", "부위당 적용", "+3,000원"],
+                  ["스팀 다림질", "개당 적용", "+2,500원"],
+                  ["고급 향 마감", "선택 적용", "+2,000원"],
+                  ["안심팩 포장", "기본 제공", "무료"],
+                  ["무게 초과", "1kg 당", "+3,000원"],
+                  ["명품 라벨 검수", "브랜드 확인 시", "+5,000원"],
+                ],
+              },
+            };
 
-          const current = pricingData[pricingTab];
+            const current = pricingData[pricingTab];
 
-          return (
-            <div className="pricing_overlay" key="pricing-overlay">
-              <header className="pricing_header">
-                <button type="button" className="premium_back_btn" onClick={() => setShowPricingDetail(false)} aria-label="뒤로가기">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <h1 className="pricing_header_title">세탁 종류별 요금</h1>
-                <div style={{ width: 42 }} />
-              </header>
-
-              {/* 탭 */}
-              <div className="pricing_tab_bar">
-                {tabs.map(t => (
+            return (
+              <div className="pricing_overlay" key="pricing-overlay">
+                <header className="pricing_header">
                   <button
-                    key={t.key}
                     type="button"
-                    className={`pricing_tab_btn ${pricingTab === t.key ? "pricing_tab_btn--active" : ""}`}
-                    onClick={() => setPricingTab(t.key)}
+                    className="premium_back_btn"
+                    onClick={() => setShowPricingDetail(false)}
+                    aria-label="뒤로가기"
                   >
-                    <span>{t.emoji}</span>
-                    <span>{t.label}</span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
                   </button>
-                ))}
-              </div>
+                  <h1 className="pricing_header_title">세탁 종류별 요금</h1>
+                  <div style={{ width: 42 }} />
+                </header>
 
-              <div className="pricing_scroll" key={pricingTab}>
-                {/* 안내 배너 */}
-                <div className="pricing_banner">
-                  <span className="pricing_banner_emoji">
-                    {tabs.find(t => t.key === pricingTab)?.emoji}
-                  </span>
-                  <div>
-                    <p className="pricing_banner_title">{tabs.find(t => t.key === pricingTab)?.label} 세탁 요금</p>
-                    <p className="pricing_banner_sub">VAT 포함 · 수거배송비 별도 (기본 2,900원)</p>
-                  </div>
+                {/* 탭 */}
+                <div className="pricing_tab_bar">
+                  {tabs.map((t) => (
+                    <button
+                      key={t.key}
+                      type="button"
+                      className={`pricing_tab_btn ${pricingTab === t.key ? "pricing_tab_btn--active" : ""}`}
+                      onClick={() => setPricingTab(t.key)}
+                    >
+                      <span>{t.emoji}</span>
+                      <span>{t.label}</span>
+                    </button>
+                  ))}
                 </div>
 
-                {/* 요금 테이블 */}
-                <div className="pricing_table_wrap">
-                  <table className="pricing_table">
-                    <thead>
-                      <tr>
-                        {current.columns.map((col, ci) => (
-                          <th key={ci} className={ci === 0 ? "pricing_th pricing_th--item" : "pricing_th"}>
-                            {col}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {current.rows.map((row, ri) => (
-                        <tr key={ri} className={ri % 2 === 0 ? "pricing_tr" : "pricing_tr pricing_tr--alt"}>
-                          {row.map((cell, ci) => (
-                            <td
+                <div
+                  className="pricing_scroll"
+                  key={pricingTab}
+                  ref={pricingScrollRef}
+                >
+                  {/* 안내 배너 */}
+                  <div className="pricing_banner">
+                    <span className="pricing_banner_emoji">
+                      {tabs.find((t) => t.key === pricingTab)?.emoji}
+                    </span>
+                    <div>
+                      <p className="pricing_banner_title">
+                        {tabs.find((t) => t.key === pricingTab)?.label} 세탁
+                        요금
+                      </p>
+                      <p className="pricing_banner_sub">
+                        VAT 포함 · 수거배송비 별도 (기본 2,900원)
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 요금 테이블 */}
+                  <div className="pricing_table_wrap">
+                    <table className="pricing_table">
+                      <thead>
+                        <tr>
+                          {current.columns.map((col, ci) => (
+                            <th
                               key={ci}
                               className={
                                 ci === 0
-                                  ? "pricing_td pricing_td--label"
-                                  : cell === "—"
-                                    ? "pricing_td pricing_td--na"
-                                    : cell === "무료"
-                                      ? "pricing_td pricing_td--free"
-                                      : "pricing_td pricing_td--price"
+                                  ? "pricing_th pricing_th--item"
+                                  : "pricing_th"
                               }
                             >
-                              {cell}
-                            </td>
+                              {col}
+                            </th>
                           ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {current.rows.map((row, ri) => (
+                          <tr
+                            key={ri}
+                            className={
+                              ri % 2 === 0
+                                ? "pricing_tr"
+                                : "pricing_tr pricing_tr--alt"
+                            }
+                          >
+                            {row.map((cell, ci) => (
+                              <td
+                                key={ci}
+                                className={
+                                  ci === 0
+                                    ? "pricing_td pricing_td--label"
+                                    : cell === "—"
+                                      ? "pricing_td pricing_td--na"
+                                      : cell === "무료"
+                                        ? "pricing_td pricing_td--free"
+                                        : "pricing_td pricing_td--price"
+                                }
+                              >
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
 
-                {/* 주석 */}
-                {current.note && (
-                  <p className="pricing_note">{current.note}</p>
-                )}
+                  {/* 주석 */}
+                  {current.note && (
+                    <p className="pricing_note">{current.note}</p>
+                  )}
 
-                {/* 하단 안내 */}
-                <div className="pricing_footer_box">
-                  <p className="pricing_footer_title">💡 요금 안내</p>
-                  <ul className="pricing_footer_list">
-                    <li>모든 가격은 <strong>VAT 포함</strong> 기준입니다.</li>
-                    <li>수거·배송비 <strong>2,900원</strong>이 별도 청구됩니다.</li>
-                    <li>3만원 이상 주문 시 <strong>배송비 무료</strong>입니다.</li>
-                    <li>실제 요금은 소재·상태에 따라 변동될 수 있습니다.</li>
-                  </ul>
+                  {/* 하단 안내 */}
+                  <div className="pricing_footer_box">
+                    <p className="pricing_footer_title">💡 요금 안내</p>
+                    <ul className="pricing_footer_list">
+                      <li>
+                        모든 가격은 <strong>VAT 포함</strong> 기준입니다.
+                      </li>
+                      <li>
+                        수거·배송비 <strong>2,900원</strong>이 별도 청구됩니다.
+                      </li>
+                      <li>
+                        3만원 이상 주문 시 <strong>배송비 무료</strong>입니다.
+                      </li>
+                      <li>실제 요금은 소재·상태에 따라 변동될 수 있습니다.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
 
         {/* ===================================================== */}
         {/* ===================================================== */}
         {/* 포인트 상세 & 미니게임 오버레이                        */}
         {/* ===================================================== */}
-        {showPointDetail && (() => {
-          const pointHistory = [
-            { label: "세탁 서비스 이용 완료", date: "2026.05.27", amount: 100, icon: "🧺" },
-            { label: "고객 리뷰 작성", date: "2026.05.25", amount: 50, icon: "✍️" },
-            { label: "친구 초대 성공", date: "2026.05.20", amount: 200, icon: "👥" },
-            { label: "첫 이용 보너스", date: "2026.05.15", amount: 300, icon: "🎁" },
-            { label: "AI 소재 분석 이용", date: "2026.05.10", amount: 50, icon: "🔬" },
-            { label: "출석 체크 (7일 연속)", date: "2026.05.07", amount: 100, icon: "📅" },
-          ];
-          const earnMethods = [
-            { label: "세탁 서비스 이용", reward: "+100P", icon: "🧺", desc: "매 이용 시마다 적립" },
-            { label: "리뷰 작성", reward: "+50P", icon: "✍️", desc: "이용 후 리뷰 남기기" },
-            { label: "친구 초대", reward: "+200P", icon: "👥", desc: "링크로 친구 초대 성공 시" },
-            { label: "AI 소재 분석", reward: "+30P", icon: "🔬", desc: "하루 1회 한정" },
-            { label: "출석 체크", reward: "+10P", icon: "📅", desc: "매일 앱 방문 시" },
-            { label: "버블 게임", reward: "+최대 90P", icon: "🫧", desc: "하루 1회 미니게임" },
-          ];
+        {showPointDetail &&
+          (() => {
+            const pointHistory = [
+              {
+                label: "세탁 서비스 이용 완료",
+                date: "2026.05.27",
+                amount: 100,
+                icon: "🧺",
+              },
+              {
+                label: "고객 리뷰 작성",
+                date: "2026.05.25",
+                amount: 50,
+                icon: "✍️",
+              },
+              {
+                label: "친구 초대 성공",
+                date: "2026.05.20",
+                amount: 200,
+                icon: "👥",
+              },
+              {
+                label: "첫 이용 보너스",
+                date: "2026.05.15",
+                amount: 300,
+                icon: "🎁",
+              },
+              {
+                label: "AI 소재 분석 이용",
+                date: "2026.05.10",
+                amount: 50,
+                icon: "🔬",
+              },
+              {
+                label: "출석 체크 (7일 연속)",
+                date: "2026.05.07",
+                amount: 100,
+                icon: "📅",
+              },
+            ];
+            const earnMethods = [
+              {
+                label: "세탁 서비스 이용",
+                reward: "+100P",
+                icon: "🧺",
+                desc: "매 이용 시마다 적립",
+              },
+              {
+                label: "리뷰 작성",
+                reward: "+50P",
+                icon: "✍️",
+                desc: "이용 후 리뷰 남기기",
+              },
+              {
+                label: "친구 초대",
+                reward: "+200P",
+                icon: "👥",
+                desc: "링크로 친구 초대 성공 시",
+              },
+              {
+                label: "AI 소재 분석",
+                reward: "+30P",
+                icon: "🔬",
+                desc: "하루 1회 한정",
+              },
+              {
+                label: "출석 체크",
+                reward: "+10P",
+                icon: "📅",
+                desc: "매일 앱 방문 시",
+              },
+              {
+                label: "버블 게임",
+                reward: "+최대 90P",
+                icon: "🫧",
+                desc: "하루 1회 미니게임",
+              },
+            ];
 
-          const startGame = () => {
-            setGameActive(true);
-            setGameEarned(0);
-            setGameDone(false);
-            setGameTimeLeft(15);
-            // 버블 랜덤 표시
-            const interval = window.setInterval(() => {
-              setBubbleStates(() => Array(9).fill(null).map(() => Math.random() > 0.45));
-            }, 700);
-            // 타이머
-            let t = 15;
-            const countdown = window.setInterval(() => {
-              t -= 1;
-              setGameTimeLeft(t);
-              if (t <= 0) {
-                clearInterval(countdown);
-                clearInterval(interval);
-                setBubbleStates(Array(9).fill(false));
-                setGameActive(false);
-                setGameDone(true);
-                setTotalScore(prev => prev + gameEarned);
-              }
-            }, 1000);
-          };
+            const startGame = () => {
+              setGameActive(true);
+              setGameEarned(0);
+              setGameDone(false);
+              setGameTimeLeft(15);
+              // 버블 랜덤 표시
+              const interval = window.setInterval(() => {
+                setBubbleStates(() =>
+                  Array(9)
+                    .fill(null)
+                    .map(() => Math.random() > 0.45),
+                );
+              }, 700);
+              // 타이머
+              let t = 15;
+              const countdown = window.setInterval(() => {
+                t -= 1;
+                setGameTimeLeft(t);
+                if (t <= 0) {
+                  clearInterval(countdown);
+                  clearInterval(interval);
+                  setBubbleStates(Array(9).fill(false));
+                  setGameActive(false);
+                  setGameDone(true);
+                  setTotalScore((prev) => prev + gameEarned);
+                }
+              }, 1000);
+            };
 
-          const popBubble = (idx: number) => {
-            if (!gameActive || !bubbleStates[idx]) return;
-            setBubbleStates(prev => { const n = [...prev]; n[idx] = false; return n; });
-            setGameEarned(prev => prev + 10);
-          };
+            const popBubble = (idx: number) => {
+              if (!gameActive || !bubbleStates[idx]) return;
+              setBubbleStates((prev) => {
+                const n = [...prev];
+                n[idx] = false;
+                return n;
+              });
+              setGameEarned((prev) => prev + 10);
+            };
 
-          return (
-            <div className="point_detail_overlay">
-              {/* 헤더 */}
-              <header className="point_detail_header">
-                <button type="button" className="premium_back_btn" onClick={() => { setShowPointDetail(false); setGameActive(false); setGameDone(false); }} aria-label="뒤로가기">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <h1 className="point_detail_title">왓씨 포인트</h1>
-                <div style={{ width: 42 }} />
-              </header>
+            return (
+              <div className="point_detail_overlay">
+                {/* 헤더 */}
+                <header className="point_detail_header">
+                  <button
+                    type="button"
+                    className="premium_back_btn"
+                    onClick={() => {
+                      setShowPointDetail(false);
+                      setGameActive(false);
+                      setGameDone(false);
+                    }}
+                    aria-label="뒤로가기"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <h1 className="point_detail_title">왓씨 포인트</h1>
+                  <div style={{ width: 42 }} />
+                </header>
 
-              <div className="point_detail_scroll">
-                {/* 현재 포인트 배지 */}
-                <div className="point_hero_box">
-                  <p className="point_hero_label">현재 보유 포인트</p>
-                  <div className="point_hero_score">{totalScore.toLocaleString()}<span className="point_hero_unit">점</span></div>
-                  <div className="point_hero_bar_track">
-                    <div className="point_hero_bar_fill" style={{ width: `${Math.min((totalScore / 1000) * 100, 100)}%` }} />
-                  </div>
-                  <p className="point_hero_next">다음 등급까지 {Math.max(0, 1000 - totalScore)}점 남음 · 실버 → 골드</p>
-                </div>
-
-                {/* 적립 내역 */}
-                <div className="point_section">
-                  <h3 className="point_section_title">적립 내역</h3>
-                  <div className="point_history_list">
-                    {pointHistory.map((h, i) => (
-                      <div key={i} className="point_history_item">
-                        <span className="point_history_icon">{h.icon}</span>
-                        <div className="point_history_info">
-                          <p className="point_history_label">{h.label}</p>
-                          <p className="point_history_date">{h.date}</p>
-                        </div>
-                        <span className="point_history_amount">+{h.amount}P</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 포인트 획득 방법 */}
-                <div className="point_section">
-                  <h3 className="point_section_title">포인트 더 모으기</h3>
-                  <div className="point_earn_grid">
-                    {earnMethods.map((m, i) => (
-                      <div key={i} className="point_earn_card" onClick={() => triggerToast(`${m.label} 기능으로 이동합니다!`)}>
-                        <span className="point_earn_icon">{m.icon}</span>
-                        <p className="point_earn_label">{m.label}</p>
-                        <p className="point_earn_desc">{m.desc}</p>
-                        <span className="point_earn_reward">{m.reward}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 버블 팝 미니게임 */}
-                <div className="point_section">
-                  <h3 className="point_section_title">🫧 버블 팝 미니게임</h3>
-                  <p className="point_game_desc">15초 안에 버블을 최대한 많이 터뜨리세요! 버블 1개 = 10P</p>
-
-                  {gameDone ? (
-                    <div className="point_game_result">
-                      <p className="point_game_result_emoji">🎉</p>
-                      <p className="point_game_result_score">+{gameEarned}P 획득!</p>
-                      <p className="point_game_result_sub">총 {totalScore.toLocaleString()}점 보유 중</p>
-                      <button className="point_game_replay_btn" onClick={startGame}>다시 하기</button>
+                <div className="point_detail_scroll">
+                  {/* 현재 포인트 배지 */}
+                  <div className="point_hero_box">
+                    <p className="point_hero_label">현재 보유 포인트</p>
+                    <div className="point_hero_score">
+                      {totalScore.toLocaleString()}
+                      <span className="point_hero_unit">점</span>
                     </div>
-                  ) : gameActive ? (
-                    <div className="point_game_area">
-                      <div className="point_game_hud">
-                        <span className="point_game_timer">⏱ {gameTimeLeft}초</span>
-                        <span className="point_game_earned">+{gameEarned}P</span>
-                      </div>
-                      <div className="point_bubble_grid">
-                        {bubbleStates.map((visible, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            className={`point_bubble ${visible ? "point_bubble--visible" : ""}`}
-                            onClick={() => popBubble(idx)}
-                          >
-                            🫧
-                          </button>
-                        ))}
-                      </div>
+                    <div className="point_hero_bar_track">
+                      <div
+                        className="point_hero_bar_fill"
+                        style={{
+                          width: `${Math.min((totalScore / 1000) * 100, 100)}%`,
+                        }}
+                      />
                     </div>
-                  ) : (
-                    <button className="point_game_start_btn" onClick={startGame}>
-                      게임 시작하기
+                    <p className="point_hero_next">
+                      다음 등급까지 {Math.max(0, 1000 - totalScore)}점 남음 ·
+                      실버 → 골드
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowMembershipTier(true)}
+                      style={{
+                        marginTop: "12px",
+                        padding: "8px 12px",
+                        borderRadius: "8px",
+                        border: "1px solid #e2e8f0",
+                        background: "#f8fafc",
+                        cursor: "pointer",
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        color: "#2563eb",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      🥈 현재 실버 등급 · 전체 등급 보기
                     </button>
-                  )}
+                  </div>
+
+                  {/* 적립 내역 */}
+                  <div className="point_section">
+                    <h3 className="point_section_title">적립 내역</h3>
+                    <div className="point_history_list">
+                      {pointHistory.map((h, i) => (
+                        <div key={i} className="point_history_item">
+                          <span className="point_history_icon">{h.icon}</span>
+                          <div className="point_history_info">
+                            <p className="point_history_label">{h.label}</p>
+                            <p className="point_history_date">{h.date}</p>
+                          </div>
+                          <span className="point_history_amount">
+                            +{h.amount}P
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 포인트 획득 방법 */}
+                  <div className="point_section">
+                    <h3 className="point_section_title">포인트 더 모으기</h3>
+                    <div className="point_earn_grid">
+                      {earnMethods.map((m, i) => (
+                        <div
+                          key={i}
+                          className="point_earn_card"
+                          onClick={() =>
+                            triggerToast(`${m.label} 기능으로 이동합니다!`)
+                          }
+                        >
+                          <span className="point_earn_icon">{m.icon}</span>
+                          <p className="point_earn_label">{m.label}</p>
+                          <p className="point_earn_desc">{m.desc}</p>
+                          <span className="point_earn_reward">{m.reward}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 버블 팝 미니게임 */}
+                  <div className="point_section">
+                    <h3 className="point_section_title">🫧 버블 팝 미니게임</h3>
+                    <p className="point_game_desc">
+                      15초 안에 버블을 최대한 많이 터뜨리세요! 버블 1개 = 10P
+                    </p>
+
+                    {gameDone ? (
+                      <div className="point_game_result">
+                        <p className="point_game_result_emoji">🎉</p>
+                        <p className="point_game_result_score">
+                          +{gameEarned}P 획득!
+                        </p>
+                        <p className="point_game_result_sub">
+                          총 {totalScore.toLocaleString()}점 보유 중
+                        </p>
+                        <button
+                          className="point_game_replay_btn"
+                          onClick={startGame}
+                        >
+                          다시 하기
+                        </button>
+                      </div>
+                    ) : gameActive ? (
+                      <div className="point_game_area">
+                        <div className="point_game_hud">
+                          <span className="point_game_timer">
+                            ⏱ {gameTimeLeft}초
+                          </span>
+                          <span className="point_game_earned">
+                            +{gameEarned}P
+                          </span>
+                        </div>
+                        <div className="point_bubble_grid">
+                          {bubbleStates.map((visible, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              className={`point_bubble ${visible ? "point_bubble--visible" : ""}`}
+                              onClick={() => popBubble(idx)}
+                            >
+                              🫧
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        className="point_game_start_btn"
+                        onClick={startGame}
+                      >
+                        게임 시작하기
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
 
         {/* 커뮤니티 상세 페이지 (고정 오버레이)                 */}
         {/* ===================================================== */}
-        {showCommunityDetail && (() => {
-          const card = COMMUNITY_CARDS.find(c => c.key === showCommunityDetail)!;
-          const imgMap: Record<string, string> = { community: d1Img, tips: communityTipsImg, popular: m1Img, qa: l1Img, event: j1Img };
-          const posts: Record<string, Array<{ title: string; author: string; date: string; excerpt: string; img: string; likes: number; comments: number; tags: string[] }>> = {
-            community: [
-              { title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!", author: "따뜻한봄날", date: "2026.05.28", excerpt: "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요.", img: b1Img, likes: 124, comments: 38, tags: ["#패딩세탁", "#보풀제거"] },
-              { title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기", author: "깔끔맘", date: "2026.05.25", excerpt: "과탄산소다 + 베이킹소다 1:1 비율로 미지근한 물에 담가두고 2시간 후 세탁하면 새 셔츠처럼 됩니다!", img: a1Img, likes: 89, comments: 22, tags: ["#교복관리", "#흰셔츠"] },
-              { title: "청바지 색 빠짐 없이 세탁하는 방법 정리", author: "데님러버", date: "2026.05.22", excerpt: "처음엔 소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본입니다.", img: q1Img, likes: 67, comments: 15, tags: ["#청바지", "#색빠짐방지"] },
-              { title: "명품 가방 집에서 세탁하다 망친 후기...", author: "반성중", date: "2026.05.18", excerpt: "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.", img: c1Img, likes: 201, comments: 76, tags: ["#명품케어", "#타산지석"] },
-            ],
-            tips: [
-              { title: "울 소재 옷, 절대 드라이어 넣으면 안 되는 이유", author: "패션피플", date: "2026.05.27", excerpt: "울은 열과 마찰에 약해 드라이어 1번에 반 사이즈씩 줄어들 수 있어요. 반드시 자연 건조, 그늘에서!", img: l1Img, likes: 156, comments: 45, tags: ["#울소재", "#드라이어주의"] },
-              { title: "세탁 표시 기호 완벽 해석 가이드 (저장해두세요)", author: "세탁마스터", date: "2026.05.24", excerpt: "△=표백가능, ○=드럼건조가능, 🅟=드라이클리닝. 이것만 알아도 세탁 실수 90% 줄일 수 있어요.", img: a1Img, likes: 203, comments: 89, tags: ["#세탁기호", "#세탁가이드"] },
-              { title: "손세탁 vs 세탁기, 옷감별 최적 선택법", author: "옷지킴이", date: "2026.05.20", excerpt: "실크·캐시미어는 손세탁, 면·폴리에스터는 세탁기. 중간 소재는 세탁기 울코스가 정답입니다.", img: b1Img, likes: 94, comments: 31, tags: ["#손세탁", "#세탁기선택"] },
-              { title: "세제 너무 많이 쓰면 오히려 독? 적정 사용량 공유", author: "환경지킴이", date: "2026.05.16", excerpt: "세제가 많으면 헹굼이 부족해 섬유에 잔류하고 피부 트러블을 유발합니다. 표준의 2/3만 써도 충분해요.", img: c1Img, likes: 77, comments: 19, tags: ["#세제량", "#친환경세탁"] },
-            ],
-            popular: [
-              { title: "이번주 1등! 캐시미어 니트 세탁 완전 후기 🏆", author: "니트마니아", date: "2026.05.28", excerpt: "왓씨 캐시미어 전용 코스 써봤는데 줄어들거나 뭉침 없이 폭신폭신하게 돌아왔어요. 진짜 최고입니다!!", img: l1Img, likes: 312, comments: 102, tags: ["#캐시미어", "#주간1위"] },
-              { title: "왓씨 이용 1년 후기 — 진짜 솔직하게 씁니다", author: "장기유저", date: "2026.05.26", excerpt: "처음엔 반신반의했는데 지금은 세탁소 완전 안 가요. 수거가 편리하고 품질도 꾸준히 좋습니다. 다만 가끔 배송이...", img: q1Img, likes: 289, comments: 95, tags: ["#왓씨후기", "#솔직리뷰"] },
-              { title: "세탁소 vs 왓씨 가격 완전 비교분석 (표 있음)", author: "꼼꼼분석러", date: "2026.05.23", excerpt: "셔츠 기준 동네세탁소 4,000원 vs 왓씨 3,800원+수거배송 포함. 품질도 왓씨가 더 좋았습니다.", img: a1Img, likes: 178, comments: 67, tags: ["#가격비교", "#데이터분석"] },
-              { title: "이불 세탁 완전 실패담... 집 세탁기로는 무리였어요", author: "실패의고수", date: "2026.05.19", excerpt: "구스다운 이불을 가정용 세탁기에 넣었더니 솜 뭉침이 심하게 생겼어요. 이건 진짜 전문 업체에 맡겨야 해요.", img: b1Img, likes: 145, comments: 53, tags: ["#이불세탁", "#실패후기"] },
-            ],
-            qa: [
-              { title: "패딩 집에서 세탁해도 될까요? 드라이 필수인가요?", author: "패딩고민", date: "2026.05.29", excerpt: "거위털 패딩인데 세탁 표시 보면 드라이클리닝이라고 나와 있어요. 집에서 세탁하면 정말 안 되나요?", img: reviewOuterImg, likes: 44, comments: 18, tags: ["#패딩세탁", "#질문"] },
-              { title: "흰 면티에 커피 쏟았는데 어떻게 해야 하나요 😭", author: "커피사고", date: "2026.05.27", excerpt: "방금 새 흰 티셔츠에 아이스 아메리카노를 쏟았어요. 지금 당장 어떻게 해야 하나요?", img: reviewShirtsImg, likes: 37, comments: 22, tags: ["#얼룩제거", "#응급처치"] },
-              { title: "울 소재 니트 세탁 주기가 어떻게 되나요?", author: "니트질문자", date: "2026.05.24", excerpt: "울 소재 니트 자주 입는데 세탁을 얼마나 자주 해야 할지 모르겠어요. 냄새가 날 때만 하면 되나요?", img: d1Img, likes: 29, comments: 15, tags: ["#울니트", "#세탁주기"] },
-              { title: "왓씨 예약 취소는 언제까지 가능한가요?", author: "취소문의", date: "2026.05.22", excerpt: "내일 수거 예정인데 급한 일이 생겼어요. 오늘 취소해도 되는지 궁금합니다.", img: a1Img, likes: 12, comments: 8, tags: ["#취소문의", "#예약"] },
-            ],
-            event: [
-              { title: "🎁 6월 첫 이용 고객 50% 할인 이벤트!", author: "왓씨공식", date: "2026.06.01", excerpt: "이번 달 왓씨 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 예약하세요!", img: j1Img, likes: 231, comments: 45, tags: ["#이벤트", "#50%할인", "#신규혜택"] },
-              { title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF", author: "왓씨공식", date: "2026.05.30", excerpt: "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!", img: reviewBeddingImg, likes: 187, comments: 34, tags: ["#이불특가", "#여름준비"] },
-              { title: "👥 친구 초대하면 둘 다 3,000P 적립!", author: "왓씨공식", date: "2026.05.25", excerpt: "친구 링크로 가입하면 나도 3,000P, 친구도 3,000P! 포인트로 바로 결제에 사용 가능합니다.", img: m1Img, likes: 156, comments: 28, tags: ["#친구초대", "#포인트적립"] },
-              { title: "⭐ 5월 우수 리뷰어 선정 — 상품권 증정!", author: "왓씨공식", date: "2026.05.20", excerpt: "우수 리뷰를 작성해 주신 고객분께 커피 기프티콘을 드립니다. 솔직한 후기 남겨주세요!", img: b1Img, likes: 98, comments: 19, tags: ["#리뷰이벤트", "#상품권"] },
-            ],
-          };
-          // 커뮤니티 전용 피드 데이터
-          const communityAllPosts = [
-            { id: 0, category: "hot",  badge: "🔥 HOT",   title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!", author: "따뜻한봄날", avatar: "🧸", date: "05.28", excerpt: "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요!", img: b1Img, likes: 124, comments: 38, tags: ["#패딩세탁", "#보풀제거"], views: 1204 },
-            { id: 1, category: "new",  badge: "🆕 NEW",   title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기", author: "깔끔맘", avatar: "👩", date: "05.25", excerpt: "과탄산소다 + 베이킹소다 1:1 비율로 2시간 담가두면 새 셔츠가 됩니다!", img: a1Img, likes: 89, comments: 22, tags: ["#교복관리", "#흰셔츠"], views: 782 },
-            { id: 2, category: "tips", badge: "💡 팁",    title: "청바지 색 빠짐 없이 세탁하는 방법 총정리", author: "데님러버", avatar: "👖", date: "05.22", excerpt: "소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본!", img: q1Img, likes: 67, comments: 15, tags: ["#청바지", "#색빠짐방지"], views: 534 },
-            { id: 3, category: "hot",  badge: "😱 실패담", title: "명품 가방 집에서 세탁하다 망친 후기...", author: "반성중", avatar: "😅", date: "05.18", excerpt: "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.", img: c1Img, likes: 201, comments: 76, tags: ["#명품케어", "#타산지석"], views: 2103 },
-            { id: 4, category: "tips", badge: "💡 팁",    title: "세탁기 안에서 나는 퀴퀴한 냄새 없애는 법", author: "냄새제거왕", avatar: "🌬️", date: "05.15", excerpt: "구연산 + 뜨거운 물 세탁기 통돌리기로 3회 반복하면 완전히 사라져요!", img: d1Img, likes: 143, comments: 29, tags: ["#세탁기관리", "#냄새제거"], views: 1567 },
-            { id: 5, category: "new",  badge: "🆕 NEW",   title: "왓씨 이용 첫 후기 — 정말 다시 쓰고 싶어요", author: "첫경험자", avatar: "🌟", date: "05.12", excerpt: "수거부터 배달까지 진짜 손 하나 안 대도 됐어요. 옷도 새 옷 느낌. 강추합니다!", img: a1Img, likes: 55, comments: 11, tags: ["#첫경험", "#왓씨후기"], views: 423 },
-          ];
+        {showCommunityDetail &&
+          (() => {
+            const card = COMMUNITY_CARDS.find(
+              (c) => c.key === showCommunityDetail,
+            )!;
+            const imgMap: Record<string, string> = {
+              community: d1Img,
+              tips: communityTipsImg,
+              popular: m1Img,
+              qa: l1Img,
+              event: j1Img,
+            };
+            const posts: Record<
+              string,
+              Array<{
+                title: string;
+                author: string;
+                date: string;
+                excerpt: string;
+                img: string;
+                likes: number;
+                comments: number;
+                tags: string[];
+              }>
+            > = {
+              community: [
+                {
+                  title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!",
+                  author: "따뜻한봄날",
+                  date: "2026.05.28",
+                  excerpt:
+                    "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요.",
+                  img: b1Img,
+                  likes: 124,
+                  comments: 38,
+                  tags: ["#패딩세탁", "#보풀제거"],
+                },
+                {
+                  title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기",
+                  author: "깔끔맘",
+                  date: "2026.05.25",
+                  excerpt:
+                    "과탄산소다 + 베이킹소다 1:1 비율로 미지근한 물에 담가두고 2시간 후 세탁하면 새 셔츠처럼 됩니다!",
+                  img: a1Img,
+                  likes: 89,
+                  comments: 22,
+                  tags: ["#교복관리", "#흰셔츠"],
+                },
+                {
+                  title: "청바지 색 빠짐 없이 세탁하는 방법 정리",
+                  author: "데님러버",
+                  date: "2026.05.22",
+                  excerpt:
+                    "처음엔 소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본입니다.",
+                  img: q1Img,
+                  likes: 67,
+                  comments: 15,
+                  tags: ["#청바지", "#색빠짐방지"],
+                },
+                {
+                  title: "명품 가방 집에서 세탁하다 망친 후기...",
+                  author: "반성중",
+                  date: "2026.05.18",
+                  excerpt:
+                    "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.",
+                  img: c1Img,
+                  likes: 201,
+                  comments: 76,
+                  tags: ["#명품케어", "#타산지석"],
+                },
+              ],
+              tips: [
+                {
+                  title: "울 소재 옷, 절대 드라이어 넣으면 안 되는 이유",
+                  author: "패션피플",
+                  date: "2026.05.27",
+                  excerpt:
+                    "울은 열과 마찰에 약해 드라이어 1번에 반 사이즈씩 줄어들 수 있어요. 반드시 자연 건조, 그늘에서!",
+                  img: l1Img,
+                  likes: 156,
+                  comments: 45,
+                  tags: ["#울소재", "#드라이어주의"],
+                },
+                {
+                  title: "세탁 표시 기호 완벽 해석 가이드 (저장해두세요)",
+                  author: "세탁마스터",
+                  date: "2026.05.24",
+                  excerpt:
+                    "△=표백가능, ○=드럼건조가능, 🅟=드라이클리닝. 이것만 알아도 세탁 실수 90% 줄일 수 있어요.",
+                  img: a1Img,
+                  likes: 203,
+                  comments: 89,
+                  tags: ["#세탁기호", "#세탁가이드"],
+                },
+                {
+                  title: "손세탁 vs 세탁기, 옷감별 최적 선택법",
+                  author: "옷지킴이",
+                  date: "2026.05.20",
+                  excerpt:
+                    "실크·캐시미어는 손세탁, 면·폴리에스터는 세탁기. 중간 소재는 세탁기 울코스가 정답입니다.",
+                  img: b1Img,
+                  likes: 94,
+                  comments: 31,
+                  tags: ["#손세탁", "#세탁기선택"],
+                },
+                {
+                  title: "세제 너무 많이 쓰면 오히려 독? 적정 사용량 공유",
+                  author: "환경지킴이",
+                  date: "2026.05.16",
+                  excerpt:
+                    "세제가 많으면 헹굼이 부족해 섬유에 잔류하고 피부 트러블을 유발합니다. 표준의 2/3만 써도 충분해요.",
+                  img: c1Img,
+                  likes: 77,
+                  comments: 19,
+                  tags: ["#세제량", "#친환경세탁"],
+                },
+              ],
+              popular: [
+                {
+                  title: "이번주 1등! 캐시미어 니트 세탁 완전 후기 🏆",
+                  author: "니트마니아",
+                  date: "2026.05.28",
+                  excerpt:
+                    "왓씨 캐시미어 전용 코스 써봤는데 줄어들거나 뭉침 없이 폭신폭신하게 돌아왔어요. 진짜 최고입니다!!",
+                  img: l1Img,
+                  likes: 312,
+                  comments: 102,
+                  tags: ["#캐시미어", "#주간1위"],
+                },
+                {
+                  title: "왓씨 이용 1년 후기 — 진짜 솔직하게 씁니다",
+                  author: "장기유저",
+                  date: "2026.05.26",
+                  excerpt:
+                    "처음엔 반신반의했는데 지금은 세탁소 완전 안 가요. 수거가 편리하고 품질도 꾸준히 좋습니다. 다만 가끔 배송이...",
+                  img: q1Img,
+                  likes: 289,
+                  comments: 95,
+                  tags: ["#왓씨후기", "#솔직리뷰"],
+                },
+                {
+                  title: "세탁소 vs 왓씨 가격 완전 비교분석 (표 있음)",
+                  author: "꼼꼼분석러",
+                  date: "2026.05.23",
+                  excerpt:
+                    "셔츠 기준 동네세탁소 4,000원 vs 왓씨 3,800원+수거배송 포함. 품질도 왓씨가 더 좋았습니다.",
+                  img: a1Img,
+                  likes: 178,
+                  comments: 67,
+                  tags: ["#가격비교", "#데이터분석"],
+                },
+                {
+                  title: "이불 세탁 완전 실패담... 집 세탁기로는 무리였어요",
+                  author: "실패의고수",
+                  date: "2026.05.19",
+                  excerpt:
+                    "구스다운 이불을 가정용 세탁기에 넣었더니 솜 뭉침이 심하게 생겼어요. 이건 진짜 전문 업체에 맡겨야 해요.",
+                  img: b1Img,
+                  likes: 145,
+                  comments: 53,
+                  tags: ["#이불세탁", "#실패후기"],
+                },
+              ],
+              qa: [
+                {
+                  title: "패딩 집에서 세탁해도 될까요? 드라이 필수인가요?",
+                  author: "패딩고민",
+                  date: "2026.05.29",
+                  excerpt:
+                    "거위털 패딩인데 세탁 표시 보면 드라이클리닝이라고 나와 있어요. 집에서 세탁하면 정말 안 되나요?",
+                  img: reviewOuterImg,
+                  likes: 44,
+                  comments: 18,
+                  tags: ["#패딩세탁", "#질문"],
+                },
+                {
+                  title: "흰 면티에 커피 쏟았는데 어떻게 해야 하나요 😭",
+                  author: "커피사고",
+                  date: "2026.05.27",
+                  excerpt:
+                    "방금 새 흰 티셔츠에 아이스 아메리카노를 쏟았어요. 지금 당장 어떻게 해야 하나요?",
+                  img: reviewShirtsImg,
+                  likes: 37,
+                  comments: 22,
+                  tags: ["#얼룩제거", "#응급처치"],
+                },
+                {
+                  title: "울 소재 니트 세탁 주기가 어떻게 되나요?",
+                  author: "니트질문자",
+                  date: "2026.05.24",
+                  excerpt:
+                    "울 소재 니트 자주 입는데 세탁을 얼마나 자주 해야 할지 모르겠어요. 냄새가 날 때만 하면 되나요?",
+                  img: d1Img,
+                  likes: 29,
+                  comments: 15,
+                  tags: ["#울니트", "#세탁주기"],
+                },
+                {
+                  title: "왓씨 예약 취소는 언제까지 가능한가요?",
+                  author: "취소문의",
+                  date: "2026.05.22",
+                  excerpt:
+                    "내일 수거 예정인데 급한 일이 생겼어요. 오늘 취소해도 되는지 궁금합니다.",
+                  img: a1Img,
+                  likes: 12,
+                  comments: 8,
+                  tags: ["#취소문의", "#예약"],
+                },
+              ],
+              event: [
+                {
+                  title: "🎁 6월 첫 이용 고객 50% 할인 이벤트!",
+                  author: "왓씨공식",
+                  date: "2026.06.01",
+                  excerpt:
+                    "이번 달 왓씨 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 예약하세요!",
+                  img: j1Img,
+                  likes: 231,
+                  comments: 45,
+                  tags: ["#이벤트", "#50%할인", "#신규혜택"],
+                },
+                {
+                  title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF",
+                  author: "왓씨공식",
+                  date: "2026.05.30",
+                  excerpt:
+                    "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!",
+                  img: reviewBeddingImg,
+                  likes: 187,
+                  comments: 34,
+                  tags: ["#이불특가", "#여름준비"],
+                },
+                {
+                  title: "👥 친구 초대하면 둘 다 3,000P 적립!",
+                  author: "왓씨공식",
+                  date: "2026.05.25",
+                  excerpt:
+                    "친구 링크로 가입하면 나도 3,000P, 친구도 3,000P! 포인트로 바로 결제에 사용 가능합니다.",
+                  img: m1Img,
+                  likes: 156,
+                  comments: 28,
+                  tags: ["#친구초대", "#포인트적립"],
+                },
+                {
+                  title: "⭐ 5월 우수 리뷰어 선정 — 상품권 증정!",
+                  author: "왓씨공식",
+                  date: "2026.05.20",
+                  excerpt:
+                    "우수 리뷰를 작성해 주신 고객분께 커피 기프티콘을 드립니다. 솔직한 후기 남겨주세요!",
+                  img: b1Img,
+                  likes: 98,
+                  comments: 19,
+                  tags: ["#리뷰이벤트", "#상품권"],
+                },
+              ],
+            };
+            // 커뮤니티 전용 피드 데이터
+            const communityAllPosts = [
+              {
+                id: 0,
+                category: "hot",
+                badge: "🔥 HOT",
+                title: "겨울 패딩 세탁 후 보풀 없애는 꿀팁 공유합니다!",
+                author: "따뜻한봄날",
+                avatar: "🧸",
+                date: "05.28",
+                excerpt:
+                  "드라이 후에 부드러운 브러시로 결대로 쓸어주면 보풀이 싹 사라집니다. 처음엔 반신반의했는데 진짜 효과 있어요!",
+                img: b1Img,
+                likes: 124,
+                comments: 38,
+                tags: ["#패딩세탁", "#보풀제거"],
+                views: 1204,
+              },
+              {
+                id: 1,
+                category: "new",
+                badge: "🆕 NEW",
+                title: "아이 교복 흰 셔츠, 찌든 때 100% 제거 성공 후기",
+                author: "깔끔맘",
+                avatar: "👩",
+                date: "05.25",
+                excerpt:
+                  "과탄산소다 + 베이킹소다 1:1 비율로 2시간 담가두면 새 셔츠가 됩니다!",
+                img: a1Img,
+                likes: 89,
+                comments: 22,
+                tags: ["#교복관리", "#흰셔츠"],
+                views: 782,
+              },
+              {
+                id: 2,
+                category: "tips",
+                badge: "💡 팁",
+                title: "청바지 색 빠짐 없이 세탁하는 방법 총정리",
+                author: "데님러버",
+                avatar: "👖",
+                date: "05.22",
+                excerpt:
+                  "소금물에 30분 담갔다가 세탁기 '울/섬세' 코스로. 뒤집어서 세탁하는 건 기본!",
+                img: q1Img,
+                likes: 67,
+                comments: 15,
+                tags: ["#청바지", "#색빠짐방지"],
+                views: 534,
+              },
+              {
+                id: 3,
+                category: "hot",
+                badge: "😱 실패담",
+                title: "명품 가방 집에서 세탁하다 망친 후기...",
+                author: "반성중",
+                avatar: "😅",
+                date: "05.18",
+                excerpt:
+                  "절대 집에서 물세탁 하지 마세요. 가죽 핸들 부분이 뒤틀렸어요. 왓씨 같은 전문 서비스에 맡기는 게 답입니다.",
+                img: c1Img,
+                likes: 201,
+                comments: 76,
+                tags: ["#명품케어", "#타산지석"],
+                views: 2103,
+              },
+              {
+                id: 4,
+                category: "tips",
+                badge: "💡 팁",
+                title: "세탁기 안에서 나는 퀴퀴한 냄새 없애는 법",
+                author: "냄새제거왕",
+                avatar: "🌬️",
+                date: "05.15",
+                excerpt:
+                  "구연산 + 뜨거운 물 세탁기 통돌리기로 3회 반복하면 완전히 사라져요!",
+                img: d1Img,
+                likes: 143,
+                comments: 29,
+                tags: ["#세탁기관리", "#냄새제거"],
+                views: 1567,
+              },
+              {
+                id: 5,
+                category: "new",
+                badge: "🆕 NEW",
+                title: "왓씨 이용 첫 후기 — 정말 다시 쓰고 싶어요",
+                author: "첫경험자",
+                avatar: "🌟",
+                date: "05.12",
+                excerpt:
+                  "수거부터 배달까지 진짜 손 하나 안 대도 됐어요. 옷도 새 옷 느낌. 강추합니다!",
+                img: a1Img,
+                likes: 55,
+                comments: 11,
+                tags: ["#첫경험", "#왓씨후기"],
+                views: 423,
+              },
+            ];
 
-          const feedTabs: { key: "all" | "hot" | "new" | "tips"; label: string }[] = [
-            { key: "all",  label: "전체" },
-            { key: "hot",  label: "🔥 인기" },
-            { key: "new",  label: "🆕 최신" },
-            { key: "tips", label: "💡 팁" },
-          ];
+            const feedTabs: {
+              key: "all" | "hot" | "new" | "tips";
+              label: string;
+            }[] = [
+              { key: "all", label: "전체" },
+              { key: "hot", label: "🔥 인기" },
+              { key: "new", label: "🆕 최신" },
+              { key: "tips", label: "💡 팁" },
+            ];
 
-          const visiblePosts = communityFeedTab === "all"
-            ? communityAllPosts
-            : communityAllPosts.filter(p => p.category === communityFeedTab);
+            const visiblePosts =
+              communityFeedTab === "all"
+                ? communityAllPosts
+                : communityAllPosts.filter(
+                    (p) => p.category === communityFeedTab,
+                  );
 
-          const isCommunity = showCommunityDetail === "community";
-          const currentPosts = posts[showCommunityDetail] ?? [];
+            const isCommunity = showCommunityDetail === "community";
+            const currentPosts = posts[showCommunityDetail] ?? [];
 
-          return (
-            <div className="community_detail_overlay" key={`comm-${showCommunityDetail}`}>
-              {/* 헤더 */}
-              <header className="community_detail_header">
-                <button type="button" className="premium_back_btn" onClick={() => setShowCommunityDetail(null)} aria-label="뒤로가기">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <h1 className="community_detail_title">{card.label}</h1>
-                {isCommunity ? (
-                  <button type="button" className="comm_write_btn" onClick={() => setShowWritePost(true)}>✏️</button>
-                ) : (
-                  <div style={{ width: 42 }} />
-                )}
-              </header>
-
-              <div className="community_detail_scroll" ref={communityDetailScrollRef}>
-                {isCommunity ? (
-                  /* ── 왓씨 세탁 커뮤니티 전용 피드 ── */
-                  <>
-                    {/* 커뮤니티 히어로 */}
-                    <div className="comm_hero">
-                      <div className="comm_hero_info">
-                        <div className="comm_hero_icon">🧺</div>
-                        <div>
-                          <h2 className="comm_hero_title">왓씨 세탁 커뮤니티</h2>
-                          <p className="comm_hero_desc">세탁 경험을 나누고 솔루션을 찾아요</p>
-                        </div>
-                      </div>
-                      <div className="comm_hero_stats">
-                        <div className="comm_stat"><strong>4.2만</strong><span>멤버</span></div>
-                        <div className="comm_stat"><strong>하루 38</strong><span>게시글</span></div>
-                        <div className="comm_stat"><strong>9.4k</strong><span>댓글</span></div>
-                      </div>
-                    </div>
-
-                    {/* 검색바 */}
-                    <div className="comm_search_row">
-                      <div className="comm_search_box">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                        <span className="comm_search_placeholder">세탁 노하우 검색...</span>
-                      </div>
-                    </div>
-
-                    {/* 필터 탭 */}
-                    <div className="comm_feed_tabs">
-                      {feedTabs.map(t => (
-                        <button key={t.key} type="button"
-                          className={`comm_feed_tab ${communityFeedTab === t.key ? "comm_feed_tab--active" : ""}`}
-                          onClick={() => setCommunityFeedTab(t.key)}>
-                          {t.label}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* 피드 */}
-                    <div className="comm_feed_list">
-                      {visiblePosts.map((post, idx) => {
-                        const isLiked = likedPosts.has(post.id);
-                        return (
-                          <div key={idx} className="comm_post_card" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
-                            {/* 작성자 행 */}
-                            <div className="comm_post_top">
-                              <div className="comm_avatar">{post.avatar}</div>
-                              <div className="comm_post_author_info">
-                                <span className="comm_author">{post.author}</span>
-                                <span className="comm_date">{post.date} · 조회 {post.views.toLocaleString()}</span>
-                              </div>
-                              <span className="comm_badge">{post.badge}</span>
-                            </div>
-                            {/* 본문 */}
-                            <h3 className="comm_post_title">{post.title}</h3>
-                            <p className="comm_post_excerpt">{post.excerpt}</p>
-                            {/* 이미지 */}
-                            <img src={post.img} alt={post.title} className="comm_post_img" />
-                            {/* 태그 */}
-                            <div className="comm_post_tags">
-                              {post.tags.map(t => <span key={t} className="comm_tag">{t}</span>)}
-                            </div>
-                            {/* 액션 */}
-                            <div className="comm_post_actions">
-                              <button type="button" className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setLikedPosts(prev => {
-                                    const next = new Set(prev);
-                                    isLiked ? next.delete(post.id) : next.add(post.id);
-                                    return next;
-                                  });
-                                }}>
-                                {isLiked ? "❤️" : "🤍"} {post.likes + (isLiked ? 1 : 0)}
-                              </button>
-                              <button type="button" className="comm_action_btn"
-                                onClick={(e) => { e.stopPropagation(); triggerToast("댓글 기능은 준비 중입니다."); }}>
-                                💬 {post.comments}
-                              </button>
-                              <button type="button" className="comm_action_btn"
-                                onClick={(e) => { e.stopPropagation(); triggerToast("링크가 복사되었습니다."); }}>
-                                🔗 공유
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* 글쓰기 플로팅 버튼 */}
-                    <button type="button" className="comm_fab" onClick={() => setShowWritePost(true)}>
-                      ✏️ 글쓰기
+            return (
+              <div
+                className="community_detail_overlay"
+                key={`comm-${showCommunityDetail}`}
+              >
+                {/* 헤더 */}
+                <header className="community_detail_header">
+                  <button
+                    type="button"
+                    className="premium_back_btn"
+                    onClick={() => setShowCommunityDetail(null)}
+                    aria-label="뒤로가기"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <h1 className="community_detail_title">{card.label}</h1>
+                  {isCommunity ? (
+                    <button
+                      type="button"
+                      className="comm_write_btn"
+                      onClick={() => setShowWritePost(true)}
+                    >
+                      ✏️
                     </button>
+                  ) : (
+                    <div style={{ width: 42 }} />
+                  )}
+                </header>
 
-                    {/* 글쓰기 오버레이 */}
-                    {showWritePost && (
-                      <div className="write_post_overlay">
-                        <header className="write_post_header">
-                          <button type="button" className="premium_back_btn"
-                            onClick={() => { setShowWritePost(false); setWriteTitle(""); setWriteContent(""); }}
-                            aria-label="닫기">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                          </button>
-                          <h1 className="write_post_title">글쓰기</h1>
-                          <button type="button" className="write_submit_btn"
-                            disabled={writeTitle.trim().length === 0 || writeContent.trim().length === 0}
-                            onClick={() => {
-                              setShowWritePost(false);
-                              setWriteTitle("");
-                              setWriteContent("");
-                              triggerToast("✅ 게시글이 등록되었습니다!");
-                            }}>
-                            등록
-                          </button>
-                        </header>
-
-                        <div className="write_post_body">
-                          {/* 카테고리 */}
-                          <div className="write_category_row">
-                            {[
-                              { key: "new",  label: "🆕 일반" },
-                              { key: "tips", label: "💡 팁" },
-                              { key: "hot",  label: "🔥 후기" },
-                            ].map(c => (
-                              <button key={c.key} type="button"
-                                className={`write_category_btn ${writeCategory === c.key ? "write_category_btn--active" : ""}`}
-                                onClick={() => setWriteCategory(c.key as "hot" | "new" | "tips")}>
-                                {c.label}
-                              </button>
-                            ))}
+                <div
+                  className="community_detail_scroll"
+                  ref={communityDetailScrollRef}
+                >
+                  {isCommunity ? (
+                    /* ── 왓씨 세탁 커뮤니티 전용 피드 ── */
+                    <>
+                      {/* 커뮤니티 히어로 */}
+                      <div className="comm_hero">
+                        <div className="comm_hero_info">
+                          <div className="comm_hero_icon">🧺</div>
+                          <div>
+                            <h2 className="comm_hero_title">
+                              왓씨 세탁 커뮤니티
+                            </h2>
+                            <p className="comm_hero_desc">
+                              세탁 경험을 나누고 솔루션을 찾아요
+                            </p>
                           </div>
-
-                          {/* 제목 */}
-                          <input
-                            type="text"
-                            className="write_title_input"
-                            placeholder="제목을 입력해주세요"
-                            value={writeTitle}
-                            onChange={e => setWriteTitle(e.target.value)}
-                            maxLength={60}
-                          />
-                          <div className="write_char_count">{writeTitle.length}/60</div>
-
-                          {/* 본문 */}
-                          <textarea
-                            className="write_content_input"
-                            placeholder={"세탁 경험을 자유롭게 공유해주세요.\n사진과 함께 올리면 더 많은 도움이 됩니다."}
-                            value={writeContent}
-                            onChange={e => setWriteContent(e.target.value)}
-                            rows={10}
-                          />
-                          <div className="write_char_count">{writeContent.length}자</div>
-
-                          {/* 태그 안내 */}
-                          <div className="write_tag_hint">
-                            <p className="write_tag_hint_title">💬 이런 내용을 공유해보세요</p>
-                            <div className="write_suggest_tags">
-                              {["#세탁후기", "#세탁노하우", "#옷관리팁", "#얼룩제거", "#드라이클리닝", "#왓씨이용"].map(t => (
-                                <button key={t} type="button" className="write_suggest_tag"
-                                  onClick={() => setWriteContent(prev => prev + " " + t)}>
-                                  {t}
-                                </button>
-                              ))}
-                            </div>
+                        </div>
+                        <div className="comm_hero_stats">
+                          <div className="comm_stat">
+                            <strong>4.2만</strong>
+                            <span>멤버</span>
+                          </div>
+                          <div className="comm_stat">
+                            <strong>하루 38</strong>
+                            <span>게시글</span>
+                          </div>
+                          <div className="comm_stat">
+                            <strong>9.4k</strong>
+                            <span>댓글</span>
                           </div>
                         </div>
                       </div>
-                    )}
-                  </>
-                ) : (
-                  /* ── 다른 카드들 — 피드 스타일 ── */
-                  <>
-                    {/* 헤더 배너 */}
-                    <div className={`community_detail_banner home_community_banner--${card.theme}`}>
-                      <div className="home_community_left">
-                        <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
-                        <h4 className="home_community_title_1">{card.title1}</h4>
-                        <h4 className="home_community_title_2">{card.title2}</h4>
-                        <div className="home_review_tags_bottom">
-                          {card.tags.map((t: string) => <span key={t} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{t}</span>)}
+
+                      {/* 검색바 */}
+                      <div className="comm_search_row">
+                        <div className="comm_search_box">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke="#94a3b8"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                          >
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                          </svg>
+                          <span className="comm_search_placeholder">
+                            세탁 노하우 검색...
+                          </span>
                         </div>
                       </div>
-                      <div className="home_community_right">
-                        <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
-                      </div>
-                    </div>
 
-                    {/* 게시글 피드 */}
-                    {currentPosts.length > 0 ? (
-                      <div className="comm_feed_list" style={{ paddingBottom: 32 }}>
-                        {currentPosts.map((post, idx) => {
-                          const isLiked = likedPosts.has(idx + 100);
+                      {/* 필터 탭 */}
+                      <div className="comm_feed_tabs">
+                        {feedTabs.map((t) => (
+                          <button
+                            key={t.key}
+                            type="button"
+                            className={`comm_feed_tab ${communityFeedTab === t.key ? "comm_feed_tab--active" : ""}`}
+                            onClick={() => setCommunityFeedTab(t.key)}
+                          >
+                            {t.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* 피드 */}
+                      <div className="comm_feed_list">
+                        {visiblePosts.map((post, idx) => {
+                          const isLiked = likedPosts.has(post.id);
                           return (
-                            <div key={idx} className="comm_post_card" onClick={() => triggerToast(`"${post.title}" 게시글로 이동합니다.`)}>
+                            <div
+                              key={idx}
+                              className="comm_post_card"
+                              onClick={() =>
+                                triggerToast(
+                                  `"${post.title}" 게시글로 이동합니다.`,
+                                )
+                              }
+                            >
+                              {/* 작성자 행 */}
                               <div className="comm_post_top">
-                                <div className="comm_avatar">👤</div>
+                                <div className="comm_avatar">{post.avatar}</div>
                                 <div className="comm_post_author_info">
-                                  <span className="comm_author">{post.author}</span>
-                                  <span className="comm_date">{post.date}</span>
+                                  <span className="comm_author">
+                                    {post.author}
+                                  </span>
+                                  <span className="comm_date">
+                                    {post.date} · 조회{" "}
+                                    {post.views.toLocaleString()}
+                                  </span>
                                 </div>
+                                <span className="comm_badge">{post.badge}</span>
                               </div>
+                              {/* 본문 */}
                               <h3 className="comm_post_title">{post.title}</h3>
-                              <p className="comm_post_excerpt">{post.excerpt}</p>
-                              <img src={post.img} alt={post.title} className="comm_post_img" />
+                              <p className="comm_post_excerpt">
+                                {post.excerpt}
+                              </p>
+                              {/* 이미지 */}
+                              <img
+                                src={post.img}
+                                alt={post.title}
+                                className="comm_post_img"
+                              />
+                              {/* 태그 */}
                               <div className="comm_post_tags">
-                                {post.tags.map(t => <span key={t} className="comm_tag">{t}</span>)}
+                                {post.tags.map((t) => (
+                                  <span key={t} className="comm_tag">
+                                    {t}
+                                  </span>
+                                ))}
                               </div>
+                              {/* 액션 */}
                               <div className="comm_post_actions">
-                                <button type="button" className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
+                                <button
+                                  type="button"
+                                  className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    setLikedPosts(prev => {
+                                    setLikedPosts((prev) => {
                                       const next = new Set(prev);
-                                      isLiked ? next.delete(idx + 100) : next.add(idx + 100);
+                                      isLiked
+                                        ? next.delete(post.id)
+                                        : next.add(post.id);
                                       return next;
                                     });
-                                  }}>
-                                  {isLiked ? "❤️" : "🤍"} {post.likes + (isLiked ? 1 : 0)}
+                                  }}
+                                >
+                                  {isLiked ? "❤️" : "🤍"}{" "}
+                                  {post.likes + (isLiked ? 1 : 0)}
                                 </button>
-                                <button type="button" className="comm_action_btn"
-                                  onClick={(e) => { e.stopPropagation(); triggerToast("댓글 기능은 준비 중입니다."); }}>
+                                <button
+                                  type="button"
+                                  className="comm_action_btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    triggerToast("댓글 기능은 준비 중입니다.");
+                                  }}
+                                >
                                   💬 {post.comments}
                                 </button>
-                                <button type="button" className="comm_action_btn"
-                                  onClick={(e) => { e.stopPropagation(); triggerToast("링크가 복사되었습니다."); }}>
+                                <button
+                                  type="button"
+                                  className="comm_action_btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    triggerToast("링크가 복사되었습니다.");
+                                  }}
+                                >
                                   🔗 공유
                                 </button>
                               </div>
@@ -2770,19 +4367,306 @@ export function HomePage() {
                           );
                         })}
                       </div>
-                    ) : (
-                      <div style={{ padding: "48px 20px", textAlign: "center" }}>
-                        <p style={{ fontSize: 32, marginBottom: 12 }}>📭</p>
-                        <p style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 6px" }}>아직 게시글이 없어요</p>
-                        <p style={{ fontSize: 13, color: "#94a3b8", margin: 0 }}>첫 번째 글을 남겨보세요!</p>
+
+                      {/* 글쓰기 플로팅 버튼 */}
+                      <button
+                        type="button"
+                        className="comm_fab"
+                        onClick={() => setShowWritePost(true)}
+                      >
+                        ✏️ 글쓰기
+                      </button>
+
+                      {/* 글쓰기 오버레이 */}
+                      {showWritePost && (
+                        <div className="write_post_overlay">
+                          <header className="write_post_header">
+                            <button
+                              type="button"
+                              className="premium_back_btn"
+                              onClick={() => {
+                                setShowWritePost(false);
+                                setWriteTitle("");
+                                setWriteContent("");
+                              }}
+                              aria-label="닫기"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="15 18 9 12 15 6" />
+                              </svg>
+                            </button>
+                            <h1 className="write_post_title">글쓰기</h1>
+                            <button
+                              type="button"
+                              className="write_submit_btn"
+                              disabled={
+                                writeTitle.trim().length === 0 ||
+                                writeContent.trim().length === 0
+                              }
+                              onClick={() => {
+                                setShowWritePost(false);
+                                setWriteTitle("");
+                                setWriteContent("");
+                                triggerToast("✅ 게시글이 등록되었습니다!");
+                              }}
+                            >
+                              등록
+                            </button>
+                          </header>
+
+                          <div className="write_post_body">
+                            {/* 카테고리 */}
+                            <div className="write_category_row">
+                              {[
+                                { key: "new", label: "🆕 일반" },
+                                { key: "tips", label: "💡 팁" },
+                                { key: "hot", label: "🔥 후기" },
+                              ].map((c) => (
+                                <button
+                                  key={c.key}
+                                  type="button"
+                                  className={`write_category_btn ${writeCategory === c.key ? "write_category_btn--active" : ""}`}
+                                  onClick={() =>
+                                    setWriteCategory(
+                                      c.key as "hot" | "new" | "tips",
+                                    )
+                                  }
+                                >
+                                  {c.label}
+                                </button>
+                              ))}
+                            </div>
+
+                            {/* 제목 */}
+                            <input
+                              type="text"
+                              className="write_title_input"
+                              placeholder="제목을 입력해주세요"
+                              value={writeTitle}
+                              onChange={(e) => setWriteTitle(e.target.value)}
+                              maxLength={60}
+                            />
+                            <div className="write_char_count">
+                              {writeTitle.length}/60
+                            </div>
+
+                            {/* 본문 */}
+                            <textarea
+                              className="write_content_input"
+                              placeholder={
+                                "세탁 경험을 자유롭게 공유해주세요.\n사진과 함께 올리면 더 많은 도움이 됩니다."
+                              }
+                              value={writeContent}
+                              onChange={(e) => setWriteContent(e.target.value)}
+                              rows={10}
+                            />
+                            <div className="write_char_count">
+                              {writeContent.length}자
+                            </div>
+
+                            {/* 태그 안내 */}
+                            <div className="write_tag_hint">
+                              <p className="write_tag_hint_title">
+                                💬 이런 내용을 공유해보세요
+                              </p>
+                              <div className="write_suggest_tags">
+                                {[
+                                  "#세탁후기",
+                                  "#세탁노하우",
+                                  "#옷관리팁",
+                                  "#얼룩제거",
+                                  "#드라이클리닝",
+                                  "#왓씨이용",
+                                ].map((t) => (
+                                  <button
+                                    key={t}
+                                    type="button"
+                                    className="write_suggest_tag"
+                                    onClick={() =>
+                                      setWriteContent((prev) => prev + " " + t)
+                                    }
+                                  >
+                                    {t}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    /* ── 다른 카드들 — 피드 스타일 ── */
+                    <>
+                      {/* 헤더 배너 */}
+                      <div
+                        className={`community_detail_banner home_community_banner--${card.theme}`}
+                      >
+                        <div className="home_community_left">
+                          <span
+                            className={`home_community_label home_community_label--${card.theme}`}
+                          >
+                            {card.label}
+                          </span>
+                          <h4 className="home_community_title_1">
+                            {card.title1}
+                          </h4>
+                          <h4 className="home_community_title_2">
+                            {card.title2}
+                          </h4>
+                          <div className="home_review_tags_bottom">
+                            {card.tags.map((t: string) => (
+                              <span
+                                key={t}
+                                className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="home_community_right">
+                          <img
+                            src={imgMap[card.key]}
+                            alt={card.label}
+                            className="home_community_3d_img"
+                          />
+                        </div>
                       </div>
-                    )}
-                  </>
-                )}
+
+                      {/* 게시글 피드 */}
+                      {currentPosts.length > 0 ? (
+                        <div
+                          className="comm_feed_list"
+                          style={{ paddingBottom: 32 }}
+                        >
+                          {currentPosts.map((post, idx) => {
+                            const isLiked = likedPosts.has(idx + 100);
+                            return (
+                              <div
+                                key={idx}
+                                className="comm_post_card"
+                                onClick={() =>
+                                  triggerToast(
+                                    `"${post.title}" 게시글로 이동합니다.`,
+                                  )
+                                }
+                              >
+                                <div className="comm_post_top">
+                                  <div className="comm_avatar">👤</div>
+                                  <div className="comm_post_author_info">
+                                    <span className="comm_author">
+                                      {post.author}
+                                    </span>
+                                    <span className="comm_date">
+                                      {post.date}
+                                    </span>
+                                  </div>
+                                </div>
+                                <h3 className="comm_post_title">
+                                  {post.title}
+                                </h3>
+                                <p className="comm_post_excerpt">
+                                  {post.excerpt}
+                                </p>
+                                <img
+                                  src={post.img}
+                                  alt={post.title}
+                                  className="comm_post_img"
+                                />
+                                <div className="comm_post_tags">
+                                  {post.tags.map((t) => (
+                                    <span key={t} className="comm_tag">
+                                      {t}
+                                    </span>
+                                  ))}
+                                </div>
+                                <div className="comm_post_actions">
+                                  <button
+                                    type="button"
+                                    className={`comm_action_btn ${isLiked ? "comm_action_btn--liked" : ""}`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setLikedPosts((prev) => {
+                                        const next = new Set(prev);
+                                        isLiked
+                                          ? next.delete(idx + 100)
+                                          : next.add(idx + 100);
+                                        return next;
+                                      });
+                                    }}
+                                  >
+                                    {isLiked ? "❤️" : "🤍"}{" "}
+                                    {post.likes + (isLiked ? 1 : 0)}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="comm_action_btn"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      triggerToast(
+                                        "댓글 기능은 준비 중입니다.",
+                                      );
+                                    }}
+                                  >
+                                    💬 {post.comments}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="comm_action_btn"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      triggerToast("링크가 복사되었습니다.");
+                                    }}
+                                  >
+                                    🔗 공유
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div
+                          style={{ padding: "48px 20px", textAlign: "center" }}
+                        >
+                          <p style={{ fontSize: 32, marginBottom: 12 }}>📭</p>
+                          <p
+                            style={{
+                              fontSize: 15,
+                              fontWeight: 700,
+                              color: "#1e293b",
+                              margin: "0 0 6px",
+                            }}
+                          >
+                            아직 게시글이 없어요
+                          </p>
+                          <p
+                            style={{
+                              fontSize: 13,
+                              color: "#94a3b8",
+                              margin: 0,
+                            }}
+                          >
+                            첫 번째 글을 남겨보세요!
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
 
         {/* ---------------------------------------------------- */}
         {/* [1. HOME VIEW - First Photo Circular Progress Dashboard] */}
@@ -2825,14 +4709,21 @@ export function HomePage() {
                   <h2 className="home_card_main_text">
                     세탁{" "}
                     <span className="blue_percent dynamic_count_active">
-                      <span className="digit">{progressPercent}</span>
+                      <span ref={progressDigitRef} className="digit">
+                        1
+                      </span>
                       <span className="percent-char">%</span>
                     </span>{" "}
                     진행 중
                   </h2>
+                  <p className="home_card_order_info">
+                    오늘 아침 주문 · 건조 66% 진행 중
+                  </p>
 
                   {/* [SVG 둥근 그라데이션 원형 프로그레스 링 & 정중앙 정렬 세탁물 그래픽] */}
-                  <div className="home_circle_container">
+                  <div
+                    className={`home_circle_container ${progressCompleted ? "progress-sparkle-flash" : ""}`}
+                  >
                     <svg className="home_circle_svg" viewBox="0 0 170 170">
                       <defs>
                         <linearGradient
@@ -2868,6 +4759,7 @@ export function HomePage() {
                       />
                       {/* 진행도 링 (66%) - 더 두꺼운 stroke로 입체감 */}
                       <circle
+                        ref={progressCircleRef}
                         cx="85"
                         cy="85"
                         r="70"
@@ -2876,7 +4768,7 @@ export function HomePage() {
                         strokeWidth="12"
                         fill="transparent"
                         strokeDasharray="439.8"
-                        strokeDashoffset={439.8 * (1 - circleProgress / 100)}
+                        strokeDashoffset="439.8"
                         strokeLinecap="round"
                         transform="rotate(-90 85 85)"
                       />
@@ -2952,6 +4844,7 @@ export function HomePage() {
                   onClick={() => handleAction("60초 세탁 신청")}
                 >
                   <div className="home_col_title_row">
+                    <span className="home_col_card_badge">ORDER</span>
                     <span className="home_col_title_large">60초</span>
                     <span className="home_col_title_large">세탁 신청</span>
                   </div>
@@ -2967,6 +4860,7 @@ export function HomePage() {
                   onClick={() => setShowUsageGuide(true)}
                 >
                   <div className="home_col_title_row">
+                    <span className="home_col_card_badge">HOW TO</span>
                     <span className="home_col_title_large">왓씨</span>
                     <span className="home_col_title_large">이용방법</span>
                   </div>
@@ -3000,7 +4894,11 @@ export function HomePage() {
                     <p className="home_info_card_title">가격표</p>
                     <p className="home_info_card_sub">합리적인 요금 확인</p>
                   </div>
-                  <img src={p1Img} alt="가격표" className="home_info_card_img home_info_card_img--price" />
+                  <img
+                    src={priceTagImg}
+                    alt="가격표"
+                    className="home_info_card_img home_info_card_img--price"
+                  />
                 </div>
 
                 {/* 세탁 종류 안내 카드 */}
@@ -3012,64 +4910,15 @@ export function HomePage() {
                 >
                   <div className="home_info_card_text">
                     <span className="home_info_card_badge">GUIDE</span>
-                    <p className="home_info_card_title">세탁 종류<br />안내</p>
+                    <p className="home_info_card_title">세탁 종류 안내</p>
                     <p className="home_info_card_sub">의류별 케어 가이드</p>
                   </div>
-                  {/* 긴팔 드레스셔츠 SVG */}
-                  <svg
+                  {/* 세탁 종류 안내 이미지 */}
+                  <img
+                    src={guideShirtImg}
+                    alt="세탁 종류 안내"
                     className="home_info_card_img home_info_card_img--guide"
-                    viewBox="0 0 120 150"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <defs>
-                      <linearGradient id="sBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#ffffff" />
-                        <stop offset="100%" stopColor="#dbeafe" />
-                      </linearGradient>
-                      <linearGradient id="sShade" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#bfdbfe" stopOpacity="0.5" />
-                        <stop offset="100%" stopColor="#eff6ff" stopOpacity="0" />
-                      </linearGradient>
-                      <linearGradient id="sSleeve" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#dbeafe" />
-                        <stop offset="100%" stopColor="#bfdbfe" />
-                      </linearGradient>
-                      <filter id="sDrop">
-                        <feDropShadow dx="2" dy="5" stdDeviation="4" floodColor="#1d4ed8" floodOpacity="0.14" />
-                      </filter>
-                    </defs>
-                    {/* 왼쪽 긴 소매 */}
-                    <path d="M38,32 L12,38 L10,120 L26,124 L38,114 Z" fill="url(#sSleeve)" />
-                    {/* 오른쪽 긴 소매 */}
-                    <path d="M82,32 L108,38 L110,120 L94,124 L82,114 Z" fill="#c7d9f5" />
-                    {/* 몸통 */}
-                    <path d="M38,26 L38,146 L82,146 L82,26 L72,18 L60,24 L48,18 Z" fill="url(#sBody)" filter="url(#sDrop)" />
-                    {/* 왼쪽 음영 */}
-                    <path d="M38,26 L60,24 L60,146 L38,146 Z" fill="url(#sShade)" />
-                    {/* 왼쪽 칼라 */}
-                    <path d="M48,18 L60,24 L60,44 L44,30 Z" fill="#93c5fd" />
-                    {/* 오른쪽 칼라 */}
-                    <path d="M72,18 L60,24 L60,44 L76,30 Z" fill="#bfdbfe" />
-                    {/* 칼라 V라인 */}
-                    <path d="M48,18 L60,45 L72,18" fill="none" stroke="#60a5fa" strokeWidth="1.2" strokeLinejoin="round" />
-                    {/* 플라켓 점선 */}
-                    <line x1="60" y1="45" x2="60" y2="146" stroke="#93c5fd" strokeWidth="0.9" strokeDasharray="2.5,2.5" />
-                    {/* 단추 5개 */}
-                    <circle cx="60" cy="58"  r="2.2" fill="#93c5fd" />
-                    <circle cx="60" cy="74"  r="2.2" fill="#93c5fd" />
-                    <circle cx="60" cy="90"  r="2.2" fill="#93c5fd" />
-                    <circle cx="60" cy="106" r="2.2" fill="#93c5fd" />
-                    <circle cx="60" cy="122" r="2.2" fill="#93c5fd" />
-                    {/* 왼쪽 커프스 */}
-                    <rect x="9"  y="115" width="17" height="9" rx="3" fill="#93c5fd" />
-                    {/* 오른쪽 커프스 */}
-                    <rect x="94" y="115" width="17" height="9" rx="3" fill="#93c5fd" />
-                    {/* 커프스 단추 */}
-                    <circle cx="17.5" cy="119.5" r="1.5" fill="#60a5fa" />
-                    <circle cx="102.5" cy="119.5" r="1.5" fill="#60a5fa" />
-                    {/* 밑단 */}
-                    <rect x="38" y="143" width="44" height="3" rx="1.5" fill="#93c5fd" opacity="0.4" />
-                  </svg>
+                  />
                 </div>
               </section>
 
@@ -3117,10 +4966,7 @@ export function HomePage() {
               >
                 <div className="home_review_header_row">
                   <h3 className="home_review_title">실제 고객 리뷰</h3>
-                  <button
-                    className="home_review_more"
-                    onClick={openAllReviews}
-                  >
+                  <button className="home_review_more" onClick={openAllReviews}>
                     전체보기&gt;
                   </button>
                 </div>
@@ -3138,8 +4984,128 @@ export function HomePage() {
                   ))}
                 </div>
 
+                {/* 리뷰 작성 영역 – 펼치기/접기 */}
+                <div className="home_write_review_accordion" style={{ marginBottom: "20px" }}>
+                  <button
+                    type="button"
+                    className="home_write_review_toggle"
+                    onClick={() => setShowWriteReview((v) => !v)}
+                  >
+                    <span className="home_write_review_toggle_left">
+                      <span className="home_write_review_toggle_icon">✏️</span>
+                      <span className="home_write_review_toggle_label">
+                        나도 리뷰쓰기
+                      </span>
+                    </span>
+                    <span
+                      className={`home_write_review_toggle_arrow ${showWriteReview ? "open" : ""}`}
+                    >
+                      {showWriteReview ? "접기" : "펼치기"}
+                    </span>
+                  </button>
+
+                  {showWriteReview && (
+                    <div className="home_write_review_box" style={{ marginBottom: "20px" }}>
+                      {writeReviewSubmitted ? (
+                        <div className="home_write_review_success">
+                          <span className="home_write_review_success_icon">
+                            ✓
+                          </span>
+                          <p className="home_write_review_success_text">
+                            리뷰가 등록되었어요!
+                            <br />
+                            소중한 경험을 공유해주셔서 감사합니다.
+                          </p>
+                          <button
+                            className="home_write_review_again_btn"
+                            onClick={() => {
+                              setWriteReviewSubmitted(false);
+                              setWriteReviewStars(0);
+                              setWriteReviewText("");
+                            }}
+                          >
+                            다시 작성하기
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="home_write_review_header">
+                            <span className="home_write_review_label">
+                              리뷰 남기기
+                            </span>
+                            <p className="home_write_review_sub">
+                              세탁 서비스 경험을 공유해주세요
+                            </p>
+                          </div>
+
+                          {/* 별점 선택 */}
+                          <div className="home_write_star_row">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                              <button
+                                key={s}
+                                type="button"
+                                className={`home_write_star_btn ${s <= writeReviewStars ? "home_write_star_btn--on" : ""}`}
+                                onClick={() => setWriteReviewStars(s)}
+                                aria-label={`별점 ${s}점`}
+                              >
+                                ★
+                              </button>
+                            ))}
+                            {writeReviewStars > 0 && (
+                              <span className="home_write_star_label">
+                                {
+                                  [
+                                    "",
+                                    "별로예요",
+                                    "아쉬워요",
+                                    "보통이에요",
+                                    "좋아요",
+                                    "최고예요",
+                                  ][writeReviewStars]
+                                }
+                              </span>
+                            )}
+                          </div>
+
+                          {/* 텍스트 입력 */}
+                          <textarea
+                            className="home_write_review_textarea"
+                            placeholder="어떤 점이 좋으셨나요? 솔직한 후기가 다른 고객에게 큰 도움이 됩니다."
+                            value={writeReviewText}
+                            onChange={(e) => setWriteReviewText(e.target.value)}
+                            maxLength={300}
+                            rows={3}
+                          />
+                          <div className="home_write_review_char_count">
+                            {writeReviewText.length} / 300
+                          </div>
+
+                          {/* 등록 버튼 */}
+                          <button
+                            type="button"
+                            className={`home_write_review_submit ${writeReviewStars > 0 && writeReviewText.trim().length > 0 ? "home_write_review_submit--active" : ""}`}
+                            disabled={
+                              writeReviewStars === 0 ||
+                              writeReviewText.trim().length === 0
+                            }
+                            onClick={() => {
+                              setWriteReviewSubmitted(true);
+                              triggerToast("리뷰가 등록되었습니다!");
+                            }}
+                          >
+                            리뷰 등록하기
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 {/* [가로 터치 스크롤 Swiper 카드 슬라이더] */}
-                <div className="home_review_swiper_container" ref={homeReviewSwiperRef}>
+                <div
+                  className="home_review_swiper_container"
+                  ref={homeReviewSwiperRef}
+                >
                   {getReviewsForTag(selectedTag).map((rv, idx) => (
                     <div
                       className="home_review_slide_card"
@@ -3171,98 +5137,37 @@ export function HomePage() {
                     </div>
                   ))}
                 </div>
-
-                {/* 리뷰 작성 영역 */}
-                <div className="home_write_review_box">
-                  {writeReviewSubmitted ? (
-                    <div className="home_write_review_success">
-                      <span className="home_write_review_success_icon">✓</span>
-                      <p className="home_write_review_success_text">
-                        리뷰가 등록되었어요!<br />소중한 경험을 공유해주셔서 감사합니다.
-                      </p>
-                      <button
-                        className="home_write_review_again_btn"
-                        onClick={() => {
-                          setWriteReviewSubmitted(false);
-                          setWriteReviewStars(0);
-                          setWriteReviewText("");
-                        }}
-                      >
-                        다시 작성하기
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="home_write_review_header">
-                        <span className="home_write_review_label">리뷰 남기기</span>
-                        <p className="home_write_review_sub">세탁 서비스 경험을 공유해주세요</p>
-                      </div>
-
-                      {/* 별점 선택 */}
-                      <div className="home_write_star_row">
-                        {[1, 2, 3, 4, 5].map((s) => (
-                          <button
-                            key={s}
-                            type="button"
-                            className={`home_write_star_btn ${s <= writeReviewStars ? "home_write_star_btn--on" : ""}`}
-                            onClick={() => setWriteReviewStars(s)}
-                            aria-label={`별점 ${s}점`}
-                          >
-                            ★
-                          </button>
-                        ))}
-                        {writeReviewStars > 0 && (
-                          <span className="home_write_star_label">
-                            {["", "별로예요", "아쉬워요", "보통이에요", "좋아요", "최고예요"][writeReviewStars]}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* 텍스트 입력 */}
-                      <textarea
-                        className="home_write_review_textarea"
-                        placeholder="어떤 점이 좋으셨나요? 솔직한 후기가 다른 고객에게 큰 도움이 됩니다."
-                        value={writeReviewText}
-                        onChange={(e) => setWriteReviewText(e.target.value)}
-                        maxLength={300}
-                        rows={3}
-                      />
-                      <div className="home_write_review_char_count">
-                        {writeReviewText.length} / 300
-                      </div>
-
-                      {/* 등록 버튼 */}
-                      <button
-                        type="button"
-                        className={`home_write_review_submit ${writeReviewStars > 0 && writeReviewText.trim().length > 0 ? "home_write_review_submit--active" : ""}`}
-                        disabled={writeReviewStars === 0 || writeReviewText.trim().length === 0}
-                        onClick={() => {
-                          setWriteReviewSubmitted(true);
-                          triggerToast("리뷰가 등록되었습니다!");
-                        }}
-                      >
-                        리뷰 등록하기
-                      </button>
-                    </>
-                  )}
-                </div>
               </section>
 
               {/* 왓씨 세탁 커뮤니티 — 드래그 가능 가로 캐러셀 */}
               <section
                 className="home_community_section"
-                onMouseLeave={() => { communityDraggingRef.current = false; if (communityTrackRef.current) communityTrackRef.current.classList.remove("home_community_track--dragging"); }}
-                onMouseUp={() => { communityDraggingRef.current = false; if (communityTrackRef.current) communityTrackRef.current.classList.remove("home_community_track--dragging"); }}
+                onMouseLeave={() => {
+                  communityDraggingRef.current = false;
+                  if (communityTrackRef.current)
+                    communityTrackRef.current.classList.remove(
+                      "home_community_track--dragging",
+                    );
+                }}
+                onMouseUp={() => {
+                  communityDraggingRef.current = false;
+                  if (communityTrackRef.current)
+                    communityTrackRef.current.classList.remove(
+                      "home_community_track--dragging",
+                    );
+                }}
                 onMouseMove={(e) => {
                   if (!communityDraggingRef.current) return;
                   const delta = e.clientX - communityDragStartRef.current.x;
-                  if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
+                  if (Math.abs(delta) > 4)
+                    communityClickBlockRef.current = true;
                   let nx = communityDragStartRef.current.tx + delta;
                   const SET = 1350;
                   if (nx > 0) nx -= SET;
                   if (nx < -SET) nx += SET;
                   communityXRef.current = nx;
-                  if (communityTrackRef.current) communityTrackRef.current.style.transform = `translateX(${nx}px)`;
+                  if (communityTrackRef.current)
+                    communityTrackRef.current.style.transform = `translateX(${nx}px)`;
                 }}
               >
                 <div
@@ -3271,30 +5176,54 @@ export function HomePage() {
                   onMouseDown={(e) => {
                     communityDraggingRef.current = true;
                     communityClickBlockRef.current = false;
-                    communityDragStartRef.current = { x: e.clientX, tx: communityXRef.current };
-                    communityTrackRef.current?.classList.add("home_community_track--dragging");
+                    communityDragStartRef.current = {
+                      x: e.clientX,
+                      tx: communityXRef.current,
+                    };
+                    communityTrackRef.current?.classList.add(
+                      "home_community_track--dragging",
+                    );
                     e.preventDefault();
                   }}
                   onTouchStart={(e) => {
                     communityDraggingRef.current = true;
                     communityClickBlockRef.current = false;
-                    communityDragStartRef.current = { x: e.touches[0].clientX, tx: communityXRef.current };
+                    communityDragStartRef.current = {
+                      x: e.touches[0].clientX,
+                      tx: communityXRef.current,
+                    };
                   }}
                   onTouchMove={(e) => {
                     if (!communityDraggingRef.current) return;
-                    const delta = e.touches[0].clientX - communityDragStartRef.current.x;
-                    if (Math.abs(delta) > 4) communityClickBlockRef.current = true;
+                    const delta =
+                      e.touches[0].clientX - communityDragStartRef.current.x;
+                    if (Math.abs(delta) > 4)
+                      communityClickBlockRef.current = true;
                     let nx = communityDragStartRef.current.tx + delta;
                     const SET = 1350;
                     if (nx > 0) nx -= SET;
                     if (nx < -SET) nx += SET;
                     communityXRef.current = nx;
-                    if (communityTrackRef.current) communityTrackRef.current.style.transform = `translateX(${nx}px)`;
+                    if (communityTrackRef.current)
+                      communityTrackRef.current.style.transform = `translateX(${nx}px)`;
                   }}
-                  onTouchEnd={() => { communityDraggingRef.current = false; }}
+                  onTouchEnd={() => {
+                    communityDraggingRef.current = false;
+                  }}
                 >
-                  {([...COMMUNITY_CARDS, ...COMMUNITY_CARDS] as typeof COMMUNITY_CARDS[number][]).map((card, i) => {
-                    const imgMap: Record<string, string> = { community: d1Img, tips: communityTipsImg, popular: m1Img, qa: l1Img, event: j1Img };
+                  {(
+                    [
+                      ...COMMUNITY_CARDS,
+                      ...COMMUNITY_CARDS,
+                    ] as (typeof COMMUNITY_CARDS)[number][]
+                  ).map((card, i) => {
+                    const imgMap: Record<string, string> = {
+                      community: d1Img,
+                      tips: communityTipsImg,
+                      popular: m1Img,
+                      qa: l1Img,
+                      event: j1Img,
+                    };
                     return (
                       <div
                         key={i}
@@ -3307,17 +5236,34 @@ export function HomePage() {
                         }}
                       >
                         <div className="home_community_left">
-                          <span className={`home_community_label home_community_label--${card.theme}`}>{card.label}</span>
-                          <h4 className="home_community_title_1">{card.title1}</h4>
-                          <h4 className="home_community_title_2">{card.title2}</h4>
+                          <span
+                            className={`home_community_label home_community_label--${card.theme}`}
+                          >
+                            {card.label}
+                          </span>
+                          <h4 className="home_community_title_1">
+                            {card.title1}
+                          </h4>
+                          <h4 className="home_community_title_2">
+                            {card.title2}
+                          </h4>
                           <div className="home_review_tags_bottom">
                             {card.tags.map((tag: string) => (
-                              <span key={tag} className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}>{tag}</span>
+                              <span
+                                key={tag}
+                                className={`home_review_bottom_tag home_review_bottom_tag--${card.theme}`}
+                              >
+                                {tag}
+                              </span>
                             ))}
                           </div>
                         </div>
                         <div className="home_community_right">
-                          <img src={imgMap[card.key]} alt={card.label} className="home_community_3d_img" />
+                          <img
+                            src={imgMap[card.key]}
+                            alt={card.label}
+                            className="home_community_3d_img"
+                          />
                         </div>
                       </div>
                     );
@@ -3340,8 +5286,12 @@ export function HomePage() {
                   <button
                     type="button"
                     className="premium_back_btn"
-                    onClick={() => setShowReserveDetail(false)}
-                    aria-label="뒤로가기"
+                    onClick={() => {
+                      setShowReserveDetail(false);
+                      setActiveTab("home");
+                      setReserveDetailFromHome(false);
+                    }}
+                    aria-label="홈으로"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -3432,12 +5382,48 @@ export function HomePage() {
                     <p className="reserve_section_sub">중복 선택 가능합니다</p>
                     <div className="laundry_option_grid laundry_option_grid--3col">
                       {[
-                        { id: "일반",       emoji: "🧺", label: "일반",       surcharge: "+0원",     desc: "기본 세탁" },
-                        { id: "친환경",     emoji: "🌿", label: "친환경",     surcharge: "+2,000원", desc: "자연 유래 세제" },
-                        { id: "알러지 케어",emoji: "🤧", label: "알러지 케어",surcharge: "+3,000원", desc: "저자극 성분" },
-                        { id: "살균",       emoji: "🦠", label: "살균",       surcharge: "+4,000원", desc: "99.9% 항균" },
-                        { id: "울/캐시미어",emoji: "🧶", label: "울/캐시미어",surcharge: "+5,000원", desc: "섬세 소재 전용" },
-                        { id: "프리미엄",   emoji: "✨", label: "프리미엄",   surcharge: "+6,000원", desc: "명품 케어 코스" },
+                        {
+                          id: "일반",
+                          emoji: "🧺",
+                          label: "일반",
+                          surcharge: "+0원",
+                          desc: "기본 세탁",
+                        },
+                        {
+                          id: "친환경",
+                          emoji: "🌿",
+                          label: "친환경",
+                          surcharge: "+2,000원",
+                          desc: "자연 유래 세제",
+                        },
+                        {
+                          id: "알러지 케어",
+                          emoji: "🤧",
+                          label: "알러지 케어",
+                          surcharge: "+3,000원",
+                          desc: "저자극 성분",
+                        },
+                        {
+                          id: "살균",
+                          emoji: "🦠",
+                          label: "살균",
+                          surcharge: "+4,000원",
+                          desc: "99.9% 항균",
+                        },
+                        {
+                          id: "울/캐시미어",
+                          emoji: "🧶",
+                          label: "울/캐시미어",
+                          surcharge: "+5,000원",
+                          desc: "섬세 소재 전용",
+                        },
+                        {
+                          id: "프리미엄",
+                          emoji: "✨",
+                          label: "프리미엄",
+                          surcharge: "+6,000원",
+                          desc: "명품 케어 코스",
+                        },
                       ].map((opt) => {
                         const isOn = selectedLaundryOptions.includes(opt.id);
                         return (
@@ -3449,15 +5435,25 @@ export function HomePage() {
                               setSelectedLaundryOptions((prev) =>
                                 isOn
                                   ? prev.filter((v) => v !== opt.id)
-                                  : [...prev, opt.id]
+                                  : [...prev, opt.id],
                               )
                             }
                           >
-                            {isOn && <span className="laundry_option_check">✓</span>}
-                            <span className="laundry_option_emoji">{opt.emoji}</span>
-                            <span className="laundry_option_label">{opt.label}</span>
-                            <span className="laundry_option_desc">{opt.desc}</span>
-                            <span className="laundry_option_surcharge">{opt.surcharge}</span>
+                            {isOn && (
+                              <span className="laundry_option_check">✓</span>
+                            )}
+                            <span className="laundry_option_emoji">
+                              {opt.emoji}
+                            </span>
+                            <span className="laundry_option_label">
+                              {opt.label}
+                            </span>
+                            <span className="laundry_option_desc">
+                              {opt.desc}
+                            </span>
+                            <span className="laundry_option_surcharge">
+                              {opt.surcharge}
+                            </span>
                           </button>
                         );
                       })}
@@ -3467,26 +5463,100 @@ export function HomePage() {
                   {/* 2-1. 향 선택 — 팔레트 리디자인 */}
                   {(() => {
                     const scents = [
-                      { id: "무향",       emoji: "🌫️", label: "무향",       desc: "향 없음 · 기본",          surcharge: "+0원",     bg: "#f1f5f9", ring: "#94a3b8",  dot: "#64748b" },
-                      { id: "라벤더",     emoji: "💜",  label: "라벤더",     desc: "편안한 플로럴",            surcharge: "+1,000원", bg: "#ede9fe", ring: "#7c3aed",  dot: "#6d28d9" },
-                      { id: "시트러스",   emoji: "🍋",  label: "시트러스",   desc: "상큼한 과일향",            surcharge: "+1,000원", bg: "#fef9c3", ring: "#ca8a04",  dot: "#a16207" },
-                      { id: "오션 브리즈",emoji: "🌊",  label: "오션",       desc: "청량한 바다향",            surcharge: "+1,000원", bg: "#e0f2fe", ring: "#0284c7",  dot: "#0369a1" },
-                      { id: "로즈",       emoji: "🌹",  label: "로즈",       desc: "고급스러운 장미향",        surcharge: "+1,500원", bg: "#fce7f3", ring: "#db2777",  dot: "#be185d" },
-                      { id: "머스크",     emoji: "🤍",  label: "머스크",     desc: "포근하고 따뜻한 향",       surcharge: "+1,500원", bg: "#fef3c7", ring: "#d97706",  dot: "#b45309" },
+                      {
+                        id: "무향",
+                        emoji: "🌫️",
+                        label: "무향",
+                        desc: "향 없음 · 기본",
+                        surcharge: "+0원",
+                        bg: "#f1f5f9",
+                        ring: "#94a3b8",
+                        dot: "#64748b",
+                      },
+                      {
+                        id: "라벤더",
+                        emoji: "💜",
+                        label: "라벤더",
+                        desc: "편안한 플로럴",
+                        surcharge: "+1,000원",
+                        bg: "#ede9fe",
+                        ring: "#7c3aed",
+                        dot: "#6d28d9",
+                      },
+                      {
+                        id: "시트러스",
+                        emoji: "🍋",
+                        label: "시트러스",
+                        desc: "상큼한 과일향",
+                        surcharge: "+1,000원",
+                        bg: "#fef9c3",
+                        ring: "#ca8a04",
+                        dot: "#a16207",
+                      },
+                      {
+                        id: "오션 브리즈",
+                        emoji: "🌊",
+                        label: "오션",
+                        desc: "청량한 바다향",
+                        surcharge: "+1,000원",
+                        bg: "#e0f2fe",
+                        ring: "#0284c7",
+                        dot: "#0369a1",
+                      },
+                      {
+                        id: "로즈",
+                        emoji: "🌹",
+                        label: "로즈",
+                        desc: "고급스러운 장미향",
+                        surcharge: "+1,500원",
+                        bg: "#fce7f3",
+                        ring: "#db2777",
+                        dot: "#be185d",
+                      },
+                      {
+                        id: "머스크",
+                        emoji: "🤍",
+                        label: "머스크",
+                        desc: "포근하고 따뜻한 향",
+                        surcharge: "+1,500원",
+                        bg: "#fef3c7",
+                        ring: "#d97706",
+                        dot: "#b45309",
+                      },
                     ];
-                    const active = scents.find(s => s.id === selectedScent) ?? scents[0];
+                    const active =
+                      scents.find((s) => s.id === selectedScent) ?? scents[0];
                     return (
                       <section className="reserve_detail_section">
-                        <h2 className="reserve_section_title">향을 선택해주세요</h2>
+                        <h2 className="reserve_section_title">
+                          향을 선택해주세요
+                        </h2>
 
                         {/* 선택된 향 프리뷰 카드 */}
-                        <div className="scent_preview_card" style={{ background: `linear-gradient(135deg, ${active.bg}, white)`, borderColor: active.ring + "55" }}>
-                          <span className="scent_preview_emoji">{active.emoji}</span>
+                        <div
+                          className="scent_preview_card"
+                          style={{
+                            background: `linear-gradient(135deg, ${active.bg}, white)`,
+                            borderColor: active.ring + "55",
+                          }}
+                        >
+                          <span className="scent_preview_emoji">
+                            {active.emoji}
+                          </span>
                           <div className="scent_preview_info">
-                            <span className="scent_preview_name">{active.label}</span>
-                            <span className="scent_preview_desc">{active.desc}</span>
+                            <span className="scent_preview_name">
+                              {active.label}
+                            </span>
+                            <span className="scent_preview_desc">
+                              {active.desc}
+                            </span>
                           </div>
-                          <span className="scent_preview_price" style={{ color: active.dot, background: active.bg }}>{active.surcharge}</span>
+                          <span
+                            className="scent_preview_price"
+                            style={{ color: active.dot, background: active.bg }}
+                          >
+                            {active.surcharge}
+                          </span>
                         </div>
 
                         {/* 팔레트 그리드 */}
@@ -3499,16 +5569,44 @@ export function HomePage() {
                                 type="button"
                                 className={`scent_palette_btn ${isOn ? "scent_palette_btn--active" : ""}`}
                                 onClick={() => setSelectedScent(s.id)}
-                                style={isOn ? { boxShadow: `0 0 0 3px ${s.ring}`, background: s.bg } : {}}
+                                style={
+                                  isOn
+                                    ? {
+                                        boxShadow: `0 0 0 3px ${s.ring}`,
+                                        background: s.bg,
+                                      }
+                                    : {}
+                                }
                               >
                                 <div
                                   className="scent_bubble"
-                                  style={{ background: s.bg, border: `2px solid ${isOn ? s.ring : s.bg}` }}
+                                  style={{
+                                    background: s.bg,
+                                    border: `2px solid ${isOn ? s.ring : s.bg}`,
+                                  }}
                                 >
-                                  <span className="scent_bubble_emoji">{s.emoji}</span>
-                                  {isOn && <span className="scent_bubble_check" style={{ background: s.dot }}>✓</span>}
+                                  <span className="scent_bubble_emoji">
+                                    {s.emoji}
+                                  </span>
+                                  {isOn && (
+                                    <span
+                                      className="scent_bubble_check"
+                                      style={{ background: s.dot }}
+                                    >
+                                      ✓
+                                    </span>
+                                  )}
                                 </div>
-                                <span className="scent_bubble_label" style={isOn ? { color: s.dot, fontWeight: 800 } : {}}>{s.label}</span>
+                                <span
+                                  className="scent_bubble_label"
+                                  style={
+                                    isOn
+                                      ? { color: s.dot, fontWeight: 800 }
+                                      : {}
+                                  }
+                                >
+                                  {s.label}
+                                </span>
                               </button>
                             );
                           })}
@@ -3521,15 +5619,23 @@ export function HomePage() {
                   <section className="reserve_detail_section">
                     <h2 className="reserve_section_title">배송 정보</h2>
                     <div className="reserve_address_card">
-
                       {/* 주소 표시 / 편집 영역 */}
                       {isEditingAddress ? (
                         /* ── 편집 모드 ── */
                         <div className="address_edit_form">
                           <label className="address_edit_label">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                              <circle cx="12" cy="10" r="3"/>
+                            <svg
+                              viewBox="0 0 24 24"
+                              width="14"
+                              height="14"
+                              fill="none"
+                              stroke="#2563eb"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                              <circle cx="12" cy="10" r="3" />
                             </svg>
                             배달 주소
                           </label>
@@ -3542,9 +5648,19 @@ export function HomePage() {
                             placeholder="도로명 주소를 입력해주세요"
                           />
 
-                          <label className="address_edit_label" style={{ marginTop: 14 }}>수거 장소</label>
+                          <label
+                            className="address_edit_label"
+                            style={{ marginTop: 14 }}
+                          >
+                            수거 장소
+                          </label>
                           <div className="address_spot_grid">
-                            {["공동현관 문 앞", "경비실 위탁", "택배함 보관", "직접 전달"].map((spot) => (
+                            {[
+                              "공동현관 문 앞",
+                              "경비실 위탁",
+                              "택배함 보관",
+                              "직접 전달",
+                            ].map((spot) => (
                               <button
                                 key={spot}
                                 type="button"
@@ -3552,9 +5668,9 @@ export function HomePage() {
                                 onClick={() => setCollectionSpot(spot)}
                               >
                                 {spot === "공동현관 문 앞" && "🚪 "}
-                                {spot === "경비실 위탁"   && "🏢 "}
-                                {spot === "택배함 보관"   && "📦 "}
-                                {spot === "직접 전달"     && "🤝 "}
+                                {spot === "경비실 위탁" && "🏢 "}
+                                {spot === "택배함 보관" && "📦 "}
+                                {spot === "직접 전달" && "🤝 "}
                                 {spot}
                               </button>
                             ))}
@@ -3565,12 +5681,16 @@ export function HomePage() {
                               type="button"
                               className="address_action_btn address_action_btn--cancel"
                               onClick={() => setIsEditingAddress(false)}
-                            >취소</button>
+                            >
+                              취소
+                            </button>
                             <button
                               type="button"
                               className="address_action_btn address_action_btn--save"
                               onClick={() => setIsEditingAddress(false)}
-                            >저장하기</button>
+                            >
+                              저장하기
+                            </button>
                           </div>
                         </div>
                       ) : (
@@ -3578,14 +5698,27 @@ export function HomePage() {
                         <div className="address_view_row">
                           <div className="address_view_left">
                             <div className="address_view_icon">
-                              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
+                              <svg
+                                viewBox="0 0 24 24"
+                                width="16"
+                                height="16"
+                                fill="none"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
                               </svg>
                             </div>
                             <div className="address_view_info">
-                              <span className="address_view_main">{reserveAddress}</span>
-                              <span className="address_view_spot">{collectionSpot}</span>
+                              <span className="address_view_main">
+                                {reserveAddress}
+                              </span>
+                              <span className="address_view_spot">
+                                {collectionSpot}
+                              </span>
                             </div>
                           </div>
                           <button
@@ -3745,7 +5878,13 @@ export function HomePage() {
                       <div className="price_row">
                         <span className="price_label">
                           추가 서비스 (
-                          {selectedLaundryOptions.length === 0 || (selectedLaundryOptions.length === 1 && selectedLaundryOptions[0] === "일반") ? "없음" : selectedLaundryOptions.filter(v => v !== "일반").join(", ")}
+                          {selectedLaundryOptions.length === 0 ||
+                          (selectedLaundryOptions.length === 1 &&
+                            selectedLaundryOptions[0] === "일반")
+                            ? "없음"
+                            : selectedLaundryOptions
+                                .filter((v) => v !== "일반")
+                                .join(", ")}
                           {ironingOption !== "신청 안 함"
                             ? `, 다림질: ${ironingOption.split(" ")[0]}`
                             : ""}
@@ -3754,7 +5893,21 @@ export function HomePage() {
                         <span className="price_val">
                           +
                           {(
-                            ((selectedLaundryOptions.includes("친환경") ? 2000 : 0) + (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) + (selectedLaundryOptions.includes("살균") ? 4000 : 0) + (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) + (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0)) +
+                            (selectedLaundryOptions.includes("친환경")
+                              ? 2000
+                              : 0) +
+                            (selectedLaundryOptions.includes("알러지 케어")
+                              ? 3000
+                              : 0) +
+                            (selectedLaundryOptions.includes("살균")
+                              ? 4000
+                              : 0) +
+                            (selectedLaundryOptions.includes("울/캐시미어")
+                              ? 5000
+                              : 0) +
+                            (selectedLaundryOptions.includes("프리미엄")
+                              ? 6000
+                              : 0) +
                             (ironingOption === "기본 (스팀)"
                               ? 2000
                               : ironingOption === "고급 (칼주름)"
@@ -3775,7 +5928,21 @@ export function HomePage() {
                               : selectedLaundryType === "관리 의류"
                                 ? 25000
                                 : 30000) +
-                            ((selectedLaundryOptions.includes("친환경") ? 2000 : 0) + (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) + (selectedLaundryOptions.includes("살균") ? 4000 : 0) + (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) + (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0)) +
+                            ((selectedLaundryOptions.includes("친환경")
+                              ? 2000
+                              : 0) +
+                              (selectedLaundryOptions.includes("알러지 케어")
+                                ? 3000
+                                : 0) +
+                              (selectedLaundryOptions.includes("살균")
+                                ? 4000
+                                : 0) +
+                              (selectedLaundryOptions.includes("울/캐시미어")
+                                ? 5000
+                                : 0) +
+                              (selectedLaundryOptions.includes("프리미엄")
+                                ? 6000
+                                : 0)) +
                             (ironingOption === "기본 (스팀)"
                               ? 2000
                               : ironingOption === "고급 (칼주름)"
@@ -3926,25 +6093,46 @@ export function HomePage() {
                   <div className="reserve_confirm_overlay">
                     <div className="rc_hero">
                       <div className="rc_check_circle">
-                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="32"
+                          height="32"
+                          fill="none"
+                          stroke="#ffffff"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
                       </div>
                       <h1 className="rc_title">예약이 완료되었습니다!</h1>
                       <p className="rc_sub">아래 예약 정보를 확인해주세요</p>
-                      <span className="rc_order_num">예약번호 WTC-20260601-{Math.floor(Math.random() * 9000 + 1000)}</span>
+                      <span className="rc_order_num">
+                        예약번호 WTC-20260601-
+                        {Math.floor(Math.random() * 9000 + 1000)}
+                      </span>
                     </div>
                     <div className="rc_body">
                       <div className="rc_section">
                         <h3 className="rc_section_title">📋 예약 정보</h3>
                         <div className="rc_info_card">
                           {[
-                            { label: "예약 일시",  val: `2026.06.01  ${new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}` },
-                            { label: "수거 예정",  val: `${reserveDate}  ${reserveTime}` },
-                            { label: "세탁 종류",  val: selectedLaundryType },
-                            { label: "세탁 옵션",  val: selectedLaundryOptions.join(", ") },
-                            { label: "수거 장소",  val: collectionSpot },
-                            { label: "배달 주소",  val: reserveAddress },
+                            {
+                              label: "예약 일시",
+                              val: `2026.06.01  ${new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}`,
+                            },
+                            {
+                              label: "수거 예정",
+                              val: `${reserveDate}  ${reserveTime}`,
+                            },
+                            { label: "세탁 종류", val: selectedLaundryType },
+                            {
+                              label: "세탁 옵션",
+                              val: selectedLaundryOptions.join(", "),
+                            },
+                            { label: "수거 장소", val: collectionSpot },
+                            { label: "배달 주소", val: reserveAddress },
                           ].map((row, i) => (
                             <div key={i} className="rc_info_row">
                               <span className="rc_info_label">{row.label}</span>
@@ -3954,19 +6142,46 @@ export function HomePage() {
                         </div>
                       </div>
                       <div className="rc_section">
-                        <h3 className="rc_section_title">📅 배송 일정 (예상)</h3>
+                        <h3 className="rc_section_title">
+                          📅 배송 일정 (예상)
+                        </h3>
                         <div className="rc_timeline">
                           {[
-                            { dot: "pickup", emoji: "🚪", step: "수거", date: `${reserveDate}`, time: reserveTime, desc: "담당 마스터가 문 앞에서 수거" },
-                            { dot: "wash",   emoji: "🧺", step: "세탁", date: "수거 당일 내",   time: "팩토리 케어", desc: "스마트 팩토리 전문 세탁 케어" },
-                            { dot: "done",   emoji: "🏠", step: "배달", date: "수거 다음날",    time: "오후 중",     desc: "세탁 완료 후 문 앞 안전 배달" },
+                            {
+                              dot: "pickup",
+                              emoji: "🚪",
+                              step: "수거",
+                              date: `${reserveDate}`,
+                              time: reserveTime,
+                              desc: "담당 마스터가 문 앞에서 수거",
+                            },
+                            {
+                              dot: "wash",
+                              emoji: "🧺",
+                              step: "세탁",
+                              date: "수거 당일 내",
+                              time: "팩토리 케어",
+                              desc: "스마트 팩토리 전문 세탁 케어",
+                            },
+                            {
+                              dot: "done",
+                              emoji: "🏠",
+                              step: "배달",
+                              date: "수거 다음날",
+                              time: "오후 중",
+                              desc: "세탁 완료 후 문 앞 안전 배달",
+                            },
                           ].map((s, i) => (
                             <div key={i} className="rc_timeline_item">
-                              <div className={`rc_tl_dot rc_tl_dot--${s.dot}`}>{s.emoji}</div>
+                              <div className={`rc_tl_dot rc_tl_dot--${s.dot}`}>
+                                {s.emoji}
+                              </div>
                               <div className="rc_tl_content">
                                 <div className="rc_tl_top">
                                   <span className="rc_tl_step">{s.step}</span>
-                                  <span className="rc_tl_date">{s.date} · {s.time}</span>
+                                  <span className="rc_tl_date">
+                                    {s.date} · {s.time}
+                                  </span>
                                 </div>
                                 <p className="rc_tl_desc">{s.desc}</p>
                               </div>
@@ -3979,25 +6194,46 @@ export function HomePage() {
                         <div className="rc_rider_grid">
                           <div className="rc_rider_card">
                             <span className="rc_rider_role">수거 담당</span>
-                            <img src={riderJinwooImg} alt="수거 기사" className="rc_rider_avatar" />
+                            <img
+                              src={riderJinwooImg}
+                              alt="수거 기사"
+                              className="rc_rider_avatar"
+                            />
                             <span className="rc_rider_name">김진우 마스터</span>
                             <span className="rc_rider_rating">⭐ 4.98</span>
                           </div>
                           <div className="rc_rider_card">
                             <span className="rc_rider_role">배달 담당</span>
-                            <img src={riderJinwooImg} alt="배달 기사" className="rc_rider_avatar" />
+                            <img
+                              src={riderJinwooImg}
+                              alt="배달 기사"
+                              className="rc_rider_avatar"
+                            />
                             <span className="rc_rider_name">최윤서 마스터</span>
                             <span className="rc_rider_rating">⭐ 5.0</span>
                           </div>
                         </div>
                       </div>
                       <div className="rc_actions">
-                        <button type="button" className="rc_btn_primary"
-                          onClick={() => { setShowReserveConfirm(false); setShowOrderReceived(true); }}>
+                        <button
+                          type="button"
+                          className="rc_btn_primary"
+                          onClick={() => {
+                            setShowReserveConfirm(false);
+                            setShowOrderReceived(true);
+                          }}
+                        >
                           수거·배송 현황 보기
                         </button>
-                        <button type="button" className="rc_btn_secondary"
-                          onClick={() => { setShowReserveConfirm(false); setShowReserveDetail(false); setActiveTab("home"); }}>
+                        <button
+                          type="button"
+                          className="rc_btn_secondary"
+                          onClick={() => {
+                            setShowReserveConfirm(false);
+                            setShowReserveDetail(false);
+                            setActiveTab("home");
+                          }}
+                        >
                           홈으로 돌아가기
                         </button>
                       </div>
@@ -4005,299 +6241,13 @@ export function HomePage() {
                   </div>
                 )}
               </div>
-            ) : showAiGuideDetail ? (
-              <div className="ai_guide_detail_wrapper">
-
-
-                {/* 실제 카메라 구동을 위한 숨김 인풋 */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  ref={cameraInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleCameraCapture}
-                />
-
-                <header className="ai_guide_detail_header">
-                  <button
-                    type="button"
-                    className="premium_back_btn"
-                    onClick={() => {
-                      setShowAiGuideDetail(false);
-                      setActiveTab("home");
-                      setScanResult(false);
-                      setScanProgress(0);
-                      setCapturedPhotoUrl(null);
-                      setAiAnalysisResult(null);
-                      setAiAnalysisError(false);
-                    }}
-                    aria-label="뒤로가기"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                  </button>
-                  <h1 className="ai_guide_detail_header_title">
-                    AI 세탁 스캐너 가이드
-                  </h1>
-                  <div style={{ width: 42 }} />
-                </header>
-
-                <div className="ai_guide_detail_content">
-                  {/* 1. 소개 정보 */}
-                  <section className="ai_guide_intro_section">
-                    <div className="ai_guide_intro_badge">
-                      AI VISION SMART SCAN
-                    </div>
-                    <h2 className="ai_guide_intro_title">
-                      찍으면 알 수 있는 최적의 세탁법
-                    </h2>
-                    <p className="ai_guide_intro_desc">
-                      세탁물의 특징이나 섬유 결이 잘 보이도록 촬영해 보세요.
-                      <br />
-                      AI가 원단 성분을 정밀 분석하여 완벽한 케어 코스를
-                      제안합니다.
-                    </p>
-                  </section>
-
-                  {/* 2. 이용 방법 단계 */}
-                  <section className="ai_guide_steps_section">
-                    <h3 className="ai_guide_section_title">이용 방법</h3>
-                    <div className="ai_guide_steps_grid">
-                      <div className="ai_guide_step_card">
-                        <div className="step_number">01</div>
-                        <h4 className="step_title">의류 촬영</h4>
-                        <p className="step_desc">
-                          카메라 뷰 파인더 내에 옷이 들어오도록 초점을 잡습니다.
-                        </p>
-                      </div>
-                      <div className="ai_guide_step_card">
-                        <div className="step_number">02</div>
-                        <h4 className="step_title">실시간 스캔</h4>
-                        <p className="step_desc">
-                          AI가 섬유 짜임새와 의류 고유 코드를 정교히 판별합니다.
-                        </p>
-                      </div>
-                      <div className="ai_guide_step_card">
-                        <div className="step_number">03</div>
-                        <h4 className="step_title">맞춤형 코스 제안</h4>
-                        <p className="step_desc">
-                          건조기 온도, 스팀 시간 등 완벽한 케어 설정을 추천
-                          받습니다.
-                        </p>
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* 3. 카메라 기능 시뮬레이션 */}
-                  <section className="ai_guide_scanner_section">
-                    <h3 className="ai_guide_section_title">
-                      AI 스캐너 직접 체험해보기
-                    </h3>
-
-                    {/* 스캐너 기기 프레임 */}
-                    <div className="ai_scanner_viewport">
-                      {simulatingScan ? (
-                        <div className="scanner_scanning_overlay">
-                          <div className="scanning_laser_line" />
-                          <div className="scanning_loader_box">
-                            <span className="scanning_loader_text">
-                              {scanProgress < 30
-                                ? "이미지 업로드 중..."
-                                : scanProgress < 60
-                                  ? "AI 소재 패턴 분석 중..."
-                                  : scanProgress < 85
-                                    ? "세탁 케어 코스 도출 중..."
-                                    : "결과 생성 중..."}
-                            </span>
-                            <div className="scanning_progress_bar_bg">
-                              <div
-                                className="scanning_progress_fill"
-                                style={{ width: `${scanProgress}%`, transition: "width 0.3s ease" }}
-                              />
-                            </div>
-                            <span className="scanning_percentage">
-                              {scanProgress}%
-                            </span>
-                          </div>
-                        </div>
-                      ) : scanResult ? (
-                        <div className="scanner_result_overlay">
-                          <div className={`result_badge ${aiAnalysisResult ? "result_badge--ai" : ""}`}>
-                            {aiAnalysisResult ? "✦ AI 실제 분석 완료" : "분석 완료"}
-                          </div>
-
-                          {/* 촬영한 실제 사진 */}
-                          {capturedPhotoUrl && (
-                            <div className="scanner_captured_preview">
-                              <img
-                                src={capturedPhotoUrl}
-                                alt="분석된 의류"
-                                className="result_captured_img"
-                              />
-                            </div>
-                          )}
-
-                          {/* ── AI 실제 응답 ── */}
-                          {aiAnalysisResult ? (
-                            <div className="ai_real_result_box">
-                              <p className="ai_real_result_label">
-                                <span className="ai_real_result_badge">Gemini AI</span>
-                                실제 분석 결과
-                              </p>
-                              <div className="ai_real_result_text">
-                                {aiAnalysisResult.split("\n").map((line, i) =>
-                                  line.trim() ? (
-                                    <p key={i} className={line.startsWith("**") || /^\d+\./.test(line) ? "ai_result_section" : "ai_result_line"}>
-                                      {line.replace(/\*\*/g, "")}
-                                    </p>
-                                  ) : <br key={i} />
-                                )}
-                              </div>
-                            </div>
-                          ) : (
-                            /* ── 폴백: 시뮬레이션 결과 ── */
-                            <>
-                              <h4 className="result_cloth_name">
-                                {capturedPhotoUrl
-                                  ? "🔍 의류 성분 분석 결과"
-                                  : selectedScanPreset === "shirt"
-                                    ? "👔 100% 면 화이트 드레스 셔츠"
-                                    : selectedScanPreset === "coat"
-                                      ? "🧥 캐시미어 혼방 가을 코트"
-                                      : "🛏️ 거위털 극세사 솜이불"}
-                              </h4>
-                              {aiAnalysisError && (
-                                <p className="ai_fallback_notice">
-                                  ※ AI 서버 미연결 — 기본 분석 결과입니다
-                                </p>
-                              )}
-                              <div className="result_specs">
-                                <div className="spec_row"><span>소재 판정</span><strong>천연 섬유 혼합 감지</strong></div>
-                                <div className="spec_row"><span>권장 온도</span><strong>30°C 미온수 마일드</strong></div>
-                                <div className="spec_row"><span>건조 방식</span><strong>단독 저온 텀블러 회전</strong></div>
-                                <div className="spec_row"><span>추천 코스</span><strong className="blue_bold">왓씨 안심 에코 런드리</strong></div>
-                              </div>
-                            </>
-                          )}
-
-                          <button
-                            type="button"
-                            className="scanner_reset_btn"
-                            onClick={() => {
-                              setScanResult(false);
-                              setScanProgress(0);
-                              setCapturedPhotoUrl(null);
-                              setAiAnalysisResult(null);
-                              setAiAnalysisError(false);
-                            }}
-                          >
-                            다시 촬영하기
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="scanner_camera_feed">
-                          {/* Preset preview background image */}
-                          <div className="camera_feed_bg_sim">
-                            {capturedPhotoUrl ? (
-                              <img
-                                src={capturedPhotoUrl}
-                                alt="실물 촬영"
-                                className="sim_feed_img"
-                              />
-                            ) : (
-                              <>
-                                {selectedScanPreset === "shirt" && (
-                                  <img
-                                    src={reviewShirtsImg}
-                                    alt="셔츠 실물"
-                                    className="sim_feed_img"
-                                  />
-                                )}
-                                {selectedScanPreset === "coat" && (
-                                  <img
-                                    src={reviewOuterImg}
-                                    alt="코트 실물"
-                                    className="sim_feed_img"
-                                  />
-                                )}
-                                {selectedScanPreset === "bedding" && (
-                                  <img
-                                    src={reviewBeddingImg}
-                                    alt="이불 실물"
-                                    className="sim_feed_img"
-                                  />
-                                )}
-                              </>
-                            )}
-                          </div>
-
-                          <div className="camera_focus_target" />
-                          <div className="camera_status_tag">
-                            📡 AI LENS CONNECTED
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* 프리셋 선택 조작판 */}
-                    {!simulatingScan && !scanResult && (
-                      <div className="ai_scanner_preset_selector">
-                        <span className="selector_label">
-                          촬영할 의류 품목 선택:
-                        </span>
-                        <div className="preset_buttons">
-                          {[
-                            { id: "shirt", label: "👔 드레스 셔츠" },
-                            { id: "coat", label: "🧥 겨울 코트" },
-                            { id: "bedding", label: "🛏️ 극세사 이불" },
-                          ].map((btn) => (
-                            <button
-                              key={btn.id}
-                              type="button"
-                              className={`preset_select_btn ${selectedScanPreset === btn.id ? "active" : ""}`}
-                              onClick={() => setSelectedScanPreset(btn.id)}
-                            >
-                              {btn.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* 촬영/셔터 버튼 */}
-                    {!simulatingScan && !scanResult && (
-                      <div className="shutter_control_row">
-                        <button
-                          type="button"
-                          className="ai_shutter_btn"
-                          onClick={() => cameraInputRef.current?.click()}
-                        >
-                          <div className="shutter_inner_circle" />
-                        </button>
-                        <span className="shutter_action_text">
-                          셔터를 눌러 사진 촬영 → AI 즉시 분석
-                        </span>
-                      </div>
-                    )}
-                  </section>
-                </div>
-              </div>
             ) : (
               <>
                 {/* 이전 페이지 뒤로가기 버튼 (mypage 상세에서 진입 시) */}
                 {reserveFrom && (
-                  <div style={{ padding: "12px 20px 0", background: "#ffffff" }}>
+                  <div
+                    style={{ padding: "12px 20px 0", background: "#ffffff" }}
+                  >
                     <button
                       type="button"
                       className="premium_back_btn"
@@ -4307,7 +6257,16 @@ export function HomePage() {
                       }}
                       aria-label="이전 페이지로"
                     >
-                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
                         <polyline points="15 18 9 12 15 6" />
                       </svg>
                     </button>
@@ -4349,7 +6308,10 @@ export function HomePage() {
                   <button
                     type="button"
                     className="reserve_wire_btn"
-                    onClick={() => setShowReserveDetail(true)}
+                    onClick={() => {
+                      setShowReserveDetail(true);
+                      setReserveDetailFromHome(false);
+                    }}
                   >
                     예약하기
                   </button>
@@ -4823,7 +6785,9 @@ export function HomePage() {
                     style={{
                       marginLeft: "auto",
                       transition: "transform 0.3s ease",
-                      transform: showGpsDetail ? "rotate(180deg)" : "rotate(0deg)",
+                      transform: showGpsDetail
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)",
                       flexShrink: 0,
                     }}
                   >
@@ -4844,9 +6808,15 @@ export function HomePage() {
                           className="gps_rider_avatar"
                         />
                         <div className="gps_rider_info">
-                          <strong className="gps_rider_name">김진우 마스터</strong>
-                          <span className="gps_rider_meta">⭐ 4.98 · 배달 3,214건</span>
-                          <span className="gps_rider_vehicle">왓씨 전용 오토바이 · 안심팩 장착</span>
+                          <strong className="gps_rider_name">
+                            김진우 마스터
+                          </strong>
+                          <span className="gps_rider_meta">
+                            ⭐ 4.98 · 배달 3,214건
+                          </span>
+                          <span className="gps_rider_vehicle">
+                            왓씨 전용 오토바이 · 안심팩 장착
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -4861,7 +6831,9 @@ export function HomePage() {
                           <span className="gps_route_dot gps_route_dot--start" />
                           <div>
                             <p className="gps_route_place">세탁 공장</p>
-                            <p className="gps_route_addr">서울 반포동 왓씨 케어센터</p>
+                            <p className="gps_route_addr">
+                              서울 반포동 왓씨 케어센터
+                            </p>
                           </div>
                         </div>
                         <div className="gps_route_line" />
@@ -4869,7 +6841,9 @@ export function HomePage() {
                           <span className="gps_route_dot gps_route_dot--current" />
                           <div>
                             <p className="gps_route_place">현재 위치</p>
-                            <p className="gps_route_addr">서초대로 158 인근 이동 중</p>
+                            <p className="gps_route_addr">
+                              서초대로 158 인근 이동 중
+                            </p>
                           </div>
                         </div>
                         <div className="gps_route_line" />
@@ -4877,7 +6851,9 @@ export function HomePage() {
                           <span className="gps_route_dot gps_route_dot--end" />
                           <div>
                             <p className="gps_route_place">도착지 (우리집)</p>
-                            <p className="gps_route_addr">반포동 왓씨타워 410호</p>
+                            <p className="gps_route_addr">
+                              반포동 왓씨타워 410호
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -4895,15 +6871,21 @@ export function HomePage() {
                         </div>
                         <div className="gps_stat_item">
                           <span className="gps_stat_label">위성 수신</span>
-                          <strong className="gps_stat_val gps_stat_val--green">{satellites}개</strong>
+                          <strong className="gps_stat_val gps_stat_val--green">
+                            {satellites}개
+                          </strong>
                         </div>
                         <div className="gps_stat_item">
                           <span className="gps_stat_label">GPS 정확도</span>
-                          <strong className="gps_stat_val gps_stat_val--green">±2m</strong>
+                          <strong className="gps_stat_val gps_stat_val--green">
+                            ±2m
+                          </strong>
                         </div>
                         <div className="gps_stat_item">
                           <span className="gps_stat_label">도착 예정</span>
-                          <strong className="gps_stat_val gps_stat_val--blue">약 {etaMinutes}분</strong>
+                          <strong className="gps_stat_val gps_stat_val--blue">
+                            약 {etaMinutes}분
+                          </strong>
                         </div>
                       </div>
                     </div>
@@ -4918,8 +6900,8 @@ export function HomePage() {
               <div className="delivery_timeline_list">
                 <div className="delivery_timeline_item delivery_timeline_item--active">
                   <div className="delivery_time_col">
-                    <span className="deliv_date">05.27</span>
-                    <span className="deliv_time">10:15</span>
+                    <span className="deliv_date">06.01</span>
+                    <span className="deliv_time">16:45</span>
                   </div>
                   <div className="delivery_dot_col">
                     <div className="deliv_timeline_dot deliv_timeline_dot--active-pulse" />
@@ -4931,14 +6913,14 @@ export function HomePage() {
                     </h4>
                     <p className="deliv_step_desc">
                       소중한 세탁물을 안전하게 안심팩 포장하여 배송 마스터님이
-                      문 앞 배달을 개시했습니다.
+                      우리집으로 문 앞 배달을 개시했습니다. (10분 내 도착 예정)
                     </p>
                   </div>
                 </div>
 
                 <div className="delivery_timeline_item delivery_timeline_item--done">
                   <div className="delivery_time_col">
-                    <span className="deliv_date">05.27</span>
+                    <span className="deliv_date">05.31</span>
                     <span className="deliv_time">02:30</span>
                   </div>
                   <div className="delivery_dot_col">
@@ -4958,7 +6940,7 @@ export function HomePage() {
 
                 <div className="delivery_timeline_item delivery_timeline_item--done">
                   <div className="delivery_time_col">
-                    <span className="deliv_date">05.26</span>
+                    <span className="deliv_date">05.30</span>
                     <span className="deliv_time">22:00</span>
                   </div>
                   <div className="delivery_dot_col">
@@ -4978,7 +6960,7 @@ export function HomePage() {
 
                 <div className="delivery_timeline_item delivery_timeline_item--done">
                   <div className="delivery_time_col">
-                    <span className="deliv_date">05.26</span>
+                    <span className="deliv_date">05.30</span>
                     <span className="deliv_time">18:40</span>
                   </div>
                   <div className="delivery_dot_col">
@@ -5264,7 +7246,9 @@ export function HomePage() {
                   <div className="cycle_progress_track">
                     <div
                       className={`cycle_progress_fill ${wearCount >= targetCycle ? "cycle_progress_fill--over" : ""}`}
-                      style={{ width: `${Math.min((wearCount / targetCycle) * 100, 100)}%` }}
+                      style={{
+                        width: `${Math.min((wearCount / targetCycle) * 100, 100)}%`,
+                      }}
                     />
                     {[...Array(targetCycle - 1)].map((_, i) => (
                       <div
@@ -5286,7 +7270,9 @@ export function HomePage() {
                     <button
                       type="button"
                       className="sim_btn"
-                      onClick={() => { if (wearCount > 0) setWearCount(wearCount - 1); }}
+                      onClick={() => {
+                        if (wearCount > 0) setWearCount(wearCount - 1);
+                      }}
                     >
                       − 1회
                     </button>
@@ -5307,14 +7293,24 @@ export function HomePage() {
                     <button
                       type="button"
                       className="cycle_target_btn"
-                      onClick={() => setTargetCycle(Math.max(2, targetCycle - 1))}
-                    >−</button>
-                    <span className="cycle_target_value">{targetCycle}회마다 세탁</span>
+                      onClick={() =>
+                        setTargetCycle(Math.max(2, targetCycle - 1))
+                      }
+                    >
+                      −
+                    </button>
+                    <span className="cycle_target_value">
+                      {targetCycle}회마다 세탁
+                    </span>
                     <button
                       type="button"
                       className="cycle_target_btn"
-                      onClick={() => setTargetCycle(Math.min(20, targetCycle + 1))}
-                    >+</button>
+                      onClick={() =>
+                        setTargetCycle(Math.min(20, targetCycle + 1))
+                      }
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
 
@@ -5501,7 +7497,9 @@ export function HomePage() {
             {/* [7. 세탁 이력 관리] */}
             <section className="care_history_section">
               <div className="care_history_header_row">
-                <h3 className="care_section_title" style={{ margin: 0 }}>세탁 이력 관리</h3>
+                <h3 className="care_section_title" style={{ margin: 0 }}>
+                  세탁 이력 관리
+                </h3>
                 <button
                   type="button"
                   className="mypage_active_order_all_btn"
@@ -5577,7 +7575,6 @@ export function HomePage() {
                 className="premium_back_btn"
                 onClick={() => {
                   setActiveTab("home");
-                  navigate("/home?tab=home");
                 }}
                 aria-label="홈으로 이동"
               >
@@ -5656,12 +7653,30 @@ export function HomePage() {
                 {/* 상단: 라벨 + 등급 배지 */}
                 <div className="score_top_row">
                   <span className="score_top_label">왓씨 포인트</span>
-                  <span className="score_tier_badge">🥈 실버</span>
+                  <button
+                    type="button"
+                    className="score_tier_badge"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMembershipTier(true);
+                    }}
+                    style={{
+                      border: "none",
+                      background: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    🥈 실버
+                  </button>
                 </div>
 
                 {/* 메인 점수 */}
                 <div className="score_main_row">
-                  <span className="score_number">{totalScore.toLocaleString()}</span>
+                  <span className="score_number">
+                    {totalScore.toLocaleString()}
+                  </span>
                   <span className="score_unit">점</span>
                 </div>
 
@@ -5670,10 +7685,14 @@ export function HomePage() {
                   <div className="score_progress_track">
                     <div
                       className="score_progress_fill"
-                      style={{ width: `${Math.min((totalScore / 1000) * 100, 100)}%` }}
+                      style={{
+                        width: `${Math.min((totalScore / 1000) * 100, 100)}%`,
+                      }}
                     />
                   </div>
-                  <span className="score_next_label">🏆 골드까지 {Math.max(0, 1000 - totalScore)}점</span>
+                  <span className="score_next_label">
+                    🏆 골드까지 {Math.max(0, 1000 - totalScore)}점
+                  </span>
                 </div>
               </div>
             </section>
@@ -5773,11 +7792,20 @@ export function HomePage() {
                 </button>
               </div>
 
-              <div className="mypage_active_order_card" onClick={() => setActiveTab("delivery")} role="button" tabIndex={0}>
+              <div
+                className="mypage_active_order_card"
+                onClick={() => setActiveTab("delivery")}
+                role="button"
+                tabIndex={0}
+              >
                 {/* 주문번호 + 상태 배지 */}
                 <div className="mao_top_row">
-                  <span className="mao_order_num">주문번호 WTC-20260527-8311</span>
-                  <span className="mao_status_badge mao_status_badge--drying">건조 중</span>
+                  <span className="mao_order_num">
+                    주문번호 WTC-20260527-8311
+                  </span>
+                  <span className="mao_status_badge mao_status_badge--drying">
+                    건조 중
+                  </span>
                 </div>
 
                 {/* 5단계 스테퍼 */}
@@ -5790,16 +7818,35 @@ export function HomePage() {
                     { label: "배송", done: false },
                   ].map((s, i, arr) => (
                     <div key={i} className="mao_stepper_item">
-                      <div className={`mao_dot ${s.done ? "mao_dot--done" : s.current ? "mao_dot--current" : "mao_dot--pending"}`}>
+                      <div
+                        className={`mao_dot ${s.done ? "mao_dot--done" : s.current ? "mao_dot--current" : "mao_dot--pending"}`}
+                      >
                         {s.done && (
-                          <svg viewBox="0 0 16 16" width="9" height="9" fill="none">
-                            <polyline points="3,8 6.5,11.5 13,4.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                          <svg
+                            viewBox="0 0 16 16"
+                            width="9"
+                            height="9"
+                            fill="none"
+                          >
+                            <polyline
+                              points="3,8 6.5,11.5 13,4.5"
+                              stroke="#fff"
+                              strokeWidth="2.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         )}
                       </div>
-                      <span className={`mao_step_label ${s.current ? "mao_step_label--current" : s.done ? "mao_step_label--done" : ""}`}>{s.label}</span>
+                      <span
+                        className={`mao_step_label ${s.current ? "mao_step_label--current" : s.done ? "mao_step_label--done" : ""}`}
+                      >
+                        {s.label}
+                      </span>
                       {i < arr.length - 1 && (
-                        <div className={`mao_connector ${s.done ? "mao_connector--done" : ""}`} />
+                        <div
+                          className={`mao_connector ${s.done ? "mao_connector--done" : ""}`}
+                        />
                       )}
                     </div>
                   ))}
@@ -5814,7 +7861,9 @@ export function HomePage() {
                 <div className="mao_info_row">
                   <div className="mao_items">
                     <span className="mao_items_label">세탁 품목</span>
-                    <span className="mao_items_val">아우터 코트 1건 · 셔츠 2건</span>
+                    <span className="mao_items_val">
+                      아우터 코트 1건 · 셔츠 2건
+                    </span>
                   </div>
                   <div className="mao_eta">
                     <span className="mao_eta_label">도착 예정</span>
@@ -5823,9 +7872,25 @@ export function HomePage() {
                 </div>
 
                 {/* CTA */}
-                <button type="button" className="mao_cta_btn" onClick={(e) => { e.stopPropagation(); setActiveTab("delivery"); }}>
+                <button
+                  type="button"
+                  className="mao_cta_btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveTab("delivery");
+                  }}
+                >
                   실시간 배송 현황 보기
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </button>
@@ -5861,7 +7926,10 @@ export function HomePage() {
                 </div>
                 <div
                   className="mypage_menu_item"
-                  onClick={() => { setPricingTab("clothing"); setShowPricingDetail(true); }}
+                  onClick={() => {
+                    setPricingTab("clothing");
+                    setShowPricingDetail(true);
+                  }}
                 >
                   <span>세탁 종류별 요금</span>
                   <span className="mypage_arrow">&gt;</span>
@@ -5937,6 +8005,531 @@ export function HomePage() {
       {/* 공통 하단 네비게이션 탭 바 */}
       {!showReserveDetail && <BottomNav />}
 
+      {/* 회원 등급 모달 */}
+      {showMembershipTier && (
+        <div
+          className="membership_tier_overlay"
+          onClick={() => setShowMembershipTier(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "flex-end",
+            zIndex: 10000,
+            animation: "slideUp 0.3s ease",
+          }}
+        >
+          <style>{`
+            @keyframes slideUp {
+              from { transform: translateY(100%); }
+              to { transform: translateY(0); }
+            }
+          `}</style>
+          <div
+            className="membership_tier_modal"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: "480px",
+              background: "#ffffff",
+              borderRadius: "24px 24px 0 0",
+              padding: "20px 20px 40px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+            }}
+          >
+            {/* 헤더 */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: "18px",
+                  fontWeight: "700",
+                  color: "#0f172a",
+                }}
+              >
+                왓씨 회원 등급
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowMembershipTier(false)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "20px",
+                  color: "#94a3b8",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* 등급 리스트 */}
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+            >
+              {[
+                {
+                  emoji: "🥉",
+                  name: "브론즈",
+                  points: "0 ~ 499점",
+                  desc: "왓씨 첫 가입",
+                },
+                {
+                  emoji: "🥈",
+                  name: "실버",
+                  points: "500 ~ 999점",
+                  desc: "현재 등급",
+                  isCurrent: true,
+                },
+                {
+                  emoji: "🥇",
+                  name: "골드",
+                  points: "1,000 ~ 4,999점",
+                  desc: "다음 등급까지 200점 남음",
+                },
+                {
+                  emoji: "💎",
+                  name: "플래티넘",
+                  points: "5,000점 이상",
+                  desc: "최고 등급",
+                },
+              ].map((tier, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    padding: "14px 14px",
+                    border: tier.isCurrent
+                      ? "2px solid #2563eb"
+                      : "1px solid #e2e8f0",
+                    borderRadius: "12px",
+                    background: tier.isCurrent ? "#f0f9ff" : "#f8fafc",
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <span style={{ fontSize: "24px" }}>{tier.emoji}</span>
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        marginBottom: "4px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "700",
+                          color: "#0f172a",
+                        }}
+                      >
+                        {tier.name}
+                      </span>
+                      {tier.isCurrent && (
+                        <span
+                          style={{
+                            display: "inline-block",
+                            background: "#2563eb",
+                            color: "#ffffff",
+                            fontSize: "10px",
+                            fontWeight: "700",
+                            padding: "2px 6px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          현재
+                        </span>
+                      )}
+                    </div>
+                    <p
+                      style={{
+                        margin: "2px 0",
+                        fontSize: "11px",
+                        color: "#64748b",
+                      }}
+                    >
+                      {tier.points}
+                    </p>
+                    <p
+                      style={{
+                        margin: "2px 0",
+                        fontSize: "11px",
+                        color: tier.isCurrent ? "#2563eb" : "#94a3b8",
+                      }}
+                    >
+                      {tier.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* 혜택 정보 */}
+            <div
+              style={{
+                marginTop: "20px",
+                padding: "14px",
+                background: "#f8fafc",
+                borderRadius: "12px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  color: "#0f172a",
+                  marginBottom: "8px",
+                }}
+              >
+                각 등급별 혜택
+              </p>
+              <ul
+                style={{
+                  margin: 0,
+                  paddingLeft: "18px",
+                  fontSize: "11px",
+                  color: "#475569",
+                  lineHeight: "1.6",
+                }}
+              >
+                <li>포인트 적립 및 사용 가능</li>
+                <li>등급별 배송료 할인</li>
+                <li>플래티넘: 프리미엄 서비스 이용</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================== */}
+      {/* AI 세탁 가이드 상세 페이지 오버레이                     */}
+      {/* ===================================================== */}
+      {showAiGuideDetail && (
+        <div className="ai_guide_detail_wrapper">
+          {/* 실제 카메라 구동을 위한 숨김 인풋 */}
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            ref={cameraInputRef}
+            style={{ display: "none" }}
+            onChange={handleCameraCapture}
+          />
+
+          <header className="ai_guide_detail_header">
+            <button
+              type="button"
+              className="premium_back_btn"
+              onClick={() => {
+                setShowAiGuideDetail(false);
+                if (activeTab === "reserve") {
+                  setShowReserveDetail(false);
+                }
+                setScanResult(false);
+                setScanProgress(0);
+                setCapturedPhotoUrl(null);
+                setAiAnalysisResult(null);
+                setAiAnalysisError(false);
+              }}
+              aria-label="뒤로가기"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <h1 className="ai_guide_detail_header_title">
+              AI 세탁 스캐너 가이드
+            </h1>
+            <div style={{ width: 42 }} />
+          </header>
+
+          <div className="ai_guide_detail_content">
+            {/* 1. 소개 정보 */}
+            <section className="ai_guide_intro_section">
+              <div className="ai_guide_intro_badge">AI VISION SMART SCAN</div>
+              <h2 className="ai_guide_intro_title">
+                찍으면 알 수 있는 최적의 세탁법
+              </h2>
+              <p className="ai_guide_intro_desc">
+                세탁물의 특징이나 섬유 결이 잘 보이도록 촬영해 보세요.
+                <br />
+                AI가 원단 성분을 정밀 분석하여 완벽한 케어 코스를 제안합니다.
+              </p>
+            </section>
+
+            {/* 2. 이용 방법 단계 */}
+            <section className="ai_guide_steps_section">
+              <h3 className="ai_guide_section_title">이용 방법</h3>
+              <div className="ai_guide_steps_grid">
+                <div className="ai_guide_step_card">
+                  <div className="step_number">01</div>
+                  <h4 className="step_title">의류 촬영</h4>
+                  <p className="step_desc">
+                    카메라 뷰 파인더 내에 옷이 들어오도록 초점을 잡습니다.
+                  </p>
+                </div>
+                <div className="ai_guide_step_card">
+                  <div className="step_number">02</div>
+                  <h4 className="step_title">실시간 스캔</h4>
+                  <p className="step_desc">
+                    AI가 섬유 짜임새와 의류 고유 코드를 정교히 판별합니다.
+                  </p>
+                </div>
+                <div className="ai_guide_step_card">
+                  <div className="step_number">03</div>
+                  <h4 className="step_title">맞춤형 코스 제안</h4>
+                  <p className="step_desc">
+                    건조기 온도, 스팀 시간 등 완벽한 케어 설정을 추천 받습니다.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 3. 카메라 기능 시뮬레이션 */}
+            <section className="ai_guide_scanner_section">
+              <h3 className="ai_guide_section_title">
+                AI 스캐너 직접 체험해보기
+              </h3>
+
+              {/* 스캐너 기기 프레임 */}
+              <div className="ai_scanner_viewport">
+                {simulatingScan ? (
+                  <div className="scanner_scanning_overlay">
+                    <div className="scanning_laser_line" />
+                    <div className="scanning_loader_box">
+                      <span className="scanning_loader_text">
+                        {scanProgress < 30
+                          ? "이미지 업로드 중..."
+                          : scanProgress < 60
+                            ? "AI 소재 패턴 분석 중..."
+                            : scanProgress < 85
+                              ? "세탁 케어 코스 도출 중..."
+                              : "결과 생성 중..."}
+                      </span>
+                      <div className="scanning_progress_bar_bg">
+                        <div
+                          className="scanning_progress_fill"
+                          style={{
+                            width: `${scanProgress}%`,
+                            transition: "width 0.3s ease",
+                          }}
+                        />
+                      </div>
+                      <span className="scanning_percentage">
+                        {scanProgress}%
+                      </span>
+                    </div>
+                  </div>
+                ) : scanResult ? (
+                  <div className="scanner_result_overlay">
+                    <div
+                      className={`result_badge ${aiAnalysisResult ? "result_badge--ai" : ""}`}
+                    >
+                      {aiAnalysisResult ? "✦ AI 실제 분석 완료" : "분석 완료"}
+                    </div>
+
+                    {/* 촬영한 실제 사진 */}
+                    {capturedPhotoUrl && (
+                      <div className="scanner_captured_preview">
+                        <img
+                          src={capturedPhotoUrl}
+                          alt="분석된 의류"
+                          className="result_captured_img"
+                        />
+                      </div>
+                    )}
+
+                    {/* ── AI 실제 응답 ── */}
+                    {aiAnalysisResult ? (
+                      <div className="ai_real_result_box">
+                        <p className="ai_real_result_label">
+                          <span className="ai_real_result_badge">
+                            Gemini AI
+                          </span>
+                          실제 분석 결과
+                        </p>
+                        <div className="ai_real_result_text">
+                          {aiAnalysisResult.split("\n").map((line, i) =>
+                            line.trim() ? (
+                              <p
+                                key={i}
+                                className={
+                                  line.startsWith("**") || /^\d+\./.test(line)
+                                    ? "ai_result_section"
+                                    : "ai_result_line"
+                                }
+                              >
+                                {line.replace(/\*\*/g, "")}
+                              </p>
+                            ) : (
+                              <br key={i} />
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      /* ── 폴백: 시뮬레이션 결과 ── */
+                      <>
+                        <h4 className="result_cloth_name">
+                          {capturedPhotoUrl
+                            ? "🔍 의류 성분 분석 결과"
+                            : selectedScanPreset === "shirt"
+                              ? "👔 100% 면 화이트 드레스 셔츠"
+                              : selectedScanPreset === "coat"
+                                ? "🧥 캐시미어 혼방 가을 코트"
+                                : "🛏️ 거위털 극세사 솜이불"}
+                        </h4>
+                        {aiAnalysisError && (
+                          <p className="ai_fallback_notice">
+                            ※ AI 서버 미연결 — 기본 분석 결과입니다
+                          </p>
+                        )}
+                        <div className="result_specs">
+                          <div className="spec_row">
+                            <span>소재 판정</span>
+                            <strong>천연 섬유 혼합 감지</strong>
+                          </div>
+                          <div className="spec_row">
+                            <span>권장 온도</span>
+                            <strong>30°C 미온수 마일드</strong>
+                          </div>
+                          <div className="spec_row">
+                            <span>건조 방식</span>
+                            <strong>단독 저온 텀블러 회전</strong>
+                          </div>
+                          <div className="spec_row">
+                            <span>추천 코스</span>
+                            <strong className="blue_bold">
+                              왓씨 안심 에코 런드리
+                            </strong>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    <button
+                      type="button"
+                      className="scanner_reset_btn"
+                      onClick={() => {
+                        setScanResult(false);
+                        setScanProgress(0);
+                        setCapturedPhotoUrl(null);
+                        setAiAnalysisResult(null);
+                        setAiAnalysisError(false);
+                      }}
+                    >
+                      다시 촬영하기
+                    </button>
+                  </div>
+                ) : (
+                  <div className="scanner_camera_feed">
+                    {/* Preset preview background image */}
+                    <div className="camera_feed_bg_sim">
+                      {capturedPhotoUrl ? (
+                        <img
+                          src={capturedPhotoUrl}
+                          alt="실물 촬영"
+                          className="sim_feed_img"
+                        />
+                      ) : (
+                        <>
+                          {selectedScanPreset === "shirt" && (
+                            <img
+                              src={reviewShirtsImg}
+                              alt="셔츠 실물"
+                              className="sim_feed_img"
+                            />
+                          )}
+                          {selectedScanPreset === "coat" && (
+                            <img
+                              src={reviewOuterImg}
+                              alt="코트 실물"
+                              className="sim_feed_img"
+                            />
+                          )}
+                          {selectedScanPreset === "bedding" && (
+                            <img
+                              src={reviewBeddingImg}
+                              alt="이불 실물"
+                              className="sim_feed_img"
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+
+                    <div className="camera_focus_target" />
+                    <div className="camera_status_tag">
+                      📡 AI LENS CONNECTED
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 프리셋 선택 조작판 */}
+              {!simulatingScan && !scanResult && (
+                <div className="ai_scanner_preset_selector">
+                  <span className="selector_label">촬영할 의류 품목 선택:</span>
+                  <div className="preset_buttons">
+                    {[
+                      { id: "shirt", label: "👔 드레스 셔츠" },
+                      { id: "coat", label: "🧥 겨울 코트" },
+                      { id: "bedding", label: "🛏️ 극세사 이불" },
+                    ].map((btn) => (
+                      <button
+                        key={btn.id}
+                        type="button"
+                        className={`preset_select_btn ${selectedScanPreset === btn.id ? "active" : ""}`}
+                        onClick={() => setSelectedScanPreset(btn.id)}
+                      >
+                        {btn.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 촬영/셔터 버튼 */}
+              {!simulatingScan && !scanResult && (
+                <div className="shutter_control_row">
+                  <button
+                    type="button"
+                    className="ai_shutter_btn"
+                    onClick={() => cameraInputRef.current?.click()}
+                  >
+                    <div className="shutter_inner_circle" />
+                  </button>
+                  <span className="shutter_action_text">
+                    셔터를 눌러 사진 촬영 → AI 즉시 분석
+                  </span>
+                </div>
+              )}
+            </section>
+          </div>
+        </div>
+      )}
+
       {/* [프로필 상세 설정 커스텀 대화형 모달 창] */}
       {showProfileModal && (
         <div
@@ -5971,33 +8564,81 @@ export function HomePage() {
               }}
             />
 
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexShrink: 0 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                marginBottom: "16px",
+                flexShrink: 0,
+              }}
+            >
               {/* 클릭 가능한 프로필 사진 */}
               <div
                 onClick={() => profileImgInputRef.current?.click()}
-                style={{ position: "relative", width: 52, height: 52, flexShrink: 0, cursor: "pointer" }}
+                style={{
+                  position: "relative",
+                  width: 52,
+                  height: 52,
+                  flexShrink: 0,
+                  cursor: "pointer",
+                }}
               >
                 <img
                   src={selectedTempImg}
                   alt="프로필 사진"
-                  style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", border: "2px solid #e2e8f0", display: "block" }}
+                  style={{
+                    width: 52,
+                    height: 52,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "2px solid #e2e8f0",
+                    display: "block",
+                  }}
                 />
-                <div style={{
-                  position: "absolute", inset: 0, borderRadius: "50%",
-                  background: "rgba(0,0,0,0.35)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                    <circle cx="12" cy="13" r="4"/>
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: "50%",
+                    background: "rgba(0,0,0,0.35)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
                   </svg>
                 </div>
               </div>
               <div>
-                <h3 className="profile_modal_title" style={{ ...styles.modalTitle, margin: 0 }}>
+                <h3
+                  className="profile_modal_title"
+                  style={{ ...styles.modalTitle, margin: 0 }}
+                >
                   👤 프로필 상세 설정
                 </h3>
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: "3px 0 0", fontWeight: 500 }}>사진을 눌러 변경할 수 있어요</p>
+                <p
+                  style={{
+                    fontSize: 11,
+                    color: "#94a3b8",
+                    margin: "3px 0 0",
+                    fontWeight: 500,
+                  }}
+                >
+                  사진을 눌러 변경할 수 있어요
+                </p>
               </div>
             </div>
 
@@ -6123,24 +8764,42 @@ export function HomePage() {
               </div>
 
               {/* 프로필 사진 수정하기 */}
-              <div className="profile_form_group" style={{ ...styles.formGroup, marginBottom: 0 }}>
+              <div
+                className="profile_form_group"
+                style={{ ...styles.formGroup, marginBottom: 0 }}
+              >
                 <label className="profile_form_label" style={styles.formLabel}>
                   프로필 사진
                 </label>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                >
                   <img
                     src={selectedTempImg}
                     alt="현재 프로필"
-                    style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", border: "2px solid #e2e8f0", flexShrink: 0 }}
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: "2px solid #e2e8f0",
+                      flexShrink: 0,
+                    }}
                   />
                   <button
                     type="button"
                     onClick={() => profileImgInputRef.current?.click()}
                     style={{
-                      flex: 1, height: 44, border: "1.5px dashed #cbd5e1",
-                      borderRadius: 12, background: "#f8fafc",
-                      color: "#2563eb", fontSize: 13, fontWeight: 700,
-                      cursor: "pointer", fontFamily: "var(--font-pretendard)",
+                      flex: 1,
+                      height: 44,
+                      border: "1.5px dashed #cbd5e1",
+                      borderRadius: 12,
+                      background: "#f8fafc",
+                      color: "#2563eb",
+                      fontSize: 13,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      fontFamily: "var(--font-pretendard)",
                     }}
                   >
                     📷 사진 변경하기
@@ -6289,7 +8948,9 @@ export function HomePage() {
               <div className="receive_success_overlay">
                 <div className="receive_success_icon">✓</div>
                 <p className="receive_success_title">수령되었습니다!</p>
-                <p className="receive_success_sub">받은 선물 {receivedGiftCount}개</p>
+                <p className="receive_success_sub">
+                  받은 선물 {receivedGiftCount}개
+                </p>
               </div>
             )}
 
@@ -6363,11 +9024,13 @@ export function HomePage() {
                   {/* 선물하기 안내 */}
                   <div className="gift_info_box">
                     <p className="gift_info_title">🎁 선물하기란?</p>
-                    <ul className="gift_info_list">
-                      <li>나의 <strong>안심 포인트</strong> 또는 <strong>세탁 쿠폰</strong>을 다른 사람에게 보낼 수 있는 기능입니다.</li>
-                      <li><strong>카카오톡</strong>으로는 링크 형태의 선물 카드를 발송하며, 수령인이 링크를 열면 자동으로 적립됩니다.</li>
-                      <li><strong>WatC 직접 양도</strong>는 상대방의 전화번호 또는 WatC 회원 ID를 입력하면 즉시 이전됩니다.</li>
-                      <li>한 번 전송된 선물은 <strong>취소가 불가</strong>하니 수령인 정보를 꼭 확인해 주세요.</li>
+                    <ul className="gift_info_list" style={{ paddingLeft: "14px", gap: "4px" }}>
+                      <li>
+                        나의 <strong>안심 포인트</strong>나 <strong>세탁 쿠폰</strong>을 가족·친구에게 간편하게 보낼 수 있는 서비스입니다.
+                      </li>
+                      <li>
+                        <strong>카카오톡 링크 공유</strong> 혹은 <strong>연락처 입력</strong>을 통해 즉시 선물할 수 있습니다. (전송 후 취소 불가)
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -6404,15 +9067,21 @@ export function HomePage() {
                   <div className="gift_input_group">
                     <div className="gift_coupon_label_row">
                       <label className="gift_label">보낼 쿠폰 수량</label>
-                      <span className="gift_coupon_stock">보유 {userCoupons}장</span>
+                      <span className="gift_coupon_stock">
+                        보유 {userCoupons}장
+                      </span>
                     </div>
                     <div className="gift_coupon_stepper">
                       <button
                         type="button"
                         className="gift_coupon_step_btn"
-                        onClick={() => setGiftCouponCount(c => Math.max(1, c - 1))}
+                        onClick={() =>
+                          setGiftCouponCount((c) => Math.max(1, c - 1))
+                        }
                         disabled={giftCouponCount <= 1}
-                      >−</button>
+                      >
+                        −
+                      </button>
                       <input
                         type="number"
                         className="gift_coupon_step_input"
@@ -6421,18 +9090,28 @@ export function HomePage() {
                         value={giftCouponCount}
                         onChange={(e) => {
                           const v = parseInt(e.target.value) || 1;
-                          setGiftCouponCount(Math.min(Math.max(1, v), userCoupons));
+                          setGiftCouponCount(
+                            Math.min(Math.max(1, v), userCoupons),
+                          );
                         }}
                       />
                       <button
                         type="button"
                         className="gift_coupon_step_btn"
-                        onClick={() => setGiftCouponCount(c => Math.min(userCoupons, c + 1))}
+                        onClick={() =>
+                          setGiftCouponCount((c) =>
+                            Math.min(userCoupons, c + 1),
+                          )
+                        }
                         disabled={giftCouponCount >= userCoupons}
-                      >+</button>
+                      >
+                        +
+                      </button>
                     </div>
                     {giftCouponCount > userCoupons && (
-                      <p className="gift_coupon_warn">보유 수량({userCoupons}장)을 초과했습니다.</p>
+                      <p className="gift_coupon_warn">
+                        보유 수량({userCoupons}장)을 초과했습니다.
+                      </p>
                     )}
                   </div>
                 )}
@@ -6458,7 +9137,9 @@ export function HomePage() {
                     </div>
                     <div className="kakao_preview_body">
                       <h4 className="kakao_preview_title">
-                        🎁 {giftRecipient.trim() ? giftRecipient.trim() : "친구"}님! {profileName}님이 보낸 세탁선물이 도착했어요
+                        🎁{" "}
+                        {giftRecipient.trim() ? giftRecipient.trim() : "친구"}
+                        님! {profileName}님이 보낸 세탁선물이 도착했어요
                       </h4>
                       <p className="kakao_preview_desc">
                         {giftType === "point"
@@ -6558,15 +9239,21 @@ export function HomePage() {
                   <div className="gift_input_group">
                     <div className="gift_coupon_label_row">
                       <label className="gift_label">보낼 쿠폰 수량</label>
-                      <span className="gift_coupon_stock">보유 {userCoupons}장</span>
+                      <span className="gift_coupon_stock">
+                        보유 {userCoupons}장
+                      </span>
                     </div>
                     <div className="gift_coupon_stepper">
                       <button
                         type="button"
                         className="gift_coupon_step_btn"
-                        onClick={() => setGiftCouponCount(c => Math.max(1, c - 1))}
+                        onClick={() =>
+                          setGiftCouponCount((c) => Math.max(1, c - 1))
+                        }
                         disabled={giftCouponCount <= 1}
-                      >−</button>
+                      >
+                        −
+                      </button>
                       <input
                         type="number"
                         className="gift_coupon_step_input"
@@ -6575,18 +9262,28 @@ export function HomePage() {
                         value={giftCouponCount}
                         onChange={(e) => {
                           const v = parseInt(e.target.value) || 1;
-                          setGiftCouponCount(Math.min(Math.max(1, v), userCoupons));
+                          setGiftCouponCount(
+                            Math.min(Math.max(1, v), userCoupons),
+                          );
                         }}
                       />
                       <button
                         type="button"
                         className="gift_coupon_step_btn"
-                        onClick={() => setGiftCouponCount(c => Math.min(userCoupons, c + 1))}
+                        onClick={() =>
+                          setGiftCouponCount((c) =>
+                            Math.min(userCoupons, c + 1),
+                          )
+                        }
                         disabled={giftCouponCount >= userCoupons}
-                      >+</button>
+                      >
+                        +
+                      </button>
                     </div>
                     {giftCouponCount > userCoupons && (
-                      <p className="gift_coupon_warn">보유 수량({userCoupons}장)을 초과했습니다.</p>
+                      <p className="gift_coupon_warn">
+                        보유 수량({userCoupons}장)을 초과했습니다.
+                      </p>
                     )}
                   </div>
                 )}

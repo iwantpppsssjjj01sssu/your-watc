@@ -112,6 +112,19 @@
   align-items: center;
 }
 
+.home_card_order_info {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: -10px 0 20px 0;
+  text-align: center;
+  background: rgba(37, 99, 235, 0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  letter-spacing: -0.2px;
+}
+
 .blue_percent .digit {
   display: inline-block;
   opacity: 0;
@@ -236,17 +249,27 @@
 
 .home_circle_svg_progress {
   stroke-dasharray: 439.8;
-  stroke-dashoffset: 149.53;
-  animation: fillCircularProgress 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  stroke-dashoffset: 439.8;
+  transition: none;
 }
 
-@keyframes fillCircularProgress {
-  from {
-    stroke-dashoffset: 439.8;
+@keyframes progressFlashGlow {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(37, 99, 235, 0));
+    transform: scale(1);
   }
-  to {
-    stroke-dashoffset: 149.53;
+  50% {
+    filter: drop-shadow(0 0 25px rgba(37, 99, 235, 0.7));
+    transform: scale(1.05);
   }
+  100% {
+    filter: drop-shadow(0 0 0px rgba(37, 99, 235, 0));
+    transform: scale(1);
+  }
+}
+
+.progress-sparkle-flash {
+  animation: progressFlashGlow 0.6s cubic-bezier(0.25, 1, 0.5, 1) 1;
 }
 
 @keyframes float-premium-outer {
@@ -434,6 +457,27 @@
   z-index: 2;
 }
 
+.home_col_card_badge {
+  align-self: flex-start;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.home_col_card_blue .home_col_card_badge {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.home_col_card_white .home_col_card_badge {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.08);
+}
+
 .home_col_title_large {
   font-size: 18px;
   font-weight: 800;
@@ -544,25 +588,27 @@
 .home_info_card:active { transform: scale(0.97); }
 
 .home_info_card--amber {
-  background: linear-gradient(135deg, #bfdbfe 0%, #eff6ff 100%);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.1);
+  background: #f1f5f9;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-.home_info_card--amber .home_info_card_badge { color: #2563eb; background: rgba(37,99,235,0.12); }
-.home_info_card--amber .home_info_card_title { color: #1e3a8a; }
-.home_info_card--amber .home_info_card_sub   { color: #3b82f6; }
+.home_info_card--amber .home_info_card_badge { color: #475569; background: rgba(71, 85, 105, 0.10); }
+.home_info_card--amber .home_info_card_title { color: #0f172a; }
+.home_info_card--amber .home_info_card_sub   { color: #64748b; }
 
 .home_info_card--teal {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.22);
+  background: linear-gradient(135deg, #d4e9ff 0%, #f0f7ff 100%);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(209, 232, 255, 0.6);
 }
 
-.home_info_card--teal .home_info_card_badge { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.18); }
-.home_info_card--teal .home_info_card_title { color: #ffffff; }
-.home_info_card--teal .home_info_card_sub   { color: rgba(255,255,255,0.75); }
+.home_info_card--teal .home_info_card_badge { color: #2563eb; background: rgba(37, 99, 235, 0.10); }
+.home_info_card--teal .home_info_card_title { color: #1e3a8a; }
+.home_info_card--teal .home_info_card_sub   { color: #3b82f6; }
 
-.home_info_card--amber:hover { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.18); }
-.home_info_card--teal:hover  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.32); }
+.home_info_card--amber:hover { background: #e2e8f0; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06); }
+.home_info_card--teal:hover  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.14); }
 
 .home_info_card_text { z-index: 2; }
 
@@ -610,10 +656,10 @@
 }
 
 .home_info_card_img--guide {
-  width: 88px;
-  height: 88px;
-  bottom: -6px;
-  right: -10px;
+  width: 96px;
+  height: 96px;
+  bottom: -16px;
+  right: -6px;
   opacity: 0.9;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
 }
@@ -621,7 +667,7 @@
 /* 하단 AI 세탁 가이드 엣지-투-엣지 배너 스타일 */
 .home_guide_full_section {
   padding: 0;
-  margin: 0 -20px 24px;
+  margin: 14px -20px 24px;
   width: calc(100% + 40px);
 }
 
@@ -670,7 +716,8 @@
   object-fit: contain;
   position: relative;
   z-index: 2;
-  margin-top: 14px;
+  margin-top: 20px;
+  transform: translateX(4px);
 }
 
 @keyframes floatHand {
@@ -1030,14 +1077,66 @@
 }
 
 /* ─────────────────────────────────────────── */
-/* 리뷰 작성 박스                               */
+/* 리뷰 작성 박스 – 펼치기/접기 아코디언        */
 /* ─────────────────────────────────────────── */
-.home_write_review_box {
-  margin-top: 20px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+.home_write_review_accordion {
+  margin-top: 10px;
+  border: 1px solid #f1f5f9;
   border-radius: 20px;
-  padding: 20px 18px 18px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.home_write_review_toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.home_write_review_toggle_left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.home_write_review_toggle_icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.home_write_review_toggle_label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+
+.home_write_review_toggle_arrow {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #2563eb;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(37, 99, 235, 0.07);
+  transition: background 0.15s ease;
+}
+
+.home_write_review_toggle_arrow.open {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.home_write_review_box {
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  border-radius: 0 0 20px 20px;
+  padding: 16px 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1806,12 +1905,11 @@
   transition: width 0.5s ease;
 }
 
-/* 필터 태그 바 */
 .review_all_tag_bar {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 14px 16px;
-  overflow-x: auto;
   border-bottom: 1px solid #f1f5f9;
   flex-shrink: 0;
 }
@@ -1931,7 +2029,7 @@
   position: fixed;
   inset: 0;
   z-index: 500;
-  background: #f8fafc;
+  background: linear-gradient(135deg, #eaf4ff 100%);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -3251,7 +3349,7 @@
   background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 60%, #eff6ff 100%);
   background-size: 200% 200%;
   border-radius: 24px;
-  padding: 24px 20px;
+  padding: 22px 22px 32px;
   cursor: pointer;
   box-sizing: border-box;
   text-align: left;
@@ -3372,11 +3470,13 @@
 
 .delivery_progress_line_wrapper {
   position: relative;
-  width: 100%;
+  width: calc(100% - 6px);
+  margin-left: 3px;
   height: 4px;
   background-color: #bfdbfe;
   border-radius: 2px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  margin-top: 4px;
 }
 
 .delivery_progress_fill {
@@ -3384,16 +3484,16 @@
   left: 0;
   top: 0;
   height: 100%;
-  width: 66%; /* 3단계 완료 */
+  width: 66%;
   background-color: #2563eb;
   border-radius: 2px;
 }
 
 .delivery_progress_dot {
   position: absolute;
-  top: -4px;
-  width: 12px;
-  height: 12px;
+  top: -5px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   transform: translateX(-50%);
 }
@@ -4279,97 +4379,140 @@
 }
 
 .care_recommend_interactive_card {
-  background-color: #f8fafc;
+  background: linear-gradient(140deg, #1e3a8a 0%, #1d4ed8 55%, #3b82f6 100%);
   border-radius: 24px;
-  padding: 20px;
-  border: 1px solid #f1f5f9;
+  padding: 22px 20px 20px;
+  border: none;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 36px rgba(37, 99, 235, 0.38), 0 2px 8px rgba(30, 58, 138, 0.22);
+}
+
+.care_recommend_interactive_card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.care_recommend_interactive_card::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
 }
 
 .rec_badge_row {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .rec_tag_ai {
-  background-color: #f1f5f9;
-  color: #475569;
+  background: rgba(255, 255, 255, 0.18);
+  color: #bfdbfe;
   font-size: 9.5px;
   font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .rec_course_title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
-  color: #000000;
-  margin: 0 0 6px;
+  color: #ffffff;
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+  line-height: 1.3;
 }
 
 .rec_course_desc {
-  font-size: 11px;
-  color: #64748b;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.72);
   margin: 0 0 18px;
-  line-height: 1.45;
-  font-weight: 500;
+  line-height: 1.55;
+  font-weight: 400;
 }
 
 .rec_personal_options {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 14px 12px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
 }
 
 .rec_option_lbl {
-  font-size: 10.5px;
-  font-weight: 800;
-  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .option_selectors {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 
 .opt_btn {
-  height: 28px;
-  border-radius: 6px;
-  border: 1px solid #cbd5e1;
-  background-color: #ffffff;
-  color: #64748b;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 0 8px;
+  height: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 0 12px;
   cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.opt_btn:active {
+  transform: scale(0.96);
 }
 
 .opt_btn--active {
-  background-color: #2563eb;
-  color: #ffffff;
-  border-color: #2563eb;
+  background: #ffffff;
+  color: #1d4ed8;
+  border-color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
 }
 
 .reserve_link_btn {
   width: 100%;
-  height: 44px;
-  border-radius: 12px;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 12.5px;
+  height: 46px;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 13px;
   font-weight: 800;
   border: none;
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  transition: all 0.18s ease;
+  letter-spacing: -0.2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .reserve_link_btn:active {
-  opacity: 0.85;
+  transform: scale(0.98);
+  opacity: 0.92;
 }
 
 /* 5. Lifecare (Accordion and Cards) */

@@ -10,7 +10,7 @@ export function Splash() {
 
   const isInIframe = useMemo(
     () => typeof window !== "undefined" && window.self !== window.top,
-    []
+    [],
   );
 
   const containerStyle = {
@@ -48,20 +48,18 @@ export function Splash() {
   const [phase, setPhase] = useState<number>(0);
 
   useEffect(() => {
-    const bubbleTimer    = setTimeout(() => setPhase(1), 2200);
-    const imageTimer     = setTimeout(() => setPhase(2), 4200);
-    const textAnimTimer  = setTimeout(() => setPhase(3), 6000);
-    const morphTimer     = setTimeout(() => setPhase(4), 7800);
-    const watcTimer      = setTimeout(() => setPhase(5), 9300);
-    const brandTimer     = setTimeout(() => setPhase(6), 10800);
-    const navTimer       = setTimeout(() => navigate("/login"), 14500);
+    const bubbleTimer = setTimeout(() => setPhase(1), 2200);
+    const imageTimer = setTimeout(() => setPhase(2), 4200);
+    const textAnimTimer = setTimeout(() => setPhase(3), 6000);
+    const morphTimer = setTimeout(() => setPhase(4), 9000); // WASHTHEC 3초 유지
+    const brandTimer = setTimeout(() => setPhase(6), 11000);
+    const navTimer = setTimeout(() => navigate("/login"), 14700);
 
     return () => {
       clearTimeout(bubbleTimer);
       clearTimeout(imageTimer);
       clearTimeout(textAnimTimer);
       clearTimeout(morphTimer);
-      clearTimeout(watcTimer);
       clearTimeout(brandTimer);
       clearTimeout(navTimer);
     };
@@ -91,14 +89,6 @@ export function Splash() {
     }
     if (phase === 4) {
       return "WATC".split("").map((c) => ({
-        char: c,
-        isW: c === "W",
-        isSuffix: false,
-        keep: true,
-      }));
-    }
-    if (phase === 5) {
-      return ["W", "a", "t", "C"].map((c) => ({
         char: c,
         isW: c === "W",
         isSuffix: false,
@@ -217,6 +207,25 @@ export function Splash() {
           width: 46px;
         }
 
+        .scroll_letter_box.collapse-letter {
+          animation: collapseLetter 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+          animation-delay: 0.6s;
+        }
+
+        @keyframes collapseLetter {
+          0% {
+            width: 32px;
+            opacity: 1;
+          }
+          100% {
+            width: 0px;
+            opacity: 0;
+            padding: 0;
+            margin: 0;
+            pointer-events: none;
+          }
+        }
+
         /* --- 방향별 위아래 교차 스크롤 등장 애니메이션 --- */
         .scroll_letter {
           display: inline-block;
@@ -259,17 +268,7 @@ export function Splash() {
           100% { opacity: 1; transform: scale(1) translateY(0);        filter: brightness(1) blur(0); }
         }
 
-        /* --- [롤인 모션] WatC 브랜드케이스 우아한 굴러내림 (phase 5) --- */
-        .text_wrapper.watc-lower-active .scroll_letter.roll-in {
-          animation: letterRollIn 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
-          opacity: 0;
-        }
 
-        @keyframes letterRollIn {
-          0%   { opacity: 0; transform: rotateX(75deg) translateY(-10px) scale(0.85); filter: blur(4px) brightness(0.5); }
-          55%  { opacity: 1; transform: rotateX(-6deg) translateY(2px)   scale(1.04); filter: blur(0)   brightness(1.25); }
-          100% { opacity: 1; transform: rotateX(0deg)  translateY(0)     scale(1);    filter: blur(0)   brightness(1);    }
-        }
 
         /* --- 고급스러운 피날레 펄싱 글로우 애니메이션 --- */
         .text_wrapper.pulsing {
@@ -327,28 +326,38 @@ export function Splash() {
         .splash_ambient_bubble {
           position: absolute;
           border-radius: 50%;
+          /* start extremely faint: near‑white with a whisper of blue */
           background: radial-gradient(circle at 35% 30%,
-            rgba(255,255,255,0.95) 0%,
-            rgba(210,225,255,0.55) 28%,
-            rgba(190,215,255,0.35) 55%,
-            rgba(220,200,255,0.22) 78%,
-            rgba(200,240,255,0.15) 100%
+            rgba(255,255,255,0.97) 0%,
+            rgba(210,225,255,0.20) 28%,
+            rgba(190,215,255,0.12) 55%,
+            rgba(220,200,255,0.08) 78%,
+            rgba(200,240,255,0.05) 100%
           );
-          border: 1px solid rgba(180,200,255,0.45);
+          border: 1px solid rgba(180,200,255,0.08);
+          /* subtle initial glow, will intensify via animation */
           box-shadow:
-            inset -3px -3px 8px rgba(255,255,255,0.88),
-            inset  2px  2px  6px rgba(160,185,255,0.4),
-            0 3px 12px rgba(120,150,255,0.12);
-          animation: ambientBubbleFloat ease-in-out forwards;
+            inset -3px -3px 8px rgba(255,255,255,0.30),
+            inset 2px 2px 6px rgba(160,185,255,0.10),
+            0 3px 12px rgba(120,150,255,0.04);
+          opacity: 0.05; /* very low visibility on entry */
+          animation: ambientBubbleAppear 2s ease-out forwards, ambientBubbleFloat 2.5s ease-in-out forwards;
           pointer-events: none;
           z-index: 2;
         }
 
         @keyframes ambientBubbleFloat {
-          0%   { transform: translateY(0) scale(1); opacity: 0.18; }
-          35%  { opacity: 0.34; }
-          72%  { opacity: 0.16; }
+          0%   { transform: translateY(0) scale(1); opacity: 0.80; }
+          35%  { opacity: 0.70; }
+          72%  { opacity: 0.50; }
           100% { transform: translateY(-16vh) scale(0.9); opacity: 0; }
+        }
+
+        @keyframes ambientBubbleAppear {
+          0%   { opacity: 0.05; }
+          30%  { opacity: 0.40; }
+          60%  { opacity: 0.70; }
+          100% { opacity: 0.80; }
         }
 
         .splash_c_morph_bubble {
@@ -508,33 +517,106 @@ export function Splash() {
       {/* PHASE 0: 3D 홀로그램 버블 스플래시 */}
       <div style={getScreenStyle(styles.baseScreen)}>
         {phase <= 1 && (
-          <div className={`splash_3d_container ${phase === 1 ? "fade-out" : ""}`}>
-
+          <div
+            className={`splash_3d_container ${phase === 1 ? "fade-out" : ""}`}
+          >
             {/* 비눗방울 30개 — 위로 올라가다 사라짐 */}
             {[
-              { size: 28, left:  "8%", dur: "2.25s", delay: "0.00s", top: "26%" },
-              { size: 16, left: "18%", dur: "2.45s", delay: "0.12s", top: "56%" },
-              { size: 38, left: "28%", dur: "2.30s", delay: "0.05s", top: "78%" },
-              { size: 22, left: "39%", dur: "2.55s", delay: "0.18s", top: "34%" },
-              { size: 46, left: "52%", dur: "2.35s", delay: "0.08s", top: "70%" },
-              { size: 14, left: "64%", dur: "2.50s", delay: "0.20s", top: "22%" },
-              { size: 32, left: "73%", dur: "2.28s", delay: "0.10s", top: "48%" },
-              { size: 18, left: "84%", dur: "2.48s", delay: "0.16s", top: "82%" },
-              { size: 40, left: "92%", dur: "2.38s", delay: "0.04s", top: "38%" },
-              { size: 20, left: "12%", dur: "2.62s", delay: "0.24s", top: "86%" },
-              { size: 34, left: "58%", dur: "2.42s", delay: "0.14s", top: "12%" },
-              { size: 24, left: "88%", dur: "2.58s", delay: "0.22s", top: "64%" },
+              {
+                size: 28,
+                left: "8%",
+                dur: "2.25s",
+                delay: "0.00s",
+                top: "26%",
+              },
+              {
+                size: 16,
+                left: "18%",
+                dur: "2.45s",
+                delay: "0.12s",
+                top: "56%",
+              },
+              {
+                size: 38,
+                left: "28%",
+                dur: "2.30s",
+                delay: "0.05s",
+                top: "78%",
+              },
+              {
+                size: 22,
+                left: "39%",
+                dur: "2.55s",
+                delay: "0.18s",
+                top: "34%",
+              },
+              {
+                size: 46,
+                left: "52%",
+                dur: "2.35s",
+                delay: "0.08s",
+                top: "70%",
+              },
+              {
+                size: 14,
+                left: "64%",
+                dur: "2.50s",
+                delay: "0.20s",
+                top: "22%",
+              },
+              {
+                size: 32,
+                left: "73%",
+                dur: "2.28s",
+                delay: "0.10s",
+                top: "48%",
+              },
+              {
+                size: 18,
+                left: "84%",
+                dur: "2.48s",
+                delay: "0.16s",
+                top: "82%",
+              },
+              {
+                size: 40,
+                left: "92%",
+                dur: "2.38s",
+                delay: "0.04s",
+                top: "38%",
+              },
+              {
+                size: 20,
+                left: "12%",
+                dur: "2.62s",
+                delay: "0.24s",
+                top: "86%",
+              },
+              {
+                size: 34,
+                left: "58%",
+                dur: "2.42s",
+                delay: "0.14s",
+                top: "12%",
+              },
+              {
+                size: 24,
+                left: "88%",
+                dur: "2.58s",
+                delay: "0.22s",
+                top: "64%",
+              },
             ].map((b, i) => (
               <div
                 key={`bbl-${i}`}
                 className="splash_ambient_bubble"
                 style={{
-                  width:             b.size,
-                  height:            b.size,
-                  left:              b.left,
-                  top:               b.top,
+                  width: b.size,
+                  height: b.size,
+                  left: b.left,
+                  top: b.top,
                   animationDuration: b.dur,
-                  animationDelay:    b.delay,
+                  animationDelay: b.delay,
                 }}
               />
             ))}
@@ -568,8 +650,7 @@ export function Splash() {
               className={`text_wrapper
                 ${phase >= 3 ? "morphing-active" : ""}
                 ${phase === 4 ? "watc-active" : ""}
-                ${phase === 5 ? "watc-lower-active" : ""}
-                ${phase === 3 || phase === 5 ? "pulsing" : ""}
+                ${phase === 3 || phase === 4 ? "pulsing" : ""}
               `}
             >
               {getWordLetters().map((item, idx) => {
@@ -578,6 +659,7 @@ export function Splash() {
                 let boxClass = "scroll_letter_box";
                 if (item.isW) boxClass += " wide-w";
                 if (item.isSuffix) boxClass += " suffix-letter";
+                if (phase === 3 && !item.keep) boxClass += " collapse-letter";
 
                 let letterClass = "scroll_letter";
                 let customStyle = {};
@@ -585,11 +667,6 @@ export function Splash() {
                   // WATC: 아래서 팡 튀어오르는 자라란
                   letterClass += " zararan animate";
                   const delays = [0, 0.15, 0.3, 0.45];
-                  customStyle = { animationDelay: `${delays[idx] ?? 0}s` };
-                } else if (phase === 5) {
-                  // WatC: 위에서 굴러내려오는 롤인
-                  letterClass += " roll-in animate";
-                  const delays = [0, 0.12, 0.24, 0.36];
                   customStyle = { animationDelay: `${delays[idx] ?? 0}s` };
                 } else {
                   letterClass += ` ${isEven ? "scroll-up" : "scroll-down"} animate`;

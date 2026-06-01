@@ -1301,9 +1301,10 @@ export function MyPageDetailPage() {
               <h1 className="menu_hero_title" style={{ color: "#1e3a8a" }}>
                 왓씨 안심 세탁 이용수칙
               </h1>
-              <p className="menu_hero_subtitle">
-                깨끗하고 신속한 세탁이 진행될 수 있도록 아래 이용수칙을 꼭
-                준수해 주세요.
+              <p className="menu_hero_subtitle" style={{ fontSize: "16.5px", fontWeight: "700", lineHeight: "1.6", color: "#1e3a8a", marginTop: "10px", maxWidth: "100%" }}>
+                깨끗하고 신속한 세탁이 진행될 수 있도록
+                <br />
+                아래 이용수칙을 꼭 준수해주세요
               </p>
             </section>
 
@@ -2032,7 +2033,7 @@ export function MyPageDetailPage() {
               fontSize: currentMenu === "invite-friend" ? "13px" : "14px",
             }}
           >
-            <span>✨ 왓씨 프리미엄 안심 세탁 예약하기</span>
+            <span>왓씨 프리미엄 안심 세탁 예약하기</span>
           </button>
         </div>
 

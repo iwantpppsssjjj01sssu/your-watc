@@ -8,7 +8,7 @@ function ScrollResetRouter() {
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'auto'
+      window.history.scrollRestoration = 'manual'
     }
   }, [])
 
@@ -32,11 +32,12 @@ function ScrollResetRouter() {
 
       previousLocation = nextLocation
 
-      if (state.historyAction === 'POP') {
-        return
-      }
-
+      // PUSH, REPLACE, POP 등 모든 라우터 이동 시 항상 최상단 강제 리셋
+      scrollToTop()
       requestAnimationFrame(scrollToTop)
+      setTimeout(scrollToTop, 20)
+      setTimeout(scrollToTop, 50)
+      setTimeout(scrollToTop, 100)
     })
   }, [lenis])
 
