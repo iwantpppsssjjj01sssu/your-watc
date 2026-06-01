@@ -48,18 +48,19 @@ export function Splash() {
   const [phase, setPhase] = useState<number>(0);
 
   useEffect(() => {
-    const bubbleTimer = setTimeout(() => setPhase(1), 2200);
-    const imageTimer = setTimeout(() => setPhase(2), 4200);
-    const textAnimTimer = setTimeout(() => setPhase(3), 6000);
-    const morphTimer = setTimeout(() => setPhase(4), 9000); // WASHTHEC 3초 유지
-    const brandTimer = setTimeout(() => setPhase(6), 11000);
-    const navTimer = setTimeout(() => navigate("/login"), 14700);
+    const bubbleTimer   = setTimeout(() => setPhase(1), 2200);
+    const imageTimer    = setTimeout(() => setPhase(2), 4200);
+    // WASHTHESEE → WASHTHEC: 약간 여유를 두고 전환
+    const textAnimTimer = setTimeout(() => setPhase(3), 6400);
+    // Phase 4(WATC 재등장) 제거 — collapse 결과가 곧 WATC이므로 중복 불필요
+    // WATC가 충분히 보인 후(약 2.2초) 브랜드 화면으로 전환
+    const brandTimer    = setTimeout(() => setPhase(6), 10800);
+    const navTimer      = setTimeout(() => navigate("/login"), 15000);
 
     return () => {
       clearTimeout(bubbleTimer);
       clearTimeout(imageTimer);
       clearTimeout(textAnimTimer);
-      clearTimeout(morphTimer);
       clearTimeout(brandTimer);
       clearTimeout(navTimer);
     };
@@ -208,22 +209,15 @@ export function Splash() {
         }
 
         .scroll_letter_box.collapse-letter {
-          animation: collapseLetter 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-          animation-delay: 0.6s;
+          animation: collapseLetter 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          /* WASHTHEC가 충분히 보인 후 천천히 사라지도록 딜레이 확보 */
+          animation-delay: 1.4s;
         }
 
         @keyframes collapseLetter {
-          0% {
-            width: 32px;
-            opacity: 1;
-          }
-          100% {
-            width: 0px;
-            opacity: 0;
-            padding: 0;
-            margin: 0;
-            pointer-events: none;
-          }
+          0%   { width: 32px; opacity: 1; filter: blur(0); }
+          40%  { opacity: 0.4; filter: blur(1px); }
+          100% { width: 0px; opacity: 0; padding: 0; margin: 0; pointer-events: none; filter: blur(2px); }
         }
 
         /* --- 방향별 위아래 교차 스크롤 등장 애니메이션 --- */
@@ -270,14 +264,15 @@ export function Splash() {
 
 
 
-        /* --- 고급스러운 피날레 펄싱 글로우 애니메이션 --- */
+        /* --- 피날레 펄싱 글로우 — collapse 완료(~2.2s) 후 WATC가 빛나도록 딜레이 적용 --- */
         .text_wrapper.pulsing {
-          animation: textPulse 2.4s ease-in-out infinite alternate;
+          animation: textPulse 2.6s ease-in-out infinite alternate;
+          animation-delay: 2.2s;
         }
 
         @keyframes textPulse {
-          0% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)) drop-shadow(0 0 12px rgba(147,197,253,0.2)); transform: scale(1); }
-          100% { filter: drop-shadow(0 0 16px rgba(255,255,255,0.6)) drop-shadow(0 0 24px rgba(147,197,253,0.5)); transform: scale(1.02); }
+          0%   { filter: drop-shadow(0 0 6px rgba(255,255,255,0.25)) drop-shadow(0 0 10px rgba(147,197,253,0.15)); transform: scale(1); }
+          100% { filter: drop-shadow(0 0 18px rgba(255,255,255,0.65)) drop-shadow(0 0 28px rgba(147,197,253,0.5)); transform: scale(1.015); }
         }
 
         /* --- [2번 페이지] 흰 배경 + C 로고 + 하강 버블 스타일 --- */
@@ -649,8 +644,7 @@ export function Splash() {
               key={`text-phase-${phase}`}
               className={`text_wrapper
                 ${phase >= 3 ? "morphing-active" : ""}
-                ${phase === 4 ? "watc-active" : ""}
-                ${phase === 3 || phase === 4 ? "pulsing" : ""}
+                ${phase === 3 ? "pulsing" : ""}
               `}
             >
               {getWordLetters().map((item, idx) => {
@@ -659,19 +653,12 @@ export function Splash() {
                 let boxClass = "scroll_letter_box";
                 if (item.isW) boxClass += " wide-w";
                 if (item.isSuffix) boxClass += " suffix-letter";
+                // phase 3: 불필요 글자는 collapse (WATC만 남음)
                 if (phase === 3 && !item.keep) boxClass += " collapse-letter";
 
-                let letterClass = "scroll_letter";
-                let customStyle = {};
-                if (phase === 4) {
-                  // WATC: 아래서 팡 튀어오르는 자라란
-                  letterClass += " zararan animate";
-                  const delays = [0, 0.15, 0.3, 0.45];
-                  customStyle = { animationDelay: `${delays[idx] ?? 0}s` };
-                } else {
-                  letterClass += ` ${isEven ? "scroll-up" : "scroll-down"} animate`;
-                  customStyle = { animationDelay: `${idx * 0.08}s` };
-                }
+                const letterClass =
+                  `scroll_letter ${isEven ? "scroll-up" : "scroll-down"} animate`;
+                const customStyle = { animationDelay: `${idx * 0.08}s` };
 
                 return (
                   <span key={`letter-${idx}`} className={boxClass}>
