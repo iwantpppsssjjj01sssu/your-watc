@@ -8,7 +8,8 @@ import j1Img from "../../asset/img/j1.png"; // 3D Laundry Basket on Stool
 import k1Img from "../../asset/img/k1.png"; // 3D Smart Phone Illustration
 import k11Img from "../../asset/img/k1-1.png"; // 3D Smartphone Hand
 import l1Img from "../../asset/img/l1.png"; // 3D Glass Metallic Ring
-import m1Img from "../../asset/img/m1.png"; // 3D Community Scene
+import m1Img from "../../asset/img/community-popular.svg"; // 인기 토픽 — 보라+연두
+import reserveIllustImg from "../../asset/img/m1.png"; // 예약 페이지 3D 일러스트
 
 import reviewBeddingImg from "../../asset/img/review-bedding.png";
 import reviewShirtsImg from "../../asset/img/review-shirts.png";
@@ -220,9 +221,41 @@ function SafeIcon() {
 export function HomePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<
-    "home" | "reserve" | "delivery" | "care" | "mypage"
-  >("home");
+  // Determine active tab from URL query parameter
+  const activeTabFromUrl = (() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab === "home" || tab === "reserve" || tab === "delivery" || tab === "care" || tab === "mypage") {
+      return tab as typeof tab;
+    }
+    return "home";
+  })();
+  const [activeTab, setActiveTab] = useState(activeTabFromUrl);
+
+  // Reset overlay states whenever the active tab changes or we leave the /home page
+  useEffect(() => {
+    // Close any modal/detail overlays tied to the Home page
+    setShowReserveDetail(false);
+    setShowReserveConfirm(false);
+    setShowOrderReceived(false);
+    setShowWriteReview(false);
+    setShowAllReviews(false);
+    setShowCommunityDetail(null);
+    setShowPricingDetail(false);
+    setShowUsageGuide(false);
+    setShowAiGuideDetail(false);
+    setShowWritePost(false);
+    setShowGiftModal(false);
+    setShowKakaoSim(false);
+    setShowWatcSim(false);
+    setShowContactUs(false);
+    setShowLaundryHistory(false);
+    setShowActiveOrderDetail(false);
+    setShowGpsDetail(false);
+    setShowPointDetail(false);
+    // Ensure active tab state matches URL query
+    setActiveTab(activeTabFromUrl);
+  }, [location.pathname, location.search]);
   const [selectedTag, setSelectedTag] = useState<string>("전체");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
@@ -350,10 +383,12 @@ export function HomePage() {
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [registeredClothes, setRegisteredClothes] = useState<any[]>([
     {
+      id: 0,
       name: "나의 아끼는 구스 코트",
       category: "아우터",
       materials: ["울", "합성섬유"],
       photo: true,
+      analyzing: false,
     },
   ]);
   const [wearCount, setWearCount] = useState<number>(4);
@@ -461,24 +496,7 @@ export function HomePage() {
     }
   }, [toastMessage]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const requestedTab = params.get("tab");
-    const from = params.get("from");
-    if (
-      requestedTab === "home" ||
-      requestedTab === "reserve" ||
-      requestedTab === "delivery" ||
-      requestedTab === "care" ||
-      requestedTab === "mypage"
-    ) {
-      setActiveTab(requestedTab);
-      if (from) setReserveFrom(from);
-      if (requestedTab === "reserve") {
-        setReserveDetailFromHome(false);
-      }
-    }
-  }, [location.search]);
+  // Duplicate activeTab handling removed – navigation state is now managed by the overlay reset effect above.
 
   // 모든 탭 이동 및 페이지 전환 시 최상단 스크롤 리셋
   useEffect(() => {
@@ -1009,7 +1027,7 @@ export function HomePage() {
         stars: "★★★★★",
         user: "워킹맘",
         date: "26.05.12",
-        body: `매일매일 쏟아져 나오는 아기 옷, 가제 수건, 내의들을 일일이 삶고 건조하기 벅찼는데 유기농 유아 전용 세제 옵션을 제공해 주셔서 맘 놓고 삶음 빨래 대행하고 있습니다.`,
+        body: `매일매일 쏟아져 나오는 아기 옷, 가제 수건, 내복들 일일이 삶고 건조하기 벅찼는데, 유아 전용 세제 옵션이 있어서 맘 놓고 맡겼어요. 아기 키우는 엄마들 참고하셔도 좋을 것 같아요.`,
         img: reviewWorkingMomImg,
         tags: ["아기옷세탁", "유기농세제"],
       },
@@ -5030,9 +5048,7 @@ export function HomePage() {
                       ) : (
                         <>
                           <div className="home_write_review_header">
-                            <span className="home_write_review_label">
-                              리뷰 남기기
-                            </span>
+                            <span className="home_write_review_label">리뷰 남기기</span>
                             <p className="home_write_review_sub">
                               세탁 서비스 경험을 공유해주세요
                             </p>
@@ -5559,6 +5575,114 @@ export function HomePage() {
                           </span>
                         </div>
 
+                        
+                          <div className="care_analysis_widget"> <h3 className="care_widget_title">실시간 AI 소재 분석</h3>
+                          {registeredClothes.length === 0 ? (
+                            <p className="no_data_hint">
+                              등록된 의류가 없습니다. 위 폼에서 의류를 등록해 주세요!
+                            </p>
+                          ) : (
+                            <>
+                              {/* Latest analysis result */}
+                              <div className="care_analysis_scroll">
+                                {registeredClothes[0] && (
+                                  <div key={registeredClothes[0].id ?? 0} className="analysis_result_card">
+                                    <div className="analysis_card_header">
+                                      <span className="anal_badge">{registeredClothes[0].category}</span>
+                                      <span className="anal_name">{registeredClothes[0].name}</span>
+                                    </div>
+                                    {registeredClothes[0].analyzing ? (
+                                      <div className="anal_loading">
+                                        <div className="anal_spinner" />
+                                        <span className="anal_loading_text">AI 소재 분석 중...</span>
+                                      </div>
+                                    ) : (
+                                      <div className="anal_details">
+                                        <div className="anal_row">
+                                          <span className="anal_lbl">분석 소재</span>
+                                          <span className="anal_val font_bold">{registeredClothes[0].materials.join(" + ")}</span>
+                                        </div>
+                                        <div className="anal_row">
+                                          <span className="anal_lbl">세탁 방법 안내</span>
+                                          <span className="anal_val text_blue font_bold">{(() => {
+                                            let laundryGuide = "일반 세탁 권장 (찬물 세탁)";
+                                            const m = registeredClothes[0].materials;
+                                            if (m.includes("실크")) laundryGuide = "손세탁 절대 권장 (중성세제 사용)";
+                                            else if (m.includes("울")) laundryGuide = "드라이클리닝 필수 권장";
+                                            else if (m.includes("합성섬유") && m.includes("면")) laundryGuide = "일반 세탁 (세탁기 표준코스 가능)";
+                                            else if (m.includes("합성섬유")) laundryGuide = "일반 세탁 및 건조기 사용 제어";
+                                            return laundryGuide;
+                                          })()}</span>
+                                        </div>
+                                        <div className="anal_row">
+                                          <span className="anal_lbl">주의사항 안내</span>
+                                          <span className="anal_val text_red font_bold">⚠️ {(() => {
+                                            let warningGuide = "손상 주의 (올 풀림 경고)";
+                                            const m = registeredClothes[0].materials;
+                                            if (m.includes("실크")) warningGuide = "변색 주의 & 손상 주의";
+                                            else if (m.includes("울")) warningGuide = "수축 주의 (온수 금지)";
+                                            else if (m.includes("합성섬유") && m.includes("면")) warningGuide = "변색 주의 (단독 세탁)";
+                                            else if (m.includes("합성섬유")) warningGuide = "손상 주의 (고온 열풍 피함)";
+                                            return warningGuide;
+                                          })()}</span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* History section */}
+                              {registeredClothes.length > 1 && (
+                                <section className="care_history_section">
+                                  <h3 className="care_widget_title">지난 분석 이력</h3>
+                                  <div className="care_history_grid">
+                                    {registeredClothes.slice(1, 4).map((cloth) => (
+                                      <div key={cloth.id ?? cloth.name} className="analysis_result_card history_card">
+                                        <div className="analysis_card_header">
+                                          <span className="anal_badge">{cloth.category}</span>
+                                          <span className="anal_name">{cloth.name}</span>
+                                        </div>
+                                        <div className="anal_details">
+                                          <div className="anal_row">
+                                            <span className="anal_lbl">분석 소재</span>
+                                            <span className="anal_val font_bold">{cloth.materials.join(" + ")}</span>
+                                          </div>
+                                          <div className="anal_row">
+                                            <span className="anal_lbl">세탁 방법 안내</span>
+                                            <span className="anal_val text_blue font_bold">{(() => {
+                                              let lg = "일반 세탁 권장 (찬물 세탁)";
+                                              const m = cloth.materials;
+                                              if (m.includes("실크")) lg = "손세탁 절대 권장 (중성세제 사용)";
+                                              else if (m.includes("울")) lg = "드라이클리닝 필수 권장";
+                                              else if (m.includes("합성섬유") && m.includes("면")) lg = "일반 세탁 (세탁기 표준코스 가능)";
+                                              else if (m.includes("합성섬유")) lg = "일반 세탁 및 건조기 사용 제어";
+                                              return lg;
+                                            })()}</span>
+                                          </div>
+                                          <div className="anal_row">
+                                            <span className="anal_lbl">주의사항 안내</span>
+                                            <span className="anal_val text_red font_bold">⚠️ {(() => {
+                                              let wg = "손상 주의 (올 풀림 경고)";
+                                              const m = cloth.materials;
+                                              if (m.includes("실크")) wg = "변색 주의 & 손상 주의";
+                                              else if (m.includes("울")) wg = "수축 주의 (온수 금지)";
+                                              else if (m.includes("합성섬유") && m.includes("면")) wg = "변색 주의 (단독 세탁)";
+                                              else if (m.includes("합성섬유")) wg = "손상 주의 (고온 열풍 피함)";
+                                              return wg;
+                                            })()}</span>
+                                          </div>
+                                        </div>
+                                        <button className="history_delete_btn" onClick={() => {
+                                          setRegisteredClothes((prev) => prev.filter((c) => c.id !== cloth.id));
+                                        }} aria-label="Delete history entry">✖</button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </section>
+
+                        </div>
+
                         {/* 팔레트 그리드 */}
                         <div className="scent_palette_grid">
                           {scents.map((s) => {
@@ -6066,6 +6190,119 @@ export function HomePage() {
                           className={`triple_option_card ${collectionSpot === spot.id ? "active" : ""}`}
                           onClick={() => setCollectionSpot(spot.id)}
                         >
+                          <div className="care_analysis_widget">
+  <h3 className="care_widget_title">실시간 AI 소재 분석</h3>
+  {registeredClothes.length === 0 ? (
+    <p className="no_data_hint">
+      등록된 의류가 없습니다. 위 폼에서 의류를 등록해 주세요!
+    </p>
+  ) : (
+    <>
+      {/* Latest analysis result */}
+      <div className="care_analysis_scroll">
+        {registeredClothes[0] && (
+          <div key={registeredClothes[0].id ?? 0} className="analysis_result_card">
+            <div className="analysis_card_header">
+              <span className="anal_badge">{registeredClothes[0].category}</span>
+              <span className="anal_name">{registeredClothes[0].name}</span>
+            </div>
+            {registeredClothes[0].analyzing ? (
+              <div className="anal_loading">
+                <div className="anal_spinner" />
+                <span className="anal_loading_text">AI 소재 분석 중...</span>
+              </div>
+            ) : (
+              <div className="anal_details">
+                <div className="anal_row">
+                  <span className="anal_lbl">분석 소재</span>
+                  <span className="anal_val font_bold">{registeredClothes[0].materials.join(" + ")}</span>
+                </div>
+                <div className="anal_row">
+                  <span className="anal_lbl">세탁 방법 안내</span>
+                  <span className="anal_val text_blue font_bold">{(() => {
+                    let laundryGuide = "일반 세탁 권장 (찬물 세탁)";
+                    const m = registeredClothes[0].materials;
+                    if (m.includes("실크")) laundryGuide = "손세탁 절대 권장 (중성세제 사용)";
+                    else if (m.includes("울")) laundryGuide = "드라이클리닝 필수 권장";
+                    else if (m.includes("합성섬유") && m.includes("면")) laundryGuide = "일반 세탁 (세탁기 표준코스 가능)";
+                    else if (m.includes("합성섬유")) laundryGuide = "일반 세탁 및 건조기 사용 제어";
+                    return laundryGuide;
+                  })()}</span>
+                </div>
+                <div className="anal_row">
+                  <span className="anal_lbl">주의사항 안내</span>
+                  <span className="anal_val text_red font_bold">⚠️ {(() => {
+                    let warningGuide = "손상 주의 (올 풀림 경고)";
+                    const m = registeredClothes[0].materials;
+                    if (m.includes("실크")) warningGuide = "변색 주의 & 손상 주의";
+                    else if (m.includes("울")) warningGuide = "수축 주의 (온수 금지)";
+                    else if (m.includes("합성섬유") && m.includes("면")) warningGuide = "변색 주의 (단독 세탁)";
+                    else if (m.includes("합성섬유")) warningGuide = "손상 주의 (고온 열풍 피함)";
+                    return warningGuide;
+                  })()}</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* History section */}
+      {registeredClothes.length > 1 && (
+        <section className="care_history_section">
+          <h3 className="care_widget_title">지난 분석 이력</h3>
+          <div className="care_history_grid">
+            {registeredClothes.slice(1, 4).map((cloth) => (
+              <div key={cloth.id ?? cloth.name} className="analysis_result_card history_card">
+                <div className="analysis_card_header">
+                  <span className="anal_badge">{cloth.category}</span>
+                  <span className="anal_name">{cloth.name}</span>
+                </div>
+                <div className="anal_details">
+                  <div className="anal_row">
+                    <span className="anal_lbl">분석 소재</span>
+                    <span className="anal_val font_bold">{cloth.materials.join(" + ")}</span>
+                  </div>
+                  <div className="anal_row">
+                    <span className="anal_lbl">세탁 방법 안내</span>
+                    <span className="anal_val text_blue font_bold">{(() => {
+                      let lg = "일반 세탁 권장 (찬물 세탁)";
+                      const m = cloth.materials;
+                      if (m.includes("실크")) lg = "손세탁 절대 권장 (중성세제 사용)";
+                      else if (m.includes("울")) lg = "드라이클리닝 필수 권장";
+                      else if (m.includes("합성섬유") && m.includes("면")) lg = "일반 세탁 (세탁기 표준코스 가능)";
+                      else if (m.includes("합성섬유")) lg = "일반 세탁 및 건조기 사용 제어";
+                      return lg;
+                    })()}</span>
+                  </div>
+                  <div className="anal_row">
+                    <span className="anal_lbl">주의사항 안내</span>
+                    <span className="anal_val text_red font_bold">⚠️ {(() => {
+                      let wg = "손상 주의 (올 풀림 경고)";
+                      const m = cloth.materials;
+                      if (m.includes("실크")) wg = "변색 주의 & 손상 주의";
+                      else if (m.includes("울")) wg = "수축 주의 (온수 금지)";
+                      else if (m.includes("합성섬유") && m.includes("면")) wg = "변색 주의 (단독 세탁)";
+                      else if (m.includes("합성섬유")) wg = "손상 주의 (고온 열풍 피함)";
+                      return wg;
+                    })()}</span>
+                  </div>
+                </div>
+                <button
+                  className="history_delete_btn"
+                  onClick={() => {
+                    setRegisteredClothes((prev) => prev.filter((c) => c.id !== cloth.id));
+                  }}
+                  aria-label="Delete history entry"
+                >✖</button>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  )}
+</div>
                           <div className="triple_option_avatar_circle">
                             <div className="inner_avatar_placeholder" />
                           </div>
@@ -6298,7 +6535,19 @@ export function HomePage() {
                     <p className="reserve_header_desc">
                       널부러진 빨래 걱정은 이제 그만.
                       <br />
-                      60초 예약으로 다음 날 바로 깨끗하게!
+                      60초 예약으로 다음 날 바로{" "}
+                      <span className="reserve_underline_wrap">
+                        깨끗하게
+                        <svg
+                          className="reserve_hand_underline"
+                          viewBox="0 0 76 9"
+                          preserveAspectRatio="none"
+                          aria-hidden="true"
+                        >
+                          <path d="M1,6 C12,3 24,8 38,5 C52,2 64,8 75,5" />
+                        </svg>
+                      </span>
+                      !
                     </p>
                   </div>
                 </header>
@@ -6320,7 +6569,7 @@ export function HomePage() {
                 {/* 중앙 3D 일러스트 이미지 단독 배치 (가득 차게 키움) */}
                 <section className="reserve_basket_container">
                   <img
-                    src={m1Img}
+                    src={reserveIllustImg}
                     alt="3D 세탁 일러스트"
                     className="reserve_m1_large_img"
                   />
@@ -6494,7 +6743,30 @@ export function HomePage() {
                       <line x1="0" y1="160" x2="358" y2="160" />
                       <line x1="0" y1="200" x2="358" y2="200" />
 
-                      <line x1="60" y1="0" x2="60" y2="220" />
+                      <line x1="60"                     onClick={() => {
+                      if (!clothName.trim()) {
+                        triggerToast("⚠️ 의류 이름을 입력해 주세요!");
+                        return;
+                      }
+                      if (selectedMaterials.length === 0) {
+                        triggerToast("⚠️ 최소 하나 이상의 소재를 선택해 주세요!");
+                        return;
+                      }
+                      const newCloth = {
+                        name: clothName,
+                        category: clothCategory,
+                        materials: selectedMaterials,
+                        photo: hasPhoto,
+                      };
+                      setRegisteredClothes([newCloth, ...registeredClothes]);
+                      setClothName("");
+                      setSelectedMaterials([]);
+                      setHasPhoto(false);
+                      triggerToast("✨ 새 의류가 성공적으로 등록 및 분석되었습니다!");
+                      // After registration, open AI 세탁 스캐너 가이드 detail
+                      setShowAiGuideDetail(true);
+                      triggerToast("📸 AI 세탁 가이드 스캐너를 작동합니다.");
+                    }} y1="0" x2="60" y2="220" />
                       <line x1="120" y1="0" x2="120" y2="220" />
                       <line x1="180" y1="0" x2="180" y2="220" />
                       <line x1="240" y1="0" x2="240" y2="220" />
@@ -6527,85 +6799,9 @@ export function HomePage() {
                       y="112"
                       fill="#bae6fd"
                       fontSize="8"
-                      fontWeight="700"
-                      fontFamily="var(--font-pretendard)"
-                      letterSpacing="1"
                     >
-                      HAN RIVER
+                      한강
                     </text>
-
-                    {/* Decorative Local Roads */}
-                    <g
-                      stroke="#ffffff"
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      opacity="0.9"
-                    >
-                      <line x1="75" y1="0" x2="75" y2="220" />
-                      <line x1="275" y1="0" x2="275" y2="220" />
-                      <line x1="0" y1="55" x2="358" y2="55" />
-                      <line x1="0" y1="165" x2="358" y2="165" />
-                    </g>
-
-                    {/* Inner Road Lines */}
-                    <g
-                      stroke="#cbd5e1"
-                      strokeWidth="1"
-                      strokeDasharray="3 3"
-                      strokeLinecap="round"
-                      opacity="0.6"
-                    >
-                      <line x1="75" y1="0" x2="75" y2="220" />
-                      <line x1="275" y1="0" x2="275" y2="220" />
-                      <line x1="0" y1="55" x2="358" y2="55" />
-                      <line x1="0" y1="165" x2="358" y2="165" />
-                    </g>
-
-                    {/* Main Curved Delivery Transit Route (Underlay Grey Road) */}
-                    <path
-                      d="M 40 145 C 90 145, 120 65, 175 65 C 230 65, 260 145, 315 145"
-                      fill="none"
-                      stroke="#e2e8f0"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                    />
-
-                    {/* Animated Glowing Neon Line on top of the main path */}
-                    <path
-                      d="M 40 145 C 90 145, 120 65, 175 65 C 230 65, 260 145, 315 145"
-                      fill="none"
-                      className={`delivery_neon_glowing_path ${trackingActive ? "delivery_neon_glowing_path--active" : ""}`}
-                      stroke="url(#neon-route-grad)"
-                      strokeWidth="5"
-                      strokeLinecap="round"
-                    />
-
-                    {/* SVG gradients */}
-                    <defs>
-                      <linearGradient
-                        id="neon-route-grad"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="0%"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#3b82f6"
-                          stopOpacity="0.8"
-                        />
-                        <stop
-                          offset="50%"
-                          stopColor="#60a5fa"
-                          stopOpacity="1"
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="#2563eb"
-                          stopOpacity="0.9"
-                        />
-                      </linearGradient>
-                    </defs>
 
                     {/* Landmarks Labels */}
                     <g transform="translate(45, 122)">
@@ -7129,19 +7325,28 @@ export function HomePage() {
                       triggerToast("⚠️ 최소 하나 이상의 소재를 선택해 주세요!");
                       return;
                     }
+                    const newId = Date.now();
                     const newCloth = {
+                      id: newId,
                       name: clothName,
                       category: clothCategory,
                       materials: selectedMaterials,
                       photo: hasPhoto,
+                      analyzing: true,
                     };
-                    setRegisteredClothes([newCloth, ...registeredClothes]);
+                    setRegisteredClothes((prev) => [newCloth, ...prev]);
                     setClothName("");
                     setSelectedMaterials([]);
                     setHasPhoto(false);
-                    triggerToast(
-                      "✨ 새 의류가 성공적으로 등록 및 분석되었습니다!",
-                    );
+                    triggerToast("🔬 AI 소재 분석을 시작합니다...");
+                    setTimeout(() => {
+                      setRegisteredClothes((prev) =>
+                        prev.map((c) =>
+                          c.id === newId ? { ...c, analyzing: false } : c,
+                        ),
+                      );
+                      triggerToast("✨ AI 소재 분석이 완료되었습니다!");
+                    }, 1800);
                   }}
                 >
                   의류 등록 및 AI 소재 분석하기
@@ -7180,31 +7385,40 @@ export function HomePage() {
                       }
 
                       return (
-                        <div key={idx} className="analysis_result_card">
+                        <div key={cloth.id ?? idx} className="analysis_result_card">
                           <div className="analysis_card_header">
                             <span className="anal_badge">{cloth.category}</span>
                             <span className="anal_name">{cloth.name}</span>
                           </div>
-                          <div className="anal_details">
-                            <div className="anal_row">
-                              <span className="anal_lbl">분석 소재</span>
-                              <span className="anal_val font_bold">
-                                {cloth.materials.join(" + ")}
+                          {cloth.analyzing ? (
+                            <div className="anal_loading">
+                              <div className="anal_spinner" />
+                              <span className="anal_loading_text">
+                                AI 소재 분석 중...
                               </span>
                             </div>
-                            <div className="anal_row">
-                              <span className="anal_lbl">세탁 방법 안내</span>
-                              <span className="anal_val text_blue font_bold">
-                                {laundryGuide}
-                              </span>
+                          ) : (
+                            <div className="anal_details">
+                              <div className="anal_row">
+                                <span className="anal_lbl">분석 소재</span>
+                                <span className="anal_val font_bold">
+                                  {cloth.materials.join(" + ")}
+                                </span>
+                              </div>
+                              <div className="anal_row">
+                                <span className="anal_lbl">세탁 방법 안내</span>
+                                <span className="anal_val text_blue font_bold">
+                                  {laundryGuide}
+                                </span>
+                              </div>
+                              <div className="anal_row">
+                                <span className="anal_lbl">주의사항 안내</span>
+                                <span className="anal_val text_red font_bold">
+                                  ⚠️ {warningGuide}
+                                </span>
+                              </div>
                             </div>
-                            <div className="anal_row">
-                              <span className="anal_lbl">주의사항 안내</span>
-                              <span className="anal_val text_red font_bold">
-                                ⚠️ {warningGuide}
-                              </span>
-                            </div>
-                          </div>
+                          )}
                         </div>
                       );
                     })}
@@ -7850,11 +8064,6 @@ export function HomePage() {
                       )}
                     </div>
                   ))}
-                </div>
-
-                {/* 진행률 바 */}
-                <div className="mao_progress_track">
-                  <div className="mao_progress_fill" style={{ width: "50%" }} />
                 </div>
 
                 {/* 세탁 품목 + 예상 도착 */}

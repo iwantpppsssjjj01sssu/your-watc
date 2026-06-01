@@ -10,6 +10,7 @@ import riderYunseoImg from "../../asset/img/rider_yunseo.png";
 
 export function DeliveryPage() {
   const navigate = useNavigate();
+  const [showContent, setShowContent] = useState<boolean>(false);
   const [position, setPosition] = useState<{
     lat: number;
     lng: number;
@@ -179,6 +180,34 @@ export function DeliveryPage() {
       </header>
 
       <div className="delivery_content">
+
+        {/* ── 캐릭터 히어로 섹션 ── */}
+        <div className="delivery_hero_section">
+          <div className="delivery_hero_char_wrap">
+            <img
+              src={riderMinsuImg}
+              alt="수거 마스터"
+              className="delivery_hero_char_img"
+            />
+          </div>
+          <div className="delivery_hero_bubble">
+            <p className="delivery_hero_bubble_text">
+              수거 요청이나 예약 정보를<br />확인하시겠어요?
+            </p>
+          </div>
+          {!showContent && (
+            <button
+              type="button"
+              className="delivery_hero_ok_btn"
+              onClick={() => setShowContent(true)}
+            >
+              OK
+            </button>
+          )}
+        </div>
+
+        {showContent && (
+          <>
         <p className="delivery_content_subtitle">
           수거 요청 접수 · 예약 정보 확인
         </p>
@@ -1321,6 +1350,8 @@ export function DeliveryPage() {
             </p>
           </div>
         </section>
+          </>
+        )}
       </div>
 
       {/* 라이더 변경 모달 (Glassmorphic Slide-up Sheet) */}

@@ -41,7 +41,7 @@
 
 /* Header section */
 .home_header {
-  padding: 32px 24px 18px;
+  padding: 32px 20px 18px;
   text-align: left;
 }
 
@@ -84,7 +84,7 @@
 
 /* Dashboard Card (Summary) */
 .home_dashboard {
-  padding: 0 12px;
+  padding: 0 20px;
   margin-bottom: 28px;
 }
 
@@ -593,7 +593,7 @@
   border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-.home_info_card--amber .home_info_card_badge { color: #475569; background: rgba(71, 85, 105, 0.10); }
+.home_info_card--amber .home_info_card_badge { color: #2563eb; background: rgba(37, 99, 235, 0.10); }
 .home_info_card--amber .home_info_card_title { color: #0f172a; }
 .home_info_card--amber .home_info_card_sub   { color: #64748b; }
 
@@ -1912,6 +1912,7 @@
   padding: 14px 16px;
   border-bottom: 1px solid #f1f5f9;
   flex-shrink: 0;
+  justify-content: center; /* center align tags */
 }
 
 .review_all_tag_bar::-webkit-scrollbar {
@@ -2850,6 +2851,35 @@
   animation-delay: 0.55s;
 }
 
+/* 손글씨 밑줄 — "깨끗하게" */
+.reserve_underline_wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.reserve_hand_underline {
+  position: absolute;
+  bottom: -3px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 9px;
+  overflow: visible;
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 2.6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* 전체 경로 길이 ≈ 90 */
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+  animation: drawHandUnderline 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 2s;
+}
+
+@keyframes drawHandUnderline {
+  to { stroke-dashoffset: 0; }
+}
+
 .reserve_header_img {
   position: absolute;
   right: 20px;
@@ -3110,12 +3140,12 @@
 
 .home_tab_bar {
   position: fixed;
-  bottom: 16px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
   left: 50%;
   transform: translateX(-50%);
   width: min(100%, 880px);
   max-width: 100%;
-  height: 96px;
+  height: 104px; /* increased for extra padding */
   background-color: #ffffff;
   border-top: 1px solid #f1f5f9;
   display: flex;
@@ -3342,6 +3372,7 @@
 
 .delivery_status_section {
   padding: 0 20px;
+  margin-top: 16px;
   margin-bottom: 24px;
 }
 
@@ -3788,7 +3819,7 @@
 }
 
 .care_section_title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   color: #000000;
   margin: 0 0 16px;
@@ -4039,6 +4070,35 @@
   border: 1px solid #e2e8f0;
   padding: 14px;
   box-sizing: border-box;
+}
+
+/* 분석 로딩 상태 */
+.anal_loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 4px 6px;
+}
+
+.anal_spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: analSpin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes analSpin {
+  to { transform: rotate(360deg); }
+}
+
+.anal_loading_text {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2563eb;
+  letter-spacing: -0.2px;
 }
 
 .analysis_card_header {
@@ -4531,8 +4591,8 @@
 .care_lifecare_card {
   background-color: #f8fafc;
   border-radius: 20px;
-  border: 1px solid #f1f5f9;
-  padding: 16px;
+  border: 1px solid #e9eef5;
+  padding: 18px 16px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -4540,20 +4600,21 @@
 .life_card_header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 9px;
+  margin-bottom: 9px;
 }
 
 .life_card_icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 12px;
   background-color: #ffffff;
   color: #1f2937;
   box-shadow: 0 1px 4px rgba(31, 41, 55, 0.08);
+  flex-shrink: 0;
 }
 
 .life_card_icon svg {
@@ -4562,18 +4623,20 @@
 }
 
 .life_card_title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
-  color: #1e293b;
+  color: #0f172a;
   margin: 0;
+  letter-spacing: -0.2px;
 }
 
 .life_card_desc {
-  font-size: 10.5px;
-  color: #64748b;
+  font-size: 13px;
+  color: #475569;
   margin: 0;
-  line-height: 1.45;
+  line-height: 1.65;
   font-weight: 500;
+  letter-spacing: -0.1px;
 }
 
 /* 6. Accordion Tips */
@@ -5291,11 +5354,11 @@
 }
 
 .mypage_active_order_title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
 }
 
 .mypage_active_order_all_btn {

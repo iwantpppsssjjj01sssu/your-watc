@@ -109,6 +109,109 @@ export function Splash() {
         `}</style>
       )}
       <style>{`
+        /* ════════════════════════════════════════
+           SKIP 버튼 — 어떤 배경에서도 잘 보이는 글래스 캡슐
+           ════════════════════════════════════════ */
+        .skip_btn {
+          position: fixed;
+          top: 28px;
+          right: 22px;
+          z-index: 99999;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 8px 16px 8px 14px;
+          border-radius: 999px;
+          font-size: 12.5px;
+          font-weight: 700;
+          font-family: var(--font-pretendard);
+          letter-spacing: 0.1px;
+          cursor: pointer;
+          white-space: nowrap;
+          overflow: hidden;
+          position: fixed;
+          transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                      box-shadow 0.22s ease,
+                      background 0.22s ease;
+        }
+
+        .skip_btn::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 999px;
+          background: linear-gradient(105deg,
+            transparent 35%,
+            rgba(255,255,255,0.18) 50%,
+            transparent 65%
+          );
+          animation: skipShimmer 5s ease-in-out infinite;
+          pointer-events: none;
+        }
+
+        @keyframes skipShimmer {
+          0%   { transform: translateX(-120%); opacity: 0; }
+          15%  { opacity: 1; }
+          45%  { transform: translateX(220%); opacity: 0; }
+          100% { transform: translateX(220%); opacity: 0; }
+        }
+
+        .skip_btn:active {
+          transform: scale(0.95);
+        }
+
+        /* ── 밝은 배경 모드 (phase 0·1·6: 흰 배경) ── */
+        .skip_btn--light {
+          background: rgba(15, 23, 42, 0.07);
+          border: 1.5px solid rgba(15, 23, 42, 0.15);
+          color: #334155;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06),
+                      inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        .skip_btn--light:hover {
+          background: rgba(15, 23, 42, 0.11);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10),
+                      inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        /* ── 어두운 배경 모드 (phase 2~5: 파란 배경) ── */
+        .skip_btn--dark {
+          background: rgba(255, 255, 255, 0.13);
+          border: 1.5px solid rgba(255, 255, 255, 0.28);
+          color: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(14px);
+          box-shadow: 0 2px 14px rgba(37, 99, 235, 0.18),
+                      0 0 0 0 rgba(147,197,253,0),
+                      inset 0 1px 0 rgba(255,255,255,0.18);
+          animation: skipPulse 3.8s ease-in-out infinite,
+                     skipGlow  4s ease-in-out infinite alternate;
+        }
+
+        @keyframes skipPulse {
+          0%, 100% { transform: scale(1); }
+          50%       { transform: scale(1.018); }
+        }
+
+        @keyframes skipGlow {
+          0%   { box-shadow: 0 2px 10px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.15); }
+          100% { box-shadow: 0 2px 22px rgba(147,197,253,0.45), 0 0 28px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.25); }
+        }
+
+        .skip_btn--dark:hover {
+          background: rgba(255, 255, 255, 0.20);
+          animation: none;
+          transform: scale(1.03);
+        }
+
+        .skip_btn_arrow {
+          width: 13px;
+          height: 13px;
+          opacity: 0.72;
+          flex-shrink: 0;
+        }
+
         /* --- 로고 컨테이너 세로 스택 정렬 --- */
         .splash_logo_container {
           display: flex;
@@ -504,8 +607,23 @@ export function Splash() {
         }
       `}</style>
 
-      {/* SKIP BUTTON */}
-      <button style={styles.skipButton} onClick={handleSkip}>
+      {/* SKIP BUTTON — 배경에 따라 light/dark 모드 자동 전환 */}
+      <button
+        className={`skip_btn ${phase >= 2 && phase < 6 ? "skip_btn--dark" : "skip_btn--light"}`}
+        onClick={handleSkip}
+        aria-label="스킵"
+      >
+        <svg
+          className="skip_btn_arrow"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none" opacity="0.8"/>
+        </svg>
         Skip
       </button>
 
@@ -714,23 +832,6 @@ const styles = {
     position: "relative" as const,
     overflow: "hidden",
     fontFamily: "var(--font-pretendard)",
-  },
-  skipButton: {
-    position: "absolute" as const,
-    top: "30px",
-    right: "25px",
-    padding: "8px 18px",
-    backgroundColor: "rgba(15, 23, 42, 0.08)",
-    backdropFilter: "blur(4px)",
-    color: "#475569",
-    border: "none",
-    borderRadius: "20px",
-    fontSize: "13px",
-    fontWeight: 700,
-    cursor: "pointer",
-    fontFamily: "var(--font-pretendard)",
-    zIndex: 99999,
-    whiteSpace: "nowrap" as const,
   },
   baseScreen: {
     width: "100%",
