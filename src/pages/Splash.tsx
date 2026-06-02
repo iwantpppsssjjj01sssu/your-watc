@@ -100,7 +100,7 @@ export function Splash() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="page-enter" style={containerStyle}>
       {isInIframe && (
         <style>{`
           .blue_cover_layer {

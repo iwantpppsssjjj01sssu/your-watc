@@ -47,7 +47,7 @@ export function AgreementPage() {
   };
 
   return (
-    <div id="agreement-page-root" style={styles.container}>
+    <div id="agreement-page-root" className="page-enter" style={styles.container}>
       <style>{`body:has(#agreement-page-root) { padding-left: 0 !important; padding-right: 0 !important; }`}</style>
 
       {/* 히어로 영역 */}

@@ -342,7 +342,7 @@ export function LifeCareDetailPage() {
   };
 
   return (
-    <div className="lifecare_detail_wrapper">
+    <div className="lifecare_detail_wrapper page-enter">
       <div className="lifecare_detail_container">
         {/* 상단 블러 고정 헤더 */}
         <header className="detail_blur_header">

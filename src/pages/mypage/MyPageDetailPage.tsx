@@ -686,7 +686,7 @@ export function MyPageDetailPage() {
   ];
 
   return (
-    <div className="mypagedetail_wrapper">
+    <div className="mypagedetail_wrapper page-enter">
       <div className="mypagedetail_container">
         {/* 상단 고정 투명 백드롭 헤더 */}
         <header className="menu_detail_header">

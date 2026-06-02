@@ -155,7 +155,7 @@ export function DeliveryPage() {
 
   return (
     <div
-      className={`delivery_container${!showContent ? " delivery_container--hero" : ""}`}
+      className={`delivery_container page-enter${!showContent ? " delivery_container--hero" : ""}`}
     >
       <header className="delivery_header">
         <button

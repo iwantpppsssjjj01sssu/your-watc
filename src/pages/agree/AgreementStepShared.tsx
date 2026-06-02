@@ -44,7 +44,7 @@ export function AgreementStepLayout({
 
   return (
     <main
-      className={`agreement_step_page ${!showBanner ? "agreement_step_page--nobanner" : ""}`}
+      className={`agreement_step_page page-enter ${!showBanner ? "agreement_step_page--nobanner" : ""}`}
       style={isInIframe ? { minHeight: "100%", height: "100%" } : undefined}
     >
       {showBanner && <BackButton />}

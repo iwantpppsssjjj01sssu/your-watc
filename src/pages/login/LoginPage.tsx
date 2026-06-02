@@ -396,7 +396,7 @@ export function LoginPage() {
   };
 
   return (
-    <div id="login-page-root" style={styles.container}>
+    <div id="login-page-root" className="page-enter" style={styles.container}>
       <style>{`
         body:has(#login-page-root) {
           padding-left: 0 !important;

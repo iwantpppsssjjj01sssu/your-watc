@@ -13,6 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
   --font-pretendard: "Pretendard Variable", "Pretendard", system-ui, sans-serif;
   --font-kbl-jump: var(--font-pretendard);
+  --header-height: 72px;
+  --header-total-height: calc(var(--header-height) + env(safe-area-inset-top, 0px));
   --color-black: #1a1a1a;
   --color-white: #ffffff;
   
@@ -119,6 +121,17 @@ a {
 .premium_back_btn:active {
   transform: scale(0.94) !important;
   background-color: #f1f5f9 !important;
+}
+
+/* ── 페이지 진입 페이드 인 ── */
+/* transform 사용 금지: position:fixed 자식(BottomNav)이 부모 기준으로 깨짐 */
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.22s ease-out both;
 }
 
 .premium_back_btn svg {

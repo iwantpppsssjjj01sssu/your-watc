@@ -5,6 +5,9 @@ import "./HomePage.css";
 import i1Img from "../../asset/img/i1.png";
 
 import j1Img from "../../asset/img/j1.png"; // 3D Laundry Basket on Stool
+import eventImg from "../../asset/img/event.png";
+import eventIconImg from "../../asset/img/event_icon.png";
+import qaImg from "../../asset/img/Q&A.png";
 import k1Img from "../../asset/img/k1.png"; // 3D Smart Phone Illustration
 import k11Img from "../../asset/img/k1-1.png"; // 3D Smartphone Hand
 import l1Img from "../../asset/img/l1.png"; // 3D Glass Metallic Ring
@@ -262,6 +265,7 @@ export function HomePage() {
   const [selectedTag, setSelectedTag] = useState<string>("전체");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
+  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
   const [allReviewsTag, setAllReviewsTag] = useState<string>("전체");
   const homeReviewSwiperRef = useRef<HTMLDivElement>(null);
@@ -397,8 +401,7 @@ export function HomePage() {
   const [wearCount, setWearCount] = useState<number>(4);
   const [targetCycle, setTargetCycle] = useState<number>(5);
   const [alertEnabled, setAlertEnabled] = useState<boolean>(true);
-  const [personalOption, setPersonalOption] =
-    useState<string>("실크 전용 보호제");
+
   // -----------------------------------
 
   // --- Reservation Detail Page States ---
@@ -559,6 +562,15 @@ export function HomePage() {
       return () => clearTimeout(timer);
     }
   }, [showCommunityDetail]);
+
+  // --- selectedReview 모달 열릴 때 창 스크롤 최상단 리셋 ---
+  useEffect(() => {
+    if (selectedReview) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [selectedReview]);
 
   // --- 이용방법 오버레이 열릴 때 내부 스크롤 최상단 리셋 ---
   useEffect(() => {
@@ -3819,7 +3831,7 @@ export function HomePage() {
               tips: communityTipsImg,
               popular: m1Img,
               qa: l1Img,
-              event: j1Img,
+              event: eventImg,
             };
             const posts: Record<
               string,
@@ -4020,48 +4032,48 @@ export function HomePage() {
               ],
               event: [
                 {
-                  title: "🎁 6월 첫 이용 고객 50% 할인 이벤트!",
-                  author: "왓씨공식",
+                  title: "6월 신규 가입 고객 첫 주문 50% 할인",
+                  author: "WatC 공식",
                   date: "2026.06.01",
                   excerpt:
-                    "이번 달 왓씨 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 예약하세요!",
-                  img: j1Img,
+                    "이번 달 왓씨를 처음 이용하시는 분들께 첫 주문 50% 할인 혜택을 드립니다. 지금 바로 예약해보세요!",
+                  img: eventImg,
                   likes: 231,
                   comments: 45,
-                  tags: ["#이벤트", "#50%할인", "#신규혜택"],
+                  tags: ["#신규혜택", "#50%할인", "#이벤트"],
                 },
                 {
-                  title: "☀️ 여름맞이 이불 세탁 특가 — 최대 30% OFF",
-                  author: "왓씨공식",
+                  title: "여름맞이 이불 세탁 특가 — 최대 30% OFF",
+                  author: "WatC 공식",
                   date: "2026.05.30",
                   excerpt:
-                    "무더운 여름 전에 이불 세탁 미리 맡기세요! 5월 31일까지 이불류 전품목 최대 30% 할인!",
-                  img: reviewBeddingImg,
+                    "무더운 여름 전에 이불 세탁 미리 맡기세요. 5월 31일까지 이불류 전 품목 최대 30% 할인!",
+                  img: eventImg,
                   likes: 187,
                   comments: 34,
-                  tags: ["#이불특가", "#여름준비"],
+                  tags: ["#이불특가", "#여름준비", "#시즌할인"],
                 },
                 {
-                  title: "👥 친구 초대하면 둘 다 3,000P 적립!",
-                  author: "왓씨공식",
+                  title: "친구 초대 시 양쪽 모두 3,000P 즉시 적립",
+                  author: "WatC 공식",
                   date: "2026.05.25",
                   excerpt:
-                    "친구 링크로 가입하면 나도 3,000P, 친구도 3,000P! 포인트로 바로 결제에 사용 가능합니다.",
-                  img: m1Img,
+                    "친구 초대 링크로 가입하면 나도 3,000P, 친구도 3,000P 즉시 적립! 포인트는 다음 결제 시 바로 사용 가능합니다.",
+                  img: eventIconImg,
                   likes: 156,
                   comments: 28,
                   tags: ["#친구초대", "#포인트적립"],
                 },
                 {
-                  title: "⭐ 5월 우수 리뷰어 선정 — 상품권 증정!",
-                  author: "왓씨공식",
+                  title: "우수 리뷰어 선정 이벤트 — 기프티콘 증정",
+                  author: "WatC 공식",
                   date: "2026.05.20",
                   excerpt:
-                    "우수 리뷰를 작성해 주신 고객분께 커피 기프티콘을 드립니다. 솔직한 후기 남겨주세요!",
-                  img: b1Img,
+                    "정성스러운 후기를 남겨주신 고객분을 매월 선정해 커피 기프티콘을 드립니다. 솔직한 리뷰를 기다립니다!",
+                  img: eventImg,
                   likes: 98,
                   comments: 19,
-                  tags: ["#리뷰이벤트", "#상품권"],
+                  tags: ["#리뷰이벤트", "#기프티콘증정"],
                 },
               ],
             };
@@ -5239,8 +5251,8 @@ export function HomePage() {
                       community: d1Img,
                       tips: communityTipsImg,
                       popular: m1Img,
-                      qa: l1Img,
-                      event: j1Img,
+                      qa: qaImg,
+                      event: eventImg,
                     };
                     return (
                       <div
@@ -5696,44 +5708,13 @@ export function HomePage() {
                                 type="button"
                                 className={`scent_palette_btn ${isOn ? "scent_palette_btn--active" : ""}`}
                                 onClick={() => setSelectedScent(s.id)}
-                                style={
-                                  isOn
-                                    ? {
-                                        boxShadow: `0 0 0 3px ${s.ring}`,
-                                        background: s.bg,
-                                      }
-                                    : {}
-                                }
                               >
-                                <div
-                                  className="scent_bubble"
-                                  style={{
-                                    background: s.bg,
-                                    border: `2px solid ${isOn ? s.ring : s.bg}`,
-                                  }}
-                                >
-                                  <span className="scent_bubble_emoji">
-                                    {s.emoji}
-                                  </span>
-                                  {isOn && (
-                                    <span
-                                      className="scent_bubble_check"
-                                      style={{ background: s.dot }}
-                                    >
-                                      ✓
-                                    </span>
-                                  )}
-                                </div>
-                                <span
-                                  className="scent_bubble_label"
-                                  style={
-                                    isOn
-                                      ? { color: s.dot, fontWeight: 800 }
-                                      : {}
-                                  }
-                                >
-                                  {s.label}
-                                </span>
+                                {isOn && (
+                                  <span className="laundry_option_check">✓</span>
+                                )}
+                                <span className="scent_palette_emoji">{s.emoji}</span>
+                                <span className="scent_palette_name">{s.label}</span>
+                                <span className="scent_palette_price">{s.surcharge}</span>
                               </button>
                             );
                           })}
@@ -6112,7 +6093,7 @@ export function HomePage() {
                   </section>
 
                   {/* 8. 요금제 선택 */}
-                  <section className="reserve_detail_section" style={{ marginBottom: "220px" }}>
+                  <section className="reserve_detail_section">
                     <h2 className="reserve_section_title">요금제 선택</h2>
                     <p className="reserve_section_sub">더 저렴하게 이용하는 방법을 선택해보세요</p>
 
@@ -6198,6 +6179,26 @@ export function HomePage() {
 
                 {/* 하단 결제 및 예약 확정 버튼 */}
                 <div className="reserve_bottom_action_bar">
+                  {/* 배송 요약 */}
+                  <div className="rsb_delivery_summary">
+                    <div className="rsb_delivery_row">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                      </svg>
+                      <span className="rsb_delivery_addr">{reserveAddress}</span>
+                    </div>
+                    <div className="rsb_delivery_chips">
+                      <span className="rsb_chip">{reserveDate}</span>
+                      <span className="rsb_chip">{reserveTime}</span>
+                      <span className={`rsb_chip ${riderType === "신속 배송" ? "rsb_chip--blue" : ""}`}>
+                        {riderType === "신속 배송" ? "⚡ 신속" : "🌙 하루"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="rsb_divider" />
+
+                  {/* 가격 명세 */}
                   <div className="rsb_price_rows">
                     <div className="rsb_price_row">
                       <span className="rsb_label">기본가 ({selectedLaundryType})</span>
@@ -6222,30 +6223,33 @@ export function HomePage() {
                       <span className="rsb_val">+2,900원</span>
                     </div>
                   </div>
-                  <div className="rsb_divider" />
-                  <div className="rsb_total_row" style={{ marginTop: 10, marginBottom: 14 }}>
-                    <span className="rsb_total_label">예상 총액</span>
-                    <span className="rsb_total_val">
-                      {(
-                        (selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000) +
-                        (selectedLaundryOptions.includes("친환경") ? 2000 : 0) +
-                        (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) +
-                        (selectedLaundryOptions.includes("살균") ? 4000 : 0) +
-                        (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) +
-                        (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0) +
-                        (ironingOption === "기본 (스팀)" ? 2000 : ironingOption === "고급 (칼주름)" ? 4000 : 0) +
-                        (riderType === "신속 배송" ? 1000 : 0) +
-                        2900
-                      ).toLocaleString()}원
-                    </span>
+
+                  {/* 총액 + 버튼 */}
+                  <div className="rsb_total_block">
+                    <div className="rsb_total_row">
+                      <span className="rsb_total_label">예상 총액</span>
+                      <span className="rsb_total_val">
+                        {(
+                          (selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000) +
+                          (selectedLaundryOptions.includes("친환경") ? 2000 : 0) +
+                          (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) +
+                          (selectedLaundryOptions.includes("살균") ? 4000 : 0) +
+                          (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) +
+                          (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0) +
+                          (ironingOption === "기본 (스팀)" ? 2000 : ironingOption === "고급 (칼주름)" ? 4000 : 0) +
+                          (riderType === "신속 배송" ? 1000 : 0) +
+                          2900
+                        ).toLocaleString()}원
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      className="reserve_complete_btn"
+                      onClick={() => setShowReserveConfirm(true)}
+                    >
+                      예약 완료
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    className="reserve_complete_btn"
-                    onClick={() => setShowReserveConfirm(true)}
-                  >
-                    예약 완료
-                  </button>
                 </div>
 
                 {/* 예약 완료 확인 오버레이 — 상세 페이지 위에 렌더링 */}
@@ -7494,32 +7498,6 @@ export function HomePage() {
                   AI가 자동 추천해 드립니다.
                 </p>
 
-                {/* 개인화 옵션 추천 */}
-                <div className="rec_personal_options">
-                  <span className="rec_option_lbl">개인화 추천 옵션</span>
-                  <div className="option_selectors">
-                    {[
-                      "알러지 케어 추가",
-                      "실크 전용 보호제",
-                      "초미세 정전기 예방",
-                    ].map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        className={`opt_btn ${personalOption === opt ? "opt_btn--active" : ""}`}
-                        onClick={() => {
-                          setPersonalOption(opt);
-                          triggerToast(
-                            `✨ [${opt}] 옵션이 맞춤 세탁에 임시 반영되었습니다.`,
-                          );
-                        }}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 {/* 즉시 세탁 예약 연결 */}
                 <button
                   type="button"
@@ -7709,9 +7687,7 @@ export function HomePage() {
               <button
                 type="button"
                 className="premium_back_btn"
-                onClick={() => {
-                  setActiveTab("home");
-                }}
+                onClick={() => navigate("/home?tab=home")}
                 aria-label="홈으로 이동"
               >
                 <svg
@@ -9026,7 +9002,8 @@ export function HomePage() {
                   <img
                     src={selectedReview.img}
                     alt={`${selectedReview.user} 리뷰 상세 이미지`}
-                    className="review_modal_detail_img"
+                    className="review_modal_detail_img review_modal_detail_img--clickable"
+                    onClick={() => setLightboxImg(selectedReview.img)}
                   />
                 </div>
               )}
@@ -9056,6 +9033,31 @@ export function HomePage() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* 이미지 라이트박스 */}
+      {lightboxImg && (
+        <div
+          className="img_lightbox_overlay"
+          onClick={() => setLightboxImg(null)}
+        >
+          <button
+            className="img_lightbox_close"
+            onClick={() => setLightboxImg(null)}
+            aria-label="닫기"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <img
+            src={lightboxImg}
+            alt="리뷰 이미지 전체 보기"
+            className="img_lightbox_img"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       )}
 
