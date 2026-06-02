@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
 import i1Img from "../../asset/img/i1.png";
-import e1Img from "../../asset/img/e1.png"; // 3D Blue Sweater
+
 import j1Img from "../../asset/img/j1.png"; // 3D Laundry Basket on Stool
 import k1Img from "../../asset/img/k1.png"; // 3D Smart Phone Illustration
 import k11Img from "../../asset/img/k1-1.png"; // 3D Smartphone Hand
@@ -25,7 +25,7 @@ import b1Img from "../../asset/img/b1.png";
 import c1Img from "../../asset/img/c1.png";
 import d1Img from "../../asset/img/d1.png";
 import priceTagImg from "../../asset/img/price-tag-3d.svg";
-import curiousKidImg from "../../asset/img/curious-kid.svg";
+
 import q1Img from "../../asset/img/q1.png";
 
 import reviewCoatImg from "../../asset/img/review-coat.png";
@@ -35,12 +35,12 @@ import reviewSuedeImg from "../../asset/img/review-suede.png";
 import reviewSneakersImg from "../../asset/img/review-sneakers.png";
 import reviewBlouseImg from "../../asset/img/review-blouse.png";
 import reviewOutdoorImg from "../../asset/img/review-outdoor.png";
-import reviewSlacksImg from "../../asset/img/review-slacks.png";
+
 import reviewFabricPadImg from "../../asset/img/review-fabric-pad.svg";
 import reviewCanvasImg from "../../asset/img/review-canvas.png";
 import reviewDuvetImg from "../../asset/img/review-duvet.png";
 import reviewPriceImg from "../../asset/img/review-price.png";
-import reviewEcoShoulderBagImg from "../../asset/img/review_eco_shoulder_bag.png";
+
 import reviewHyodoDuvetImg from "../../asset/img/review-hyodo-duvet.svg";
 import reviewEcoBagImg from "../../asset/img/review-eco-bag.svg";
 import reviewSuitImg from "../../asset/img/review-suit.png";
@@ -406,8 +406,7 @@ export function HomePage() {
   const [showReserveConfirm, setShowReserveConfirm] = useState<boolean>(false);
   const [showOrderReceived, setShowOrderReceived] = useState<boolean>(false);
   const [reserveFrom, setReserveFrom] = useState<string | null>(null); // 어디서 왔는지 추적
-  const [reserveDetailFromHome, setReserveDetailFromHome] =
-    useState<boolean>(false);
+
   const [showAiGuideDetail, setShowAiGuideDetail] = useState<boolean>(false);
   const [simulatingScan, setSimulatingScan] = useState<boolean>(false);
   const [scanResult, setScanResult] = useState<boolean>(false);
@@ -444,6 +443,7 @@ export function HomePage() {
   const [ironingOption, setIroningOption] = useState<string>("기본 (스팀)"); // "기본 (스팀)" | "고급 (칼주름)" | "신청 안 함"
   const [collectionSpot, setCollectionSpot] =
     useState<string>("공동현관 문 앞"); // "공동현관 문 앞" | "경비실 위탁" | "택배함 보관"
+  const [selectedPricingPlan, setSelectedPricingPlan] = useState<string>("일반");
 
   // --- GPS Tracking Live States ---
   const [gpsCoords, setGpsCoords] = useState({
@@ -798,7 +798,6 @@ export function HomePage() {
     } else if (actionName === "60초 세탁 신청" || actionName === "예약하기") {
       setActiveTab("reserve");
       setShowReserveDetail(true);
-      setReserveDetailFromHome(true);
       triggerToast("✨ 60초 신속 세탁 예약을 시작합니다!");
     } else if (actionName === "AI 세탁 가이드") {
       setShowAiGuideDetail(true);
@@ -5308,7 +5307,6 @@ export function HomePage() {
                     onClick={() => {
                       setShowReserveDetail(false);
                       setActiveTab("home");
-                      setReserveDetailFromHome(false);
                     }}
                     aria-label="홈으로"
                   >
@@ -5988,145 +5986,56 @@ export function HomePage() {
                     </div>
                   </section>
 
-                  {/* 4. 예상 가격 명세서 */}
-                  <section className="reserve_detail_section">
-                    <h2 className="reserve_section_title">예상 가격</h2>
-                    <div className="price_breakdown_card">
-                      <div className="price_row">
-                        <span className="price_label">기본가</span>
-                        <span className="price_val">
-                          {(selectedLaundryType === "일반 빨래"
-                            ? 19000
-                            : selectedLaundryType === "관리 의류"
-                              ? 25000
-                              : 30000
-                          ).toLocaleString()}
-                          원
-                        </span>
-                      </div>
-                      <div className="price_row">
-                        <span className="price_label">
-                          추가 서비스 (
-                          {selectedLaundryOptions.length === 0 ||
-                          (selectedLaundryOptions.length === 1 &&
-                            selectedLaundryOptions[0] === "일반")
-                            ? "없음"
-                            : selectedLaundryOptions
-                                .filter((v) => v !== "일반")
-                                .join(", ")}
-                          {ironingOption !== "신청 안 함"
-                            ? `, 다림질: ${ironingOption.split(" ")[0]}`
-                            : ""}
-                          )
-                        </span>
-                        <span className="price_val">
-                          +
-                          {(
-                            (selectedLaundryOptions.includes("친환경")
-                              ? 2000
-                              : 0) +
-                            (selectedLaundryOptions.includes("알러지 케어")
-                              ? 3000
-                              : 0) +
-                            (selectedLaundryOptions.includes("살균")
-                              ? 4000
-                              : 0) +
-                            (selectedLaundryOptions.includes("울/캐시미어")
-                              ? 5000
-                              : 0) +
-                            (selectedLaundryOptions.includes("프리미엄")
-                              ? 6000
-                              : 0) +
-                            (ironingOption === "기본 (스팀)"
-                              ? 2000
-                              : ironingOption === "고급 (칼주름)"
-                                ? 4000
-                                : 0) +
-                            (riderType === "신속 배송" ? 1000 : 0)
-                          ).toLocaleString()}
-                          원
-                        </span>
-                      </div>
-                      <div className="price_divider" />
-                      <div className="price_row total">
-                        <span className="price_label_total">총 결제 금액</span>
-                        <span className="price_val_total">
-                          {(
-                            (selectedLaundryType === "일반 빨래"
-                              ? 19000
-                              : selectedLaundryType === "관리 의류"
-                                ? 25000
-                                : 30000) +
-                            ((selectedLaundryOptions.includes("친환경")
-                              ? 2000
-                              : 0) +
-                              (selectedLaundryOptions.includes("알러지 케어")
-                                ? 3000
-                                : 0) +
-                              (selectedLaundryOptions.includes("살균")
-                                ? 4000
-                                : 0) +
-                              (selectedLaundryOptions.includes("울/캐시미어")
-                                ? 5000
-                                : 0) +
-                              (selectedLaundryOptions.includes("프리미엄")
-                                ? 6000
-                                : 0)) +
-                            (ironingOption === "기본 (스팀)"
-                              ? 2000
-                              : ironingOption === "고급 (칼주름)"
-                                ? 4000
-                                : 0) +
-                            (riderType === "신속 배송" ? 1000 : 0)
-                          ).toLocaleString()}
-                          원
-                        </span>
-                      </div>
-
-                      <div className="price_disclaimer_box">
-                        <div className="disclaimer_icon">⚠️</div>
-                        <span className="disclaimer_text">
-                          실제 수거 후 측정된 세탁물 분량 및 오염도에 따라 최종
-                          결제 금액이 달라질 수 있습니다.
-                        </span>
-                      </div>
-                    </div>
-                  </section>
-
                   {/* 5. 라이더 배정 */}
                   <section className="reserve_detail_section">
                     <h2 className="reserve_section_title">라이더 배정</h2>
-                    <div className="rider_assignment_grid">
+                    <div className="rider_v2_grid">
                       {[
                         {
                           id: "신속 배송",
+                          icon: "⚡",
+                          iconBg: "linear-gradient(135deg, #3b5bdb, #2563eb)",
                           title: "신속 배송",
-                          desc: "가장 빠르게 수거 및 당일 특급 완료 (+1,000원)",
-                          riderImg: j1Img,
+                          badge: "TODAY",
+                          badgeStyle: { background: "#2563eb", color: "#fff" },
+                          desc: "당일 특급 수거 · 빠른 완료",
+                          price: "+1,000원",
+                          priceColor: "#2563eb",
                         },
                         {
                           id: "하루 배송",
+                          icon: "🌙",
+                          iconBg: "#f1f5f9",
                           title: "하루 배송",
-                          desc: "24시간 이내 차분히 수거 및 문 앞 안심 배송 (+0원)",
-                          riderImg: e1Img,
+                          badge: "1DAY",
+                          badgeStyle: { background: "#e2e8f0", color: "#64748b" },
+                          desc: "24시간 내 안심 수거 · 배달",
+                          price: "+0원",
+                          priceColor: "#94a3b8",
                         },
-                      ].map((r) => (
-                        <div
-                          key={r.id}
-                          className={`rider_assign_card ${riderType === r.id ? "active" : ""}`}
-                          onClick={() => setRiderType(r.id)}
-                        >
-                          <div className="rider_assign_circle">
-                            <img
-                              src={r.riderImg}
-                              alt={r.title}
-                              className="rider_assign_3d_img"
-                            />
+                      ].map((r) => {
+                        const isOn = riderType === r.id;
+                        return (
+                          <div
+                            key={r.id}
+                            className={`rider_v2_card ${isOn ? "rider_v2_card--active" : ""}`}
+                            onClick={() => setRiderType(r.id)}
+                          >
+                            <div
+                              className="rider_v2_icon_wrap"
+                              style={{ background: r.iconBg }}
+                            >
+                              <span className="rider_v2_icon">{r.icon}</span>
+                            </div>
+                            <div className="rider_v2_title_row">
+                              <span className="rider_v2_title">{r.title}</span>
+                              <span className="rider_v2_badge" style={r.badgeStyle}>{r.badge}</span>
+                            </div>
+                            <p className="rider_v2_desc">{r.desc}</p>
+                            <p className="rider_v2_price" style={{ color: r.priceColor }}>{r.price}</p>
                           </div>
-                          <h3 className="rider_assign_title">{r.title}</h3>
-                          <p className="rider_assign_desc">{r.desc}</p>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </section>
 
@@ -6167,10 +6076,7 @@ export function HomePage() {
                   </section>
 
                   {/* 7. 수거 장소 설정 */}
-                  <section
-                    className="reserve_detail_section"
-                    style={{ marginBottom: "100px" }}
-                  >
+                  <section className="reserve_detail_section">
                     <h2 className="reserve_section_title">수거 장소 설정</h2>
                     <div className="triple_option_grid">
                       {[
@@ -6195,119 +6101,6 @@ export function HomePage() {
                           className={`triple_option_card ${collectionSpot === spot.id ? "active" : ""}`}
                           onClick={() => setCollectionSpot(spot.id)}
                         >
-                          <div className="care_analysis_widget">
-  <h3 className="care_widget_title">실시간 AI 소재 분석</h3>
-  {registeredClothes.length === 0 ? (
-    <p className="no_data_hint">
-      등록된 의류가 없습니다. 위 폼에서 의류를 등록해 주세요!
-    </p>
-  ) : (
-    <>
-      {/* Latest analysis result */}
-      <div className="care_analysis_scroll">
-        {registeredClothes[0] && (
-          <div key={registeredClothes[0].id ?? 0} className="analysis_result_card">
-            <div className="analysis_card_header">
-              <span className="anal_badge">{registeredClothes[0].category}</span>
-              <span className="anal_name">{registeredClothes[0].name}</span>
-            </div>
-            {registeredClothes[0].analyzing ? (
-              <div className="anal_loading">
-                <div className="anal_spinner" />
-                <span className="anal_loading_text">AI 소재 분석 중...</span>
-              </div>
-            ) : (
-              <div className="anal_details">
-                <div className="anal_row">
-                  <span className="anal_lbl">분석 소재</span>
-                  <span className="anal_val font_bold">{registeredClothes[0].materials.join(" + ")}</span>
-                </div>
-                <div className="anal_row">
-                  <span className="anal_lbl">세탁 방법 안내</span>
-                  <span className="anal_val text_blue font_bold">{(() => {
-                    let laundryGuide = "일반 세탁 권장 (찬물 세탁)";
-                    const m = registeredClothes[0].materials;
-                    if (m.includes("실크")) laundryGuide = "손세탁 절대 권장 (중성세제 사용)";
-                    else if (m.includes("울")) laundryGuide = "드라이클리닝 필수 권장";
-                    else if (m.includes("합성섬유") && m.includes("면")) laundryGuide = "일반 세탁 (세탁기 표준코스 가능)";
-                    else if (m.includes("합성섬유")) laundryGuide = "일반 세탁 및 건조기 사용 제어";
-                    return laundryGuide;
-                  })()}</span>
-                </div>
-                <div className="anal_row">
-                  <span className="anal_lbl">주의사항 안내</span>
-                  <span className="anal_val text_red font_bold">⚠️ {(() => {
-                    let warningGuide = "손상 주의 (올 풀림 경고)";
-                    const m = registeredClothes[0].materials;
-                    if (m.includes("실크")) warningGuide = "변색 주의 & 손상 주의";
-                    else if (m.includes("울")) warningGuide = "수축 주의 (온수 금지)";
-                    else if (m.includes("합성섬유") && m.includes("면")) warningGuide = "변색 주의 (단독 세탁)";
-                    else if (m.includes("합성섬유")) warningGuide = "손상 주의 (고온 열풍 피함)";
-                    return warningGuide;
-                  })()}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* History section */}
-      {registeredClothes.length > 1 && (
-        <section className="care_history_section">
-          <h3 className="care_widget_title">지난 분석 이력</h3>
-          <div className="care_history_grid">
-            {registeredClothes.slice(1, 4).map((cloth) => (
-              <div key={cloth.id ?? cloth.name} className="analysis_result_card history_card">
-                <div className="analysis_card_header">
-                  <span className="anal_badge">{cloth.category}</span>
-                  <span className="anal_name">{cloth.name}</span>
-                </div>
-                <div className="anal_details">
-                  <div className="anal_row">
-                    <span className="anal_lbl">분석 소재</span>
-                    <span className="anal_val font_bold">{cloth.materials.join(" + ")}</span>
-                  </div>
-                  <div className="anal_row">
-                    <span className="anal_lbl">세탁 방법 안내</span>
-                    <span className="anal_val text_blue font_bold">{(() => {
-                      let lg = "일반 세탁 권장 (찬물 세탁)";
-                      const m = cloth.materials;
-                      if (m.includes("실크")) lg = "손세탁 절대 권장 (중성세제 사용)";
-                      else if (m.includes("울")) lg = "드라이클리닝 필수 권장";
-                      else if (m.includes("합성섬유") && m.includes("면")) lg = "일반 세탁 (세탁기 표준코스 가능)";
-                      else if (m.includes("합성섬유")) lg = "일반 세탁 및 건조기 사용 제어";
-                      return lg;
-                    })()}</span>
-                  </div>
-                  <div className="anal_row">
-                    <span className="anal_lbl">주의사항 안내</span>
-                    <span className="anal_val text_red font_bold">⚠️ {(() => {
-                      let wg = "손상 주의 (올 풀림 경고)";
-                      const m = cloth.materials;
-                      if (m.includes("실크")) wg = "변색 주의 & 손상 주의";
-                      else if (m.includes("울")) wg = "수축 주의 (온수 금지)";
-                      else if (m.includes("합성섬유") && m.includes("면")) wg = "변색 주의 (단독 세탁)";
-                      else if (m.includes("합성섬유")) wg = "손상 주의 (고온 열풍 피함)";
-                      return wg;
-                    })()}</span>
-                  </div>
-                </div>
-                <button
-                  className="history_delete_btn"
-                  onClick={() => {
-                    setRegisteredClothes((prev) => prev.filter((c) => c.id !== cloth.id));
-                  }}
-                  aria-label="Delete history entry"
-                >✖</button>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-    </>
-  )}
-</div>
                           <div className="triple_option_avatar_circle">
                             <div className="inner_avatar_placeholder" />
                           </div>
@@ -6317,10 +6110,135 @@ export function HomePage() {
                       ))}
                     </div>
                   </section>
+
+                  {/* 8. 요금제 선택 */}
+                  <section className="reserve_detail_section" style={{ marginBottom: "220px" }}>
+                    <h2 className="reserve_section_title">요금제 선택</h2>
+                    <p className="reserve_section_sub">더 저렴하게 이용하는 방법을 선택해보세요</p>
+
+                    <div className="plan_recommend_banner">
+                      <span className="plan_recommend_tag">✨ 고객님께 추천드려요</span>
+                      <div className="plan_recommend_row">
+                        <div className="plan_recommend_left">
+                          <span className="plan_recommend_icon">💰</span>
+                          <span className="plan_recommend_name">저가형</span>
+                          <span className="plan_recommend_badge">기본가 10% 절약</span>
+                        </div>
+                        <button
+                          type="button"
+                          className="plan_recommend_select_btn"
+                          onClick={() => setSelectedPricingPlan("저가형")}
+                        >
+                          선택
+                        </button>
+                      </div>
+                      <p className="plan_recommend_desc">기본 세탁 이용 시 저가형으로 10% 아끼세요</p>
+                    </div>
+
+                    <div className="plan_cards_grid">
+                      {[
+                        {
+                          id: "일반",
+                          icon: "💳",
+                          badge: "기본",
+                          badgeClass: "plan_card_badge--default",
+                          label: "일반",
+                          sub: "단건 이용",
+                          desc: "기본 요금 적용",
+                          descClass: "plan_card_desc--green",
+                        },
+                        {
+                          id: "저가형",
+                          icon: "💰",
+                          badge: "-10%",
+                          badgeClass: "plan_card_badge--discount",
+                          label: "저가형",
+                          sub: "배달 +2일 소요",
+                          desc: "기본가 10% 절약",
+                          descClass: "plan_card_desc--green",
+                        },
+                        {
+                          id: "구독형",
+                          icon: "🔄",
+                          badge: "-20%",
+                          badgeClass: "plan_card_badge--discount",
+                          label: "구독형",
+                          sub: "월 39,900원 정기권",
+                          desc: "회당 기본가 20% 할인",
+                          descClass: "plan_card_desc--green",
+                        },
+                        {
+                          id: "묶음 할인",
+                          icon: "📦",
+                          badge: "-15%",
+                          badgeClass: "plan_card_badge--discount",
+                          label: "묶음 할인",
+                          sub: "2회 이상 동시 신청",
+                          desc: "기본가 15% 절약",
+                          descClass: "plan_card_desc--green",
+                        },
+                      ].map((plan) => (
+                        <div
+                          key={plan.id}
+                          className={`plan_card ${selectedPricingPlan === plan.id ? "plan_card--active" : ""}`}
+                          onClick={() => setSelectedPricingPlan(plan.id)}
+                        >
+                          <div className="plan_card_top">
+                            <span className="plan_card_icon">{plan.icon}</span>
+                            <span className={`plan_card_badge ${plan.badgeClass}`}>{plan.badge}</span>
+                          </div>
+                          <h3 className="plan_card_label">{plan.label}</h3>
+                          <p className="plan_card_sub">{plan.sub}</p>
+                          <p className={`plan_card_desc ${plan.descClass}`}>{plan.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
                 </div>
 
                 {/* 하단 결제 및 예약 확정 버튼 */}
                 <div className="reserve_bottom_action_bar">
+                  <div className="rsb_price_rows">
+                    <div className="rsb_price_row">
+                      <span className="rsb_label">기본가 ({selectedLaundryType})</span>
+                      <span className="rsb_val">
+                        {(selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000).toLocaleString()}원
+                      </span>
+                    </div>
+                    {ironingOption !== "신청 안 함" && (
+                      <div className="rsb_price_row">
+                        <span className="rsb_label">다림질 ({ironingOption === "기본 (스팀)" ? "기본" : "고급"})</span>
+                        <span className="rsb_val">+{(ironingOption === "기본 (스팀)" ? 2000 : 4000).toLocaleString()}원</span>
+                      </div>
+                    )}
+                    {riderType === "신속 배송" && (
+                      <div className="rsb_price_row">
+                        <span className="rsb_label">신속 배송</span>
+                        <span className="rsb_val">+1,000원</span>
+                      </div>
+                    )}
+                    <div className="rsb_price_row">
+                      <span className="rsb_label">수거·배송비</span>
+                      <span className="rsb_val">+2,900원</span>
+                    </div>
+                  </div>
+                  <div className="rsb_divider" />
+                  <div className="rsb_total_row" style={{ marginTop: 10, marginBottom: 14 }}>
+                    <span className="rsb_total_label">예상 총액</span>
+                    <span className="rsb_total_val">
+                      {(
+                        (selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000) +
+                        (selectedLaundryOptions.includes("친환경") ? 2000 : 0) +
+                        (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) +
+                        (selectedLaundryOptions.includes("살균") ? 4000 : 0) +
+                        (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) +
+                        (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0) +
+                        (ironingOption === "기본 (스팀)" ? 2000 : ironingOption === "고급 (칼주름)" ? 4000 : 0) +
+                        (riderType === "신속 배송" ? 1000 : 0) +
+                        2900
+                      ).toLocaleString()}원
+                    </span>
+                  </div>
                   <button
                     type="button"
                     className="reserve_complete_btn"
@@ -6564,7 +6482,6 @@ export function HomePage() {
                     className="reserve_wire_btn"
                     onClick={() => {
                       setShowReserveDetail(true);
-                      setReserveDetailFromHome(false);
                     }}
                   >
                     예약하기

@@ -1,0 +1,155 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 배경 그라데이션 -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="55%">
+      <stop offset="0%"   stop-color="#f0f4ff"/>
+      <stop offset="100%" stop-color="#dce8f8"/>
+    </radialGradient>
+
+    <!-- 패드 상단면 그라데이션 -->
+    <linearGradient id="padTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#faf6ef"/>
+      <stop offset="50%"  stop-color="#f2ecdf"/>
+      <stop offset="100%" stop-color="#e8dece"/>
+    </linearGradient>
+
+    <!-- 패드 전면 그라데이션 (두께) -->
+    <linearGradient id="padFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#d8ccba"/>
+      <stop offset="100%" stop-color="#c4b8a4"/>
+    </linearGradient>
+
+    <!-- 패드 측면 그라데이션 -->
+    <linearGradient id="padLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#c8bcaa"/>
+      <stop offset="100%" stop-color="#d8ccba"/>
+    </linearGradient>
+
+    <!-- 퀼팅 퍼프 그라데이션 (각 퍼프가 볼록해 보이도록) -->
+    <radialGradient id="puffGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%"   stop-color="#fffdf8"/>
+      <stop offset="60%"  stop-color="#f5eedf"/>
+      <stop offset="100%" stop-color="#e6dcc8"/>
+    </radialGradient>
+
+    <!-- 그림자 필터 -->
+    <filter id="padShadow" x="-15%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="6" dy="12" stdDeviation="12" flood-color="#7a6a50" flood-opacity="0.28"/>
+    </filter>
+    <filter id="puffShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#8a7860" flood-opacity="0.2"/>
+    </filter>
+
+    <!-- 파이핑 (테두리 봉제선) 클립 -->
+    <clipPath id="padClip">
+      <path d="M 62 68
+               Q 62 52 78 52
+               L 234 46
+               Q 258 45 262 68
+               L 272 202
+               Q 273 218 258 220
+               L 82 226
+               Q 62 227 60 210
+               Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── 배경 ── -->
+  <rect width="320" height="320" fill="url(#bgGrad)" rx="24"/>
+
+  <!-- 바닥 그림자 타원 -->
+  <ellipse cx="166" cy="250" rx="110" ry="14" fill="rgba(100,80,50,0.13)"/>
+
+  <!-- ── 패드 측면 (좌) ── -->
+  <path d="M 62 68 L 52 80 L 52 214 L 60 210 L 60 68 Z"
+        fill="url(#padLeft)" opacity="0.85"/>
+
+  <!-- ── 패드 전면 (두께) ── -->
+  <path d="M 60 210 L 52 214 L 240 226 L 258 220 L 60 210 Z"
+        fill="url(#padFront)"/>
+
+  <!-- ── 패드 메인 상단면 ── -->
+  <path d="M 62 68
+           Q 62 52 78 52
+           L 234 46
+           Q 258 45 262 68
+           L 272 202
+           Q 273 218 258 220
+           L 82 226
+           Q 62 227 60 210
+           Z"
+        fill="url(#padTop)" filter="url(#padShadow)"/>
+
+  <!-- ── 퀼팅 패턴 (5×5 격자 퍼프) ── -->
+  <!-- Row 1 -->
+  <ellipse cx="105" cy="94"  rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="150" cy="91"  rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="195" cy="89"  rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="240" cy="88"  rx="20" ry="15" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.75"/>
+
+  <!-- Row 2 -->
+  <ellipse cx="100" cy="126" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="147" cy="123" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="193" cy="121" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="238" cy="120" rx="21" ry="16" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.78"/>
+
+  <!-- Row 3 -->
+  <ellipse cx="95"  cy="158" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="143" cy="155" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="190" cy="153" rx="22" ry="17" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.9"/>
+  <ellipse cx="237" cy="152" rx="21" ry="16" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.78"/>
+
+  <!-- Row 4 -->
+  <ellipse cx="91"  cy="190" rx="22" ry="16" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.88"/>
+  <ellipse cx="139" cy="188" rx="22" ry="16" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.88"/>
+  <ellipse cx="186" cy="186" rx="22" ry="16" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.88"/>
+  <ellipse cx="233" cy="185" rx="21" ry="15" fill="url(#puffGrad)" filter="url(#puffShadow)" opacity="0.72"/>
+
+  <!-- ── 퀼팅 스티치선 (가로) ── -->
+  <g stroke="#c4b49e" stroke-width="1.2" stroke-dasharray="none" opacity="0.55">
+    <line x1="72"  y1="111" x2="264" y2="106"/>
+    <line x1="70"  y1="143" x2="262" y2="138"/>
+    <line x1="68"  y1="175" x2="260" y2="170"/>
+    <line x1="66"  y1="207" x2="258" y2="202"/>
+  </g>
+
+  <!-- ── 퀼팅 스티치선 (세로) ── -->
+  <g stroke="#c4b49e" stroke-width="1.2" opacity="0.55">
+    <line x1="126" y1="55"  x2="119" y2="219"/>
+    <line x1="170" y1="53"  x2="164" y2="219"/>
+    <line x1="215" y1="51"  x2="209" y2="219"/>
+  </g>
+
+  <!-- ── 파이핑 (테두리 봉제 라인) ── -->
+  <!-- 외곽 파이핑 (두꺼운 테두리) -->
+  <path d="M 62 68
+           Q 62 52 78 52
+           L 234 46
+           Q 258 45 262 68
+           L 272 202
+           Q 273 218 258 220
+           L 82 226
+           Q 62 227 60 210
+           Z"
+        fill="none" stroke="#c0ae94" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- 내부 봉제선 (파이핑 안쪽 스티치) -->
+  <path d="M 70 70
+           Q 70 62 80 61
+           L 232 56
+           Q 252 55 255 70
+           L 264 200
+           Q 265 212 252 213
+           L 84 219
+           Q 70 220 68 208
+           Z"
+        fill="none" stroke="#d4c4aa" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 3" opacity="0.8"/>
+
+  <!-- ── 태그 (세탁 완료 라벨) ── -->
+  <g transform="translate(228, 46) rotate(12)">
+    <rect x="0" y="0" width="44" height="24" rx="5" fill="#3b6ac8" opacity="0.92"/>
+    <text x="22" y="16" text-anchor="middle" font-size="8.5" font-weight="700"
+          fill="#ffffff" font-family="'Apple SD Gothic Neo', Arial, sans-serif"
+          letter-spacing="0.3">세탁완료</text>
+  </g>
+</svg>
