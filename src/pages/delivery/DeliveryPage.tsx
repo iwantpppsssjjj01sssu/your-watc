@@ -30,6 +30,8 @@ export function DeliveryPage() {
   const [trackingActive] = useState(true);
   const [satellites, setSatellites] = useState(11);
   const [etaMinutes, setEtaMinutes] = useState(10);
+  const [distanceToHome, setDistanceToHome] = useState(2380);
+  const [trafficDelay, setTrafficDelay] = useState<string | null>(null);
 
   // --- Premium Swappable Riders Database & State ---
   const ridersList = [
@@ -105,6 +107,45 @@ export function DeliveryPage() {
     return () => clearInterval(interval);
   }, [trackingActive]);
 
+  useEffect(() => {
+    if (!trackingActive) return;
+    const interval = setInterval(() => {
+      setDistanceToHome((prev) => {
+        if (prev <= 80) return 2380;
+        return prev - (8 + Math.floor(Math.random() * 7));
+      });
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [trackingActive]);
+
+  useEffect(() => {
+    if (!trackingActive) return;
+    const delayMessages = [
+      "반포대로 신호등 대기 중 · 약 2분 지연",
+      "서초대로 교차로 신호 대기 · 약 1분 지연",
+      "강남대로 신호등 대기 중 · 약 2분 지연",
+      "서초대로·동작대로 교차 신호 · 약 3분 지연",
+    ];
+    let hideTimer: ReturnType<typeof setTimeout>;
+    const interval = setInterval(() => {
+      if (Math.random() < 0.45) {
+        const msg = delayMessages[Math.floor(Math.random() * delayMessages.length)];
+        setTrafficDelay(msg);
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => setTrafficDelay(null), 5000);
+      }
+    }, 20000);
+    const initialTimer = setTimeout(() => {
+      setTrafficDelay(delayMessages[0]);
+      hideTimer = setTimeout(() => setTrafficDelay(null), 5000);
+    }, 8000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(hideTimer);
+      clearTimeout(initialTimer);
+    };
+  }, [trackingActive]);
+
   const handleLocationSuccess = (geo: GeolocationPosition) => {
     setPosition({
       lat: Number(geo.coords.latitude.toFixed(6)),
@@ -152,6 +193,36 @@ export function DeliveryPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
+
+  const getCurrentRoad = (dist: number): string => {
+    if (dist > 1800) return "동작대로";
+    if (dist > 800) return "서초대로";
+    if (dist > 200) return "강남대로";
+    return "반포동 골목길";
+  };
+
+  const getLocationDesc = (dist: number): string => {
+    if (dist > 1800) return "동작대로 경유 이동 중";
+    if (dist > 800) return "서초대로 경유 이동 중";
+    if (dist > 400) return "강남대로 진입 완료";
+    if (dist > 200) return "반포동 인근 진입";
+    return "우리 동네 도착 임박";
+  };
+
+  const getEtaTime = (): string => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + etaMinutes);
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2, "0");
+    const ampm = h >= 12 ? "오후" : "오전";
+    const h12 = h > 12 ? h - 12 : h === 0 ? 12 : h;
+    return `${ampm} ${h12}:${m}`;
+  };
+
+  const deliveryProgressPct = Math.min(
+    100,
+    Math.round(((2380 - distanceToHome) / 2380) * 100),
+  );
 
   return (
     <div
@@ -343,56 +414,22 @@ export function DeliveryPage() {
               </div>
 
               <div className="delivery_grid">
-                <article className="delivery_card delivery_card--map">
-                  {/* 배송 경로 안내 */}
-                  <div className="gps_prev_order_banner">
-                    <span className="gps_prev_order_icon">🚚</span>
-                    <div className="gps_prev_order_text">
-                      <strong>05.27 접수 주문 · 현재 배송 이동 중</strong>
-                      <span>
-                        어제(06.01) 16:45 배송 마스터가 출발했습니다. 오늘 밤
-                        11시 도착 예정이며 스마트 팩토리 → 우리집 경로로 이동
-                        중입니다.
+                <article className="dtc_card">
+                  {/* 지도 섹션 */}
+                  <div className="dtc_map_section">
+                    {/* 지도 위 오버레이 */}
+                    <div className="dtc_map_top_row">
+                      <span className="dtc_live_pill">
+                        <span className="dtc_live_dot" />
+                        실시간 위치 업데이트 중
                       </span>
+                      <span className="dtc_order_chip">WTC-8311</span>
                     </div>
-                  </div>
-
-                  <div className="delivery_gps_card_header">
-                    <div className="gps_header_title_group">
-                      <span
-                        className={`gps_section_badge ${position ? "gps_section_badge--real" : ""}`}
-                      >
-                        {position
-                          ? "REAL-TIME HARDWARE GPS CONNECTED"
-                          : "GPS LIVE CONNECTED"}
-                      </span>
-                      <h3 className="gps_card_title">
-                        실시간 수거 · 배송 경로
-                      </h3>
-                      <p className="gps_delivery_status_msg">
-                        세나님이 05월 27일에 시킨 배송물이 배달되고 있어요 🚚
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      className={`delivery_location_button ${trackingState === "requesting" ? "delivery_location_button--requesting" : ""} ${position ? "delivery_location_button--connected" : ""}`}
-                      onClick={startTracking}
-                      disabled={trackingState === "requesting"}
-                    >
-                      <span
-                        className={`gps_pulse_dot ${trackingState === "tracking" ? "gps_pulse_dot--active" : "gps_pulse_dot--inactive"}`}
-                      />
-                      <span>
-                        {trackingState === "idle" && "기기 GPS 연결"}
-                        {trackingState === "requesting" && "연결 요청중..."}
-                        {trackingState === "tracking" && "GPS 수신 완료"}
-                        {trackingState === "error" && "재연결 시도"}
-                      </span>
-                    </button>
-                  </div>
-
-                  {/* 실시간 vector map */}
-                  <div className="delivery_gps_map_container">
+                    {trafficDelay && (
+                      <div className="dtc_traffic_banner">
+                        🚦 {trafficDelay}
+                      </div>
+                    )}
                     <svg
                       className="delivery_gps_vector_map"
                       viewBox="0 0 358 220"
@@ -400,96 +437,133 @@ export function DeliveryPage() {
                       height="220"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      {/* Map Background Grids */}
-                      <rect width="358" height="220" fill="#f8fafc" rx="24" />
+                      {/* Map Background - warm road-map paper tone */}
+                      <rect width="358" height="220" fill="#eae6df" rx="24" />
 
-                      {/* Subtle Grid Lines */}
-                      <g opacity="0.3" stroke="#e2e8f0" strokeWidth="0.5">
-                        <line x1="0" y1="40" x2="358" y2="40" />
-                        <line x1="0" y1="80" x2="358" y2="80" />
-                        <line x1="0" y1="120" x2="358" y2="120" />
-                        <line x1="0" y1="160" x2="358" y2="160" />
-                        <line x1="0" y1="200" x2="358" y2="200" />
+                      {/* City block fills (top row) */}
+                      <rect x="4" y="4" width="63" height="43" rx="3" fill="#d6d2c8" />
+                      <rect x="79" y="4" width="192" height="43" rx="3" fill="#d6d2c8" />
+                      <rect x="279" y="4" width="75" height="43" rx="3" fill="#d6d2c8" />
 
-                        <line x1="60" y1="0" x2="60" y2="220" />
-                        <line x1="120" y1="0" x2="120" y2="220" />
-                        <line x1="180" y1="0" x2="180" y2="220" />
-                        <line x1="240" y1="0" x2="240" y2="220" />
-                        <line x1="300" y1="0" x2="300" y2="220" />
-                      </g>
+                      {/* City block fills (mid-upper – above Han River) */}
+                      <rect x="4" y="59" width="63" height="26" rx="3" fill="#d6d2c8" />
+                      <rect x="79" y="59" width="192" height="26" rx="3" fill="#d6d2c8" />
+                      <rect x="279" y="59" width="75" height="26" rx="3" fill="#d6d2c8" />
+
+                      {/* City block fills (mid-lower – below Han River) */}
+                      <rect x="4" y="128" width="63" height="33" rx="3" fill="#d6d2c8" />
+                      <rect x="79" y="128" width="192" height="33" rx="3" fill="#d6d2c8" />
+                      <rect x="279" y="128" width="75" height="33" rx="3" fill="#d6d2c8" />
+
+                      {/* City block fills (bottom row) */}
+                      <rect x="4" y="169" width="63" height="47" rx="3" fill="#d6d2c8" />
+                      <rect x="79" y="169" width="192" height="47" rx="3" fill="#d6d2c8" />
+                      <rect x="279" y="169" width="75" height="47" rx="3" fill="#d6d2c8" />
 
                       {/* Green park zones */}
                       <path
                         d="M -10 170 Q 50 160, 90 200 T 150 230 L -10 230 Z"
-                        fill="#f0fdf4"
-                        stroke="#dcfce7"
+                        fill="#c8e6b8"
+                        stroke="#b0d49c"
                         strokeWidth="1"
                       />
                       <path
                         d="M 220 -10 Q 270 30, 310 -10 Z"
-                        fill="#f0fdf4"
-                        stroke="#dcfce7"
+                        fill="#c8e6b8"
+                        stroke="#b0d49c"
                         strokeWidth="1"
                       />
 
-                      {/* Blue Han-river ribbon */}
+                      {/* Han River */}
                       <path
                         d="M -10 90 Q 80 115, 180 90 T 370 85 L 370 120 Q 280 125, 180 125 T -10 120 Z"
-                        fill="#f0f9ff"
-                        stroke="#e0f2fe"
+                        fill="#aad3df"
+                        stroke="#8ec5d4"
                         strokeWidth="1"
                       />
                       <text
                         x="130"
                         y="112"
-                        fill="#bae6fd"
+                        fill="#6aafc2"
                         fontSize="8"
                         fontWeight="700"
                         fontFamily="var(--font-pretendard)"
-                        letterSpacing="1"
+                        letterSpacing="3"
+                        textAnchor="middle"
                       >
-                        HAN RIVER
+                        한  강
                       </text>
 
-                      {/* Decorative Local Roads */}
-                      <g
-                        stroke="#ffffff"
-                        strokeWidth="6"
-                        strokeLinecap="round"
-                        opacity="0.9"
-                      >
-                        <line x1="75" y1="0" x2="75" y2="220" />
-                        <line x1="275" y1="0" x2="275" y2="220" />
+                      {/* Road borders */}
+                      <g stroke="#c8c4bc" strokeWidth="10" strokeLinecap="butt">
                         <line x1="0" y1="55" x2="358" y2="55" />
                         <line x1="0" y1="165" x2="358" y2="165" />
-                      </g>
-
-                      {/* Inner Road Lines */}
-                      <g
-                        stroke="#cbd5e1"
-                        strokeWidth="1"
-                        strokeDasharray="3 3"
-                        strokeLinecap="round"
-                        opacity="0.6"
-                      >
                         <line x1="75" y1="0" x2="75" y2="220" />
                         <line x1="275" y1="0" x2="275" y2="220" />
-                        <line x1="0" y1="55" x2="358" y2="55" />
-                        <line x1="0" y1="165" x2="358" y2="165" />
                       </g>
 
-                      {/* Main Curved Delivery Transit Route (Underlay Grey Road) */}
+                      {/* Road surfaces (white) */}
+                      <g stroke="#ffffff" strokeWidth="8" strokeLinecap="butt">
+                        <line x1="0" y1="55" x2="358" y2="55" />
+                        <line x1="0" y1="165" x2="358" y2="165" />
+                        <line x1="75" y1="0" x2="75" y2="220" />
+                        <line x1="275" y1="0" x2="275" y2="220" />
+                      </g>
+
+                      {/* Road center dashes */}
+                      <g stroke="#d8d0c4" strokeWidth="0.8" strokeDasharray="5 5">
+                        <line x1="0" y1="55" x2="358" y2="55" />
+                        <line x1="0" y1="165" x2="358" y2="165" />
+                        <line x1="75" y1="0" x2="75" y2="220" />
+                        <line x1="275" y1="0" x2="275" y2="220" />
+                      </g>
+
+                      {/* Road name labels – horizontal roads */}
+                      <g fontFamily="var(--font-pretendard)" fontSize="7" fontWeight="700" fill="#7a7870">
+                        <rect x="141" y="44" width="54" height="13" rx="3" fill="rgba(255,255,255,0.88)" />
+                        <text x="168" y="53.5" textAnchor="middle">반포대로</text>
+                        <rect x="141" y="155" width="54" height="13" rx="3" fill="rgba(255,255,255,0.88)" />
+                        <text x="168" y="164.5" textAnchor="middle">서초대로</text>
+                      </g>
+
+                      {/* Road name labels – vertical roads (rotated 90°) */}
+                      <text
+                        x="75"
+                        y="192"
+                        fill="#7a7870"
+                        fontSize="6.5"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                        transform="rotate(90, 75, 192)"
+                      >
+                        동작대로
+                      </text>
+                      <text
+                        x="275"
+                        y="192"
+                        fill="#7a7870"
+                        fontSize="6.5"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                        transform="rotate(90, 275, 192)"
+                      >
+                        강남대로
+                      </text>
+
+                      {/* Main Delivery Route – stays south of Han River via 동작대로 → 서초대로 → 강남대로 */}
                       <path
-                        d="M 40 145 C 90 145, 120 65, 175 65 C 230 65, 260 145, 315 145"
+                        d="M 40 145 C 65 145, 72 160, 75 165 L 260 165 C 268 165, 275 158, 275 145 L 315 145"
                         fill="none"
                         stroke="#e2e8f0"
                         strokeWidth="8"
                         strokeLinecap="round"
                       />
 
-                      {/* Animated Glowing Neon Line on top of the main path */}
+                      {/* Animated Glowing Neon Line */}
                       <path
-                        d="M 40 145 C 90 145, 120 65, 175 65 C 230 65, 260 145, 315 145"
+                        d="M 40 145 C 65 145, 72 160, 75 165 L 260 165 C 268 165, 275 158, 275 145 L 315 145"
                         fill="none"
                         className="delivery_neon_glowing_path delivery_neon_glowing_path--active"
                         stroke="url(#neon-route-grad-2)"
@@ -524,7 +598,7 @@ export function DeliveryPage() {
                         </linearGradient>
                       </defs>
 
-                      {/* Landmarks Labels */}
+                      {/* Landmark Labels */}
                       <g transform="translate(45, 122)">
                         <rect
                           x="-35"
@@ -569,7 +643,6 @@ export function DeliveryPage() {
                         </text>
                       </g>
 
-                      {/* Markers pins */}
                       {/* Start Marker */}
                       <circle
                         cx="40"
@@ -602,9 +675,8 @@ export function DeliveryPage() {
                         <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
                       </g>
 
-                      {/* Gliding Rider vehicle rendered directly in SVG for bulletproof scaling! */}
+                      {/* Gliding Rider vehicle */}
                       <g className="gps_delivery_rider_glider gps_delivery_rider_glider--active">
-                        {/* Ring aura pulse */}
                         <circle
                           cx="0"
                           cy="0"
@@ -624,7 +696,7 @@ export function DeliveryPage() {
                         <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
                       </g>
 
-                      {/* Hardware Real GPS Pin Overlay - If permission granted */}
+                      {/* Hardware Real GPS Pin Overlay */}
                       {position && (
                         <g transform="translate(180, 110)">
                           <circle
@@ -651,121 +723,71 @@ export function DeliveryPage() {
                         </g>
                       )}
                     </svg>
-
-                    {/* Floating Glassmorphic Telemetry Monitor Panel */}
-                    <div className="gps_telemetry_glass_panel">
-                      <div className="telemetry_row">
-                        <div className="telemetry_item">
-                          <span className="tele_label">위도(Latitude)</span>
-                          <strong className="tele_val font_mono">
-                            {position
-                              ? position.lat.toFixed(6)
-                              : simCoords.lat.toFixed(6)}
-                            °
-                          </strong>
-                        </div>
-                        <div className="telemetry_item">
-                          <span className="tele_label">경도(Longitude)</span>
-                          <strong className="tele_val font_mono">
-                            {position
-                              ? position.lng.toFixed(6)
-                              : simCoords.lng.toFixed(6)}
-                            °
-                          </strong>
-                        </div>
-                      </div>
-
-                      <div className="telemetry_divider" />
-
-                      <div className="telemetry_row">
-                        <div className="telemetry_item">
-                          <span className="tele_label">위성 수신</span>
-                          <strong className="tele_val highlight_green">
-                            {position
-                              ? "14 SAT (실제)"
-                              : `${satellites} 수신중`}
-                          </strong>
-                        </div>
-                        <div className="telemetry_item">
-                          <span className="tele_label">위치 정확도</span>
-                          <strong className="tele_val">
-                            {position
-                              ? `±${position.accuracy}m (정밀)`
-                              : "±1.6m (예측)"}
-                          </strong>
-                        </div>
-                        <div className="telemetry_item">
-                          <span className="tele_label">도착 예정</span>
-                          <strong className="tele_val highlight_blue">
-                            약 {etaMinutes}분
-                          </strong>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Accuracy check footer info / error warning */}
-                  {progressPct < 66 ? (
-                    <div className="gps_accuracy_info_footer gps_accuracy_info_footer--warning">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                      </svg>
-                      <span>
-                        실시간 GPS 위성 신호 감도 정상 (수신 상태 양호)
-                      </span>
+                  {/* ── 배송 현황 카드 ── */}
+                  <div className="dtc_status_panel">
+
+                    {/* ETA — 가장 크게 */}
+                    <div className="dtc_eta_block">
+                      <span className="dtc_eta_truck_icon">🚚</span>
+                      <div className="dtc_eta_content">
+                        <div className="dtc_eta_headline">
+                          <span className="dtc_eta_prefix">약</span>
+                          <span className="dtc_eta_num">{etaMinutes}</span>
+                          <span className="dtc_eta_suffix">분 후 도착</span>
+                        </div>
+                        <p className="dtc_eta_subtext">{getEtaTime()} 도착 예정</p>
+                      </div>
                     </div>
-                  ) : geoError ? (
-                    <div className="gps_accuracy_info_footer gps_accuracy_info_footer--error">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                        <line x1="12" y1="9" x2="12" y2="13"></line>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                      </svg>
-                      <span>
-                        기기 GPS 수신 지연: {geoError} (시뮬레이션 모드로 지속
-                        트래킹 가능)
-                      </span>
+
+                    {/* 진행률 */}
+                    <div className="dtc_progress_block">
+                      <div className="dtc_progress_header">
+                        <span className="dtc_progress_title">배송 진행률</span>
+                        <span className="dtc_progress_pct">{deliveryProgressPct}%</span>
+                      </div>
+                      <div className="dtc_progress_track">
+                        <div
+                          className="dtc_progress_fill"
+                          style={{ width: `${deliveryProgressPct}%` }}
+                        />
+                        <div
+                          className="dtc_progress_thumb"
+                          style={{ left: `calc(${deliveryProgressPct}% - 9px)` }}
+                        />
+                      </div>
+                      <div className="dtc_progress_labels">
+                        <span>세탁 공장 출발</span>
+                        <span>우리 집 도착</span>
+                      </div>
                     </div>
-                  ) : (
-                    <div className="gps_accuracy_info_footer">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="gps_info_icon"
-                      >
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                      </svg>
-                      <span>
-                        {position
-                          ? "사용자 실시간 Geolocation 위치 신호 동기화 성공 (안정)"
-                          : "실시간 GPS 위성 신호 감도 정상 (수신 상태 양호)"}
-                      </span>
+
+                    {/* 현재 위치 + 남은 거리 */}
+                    <div className="dtc_info_grid">
+                      <div className="dtc_info_item">
+                        <span className="dtc_info_emoji">📍</span>
+                        <div className="dtc_info_text">
+                          <span className="dtc_info_label">현재 위치</span>
+                          <span className="dtc_info_value">
+                            {getLocationDesc(distanceToHome)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="dtc_info_item dtc_info_item--highlight">
+                        <span className="dtc_info_emoji">🏠</span>
+                        <div className="dtc_info_text">
+                          <span className="dtc_info_label">남은 거리</span>
+                          <span className="dtc_info_value dtc_info_value--blue">
+                            {distanceToHome >= 1000
+                              ? `${(distanceToHome / 1000).toFixed(1)}km`
+                              : `${distanceToHome}m`}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  )}
+
+                  </div>
                 </article>
 
                 {/* 도착 정보 카드 */}

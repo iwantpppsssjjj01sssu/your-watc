@@ -1082,7 +1082,15 @@
   height: 100px;
   object-fit: cover;
   display: block;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+
+.home_review_duvet_img--clickable {
+  cursor: zoom-in;
+}
+
+.home_review_duvet_img--clickable:active {
+  opacity: 0.82;
 }
 
 .home_review_img_wrapper:hover .home_review_duvet_img {
@@ -2415,7 +2423,16 @@
   border-radius: 14px;
   border: 1px solid #f1f5f9;
   display: block;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+
+.review_all_img--clickable {
+  cursor: zoom-in;
+}
+
+.review_all_img--clickable:active {
+  opacity: 0.85;
+  transform: scale(0.98);
 }
 
 .review_all_img_wrap:hover .review_all_img {
@@ -10553,4 +10570,307 @@
   transition:
     opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
     transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ══════════════════════════════════════════
+   주문 확인 모달 (리뷰 쓰기 전 1단계)
+══════════════════════════════════════════ */
+.order_confirm_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: flex-end;
+  animation: ppOverlayIn 0.22s ease forwards;
+}
+
+.order_confirm_sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  padding: 12px 20px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  animation: ppSheetUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.order_confirm_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14px 0 24px;
+  gap: 10px;
+}
+
+.order_confirm_icon {
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.order_confirm_title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.35;
+  margin: 0;
+  font-family: var(--font-pretendard);
+}
+
+.order_confirm_sub {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+  font-family: var(--font-pretendard);
+}
+
+.order_confirm_btn_row {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 10px;
+}
+
+.order_confirm_btn {
+  padding: 15px;
+  border: none;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  transition: opacity 0.13s ease;
+}
+
+.order_confirm_btn:active {
+  opacity: 0.8;
+}
+
+.order_confirm_btn--no {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.order_confirm_btn--yes {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* ══════════════════════════════════════════
+   상품 선택 모달 (리뷰 작성 전 구매 항목 선택)
+══════════════════════════════════════════ */
+.product_picker_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: flex-end;
+  animation: ppOverlayIn 0.22s ease forwards;
+}
+
+@keyframes ppOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.product_picker_sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  padding: 12px 0 calc(env(safe-area-inset-bottom, 0px) + 16px);
+  animation: ppSheetUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-height: 82dvh;
+  overflow-y: auto;
+}
+
+@keyframes ppSheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.product_picker_handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e2e8f0;
+  margin: 0 auto 18px;
+}
+
+.product_picker_header {
+  padding: 0 20px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.product_picker_title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+  margin: 0 0 5px;
+  font-family: var(--font-pretendard);
+}
+
+.product_picker_sub {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0;
+  font-family: var(--font-pretendard);
+}
+
+.product_picker_list {
+  padding: 8px 0;
+}
+
+.product_picker_item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.13s ease;
+}
+
+.product_picker_item:active {
+  background: #f8fafc;
+}
+
+.product_picker_img_wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f1f5f9;
+  border: 1px solid #e8eef4;
+}
+
+.product_picker_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product_picker_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.product_picker_name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.3px;
+  font-family: var(--font-pretendard);
+  display: block;
+}
+
+.product_picker_meta {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+  font-family: var(--font-pretendard);
+  display: block;
+}
+
+.product_picker_close {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 8px 20px 0;
+  padding: 14px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  transition: background 0.13s ease;
+}
+
+.product_picker_close:active {
+  background: #e2e8f0;
+}
+
+/* 선택된 상품 칩 (리뷰 폼 상단) */
+.review_selected_product_chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f6ff;
+  border: 1.5px solid rgba(37, 99, 235, 0.15);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.review_selected_product_img_wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #dbeafe;
+  border: 1px solid #bfdbfe;
+}
+
+.review_selected_product_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.review_selected_product_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.review_selected_product_name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e3a8a;
+  letter-spacing: -0.2px;
+  font-family: var(--font-pretendard);
+  display: block;
+}
+
+.review_selected_product_date {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  font-family: var(--font-pretendard);
+  display: block;
+}
+
+.review_selected_product_change {
+  background: none;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2563eb;
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  flex-shrink: 0;
+  transition: background 0.13s ease;
+}
+
+.review_selected_product_change:active {
+  background: #dbeafe;
 }

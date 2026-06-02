@@ -7,7 +7,7 @@ import i1Img from "../../asset/img/i1.png";
 import j1Img from "../../asset/img/j1.png"; // 3D Laundry Basket on Stool
 import eventImg from "../../asset/img/event.png";
 import eventIconImg from "../../asset/img/event_icon.png";
-import qaImg from "../../asset/img/Q&A.png";
+import qaImg from "../../asset/img/q_and_a.png";
 import k1Img from "../../asset/img/k1.png"; // 3D Smart Phone Illustration
 import k11Img from "../../asset/img/k1-1.png"; // 3D Smartphone Hand
 import l1Img from "../../asset/img/l1.png"; // 3D Glass Metallic Ring
@@ -84,6 +84,13 @@ import reviewTableRunnerImg from "../../asset/img/review-table-runner.png";
 import guideShirtImg from "../../asset/img/guide-shirt.png";
 import reviewFoldedClothesImg from "../../asset/img/review-folded-clothes.png";
 import reviewBlackBackpackImg from "../../asset/img/review-black-backpack.png";
+import reviewEchobagImg from "../../asset/img/review_echobag.png";
+import reviewBlackBagImg from "../../asset/img/review_black_bag.png";
+import reviewGuuseImg from "../../asset/img/review_guuse.png";
+import reviewTradImg from "../../asset/img/review_trad.png";
+import babyMomImg from "../../asset/img/아기엄마.png";
+import travelImg from "../../asset/img/여행러.png";
+import yogaManiaImg from "../../asset/img/요가마니아.png";
 
 import { BottomNav } from "../../components/BottomNav";
 
@@ -301,6 +308,15 @@ export function HomePage() {
   const [writeReviewSubmitted, setWriteReviewSubmitted] =
     useState<boolean>(false);
   const [showWriteReview, setShowWriteReview] = useState<boolean>(false);
+  const [reviewSelectedProduct, setReviewSelectedProduct] = useState<{
+    id: number;
+    name: string;
+    category: string;
+    date: string;
+    img: string;
+  } | null>(null);
+  const [showProductPicker, setShowProductPicker] = useState<boolean>(false);
+  const [showOrderConfirm, setShowOrderConfirm] = useState<boolean>(false);
 
   // --- Profile Edit Modal States (Interactive Dialog Form) ---
   const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
@@ -976,7 +992,7 @@ export function HomePage() {
         user: "꿀잠러",
         date: "26.05.19",
         body: `겨우내 덮었던 두꺼운 거위털 구스 이불을 맡겼는데, 거위털 쏠림이나 숨 죽음 전혀 없이 방방하고 보송보송하게 부풀려서 가져다주셨습니다. 향기도 너무 좋아요!`,
-        img: reviewDuvetImg,
+        img: reviewGuuseImg,
         tags: ["구스이불", "다운복원"],
       },
       {
@@ -992,7 +1008,7 @@ export function HomePage() {
         user: "신혼부부",
         date: "26.05.11",
         body: `호텔식 올 화이트 침구 세트를 클리닝 맡겼더니 눈부실 정도로 하얗고 뽀송하게 다림질되어 배송받았습니다.`,
-        img: reviewWhitebedImg,
+        img: reviewGuuseImg,
         tags: ["호텔식침구", "오성급화이트"],
       },
       {
@@ -1008,7 +1024,7 @@ export function HomePage() {
         user: "토퍼매니아",
         date: "26.05.04",
         body: `메모리폼 침대 토퍼 겉 커버 세탁을 신청했는데, 안감 얼룩까지 꼼꼼히 체크해 주시고 중성 세제로 정성껏 세탁되어 왔네요.`,
-        img: reviewGreybedImg,
+        img: reviewTradImg,
         tags: ["토퍼커버", "중성케어"],
       },
       {
@@ -1016,7 +1032,7 @@ export function HomePage() {
         user: "효도빨래",
         date: "26.04.29",
         body: `부모님 댁에 있는 묵직한 전통 솜 한실 이불을 대행 수거해서 맡겼는데 묵은 냄새를 완벽 탈취해주시고 원형 보존하여 세탁해 주셨습니다.`,
-        img: reviewHyodoDuvetImg,
+        img: reviewTradImg,
         tags: ["한실이불", "탈취완료"],
       },
     ],
@@ -1166,7 +1182,7 @@ export function HomePage() {
         user: "에코프렌들리",
         date: "26.05.11",
         body: `때가 꼬질꼬질 타서 버리기 직전이었던 면 100% 흰색 디자이너 에코백 황변 때와 손잡이 찌든 때를 완전 뽀얗고 산뜻하게 하이 화이트 표백 세탁해 주셨어요!`,
-        img: reviewEcoBagImg,
+        img: reviewEchobagImg,
         tags: ["에코백표백", "황변제거"],
       },
       {
@@ -1182,7 +1198,7 @@ export function HomePage() {
         user: "숄더백조아",
         date: "26.05.04",
         body: `숄더 토트백 바닥면 징 주변 금속 녹슬기 시작하던 부위를 특수 약품으로 환원 청소해주시고 바닥 천 이물질 오염도 물때 자국 없이 깨끗하게 흡입 탈수 완료되었습니다.`,
-        img: reviewOutdoorImg,
+        img: reviewBlackBagImg,
         tags: ["금속케어", "토트백바닥"],
       },
       {
@@ -1340,7 +1356,7 @@ export function HomePage() {
         user: "여행러",
         date: "26.05.09",
         body: `수하물 수송 중 쓸림과 검은 기름때로 난리가 난 명품 캐리어 겉 천 커버와 내부 안감 드라이 세탁! 껌 자국까지 특수 헤라 약품으로 완전 제거 완료되었습니다.`,
-        img: reviewPriceImg,
+        img: travelImg,
         tags: ["캐리어커버", "기름오염제거"],
       },
       {
@@ -1348,7 +1364,7 @@ export function HomePage() {
         user: "아기엄마",
         date: "26.05.05",
         body: `차량용 아기 카시트 겉 커버와 헤드레스트 솜 패드 세탁을 신청했습니다. 유아 피부 저자극 특수 아토 세제와 진드기 고온 멸균 분사 가공으로 쾌적 그 자체입니다.`,
-        img: reviewBlouseImg,
+        img: babyMomImg,
         tags: ["카시트커버", "아토세제멸균"],
       },
       {
@@ -1364,11 +1380,21 @@ export function HomePage() {
         user: "요가마니아",
         date: "26.04.24",
         body: `매일 땀 흘리며 사용하는 요가 매트 대형 타월과 명상용 두꺼운 패브릭 방석 세탁! 땀 전용 고농축 시트러스 향 살균으로 매일 수련할 때 맑은 향이 올라와 집중이 잘 돼요.`,
-        img: reviewPetImg,
+        img: yogaManiaImg,
         tags: ["요가매트타월", "시트러스살균"],
       },
     ],
   };
+
+  // --- 구매 완료된 세탁 이력 (리뷰 작성용) ---
+  const purchasedOrders = [
+    { id: 1, name: "구스 다운 이불", category: "이불·침구", date: "2026.05.19 완료", img: reviewGuuseImg },
+    { id: 2, name: "아우터 코트", category: "아우터·패딩", date: "2026.05.27 완료", img: reviewOuterImg },
+    { id: 3, name: "숄더 토트백", category: "가방·잡화", date: "2026.05.04 완료", img: reviewBlackBagImg },
+    { id: 4, name: "캐시미어 니트", category: "니트·스웨터", date: "2026.04.28 완료", img: reviewCashmereImg },
+    { id: 5, name: "정장 슈트", category: "정장·비즈니스", date: "2026.04.15 완료", img: reviewSuitImg },
+    { id: 6, name: "운동화 2켤레", category: "신발", date: "2026.04.08 완료", img: reviewSneakersImg },
+  ];
 
   // --- Swappable Review Filter Tags Array ---
   const reviewTags = [
@@ -1974,7 +2000,8 @@ export function HomePage() {
                     <img
                       src={rv.img}
                       alt={`${rv.user} 리뷰 이미지`}
-                      className="review_all_img"
+                      className="review_all_img review_all_img--clickable"
+                      onClick={() => setLightboxImg(rv.img)}
                     />
                     <div className="review_all_tags">
                       {rv.tags.map((t: string) => (
@@ -5016,12 +5043,22 @@ export function HomePage() {
                   ))}
                 </div>
 
-                {/* 리뷰 작성 영역 – 펼치기/접기 */}
+                {/* 리뷰 작성 영역 */}
                 <div className="home_write_review_accordion" style={{ marginBottom: "20px" }}>
                   <button
                     type="button"
                     className="home_write_review_toggle"
-                    onClick={() => setShowWriteReview((v) => !v)}
+                    onClick={() => {
+                      if (!showWriteReview) {
+                        setShowOrderConfirm(true);
+                      } else {
+                        setShowWriteReview(false);
+                        setReviewSelectedProduct(null);
+                        setWriteReviewStars(0);
+                        setWriteReviewText("");
+                        setWriteReviewSubmitted(false);
+                      }
+                    }}
                   >
                     <span className="home_write_review_toggle_left">
                       <span className="home_write_review_toggle_icon">✏️</span>
@@ -5036,13 +5073,11 @@ export function HomePage() {
                     </span>
                   </button>
 
-                  {showWriteReview && (
+                  {showWriteReview && reviewSelectedProduct && (
                     <div className="home_write_review_box" style={{ marginBottom: "20px" }}>
                       {writeReviewSubmitted ? (
                         <div className="home_write_review_success">
-                          <span className="home_write_review_success_icon">
-                            ✓
-                          </span>
+                          <span className="home_write_review_success_icon">✓</span>
                           <p className="home_write_review_success_text">
                             리뷰가 등록되었어요!
                             <br />
@@ -5054,13 +5089,48 @@ export function HomePage() {
                               setWriteReviewSubmitted(false);
                               setWriteReviewStars(0);
                               setWriteReviewText("");
+                              setReviewSelectedProduct(null);
+                              setShowWriteReview(false);
                             }}
                           >
-                            다시 작성하기
+                            다른 상품 리뷰하기
                           </button>
                         </div>
                       ) : (
                         <>
+                          {/* 선택된 상품 표시 */}
+                          <div className="review_selected_product_chip">
+                            <div className="review_selected_product_img_wrap">
+                              <img
+                                src={reviewSelectedProduct.img}
+                                alt={reviewSelectedProduct.name}
+                                className="review_selected_product_img"
+                              />
+                            </div>
+                            <div className="review_selected_product_info">
+                              <span className="review_selected_product_name">
+                                {reviewSelectedProduct.name}
+                              </span>
+                              <span className="review_selected_product_date">
+                                {reviewSelectedProduct.date}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              className="review_selected_product_change"
+                              onClick={() => {
+                                setReviewSelectedProduct(null);
+                                setShowWriteReview(false);
+                                setWriteReviewStars(0);
+                                setWriteReviewText("");
+                                setShowProductPicker(true);
+                                setShowOrderConfirm(false);
+                              }}
+                            >
+                              변경
+                            </button>
+                          </div>
+
                           <div className="home_write_review_header">
                             <span className="home_write_review_label">리뷰 남기기</span>
                             <p className="home_write_review_sub">
@@ -5083,16 +5153,7 @@ export function HomePage() {
                             ))}
                             {writeReviewStars > 0 && (
                               <span className="home_write_star_label">
-                                {
-                                  [
-                                    "",
-                                    "별로예요",
-                                    "아쉬워요",
-                                    "보통이에요",
-                                    "좋아요",
-                                    "최고예요",
-                                  ][writeReviewStars]
-                                }
+                                {["", "별로예요", "아쉬워요", "보통이에요", "좋아요", "최고예요"][writeReviewStars]}
                               </span>
                             )}
                           </div>
@@ -5114,13 +5175,10 @@ export function HomePage() {
                           <button
                             type="button"
                             className={`home_write_review_submit ${writeReviewStars > 0 && writeReviewText.trim().length > 0 ? "home_write_review_submit--active" : ""}`}
-                            disabled={
-                              writeReviewStars === 0 ||
-                              writeReviewText.trim().length === 0
-                            }
+                            disabled={writeReviewStars === 0 || writeReviewText.trim().length === 0}
                             onClick={() => {
                               setWriteReviewSubmitted(true);
-                              triggerToast("리뷰가 등록되었습니다!");
+                              triggerToast("리뷰가 등록되었습니다! 🎉");
                             }}
                           >
                             리뷰 등록하기
@@ -5130,6 +5188,119 @@ export function HomePage() {
                     </div>
                   )}
                 </div>
+
+                {/* 주문 확인 모달 */}
+                {showOrderConfirm && (
+                  <div
+                    className="order_confirm_overlay"
+                    onClick={() => setShowOrderConfirm(false)}
+                  >
+                    <div
+                      className="order_confirm_sheet"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="product_picker_handle" />
+                      <div className="order_confirm_body">
+                        <span className="order_confirm_icon">🧺</span>
+                        <h3 className="order_confirm_title">
+                          지난 날에 세탁 맡긴<br />상품들이에요.
+                        </h3>
+                        <p className="order_confirm_sub">
+                          리뷰를 작성하시겠어요?
+                        </p>
+                      </div>
+                      <div className="order_confirm_btn_row">
+                        <button
+                          type="button"
+                          className="order_confirm_btn order_confirm_btn--no"
+                          onClick={() => setShowOrderConfirm(false)}
+                        >
+                          아니요
+                        </button>
+                        <button
+                          type="button"
+                          className="order_confirm_btn order_confirm_btn--yes"
+                          onClick={() => {
+                            setShowOrderConfirm(false);
+                            setShowProductPicker(true);
+                          }}
+                        >
+                          예
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 상품 선택 모달 */}
+                {showProductPicker && (
+                  <div
+                    className="product_picker_overlay"
+                    onClick={() => setShowProductPicker(false)}
+                  >
+                    <div
+                      className="product_picker_sheet"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="product_picker_handle" />
+                      <div className="product_picker_header">
+                        <h3 className="product_picker_title">
+                          어떤 상품을 리뷰하시겠어요?
+                        </h3>
+                        <p className="product_picker_sub">
+                          세탁 완료된 항목에만 리뷰를 남길 수 있어요
+                        </p>
+                      </div>
+                      <div className="product_picker_list">
+                        {purchasedOrders.map((order) => (
+                          <button
+                            key={order.id}
+                            type="button"
+                            className="product_picker_item"
+                            onClick={() => {
+                              setReviewSelectedProduct(order);
+                              setShowProductPicker(false);
+                              setShowWriteReview(true);
+                            }}
+                          >
+                            <div className="product_picker_img_wrap">
+                              <img
+                                src={order.img}
+                                alt={order.name}
+                                className="product_picker_img"
+                              />
+                            </div>
+                            <div className="product_picker_info">
+                              <span className="product_picker_name">{order.name}</span>
+                              <span className="product_picker_meta">
+                                {order.category} · {order.date}
+                              </span>
+                            </div>
+                            <svg
+                              viewBox="0 0 24 24"
+                              width="16"
+                              height="16"
+                              fill="none"
+                              stroke="#cbd5e1"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        className="product_picker_close"
+                        onClick={() => setShowProductPicker(false)}
+                      >
+                        닫기
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* [가로 터치 스크롤 Swiper 카드 슬라이더] */}
                 <div
@@ -5154,7 +5325,8 @@ export function HomePage() {
                         <img
                           src={rv.img}
                           alt={`${rv.user} 리뷰 이미지`}
-                          className="home_review_duvet_img"
+                          className="home_review_duvet_img home_review_duvet_img--clickable"
+                          onClick={() => setLightboxImg(rv.img)}
                         />
                       </div>
                       <div className="home_review_tags_bottom">
@@ -5586,116 +5758,6 @@ export function HomePage() {
                           >
                             {active.surcharge}
                           </span>
-                        </div>
-
-                        
-                          <div className="care_analysis_widget"> <h3 className="care_widget_title">실시간 AI 소재 분석</h3>
-                          {registeredClothes.length === 0 ? (
-                            <p className="no_data_hint">
-                              등록된 의류가 없습니다. 위 폼에서 의류를 등록해 주세요!
-                            </p>
-                          ) : (
-                            <>
-                              {/* Latest analysis result */}
-                              <div className="care_analysis_scroll">
-                                {registeredClothes[0] && (
-                                  <div key={registeredClothes[0].id ?? 0} className="analysis_result_card">
-                                    <div className="analysis_card_header">
-                                      <span className="anal_badge">{registeredClothes[0].category}</span>
-                                      <span className="anal_name">{registeredClothes[0].name}</span>
-                                    </div>
-                                    {registeredClothes[0].analyzing ? (
-                                      <div className="anal_loading">
-                                        <div className="anal_spinner" />
-                                        <span className="anal_loading_text">AI 소재 분석 중...</span>
-                                      </div>
-                                    ) : (
-                                      <div className="anal_details">
-                                        <div className="anal_row">
-                                          <span className="anal_lbl">분석 소재</span>
-                                          <span className="anal_val font_bold">{registeredClothes[0].materials.join(" + ")}</span>
-                                        </div>
-                                        <div className="anal_row">
-                                          <span className="anal_lbl">세탁 방법 안내</span>
-                                          <span className="anal_val text_blue font_bold">{(() => {
-                                            let laundryGuide = "일반 세탁 권장 (찬물 세탁)";
-                                            const m = registeredClothes[0].materials;
-                                            if (m.includes("실크")) laundryGuide = "손세탁 절대 권장 (중성세제 사용)";
-                                            else if (m.includes("울")) laundryGuide = "드라이클리닝 필수 권장";
-                                            else if (m.includes("합성섬유") && m.includes("면")) laundryGuide = "일반 세탁 (세탁기 표준코스 가능)";
-                                            else if (m.includes("합성섬유")) laundryGuide = "일반 세탁 및 건조기 사용 제어";
-                                            return laundryGuide;
-                                          })()}</span>
-                                        </div>
-                                        <div className="anal_row">
-                                          <span className="anal_lbl">주의사항 안내</span>
-                                          <span className="anal_val text_red font_bold">⚠️ {(() => {
-                                            let warningGuide = "손상 주의 (올 풀림 경고)";
-                                            const m = registeredClothes[0].materials;
-                                            if (m.includes("실크")) warningGuide = "변색 주의 & 손상 주의";
-                                            else if (m.includes("울")) warningGuide = "수축 주의 (온수 금지)";
-                                            else if (m.includes("합성섬유") && m.includes("면")) warningGuide = "변색 주의 (단독 세탁)";
-                                            else if (m.includes("합성섬유")) warningGuide = "손상 주의 (고온 열풍 피함)";
-                                            return warningGuide;
-                                          })()}</span>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-
-                              {/* History section */}
-                              {registeredClothes.length > 1 && (
-                                <section className="care_history_section">
-                                  <h3 className="care_widget_title">지난 분석 이력</h3>
-                                  <div className="care_history_grid">
-                                    {registeredClothes.slice(1, 4).map((cloth) => (
-                                      <div key={cloth.id ?? cloth.name} className="analysis_result_card history_card">
-                                        <div className="analysis_card_header">
-                                          <span className="anal_badge">{cloth.category}</span>
-                                          <span className="anal_name">{cloth.name}</span>
-                                        </div>
-                                        <div className="anal_details">
-                                          <div className="anal_row">
-                                            <span className="anal_lbl">분석 소재</span>
-                                            <span className="anal_val font_bold">{cloth.materials.join(" + ")}</span>
-                                          </div>
-                                          <div className="anal_row">
-                                            <span className="anal_lbl">세탁 방법 안내</span>
-                                            <span className="anal_val text_blue font_bold">{(() => {
-                                              let lg = "일반 세탁 권장 (찬물 세탁)";
-                                              const m = cloth.materials;
-                                              if (m.includes("실크")) lg = "손세탁 절대 권장 (중성세제 사용)";
-                                              else if (m.includes("울")) lg = "드라이클리닝 필수 권장";
-                                              else if (m.includes("합성섬유") && m.includes("면")) lg = "일반 세탁 (세탁기 표준코스 가능)";
-                                              else if (m.includes("합성섬유")) lg = "일반 세탁 및 건조기 사용 제어";
-                                              return lg;
-                                            })()}</span>
-                                          </div>
-                                          <div className="anal_row">
-                                            <span className="anal_lbl">주의사항 안내</span>
-                                            <span className="anal_val text_red font_bold">⚠️ {(() => {
-                                              let wg = "손상 주의 (올 풀림 경고)";
-                                              const m = cloth.materials;
-                                              if (m.includes("실크")) wg = "변색 주의 & 손상 주의";
-                                              else if (m.includes("울")) wg = "수축 주의 (온수 금지)";
-                                              else if (m.includes("합성섬유") && m.includes("면")) wg = "변색 주의 (단독 세탁)";
-                                              else if (m.includes("합성섬유")) wg = "손상 주의 (고온 열풍 피함)";
-                                              return wg;
-                                            })()}</span>
-                                          </div>
-                                        </div>
-                                        <button className="history_delete_btn" onClick={() => {
-                                          setRegisteredClothes((prev) => prev.filter((c) => c.id !== cloth.id));
-                                        }} aria-label="Delete history entry">✖</button>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </section>
-                              )}
-                            </>
-                          )}
                         </div>
 
                         {/* 팔레트 그리드 */}
@@ -7279,78 +7341,6 @@ export function HomePage() {
                 </button>
               </div>
 
-              {/* [2. 소재 분석 결과 디스플레이] */}
-              <div className="care_analysis_widget">
-                <h3 className="care_widget_title">실시간 AI 소재 분석</h3>
-                {registeredClothes.length === 0 ? (
-                  <p className="no_data_hint">
-                    등록된 의류가 없습니다. 위 폼에서 의류를 등록해 주세요!
-                  </p>
-                ) : (
-                  <div className="care_analysis_scroll">
-                    {registeredClothes.map((cloth, idx) => {
-                      // 소재에 따른 가상 세탁방법 및 주의사항 도출
-                      let laundryGuide = "일반 세탁 권장 (찬물 세탁)";
-                      let warningGuide = "손상 주의 (올 풀림 경고)";
-
-                      if (cloth.materials.includes("실크")) {
-                        laundryGuide = "손세탁 절대 권장 (중성세제 사용)";
-                        warningGuide = "변색 주의 & 손상 주의";
-                      } else if (cloth.materials.includes("울")) {
-                        laundryGuide = "드라이클리닝 필수 권장";
-                        warningGuide = "수축 주의 (온수 금지)";
-                      } else if (
-                        cloth.materials.includes("합성섬유") &&
-                        cloth.materials.includes("면")
-                      ) {
-                        laundryGuide = "일반 세탁 (세탁기 표준코스 가능)";
-                        warningGuide = "변색 주의 (단독 세탁)";
-                      } else if (cloth.materials.includes("합성섬유")) {
-                        laundryGuide = "일반 세탁 및 건조기 사용 제어";
-                        warningGuide = "손상 주의 (고온 열풍 피함)";
-                      }
-
-                      return (
-                        <div key={cloth.id ?? idx} className="analysis_result_card">
-                          <div className="analysis_card_header">
-                            <span className="anal_badge">{cloth.category}</span>
-                            <span className="anal_name">{cloth.name}</span>
-                          </div>
-                          {cloth.analyzing ? (
-                            <div className="anal_loading">
-                              <div className="anal_spinner" />
-                              <span className="anal_loading_text">
-                                AI 소재 분석 중...
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="anal_details">
-                              <div className="anal_row">
-                                <span className="anal_lbl">분석 소재</span>
-                                <span className="anal_val font_bold">
-                                  {cloth.materials.join(" + ")}
-                                </span>
-                              </div>
-                              <div className="anal_row">
-                                <span className="anal_lbl">세탁 방법 안내</span>
-                                <span className="anal_val text_blue font_bold">
-                                  {laundryGuide}
-                                </span>
-                              </div>
-                              <div className="anal_row">
-                                <span className="anal_lbl">주의사항 안내</span>
-                                <span className="anal_val text_red font_bold">
-                                  ⚠️ {warningGuide}
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
             </section>
 
             {/* [3. 세탁 주기 관리] */}
