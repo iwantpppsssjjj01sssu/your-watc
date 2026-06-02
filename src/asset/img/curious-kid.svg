@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- 말풍선 물음표 -->
+  <ellipse cx="122" cy="38" rx="24" ry="22" fill="#ffffff" opacity="0.9"/>
+  <path d="M106 54 L100 66 L116 58" fill="#ffffff" opacity="0.9"/>
+  <text x="114" y="46" font-family="Arial" font-size="22" font-weight="900" fill="#f43f5e" text-anchor="middle">?</text>
+
+  <!-- 머리카락 (뒷부분) -->
+  <ellipse cx="74" cy="68" rx="34" ry="32" fill="#1c1917"/>
+
+  <!-- 얼굴 -->
+  <ellipse cx="74" cy="78" rx="32" ry="30" fill="#fcd5b4"/>
+
+  <!-- 머리카락 앞 삐죽 -->
+  <path d="M52 60 Q56 44 66 50 Q60 38 74 42 Q88 36 84 50 Q94 44 96 60" fill="#1c1917"/>
+
+  <!-- 귀 -->
+  <ellipse cx="43" cy="80" rx="7" ry="8.5" fill="#fcd5b4"/>
+  <ellipse cx="43" cy="80" rx="4" ry="5.5" fill="#f8b4a0"/>
+  <ellipse cx="105" cy="80" rx="7" ry="8.5" fill="#fcd5b4"/>
+  <ellipse cx="105" cy="80" rx="4" ry="5.5" fill="#f8b4a0"/>
+
+  <!-- 눈 (크게 동그랗게 - 궁금한 표정) -->
+  <ellipse cx="62" cy="78" rx="10" ry="11" fill="#ffffff"/>
+  <ellipse cx="86" cy="78" rx="10" ry="11" fill="#ffffff"/>
+  <!-- 눈동자 -->
+  <ellipse cx="64" cy="79" rx="6.5" ry="7" fill="#3b1f0e"/>
+  <ellipse cx="88" cy="79" rx="6.5" ry="7" fill="#3b1f0e"/>
+  <!-- 하이라이트 -->
+  <circle cx="66" cy="76" r="2.2" fill="#ffffff"/>
+  <circle cx="90" cy="76" r="2.2" fill="#ffffff"/>
+  <!-- 속눈썹 (위) -->
+  <path d="M53 70 Q62 65 71 70" stroke="#1c1917" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M77 70 Q86 65 95 70" stroke="#1c1917" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+  <!-- 눈썹 (올라간 - 궁금한 표정) -->
+  <path d="M54 65 Q62 59 70 62" stroke="#1c1917" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M78 62 Q86 59 94 65" stroke="#1c1917" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- 코 -->
+  <ellipse cx="74" cy="90" rx="3" ry="2" fill="#e8956d"/>
+
+  <!-- 입 (동그랗게 벌린 - 놀란/궁금한) -->
+  <ellipse cx="74" cy="101" rx="9" ry="7" fill="#c0392b"/>
+  <ellipse cx="74" cy="101" rx="7" ry="5" fill="#e74c3c"/>
+  <!-- 이빨 -->
+  <rect x="68" y="97" width="12" height="5" rx="2" fill="#ffffff"/>
+
+  <!-- 볼 홍조 -->
+  <ellipse cx="50" cy="90" rx="9" ry="6" fill="#f9a8d4" opacity="0.5"/>
+  <ellipse cx="98" cy="90" rx="9" ry="6" fill="#f9a8d4" opacity="0.5"/>
+
+  <!-- 몸통 -->
+  <path d="M44 128 Q44 108 74 108 Q104 108 104 128 L108 168 Q74 174 40 168 Z" fill="#fb7185"/>
+  <!-- 옷 넥 -->
+  <path d="M62 108 Q74 118 86 108" stroke="#f43f5e" stroke-width="2" fill="none"/>
+  <!-- 옷 줄무늬 -->
+  <path d="M46 130 L42 165" stroke="#f43f5e" stroke-width="2" opacity="0.5"/>
+  <path d="M102 130 L106 165" stroke="#f43f5e" stroke-width="2" opacity="0.5"/>
+
+  <!-- 왼팔 (손 위로 들기) -->
+  <path d="M44 115 Q28 108 24 90" stroke="#fcd5b4" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <!-- 왼손 손가락 (볼에 대기) -->
+  <circle cx="24" cy="88" r="8" fill="#fcd5b4"/>
+  <ellipse cx="18" cy="83" rx="4" ry="5.5" fill="#fcd5b4"/>
+  <ellipse cx="24" cy="80" rx="4" ry="5.5" fill="#fcd5b4"/>
+  <ellipse cx="30" cy="82" rx="4" ry="5.5" fill="#fcd5b4"/>
+
+  <!-- 오른팔 -->
+  <path d="M104 115 Q120 108 124 100" stroke="#fcd5b4" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <circle cx="124" cy="98" r="8" fill="#fcd5b4"/>
+</svg>

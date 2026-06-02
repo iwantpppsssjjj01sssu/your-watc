@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <!-- 배경 -->
+  <rect width="400" height="300" fill="#faf5ff"/>
+
+  <!-- 햇빛 광선 배경 -->
+  <g opacity="0.12" stroke="#a78bfa" stroke-width="1.5">
+    <line x1="200" y1="30" x2="200" y2="0"/>
+    <line x1="240" y1="42" x2="260" y2="18"/>
+    <line x1="270" y1="72" x2="296" y2="54"/>
+    <line x1="160" y1="42" x2="140" y2="18"/>
+    <line x1="130" y1="72" x2="104" y2="54"/>
+  </g>
+
+  <!-- 빨랫줄 -->
+  <path d="M40 110 Q200 100 360 108" stroke="#c4b5fd" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- 이불 — 풍성하게 걸린 모습 -->
+  <!-- 이불 그림자 -->
+  <ellipse cx="200" cy="258" rx="110" ry="12" fill="rgba(139,92,246,0.10)"/>
+
+  <!-- 이불 본체 -->
+  <path d="M90 108 Q90 260 95 260 L305 260 Q310 260 310 108 Z"
+    fill="url(#duvetGrad)" stroke="#ddd6fe" stroke-width="2"/>
+
+  <!-- 이불 패턴 — 전통 꽃무늬 -->
+  <g opacity="0.35">
+    <!-- 꽃 1 -->
+    <circle cx="150" cy="165" r="18" fill="#a78bfa"/>
+    <circle cx="150" cy="165" r="10" fill="#c4b5fd"/>
+    <circle cx="150" cy="165" r="4" fill="#7c3aed"/>
+    <!-- 꽃잎 -->
+    <ellipse cx="150" cy="147" rx="4" ry="7" fill="#a78bfa"/>
+    <ellipse cx="150" cy="183" rx="4" ry="7" fill="#a78bfa"/>
+    <ellipse cx="132" cy="165" rx="7" ry="4" fill="#a78bfa"/>
+    <ellipse cx="168" cy="165" rx="7" ry="4" fill="#a78bfa"/>
+
+    <!-- 꽃 2 -->
+    <circle cx="250" cy="185" r="14" fill="#c4b5fd"/>
+    <circle cx="250" cy="185" r="7" fill="#ddd6fe"/>
+    <circle cx="250" cy="185" r="3" fill="#7c3aed"/>
+    <ellipse cx="250" cy="171" rx="3" ry="5" fill="#c4b5fd"/>
+    <ellipse cx="250" cy="199" rx="3" ry="5" fill="#c4b5fd"/>
+    <ellipse cx="236" cy="185" rx="5" ry="3" fill="#c4b5fd"/>
+    <ellipse cx="264" cy="185" rx="5" ry="3" fill="#c4b5fd"/>
+
+    <!-- 작은 꽃 3 -->
+    <circle cx="190" cy="225" r="10" fill="#a78bfa"/>
+    <circle cx="190" cy="225" r="5" fill="#ede9fe"/>
+    <ellipse cx="190" cy="215" rx="3" ry="5" fill="#a78bfa"/>
+    <ellipse cx="190" cy="235" rx="3" ry="5" fill="#a78bfa"/>
+    <ellipse cx="180" cy="225" rx="5" ry="3" fill="#a78bfa"/>
+    <ellipse cx="200" cy="225" rx="5" ry="3" fill="#a78bfa"/>
+  </g>
+
+  <!-- 이불 퀼팅 선 -->
+  <g stroke="#ddd6fe" stroke-width="1.2" opacity="0.5">
+    <path d="M90 140 Q200 132 310 140" fill="none"/>
+    <path d="M90 200 Q200 192 310 200" fill="none"/>
+    <path d="M130 108 L125 260" fill="none"/>
+    <path d="M170 108 L168 260" fill="none"/>
+    <path d="M230 108 L232 260" fill="none"/>
+    <path d="M270 108 L275 260" fill="none"/>
+  </g>
+
+  <!-- 집게 왼쪽 -->
+  <rect x="93" y="104" width="10" height="18" rx="3" fill="#7c3aed"/>
+  <rect x="91" y="102" width="14" height="5" rx="2" fill="#a78bfa"/>
+
+  <!-- 집게 오른쪽 -->
+  <rect x="297" y="104" width="10" height="18" rx="3" fill="#7c3aed"/>
+  <rect x="295" y="102" width="14" height="5" rx="2" fill="#a78bfa"/>
+
+  <!-- 스파클 / 뽀송 효과 -->
+  <g fill="#fbbf24" opacity="0.9">
+    <path d="M60 80 L63 86 L69 86 L64 90 L66 96 L60 92 L54 96 L56 90 L51 86 L57 86 Z" transform="scale(0.7) translate(20, 20)"/>
+    <path d="M340 70 L342 75 L347 75 L343 78 L344 83 L340 80 L336 83 L337 78 L333 75 L338 75 Z" transform="scale(0.65)"/>
+  </g>
+
+  <!-- 완료 체크 뱃지 -->
+  <circle cx="316" cy="228" r="22" fill="#7c3aed"/>
+  <polyline points="306,228 313,235 326,220" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <defs>
+    <linearGradient id="duvetGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#ddd6fe"/>
+    </linearGradient>
+  </defs>
+</svg>

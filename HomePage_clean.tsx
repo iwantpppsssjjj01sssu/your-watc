@@ -25,7 +25,6 @@ import b1Img from "../../asset/img/b1.png";
 import c1Img from "../../asset/img/c1.png";
 import d1Img from "../../asset/img/d1.png";
 import priceTagImg from "../../asset/img/price-tag-3d.svg";
-import curiousKidImg from "../../asset/img/curious-kid.svg";
 import q1Img from "../../asset/img/q1.png";
 
 import reviewCoatImg from "../../asset/img/review-coat.png";
@@ -41,8 +40,6 @@ import reviewCanvasImg from "../../asset/img/review-canvas.png";
 import reviewDuvetImg from "../../asset/img/review-duvet.png";
 import reviewPriceImg from "../../asset/img/review-price.png";
 import reviewEcoShoulderBagImg from "../../asset/img/review_eco_shoulder_bag.png";
-import reviewHyodoDuvetImg from "../../asset/img/review-hyodo-duvet.svg";
-import reviewEcoBagImg from "../../asset/img/review-eco-bag.svg";
 import reviewSuitImg from "../../asset/img/review-suit.png";
 import reviewPetImg from "../../asset/img/review-pet.png";
 import reviewCommunityImg from "../../asset/img/review-community.png";
@@ -1005,7 +1002,7 @@ export function HomePage() {
         user: "효도빨래",
         date: "26.04.29",
         body: `부모님 댁에 있는 묵직한 전통 솜 한실 이불을 대행 수거해서 맡겼는데 묵은 냄새를 완벽 탈취해주시고 원형 보존하여 세탁해 주셨습니다.`,
-        img: reviewHyodoDuvetImg,
+        img: reviewDuvetImg,
         tags: ["한실이불", "탈취완료"],
       },
     ],
@@ -1155,7 +1152,7 @@ export function HomePage() {
         user: "에코프렌들리",
         date: "26.05.11",
         body: `때가 꼬질꼬질 타서 버리기 직전이었던 면 100% 흰색 디자이너 에코백 황변 때와 손잡이 찌든 때를 완전 뽀얗고 산뜻하게 하이 화이트 표백 세탁해 주셨어요!`,
-        img: reviewEcoBagImg,
+        img: reviewEcoShoulderBagImg,
         tags: ["에코백표백", "황변제거"],
       },
       {

@@ -1,11 +1,469 @@
 /* ══════════════════════════════════════
-   캐릭터 히어로 섹션 (페이지 최상단 통합)
+   예약 정보 카드
 ══════════════════════════════════════ */
-.delivery_hero_section {
+.rsv_info_card {
+  background: #ffffff;
+  border: 1.5px solid #c7d7fb;
+  border-radius: 22px;
+  padding: 20px 20px 18px;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.rsv_info_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rsv_info_badge {
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.rsv_info_ordernum {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.rsv_info_title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.rsv_info_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 12px;
+}
+
+.rsv_info_cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rsv_info_label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.rsv_info_val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: -0.3px;
+}
+
+.rsv_today_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rsv_today_badge {
+  background: #fef9c3;
+  color: #a16207;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.rsv_today_desc {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.rsv_info_status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.rsv_status_dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+}
+
+.rsv_status_text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+/* GPS 이전 주문 경로 배너 */
+.gps_prev_order_banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.gps_prev_order_icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.gps_prev_order_text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gps_prev_order_text strong {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e40af;
+}
+
+.gps_prev_order_text span {
+  font-size: 11px;
+  color: #3b82f6;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════
+   배송 단계 v2
+══════════════════════════════════════ */
+.dstep_section {
+  margin-bottom: 24px;
+  padding: 0 2px;
+  min-width: 0;
+  width: 100%;
+}
+
+.dstep_section_label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0 0 4px;
+  letter-spacing: 0.2px;
+}
+
+.dstep_section_title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 20px;
+  letter-spacing: -0.4px;
+}
+
+.dstep_track_v2 {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dstep_v2_item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0 20px;
+  flex: 1;
+}
+
+/* 아이콘 행: 고정 높이 62px (52px 원 + 상하 5px glow 여유) */
+.dstep_v2_icon_row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 62px;
+  position: relative;
+  overflow: visible;
+}
+
+.dstep_v2_circle {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.dstep_v2_circle--done {
+  background: #2563eb;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+}
+
+.dstep_v2_circle--current {
+  background: #2563eb;
+  box-shadow: 0 0 0 5px rgba(37,99,235,0.18), 0 6px 20px rgba(37,99,235,0.35);
+}
+
+.dstep_v2_circle--pending {
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+}
+
+.dstep_v2_icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.dstep_v2_pulse {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid #2563eb;
+  animation: dstepPulse 1.6s ease-out infinite;
+}
+
+@keyframes dstepPulse {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.35); }
+}
+
+/* 커넥터 라인: icon_row 내 절대 위치, 아이콘 영역 제외한 가운데 */
+.dstep_v2_line {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 26px);
+  right: calc(-50% + 26px);
+  height: 2px;
+  transform: translateY(-50%);
+  background: #e2e8f0;
+  z-index: 0;
+}
+
+.dstep_v2_line--done {
+  background: #2563eb;
+}
+
+/* 레이블·시간: 고정 margin으로 기준선 통일 */
+.dstep_v2_label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin: 6px 0 0;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.dstep_v2_label--done    { color: #2563eb; }
+.dstep_v2_label--current { color: #2563eb; font-weight: 900; }
+
+.dstep_v2_sub {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 3px 0 0;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ══════════════════════════════════════
+   수령 확인 v2
+══════════════════════════════════════ */
+.rcv_section {
+  margin-bottom: 32px;
+  min-width: 0;
+  width: 100%;
+}
+
+.rcv_card {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 22px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rcv_header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rcv_icon_box {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rcv_header_text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.rcv_last_step {
+  font-size: 10px;
+  font-weight: 800;
+  color: #16a34a;
+  letter-spacing: 0.8px;
+}
+
+.rcv_title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.rcv_status_badge {
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.rcv_steps_card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.rcv_step_row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.rcv_step_left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.rcv_step_num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rcv_step_line {
+  width: 2px;
+  height: 28px;
+  background: #dcfce7;
+  margin: 2px 0;
+}
+
+.rcv_step_body {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 2px 0 16px;
+  flex: 1;
+}
+
+.rcv_step_icon {
+  font-size: 22px;
+  line-height: 1;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.rcv_step_text {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 3px;
+  letter-spacing: -0.2px;
+}
+
+.rcv_step_desc {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.rcv_confirm_btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+  border: none;
+  background: #e2e8f0;
+  color: #94a3b8;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+}
+
+.rcv_notice {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════
+   캐릭터 히어로 섹션 (페이지 최상단 통합)
+══════════════════════════════════════ */
+.delivery_hero_section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 0 80px;
   animation: heroFadeIn 0.5s ease forwards;
 }
 
@@ -25,9 +483,9 @@
 }
 
 .delivery_hero_char_img {
-  width: 110px;
+  width: 130px;
   height: auto;
-  filter: drop-shadow(0 8px 20px rgba(37, 99, 235, 0.16));
+  filter: drop-shadow(0 10px 24px rgba(37, 99, 235, 0.20));
 }
 
 /* 말풍선 */
@@ -35,11 +493,12 @@
   position: relative;
   background: #ffffff;
   border-radius: 18px;
-  padding: 12px 22px;
-  margin-top: 6px;
+  padding: 12px 26px;
+  margin-top: 8px;
   box-shadow: 0 4px 18px rgba(37, 99, 235, 0.10);
   border: 1.5px solid #dbeafe;
   animation: bubblePopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+  display: inline-block;
 }
 
 .delivery_hero_bubble::before {
@@ -111,11 +570,18 @@
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: 0 0 calc(120px + env(safe-area-inset-bottom, 0px)); /* Removed top and horizontal paddings to allow full-width header; added safe-area-inset-bottom */
+  padding: 0 0 calc(120px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   font-family: var(--font-pretendard);
   color: #0f172a;
   background-color: #f8fbff;
+}
+
+.delivery_container--hero {
+  height: 100dvh;
+  min-height: unset;
+  overflow: hidden;
+  padding-bottom: 0;
 }
 
 .delivery_header {
@@ -174,9 +640,11 @@
 }
 
 .delivery_content {
-  padding: 28px 20px 0; /* Increased top padding from 20px to 28px for header safe-area buffer */
+  padding: 0 28px;
+  box-sizing: border-box; /* include padding within width */
   display: flex;
   flex-direction: column;
+  min-height: calc(100dvh - 64px);
 }
 
 .delivery_content_subtitle {
@@ -188,11 +656,12 @@
 }
 
 .delivery_summary_cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 18px;
-  overflow: visible; /* Prevent any clipping of child cards */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .delivery_summary_card {
@@ -205,7 +674,10 @@
   flex-direction: column;
   gap: 8px;
   min-width: 0;
-  overflow: visible; /* Prevent clipping of border-radius or drop shadows */
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .delivery_summary_card--active {
@@ -307,12 +779,14 @@
 
 .delivery_section {
   margin-bottom: 20px;
+  min-width: 0;
+  width: 100%;
 }
 
 .delivery_section_header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   margin-bottom: 14px;
 }
@@ -486,8 +960,11 @@
 
 .delivery_grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .delivery_card {
@@ -495,6 +972,9 @@
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .delivery_card h3 {
@@ -677,6 +1157,8 @@
 /* ═══════════════════════════════════════════ */
 .laundry_stage_section {
   margin-bottom: 24px;
+  min-width: 0;
+  width: 100%;
 }
 
 /* 헤더 */
@@ -743,6 +1225,7 @@
   display: flex;
   gap: 12px;
   align-items: stretch;
+  min-width: 0;
 }
 
 /* 왼쪽 트랙 (도트 + 선) */
@@ -841,6 +1324,7 @@
 /* 오른쪽 카드 */
 .laundry_step_card {
   flex: 1;
+  min-width: 0;
   background: #f8fafc;
   border: 1.5px solid #e2e8f0;
   border-radius: 16px;
@@ -1528,6 +2012,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .collection_header {
@@ -1680,6 +2165,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .arrival_top_row {
@@ -2062,7 +2551,9 @@
 .gps_header_title_group {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 
 .gps_section_badge {
@@ -2078,8 +2569,8 @@
 }
 
 .gps_section_badge--real {
-  color: #10b981;
-  background-color: #f0fdf4;
+  color: #2563eb;
+  background-color: #dbeafe;
 }
 
 .gps_card_title {
@@ -2121,7 +2612,7 @@
 }
 
 .gps_pulse_dot--active {
-  background-color: #10b981;
+  background-color: #2563eb;
 }
 
 .gps_pulse_dot--active::after {
@@ -2132,7 +2623,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: #2563eb;
   animation: gpsBeacon 1.5s infinite ease-in-out;
 }
 
@@ -2321,7 +2812,7 @@
 }
 
 .highlight_green {
-  color: #059669;
+  color: #2563eb;
 }
 
 .highlight_blue {
@@ -2335,6 +2826,17 @@
 }
 
 /* Footer accuracy description */
+.gps_delivery_status_msg {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .gps_accuracy_info_footer {
   display: flex;
   align-items: center;
@@ -2355,27 +2857,27 @@
 }
 
 .gps_accuracy_info_footer--error {
-  color: #dc2626;
+  color: #3b82f6;
 }
 
 .gps_accuracy_info_footer--error span {
-  color: #dc2626;
+  color: #3b82f6;
 }
 
 .gps_accuracy_info_footer--error svg {
-  color: #dc2626;
+  color: #3b82f6;
 }
 
 .gps_accuracy_info_footer--warning {
-  color: #f59e0b;
+  color: #2563eb;
 }
 
 .gps_accuracy_info_footer--warning span {
-  color: #f59e0b;
+  color: #2563eb;
 }
 
 .gps_accuracy_info_footer--warning svg {
-  color: #f59e0b;
+  color: #2563eb;
 }
 
 /* Geolocation request specific buttons (DeliveryPage) */
@@ -2392,6 +2894,8 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .delivery_location_button--connected {
