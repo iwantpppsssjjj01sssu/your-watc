@@ -3,13 +3,13 @@
 ══════════════════════════════════════ */
 .rsv_info_card {
   background: #ffffff;
-  border: 1.5px solid #c7d7fb;
-  border-radius: 22px;
-  padding: 20px 20px 18px;
-  margin: 0 0 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px 12px;
+  margin: 0 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -24,71 +24,71 @@
 .rsv_info_badge {
   background: #eff6ff;
   color: #2563eb;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 5px 12px;
+  padding: 3px 10px;
   border-radius: 999px;
 }
 
 .rsv_info_ordernum {
-  font-size: 13px;
+  font-size: 11px;
   color: #94a3b8;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
 
 .rsv_info_title {
-  font-size: 22px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 800;
   color: #0f172a;
   margin: 0;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .rsv_info_grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 12px;
+  gap: 8px 12px;
 }
 
 .rsv_info_cell {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .rsv_info_label {
-  font-size: 12px;
+  font-size: 10px;
   color: #94a3b8;
   font-weight: 500;
 }
 
 .rsv_info_val {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 700;
   color: #1e293b;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
 }
 
 .rsv_today_row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .rsv_today_badge {
   background: #fef9c3;
   color: #a16207;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
 }
 
 .rsv_today_desc {
-  font-size: 11px;
+  font-size: 10px;
   color: #94a3b8;
   font-weight: 500;
 }
@@ -96,22 +96,22 @@
 .rsv_info_status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-top: 4px;
+  gap: 6px;
+  padding-top: 8px;
   border-top: 1px solid #f1f5f9;
 }
 
 .rsv_status_dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #22c55e;
   flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
 }
 
 .rsv_status_text {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   color: #16a34a;
 }
@@ -297,8 +297,8 @@
 }
 
 .rcv_card {
-  background: #f0fdf4;
-  border: 1.5px solid #bbf7d0;
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
   border-radius: 22px;
   padding: 20px;
   display: flex;
@@ -313,14 +313,7 @@
 }
 
 .rcv_icon_box {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: #16a34a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  display: none;
 }
 
 .rcv_header_text {
@@ -333,7 +326,7 @@
 .rcv_last_step {
   font-size: 10px;
   font-weight: 800;
-  color: #16a34a;
+  color: #2563eb;
   letter-spacing: 0.8px;
 }
 
@@ -382,8 +375,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #dcfce7;
-  color: #16a34a;
+  background: #dbeafe;
+  color: #2563eb;
   font-size: 11px;
   font-weight: 900;
   display: flex;
@@ -394,7 +387,7 @@
 .rcv_step_line {
   width: 2px;
   height: 28px;
-  background: #dcfce7;
+  background: #dbeafe;
   margin: 2px 0;
 }
 
@@ -640,11 +633,33 @@
 }
 
 .delivery_content {
-  padding: 0 28px;
-  box-sizing: border-box; /* include padding within width */
+  padding: 20px 28px 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   min-height: calc(100dvh - 64px);
+}
+
+.delivery_content_reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: contentReveal 0.5s ease forwards;
+}
+
+.delivery_content_reveal > * {
+  opacity: 0;
+  animation: itemSlideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.delivery_content_reveal > *:nth-child(1) { animation-delay: 0.05s; }
+.delivery_content_reveal > *:nth-child(2) { animation-delay: 0.15s; }
+.delivery_content_reveal > *:nth-child(3) { animation-delay: 0.25s; }
+.delivery_content_reveal > *:nth-child(4) { animation-delay: 0.35s; }
+
+@keyframes itemSlideIn {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .delivery_content_subtitle {
@@ -1504,8 +1519,8 @@
 }
 
 .laundry_badge--done {
-  background: #dcfce7;
-  color: #15803d;
+  background: #f1f5f9;
+  color: #64748b;
 }
 
 .laundry_badge--current {

@@ -485,10 +485,12 @@
 
 /* 7. 하단 고정 예약 유도 플로팅 액션바 */
 .detail_floating_action_bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: min(880px, 100%);
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 0%,

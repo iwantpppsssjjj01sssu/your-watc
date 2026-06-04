@@ -223,7 +223,7 @@ export function Splash() {
         /* --- f1 이미지 모프 등장 애니메이션 --- */
         .splash_f1_img {
           animation: imageDrop 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
-          width: 80px;
+          width: 96px;
           height: auto;
           z-index: 2;
           filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
@@ -429,35 +429,34 @@ export function Splash() {
           /* start extremely faint: near‑white with a whisper of blue */
           background: radial-gradient(circle at 35% 30%,
             rgba(255,255,255,0.97) 0%,
-            rgba(210,225,255,0.20) 28%,
-            rgba(190,215,255,0.12) 55%,
-            rgba(220,200,255,0.08) 78%,
-            rgba(200,240,255,0.05) 100%
+            rgba(210,225,255,0.35) 28%,
+            rgba(190,215,255,0.22) 55%,
+            rgba(220,200,255,0.15) 78%,
+            rgba(200,240,255,0.10) 100%
           );
-          border: 1px solid rgba(180,200,255,0.08);
-          /* subtle initial glow, will intensify via animation */
+          border: 1px solid rgba(180,200,255,0.20);
           box-shadow:
-            inset -3px -3px 8px rgba(255,255,255,0.30),
-            inset 2px 2px 6px rgba(160,185,255,0.10),
-            0 3px 12px rgba(120,150,255,0.04);
-          opacity: 0.05; /* very low visibility on entry */
+            inset -3px -3px 8px rgba(255,255,255,0.45),
+            inset 2px 2px 6px rgba(160,185,255,0.20),
+            0 3px 12px rgba(120,150,255,0.10);
+          opacity: 0.12;
           animation: ambientBubbleAppear 2s ease-out forwards, ambientBubbleFloat 2.5s ease-in-out forwards;
           pointer-events: none;
           z-index: 2;
         }
 
         @keyframes ambientBubbleFloat {
-          0%   { transform: translateY(0) scale(1); opacity: 0.80; }
-          35%  { opacity: 0.70; }
-          72%  { opacity: 0.50; }
+          0%   { transform: translateY(0) scale(1); opacity: 0.95; }
+          35%  { opacity: 0.85; }
+          72%  { opacity: 0.65; }
           100% { transform: translateY(-16vh) scale(0.9); opacity: 0; }
         }
 
         @keyframes ambientBubbleAppear {
-          0%   { opacity: 0.05; }
-          30%  { opacity: 0.40; }
-          60%  { opacity: 0.70; }
-          100% { opacity: 0.80; }
+          0%   { opacity: 0.12; }
+          30%  { opacity: 0.55; }
+          60%  { opacity: 0.82; }
+          100% { opacity: 0.95; }
         }
 
         .splash_c_morph_bubble {
