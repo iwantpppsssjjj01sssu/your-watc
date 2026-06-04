@@ -5528,7 +5528,7 @@ export function HomePage() {
                           className="order_confirm_btn order_confirm_btn--yes"
                           onClick={() => {
                             setShowOrderConfirm(false);
-                            setShowProductPicker(true);
+                            navigate("/review/write");
                           }}
                         >
                           예

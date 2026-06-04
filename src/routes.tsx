@@ -7,6 +7,7 @@ import { HomePage } from "./pages/home/HomePage";
 import { DeliveryPage } from "./pages/delivery/DeliveryPage";
 import { LifeCareDetailPage } from "./pages/lifecare/LifeCareDetailPage";
 import { MyPageDetailPage } from "./pages/mypage/MyPageDetailPage";
+import { WriteReviewPage } from "./pages/review/WriteReviewPage";
 
 export const router = createBrowserRouter(
   [
@@ -41,6 +42,10 @@ export const router = createBrowserRouter(
     {
       path: "/mypage/detail/:menu",
       element: <MyPageDetailPage />,
+    },
+    {
+      path: "/review/write",
+      element: <WriteReviewPage />,
     },
   ],
   {
