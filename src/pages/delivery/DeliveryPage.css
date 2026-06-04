@@ -231,8 +231,9 @@
 }
 
 .dstep_v2_icon {
-  font-size: 22px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dstep_v2_pulse {
@@ -406,8 +407,9 @@
 }
 
 .rcv_step_icon {
-  font-size: 22px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 2px;
   flex-shrink: 0;
 }
@@ -1450,8 +1452,9 @@
 }
 
 .laundry_card_emoji {
-  font-size: 22px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   margin-top: 1px;
 }
@@ -2077,7 +2080,9 @@
 }
 
 .collection_selected_icon {
-  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .collection_selected_info {
@@ -2139,7 +2144,9 @@
 }
 
 .collection_option_icon {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .collection_option_label {

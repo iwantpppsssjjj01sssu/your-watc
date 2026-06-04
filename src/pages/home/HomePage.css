@@ -7575,7 +7575,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: #eff6ff;
+  background-color: #bae6fd;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7731,8 +7731,9 @@
 }
 
 .laundry_option_emoji {
-  font-size: 20px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2px;
 }
 
@@ -7876,7 +7877,9 @@
 }
 
 .scent_preview_emoji {
-  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
@@ -7941,8 +7944,9 @@
 }
 
 .scent_palette_emoji {
-  font-size: 20px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2px;
 }
 
@@ -8443,8 +8447,9 @@
 }
 
 .plan_recommend_icon {
-  font-size: 16px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .plan_recommend_name {
@@ -8530,8 +8535,9 @@
 }
 
 .plan_card_icon {
-  font-size: 20px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .plan_card_badge {
@@ -8655,8 +8661,9 @@
 }
 
 .rider_v2_icon {
-  font-size: 26px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .rider_v2_title_row {

@@ -16,6 +16,7 @@ import reserveIllustImg from "../../asset/img/m1.png"; // 예약 페이지 3D �
 
 import reviewBeddingImg from "../../asset/img/review-bedding.png";
 import reviewShirtsImg from "../../asset/img/review-shirts.png";
+import pp2Img from "../../asset/img/pp2.png";
 import reviewShirtPaddingImg from "../../asset/img/review_shirt_padding.png";
 import reviewOuterImg from "../../asset/img/review-outer.png";
 import reviewShoesImg from "../../asset/img/review-shoes.png";
@@ -5490,9 +5491,9 @@ export function HomePage() {
                     className="premium_back_btn"
                     onClick={() => {
                       setShowReserveDetail(false);
-                      setActiveTab("home");
+                      setActiveTab("reserve");
                     }}
-                    aria-label="홈으로"
+                    aria-label="뒤로가기"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -5525,21 +5526,21 @@ export function HomePage() {
                           title: "일반 빨래",
                           desc: "기본 세탁, 일상 의류, 타올 및 일상 생활 빨래",
                           priceText: "기본 19,000원",
-                          img: reviewShirtsImg,
+                          img: pp2Img,
                         },
                         {
                           id: "관리 의류",
                           title: "관리 의류",
                           desc: "드라이클리닝, 아우터, 실크, 정장 등 고급 섬세 세탁",
                           priceText: "기본 25,000원",
-                          img: reviewOuterImg,
+                          img: q1Img,
                         },
                         {
                           id: "이불/리빙/기타",
                           title: "이불/리빙/기타",
                           desc: "이불, 침구류, 커튼 등 부피가 큰 생활 리빙 케어",
                           priceText: "기본 30,000원",
-                          img: reviewBeddingImg,
+                          img: reviewPriceImg,
                         },
                       ].map((item) => (
                         <div
@@ -5585,42 +5586,78 @@ export function HomePage() {
                       {[
                         {
                           id: "일반",
-                          emoji: "🧺",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" fill="#2563eb"/>
+                              <line x1="3" y1="6" x2="21" y2="6" stroke="white" strokeWidth="1.5"/>
+                              <path d="M16 10a4 4 0 0 1-8 0" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           label: "일반",
                           surcharge: "+0원",
                           desc: "기본 세탁",
                         },
                         {
                           id: "친환경",
-                          emoji: "🌿",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <path d="M6.5 20.5C4.5 18.5 3 14 5 9s8-7 13-5c2 5 0 11-5 13-3 1-5.5-.5-6.5-1.5z" fill="#2563eb"/>
+                              <line x1="6.5" y1="20.5" x2="12" y2="12" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           label: "친환경",
                           surcharge: "+2,000원",
                           desc: "자연 유래 세제",
                         },
                         {
                           id: "알러지 케어",
-                          emoji: "🤧",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#2563eb"/>
+                              <polyline points="9 12 11 14 15 10" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          ),
                           label: "알러지 케어",
                           surcharge: "+3,000원",
                           desc: "저자극 성분",
                         },
                         {
                           id: "살균",
-                          emoji: "🦠",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <circle cx="12" cy="12" r="5" fill="#2563eb"/>
+                              <line x1="12" y1="1" x2="12" y2="4" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="12" y1="20" x2="12" y2="23" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="1" y1="12" x2="4" y2="12" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="20" y1="12" x2="23" y2="12" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           label: "살균",
                           surcharge: "+4,000원",
                           desc: "99.9% 항균",
                         },
                         {
                           id: "울/캐시미어",
-                          emoji: "🧶",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2563eb"/>
+                            </svg>
+                          ),
                           label: "울/캐시미어",
                           surcharge: "+5,000원",
                           desc: "섬세 소재 전용",
                         },
                         {
                           id: "프리미엄",
-                          emoji: "✨",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#2563eb"/>
+                            </svg>
+                          ),
                           label: "프리미엄",
                           surcharge: "+6,000원",
                           desc: "명품 케어 코스",
@@ -5644,7 +5681,7 @@ export function HomePage() {
                               <span className="laundry_option_check">✓</span>
                             )}
                             <span className="laundry_option_emoji">
-                              {opt.emoji}
+                              {opt.icon}
                             </span>
                             <span className="laundry_option_label">
                               {opt.label}
@@ -5666,17 +5703,30 @@ export function HomePage() {
                     const scents = [
                       {
                         id: "무향",
-                        emoji: "🌫️",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <circle cx="12" cy="13" r="7" fill={c}/>
+                            <circle cx="7" cy="7" r="3.5" fill={c} opacity="0.6"/>
+                            <circle cx="17" cy="6" r="2" fill={c} opacity="0.4"/>
+                          </svg>
+                        ),
                         label: "무향",
                         desc: "향 없음 · 기본",
                         surcharge: "+0원",
-                        bg: "#f1f5f9",
-                        ring: "#94a3b8",
-                        dot: "#64748b",
+                        bg: "#e0f9ff",
+                        ring: "#7dd3fc",
+                        dot: "#38bdf8",
                       },
                       {
                         id: "라벤더",
-                        emoji: "💜",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-4-4-8-4-8z" fill={c}/>
+                            <path d="M8 8c-2 0-4 2-4 4a4 4 0 0 0 8 0" fill={c} opacity="0.6"/>
+                            <path d="M16 8c2 0 4 2 4 4a4 4 0 0 1-8 0" fill={c} opacity="0.6"/>
+                            <line x1="12" y1="14" x2="12" y2="22" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+                          </svg>
+                        ),
                         label: "라벤더",
                         desc: "편안한 플로럴",
                         surcharge: "+1,000원",
@@ -5686,7 +5736,13 @@ export function HomePage() {
                       },
                       {
                         id: "시트러스",
-                        emoji: "🍋",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <circle cx="12" cy="12" r="9" fill={c}/>
+                            <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
+                            <circle cx="12" cy="12" r="3" fill="white" opacity="0.3"/>
+                          </svg>
+                        ),
                         label: "시트러스",
                         desc: "상큼한 과일향",
                         surcharge: "+1,000원",
@@ -5696,7 +5752,13 @@ export function HomePage() {
                       },
                       {
                         id: "오션 브리즈",
-                        emoji: "🌊",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round"/>
+                            <path d="M2 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
+                            <path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" opacity="0.3"/>
+                          </svg>
+                        ),
                         label: "오션",
                         desc: "청량한 바다향",
                         surcharge: "+1,000원",
@@ -5706,7 +5768,15 @@ export function HomePage() {
                       },
                       {
                         id: "로즈",
-                        emoji: "🌹",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M12 3C9 3 6 6 6 10c0 5 6 9 6 9s6-4 6-9c0-4-3-7-6-7z" fill={c}/>
+                            <path d="M12 3c2 2 2 5 0 7-2-2-2-5 0-7z" fill="white" opacity="0.3"/>
+                            <line x1="12" y1="19" x2="12" y2="22" stroke={c} strokeWidth="1.8" strokeLinecap="round"/>
+                            <path d="M10 21c0 0-2-1-2-2" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                            <path d="M14 21c0 0 2-1 2-2" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                          </svg>
+                        ),
                         label: "로즈",
                         desc: "고급스러운 장미향",
                         surcharge: "+1,500원",
@@ -5716,7 +5786,12 @@ export function HomePage() {
                       },
                       {
                         id: "머스크",
-                        emoji: "🤍",
+                        icon: (c: string) => (
+                          <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill={c}/>
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="white" opacity="0.15"/>
+                          </svg>
+                        ),
                         label: "머스크",
                         desc: "포근하고 따뜻한 향",
                         surcharge: "+1,500원",
@@ -5742,7 +5817,7 @@ export function HomePage() {
                           }}
                         >
                           <span className="scent_preview_emoji">
-                            {active.emoji}
+                            {active.icon(active.dot)}
                           </span>
                           <div className="scent_preview_info">
                             <span className="scent_preview_name">
@@ -5774,7 +5849,7 @@ export function HomePage() {
                                 {isOn && (
                                   <span className="laundry_option_check">✓</span>
                                 )}
-                                <span className="scent_palette_emoji">{s.emoji}</span>
+                                <span className="scent_palette_emoji">{s.icon(s.dot)}</span>
                                 <span className="scent_palette_name">{s.label}</span>
                                 <span className="scent_palette_price">{s.surcharge}</span>
                               </button>
@@ -6036,7 +6111,11 @@ export function HomePage() {
                       {[
                         {
                           id: "신속 배송",
-                          icon: "⚡",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="26" height="26">
+                              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/>
+                            </svg>
+                          ),
                           iconBg: "linear-gradient(135deg, #3b5bdb, #2563eb)",
                           title: "신속 배송",
                           badge: "TODAY",
@@ -6047,7 +6126,11 @@ export function HomePage() {
                         },
                         {
                           id: "하루 배송",
-                          icon: "🌙",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="26" height="26">
+                              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#64748b"/>
+                            </svg>
+                          ),
                           iconBg: "#f1f5f9",
                           title: "하루 배송",
                           badge: "1DAY",
@@ -6163,7 +6246,12 @@ export function HomePage() {
                       <span className="plan_recommend_tag">✨ 고객님께 추천드려요</span>
                       <div className="plan_recommend_row">
                         <div className="plan_recommend_left">
-                          <span className="plan_recommend_icon">💰</span>
+                          <span className="plan_recommend_icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                              <circle cx="12" cy="12" r="10" fill="#2563eb"/>
+                              <path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                            </svg>
+                          </span>
                           <span className="plan_recommend_name">저가형</span>
                           <span className="plan_recommend_badge">기본가 10% 절약</span>
                         </div>
@@ -6182,7 +6270,13 @@ export function HomePage() {
                       {[
                         {
                           id: "일반",
-                          icon: "💳",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <rect x="1" y="4" width="22" height="16" rx="3" ry="3" fill="#2563eb"/>
+                              <line x1="1" y1="10" x2="23" y2="10" stroke="white" strokeWidth="2"/>
+                              <rect x="4" y="14" width="5" height="2" rx="1" fill="white"/>
+                            </svg>
+                          ),
                           badge: "기본",
                           badgeClass: "plan_card_badge--default",
                           label: "일반",
@@ -6192,7 +6286,12 @@ export function HomePage() {
                         },
                         {
                           id: "저가형",
-                          icon: "💰",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <circle cx="12" cy="12" r="10" fill="#2563eb"/>
+                              <path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           badge: "-10%",
                           badgeClass: "plan_card_badge--discount",
                           label: "저가형",
@@ -6202,7 +6301,13 @@ export function HomePage() {
                         },
                         {
                           id: "구독형",
-                          icon: "🔄",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <polyline points="23 4 23 10 17 10" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              <polyline points="1 20 1 14 7 14" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           badge: "-20%",
                           badgeClass: "plan_card_badge--discount",
                           label: "구독형",
@@ -6212,7 +6317,13 @@ export function HomePage() {
                         },
                         {
                           id: "묶음 할인",
-                          icon: "📦",
+                          icon: (
+                            <svg viewBox="0 0 24 24" width="22" height="22">
+                              <rect x="1" y="3" width="22" height="5" rx="1" fill="#2563eb"/>
+                              <path d="M3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8z" fill="#2563eb"/>
+                              <line x1="10" y1="13" x2="14" y2="13" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                            </svg>
+                          ),
                           badge: "-15%",
                           badgeClass: "plan_card_badge--discount",
                           label: "묶음 할인",

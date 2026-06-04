@@ -912,7 +912,12 @@ export function DeliveryPage() {
                   {/* 선택된 방식 강조 카드 */}
                   <div className="collection_selected_card">
                     <div className="collection_selected_icon_wrap">
-                      <span className="collection_selected_icon">🚪</span>
+                      <span className="collection_selected_icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="2" width="18" height="20" rx="1" ry="1"/>
+                          <circle cx="16" cy="12" r="1" fill="#2563eb" stroke="none"/>
+                        </svg>
+                      </span>
                     </div>
                     <div className="collection_selected_info">
                       <p className="collection_selected_label">
@@ -943,17 +948,39 @@ export function DeliveryPage() {
                   <div className="collection_options_grid">
                     {[
                       {
-                        icon: "🏢",
+                        icon: (
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="4" y="2" width="16" height="20"/>
+                            <rect x="8" y="6" width="3" height="3"/>
+                            <rect x="13" y="6" width="3" height="3"/>
+                            <rect x="8" y="11" width="3" height="3"/>
+                            <rect x="13" y="11" width="3" height="3"/>
+                            <path d="M10 22v-4h4v4"/>
+                          </svg>
+                        ),
                         label: "경비실 수거",
                         desc: "경비실에 맡기기",
                       },
                       {
-                        icon: "📦",
+                        icon: (
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="21 8 21 21 3 21 3 8"/>
+                            <rect x="1" y="3" width="22" height="5"/>
+                            <line x1="10" y1="12" x2="14" y2="12"/>
+                          </svg>
+                        ),
                         label: "택배함 수거",
                         desc: "무인 택배함 이용",
                       },
                       {
-                        icon: "🤝",
+                        icon: (
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                          </svg>
+                        ),
                         label: "직접 전달",
                         desc: "마스터와 직접 만남",
                       },
@@ -997,7 +1024,13 @@ export function DeliveryPage() {
                     "안심팩 이중 밀봉 포장",
                     "세탁 공장 안전 이송 완료",
                   ],
-                  emoji: "🧺",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                      <line x1="3" y1="6" x2="21" y2="6"/>
+                      <path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                  ),
                 },
                 {
                   id: 1,
@@ -1010,7 +1043,11 @@ export function DeliveryPage() {
                     "40°C 저온 스팀 정밀 세탁",
                     "섬유 보호 마감 처리",
                   ],
-                  emoji: "✨",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                  ),
                 },
                 {
                   id: 2,
@@ -1023,7 +1060,13 @@ export function DeliveryPage() {
                     "섬유 손상 및 수축 방지 완료",
                     "살균 드라이 완료",
                   ],
-                  emoji: "🌀",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="23 4 23 10 17 10"/>
+                      <polyline points="1 20 1 14 7 14"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                  ),
                 },
                 {
                   id: 3,
@@ -1036,7 +1079,12 @@ export function DeliveryPage() {
                     "친환경 항균 기능 포장재 적용",
                     "배송 준비 완료",
                   ],
-                  emoji: "🔍",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  ),
                 },
                 {
                   id: 4,
@@ -1049,7 +1097,14 @@ export function DeliveryPage() {
                     "실시간 하드웨어 GPS 경로 연동 중",
                     "배송완료까지 약 10분 남음",
                   ],
-                  emoji: "🚚",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="3" width="15" height="13"/>
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                      <circle cx="5.5" cy="18.5" r="2.5"/>
+                      <circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                  ),
                 },
                 {
                   id: 5,
@@ -1062,7 +1117,12 @@ export function DeliveryPage() {
                     "수령 확인 사진 및 알림 발송 예정",
                     "세탁 서비스 최종 완료 예정",
                   ],
-                  emoji: "🏠",
+                  icon: (
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                      <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                  ),
                 },
               ];
 
@@ -1171,7 +1231,7 @@ export function DeliveryPage() {
                           >
                             <div className="laundry_card_row">
                               <span className="laundry_card_emoji">
-                                {stage.emoji}
+                                {stage.icon}
                               </span>
                               <div className="laundry_card_info">
                                 <div className="laundry_card_title_row">
@@ -1240,25 +1300,47 @@ export function DeliveryPage() {
               <div className="dstep_track_v2">
                 {[
                   {
-                    icon: "🫧",
+                    icon: (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    ),
                     label: "세탁 완료",
                     sub: "05.30  14:00",
                     status: "done",
                   },
                   {
-                    icon: "🌀",
+                    icon: (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <polyline points="1 20 1 14 7 14"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                      </svg>
+                    ),
                     label: "건조 완료",
                     sub: "05.31  10:00",
                     status: "done",
                   },
                   {
-                    icon: "🚀",
+                    icon: (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="1" y="3" width="15" height="13"/>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                        <circle cx="5.5" cy="18.5" r="2.5"/>
+                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                      </svg>
+                    ),
                     label: "배송 출발",
                     sub: "어제 16:45",
                     status: "current",
                   },
                   {
-                    icon: "🏠",
+                    icon: (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                      </svg>
+                    ),
                     label: "문 앞 배달",
                     sub: "오늘 밤 11시",
                     status: "pending",
@@ -1325,19 +1407,35 @@ export function DeliveryPage() {
                   {[
                     {
                       num: "01",
-                      icon: "🔔",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9z" fill="#4ade80"/>
+                          <path d="M13.73 21a2 2 0 0 1-3.46 0" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      ),
                       text: "배송 완료 알림 수신",
                       desc: "앱 푸시 알림 및 문자로 안내됩니다",
                     },
                     {
                       num: "02",
-                      icon: "📦",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                          <rect x="1" y="3" width="22" height="5" rx="1" fill="#4ade80"/>
+                          <path d="M3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8z" fill="#4ade80"/>
+                          <line x1="10" y1="13" x2="14" y2="13" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      ),
                       text: "문 앞에서 세탁물 수령",
                       desc: "안심팩 포장 상태를 확인해 주세요",
                     },
                     {
                       num: "03",
-                      icon: "✅",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                          <circle cx="12" cy="12" r="10" fill="#4ade80"/>
+                          <polyline points="7 12 10.5 15.5 17 9" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      ),
                       text: "수령 확인 버튼 클릭",
                       desc: "확인 시 포인트 100P가 자동 적립됩니다",
                     },
