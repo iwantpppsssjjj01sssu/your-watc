@@ -220,13 +220,14 @@ export function Splash() {
           gap: 20px;
         }
 
-        /* --- f1 이미지 드롭다운 애니메이션 --- */
+        /* --- f1 이미지 모프 등장 애니메이션 --- */
         .splash_f1_img {
-          animation: imageDrop 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: imageDrop 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
           width: 80px;
           height: auto;
           z-index: 2;
           filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
+          margin-top: 60px;
         }
 
         /* --- watC 로고 페이드인 애니메이션 --- */
@@ -244,9 +245,10 @@ export function Splash() {
         }
 
         @keyframes imageDrop {
-          0% { transform: translateY(-80vh) scale(0.6); opacity: 0; }
-          40% { opacity: 1; }
-          100% { transform: translateY(0) scale(1); opacity: 1; }
+          0%   { clip-path: inset(0 100% 0 0); opacity: 0; filter: blur(6px); }
+          20%  { opacity: 1; filter: blur(2px); }
+          80%  { clip-path: inset(0 2% 0 0); filter: blur(0); }
+          100% { clip-path: inset(0 0% 0 0); opacity: 1; filter: blur(0); }
         }
 
         /* --- 블루 커버 리퀴드 웨이브 트랜지션 --- */
@@ -411,12 +413,12 @@ export function Splash() {
           z-index: 100;
           opacity: 1;
           transform: scale(1);
-          transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+          transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1), transform 1.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .splash_3d_container.fade-out {
           opacity: 0;
-          transform: scale(1.05);
+          transform: scale(1.03);
           pointer-events: none;
         }
 
