@@ -11008,29 +11008,71 @@
 }
 
 /* ══════════════════════════════════════════
-   주문 확인 모달 (리뷰 쓰기 전 1단계)
+   주문 확인 카드 (리뷰 쓰기 전 1단계) — 나도 리뷰쓰기 버튼 바로 아래 인라인
 ══════════════════════════════════════════ */
-.order_confirm_overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  animation: ppOverlayIn 0.22s ease forwards;
+.order_confirm_inline_card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 20px 20px;
+  margin-top: 10px;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.12);
+  animation: orderConfirmCardIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.order_confirm_sheet {
-  width: 100%;
-  background: #ffffff;
-  border-radius: 20px 20px 0 0;
+@keyframes orderConfirmCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order_confirm_close_btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: #94a3b8;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
   padding: 0;
-  animation: ppSheetUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  /* 시트가 화면 하단에 완전히 붙도록 */
-  margin: 0;
+}
+
+.order_confirm_close_btn:hover {
+  background: #f1f5f9;
+}
+
+.order_confirm_pencil_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  background: #eff6ff;
+  border-radius: 50%;
+  font-size: 30px;
+  margin: 0 auto 10px;
+}
+
+.order_confirm_inline_card .order_confirm_btn_row {
+  padding: 0;
+}
+
+.order_confirm_inline_card .order_confirm_body {
+  padding: 0 4px 16px;
 }
 
 .order_confirm_body {

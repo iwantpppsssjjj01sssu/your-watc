@@ -5497,6 +5497,46 @@ export function HomePage() {
                     <span className="home_write_review_toggle_arrow">&gt;</span>
                   </button>
 
+                  {showOrderConfirm && (
+                    <div className="order_confirm_inline_card">
+                      <button
+                        type="button"
+                        className="order_confirm_close_btn"
+                        onClick={() => setShowOrderConfirm(false)}
+                      >
+                        ×
+                      </button>
+                      <div className="order_confirm_body">
+                        <span className="order_confirm_pencil_icon">✏️</span>
+                        <h3 className="order_confirm_title">나도 리뷰쓰기</h3>
+                        <p className="order_confirm_sub">
+                          지난 날에 세탁 맡긴 상품들
+                          <br />
+                          리뷰를 작성하시겠어요?
+                        </p>
+                      </div>
+                      <div className="order_confirm_btn_row">
+                        <button
+                          type="button"
+                          className="order_confirm_btn order_confirm_btn--no"
+                          onClick={() => setShowOrderConfirm(false)}
+                        >
+                          아니요
+                        </button>
+                        <button
+                          type="button"
+                          className="order_confirm_btn order_confirm_btn--yes"
+                          onClick={() => {
+                            setShowOrderConfirm(false);
+                            setShowProductPicker(true);
+                          }}
+                        >
+                          예
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {showWriteReview && reviewSelectedProduct && (
                     <div
                       className="home_write_review_box"
@@ -5631,78 +5671,6 @@ export function HomePage() {
                     </div>
                   )}
                 </div>
-
-                {/* 주문 확인 모달 */}
-                {showOrderConfirm && (
-                  <div
-                    className="order_confirm_overlay"
-                    onClick={() => setShowOrderConfirm(false)}
-                  >
-                    <div
-                      className="order_confirm_sheet"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          padding: "10px 0 0",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: 36,
-                            height: 4,
-                            borderRadius: 99,
-                            background: "#e2e8f0",
-                          }}
-                        />
-                      </div>
-                      <div className="order_confirm_body">
-                        <span className="order_confirm_icon">
-                          <svg
-                            viewBox="0 0 24 24"
-                            width="44"
-                            height="44"
-                            fill="none"
-                            stroke="#2563eb"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                            <line x1="3" y1="6" x2="21" y2="6" />
-                            <path d="M16 10a4 4 0 0 1-8 0" />
-                          </svg>
-                        </span>
-                        <h3 className="order_confirm_title">
-                          지난 날에 세탁 맡긴 상품들
-                          <br />
-                          리뷰를 작성하시겠어요?
-                        </h3>
-                      </div>
-                      <div className="order_confirm_btn_row">
-                        <button
-                          type="button"
-                          className="order_confirm_btn order_confirm_btn--no"
-                          onClick={() => setShowOrderConfirm(false)}
-                        >
-                          아니요
-                        </button>
-                        <button
-                          type="button"
-                          className="order_confirm_btn order_confirm_btn--yes"
-                          onClick={() => {
-                            setShowOrderConfirm(false);
-                            setShowProductPicker(true);
-                          }}
-                        >
-                          예
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* 상품 선택 모달 */}
                 {showProductPicker && (
