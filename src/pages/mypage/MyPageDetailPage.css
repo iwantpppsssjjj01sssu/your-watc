@@ -465,7 +465,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #eef2ff;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1480,7 +1480,9 @@
   white-space: nowrap;
 }
 
-.point_history_toggle_btn:hover { background: #dbeafe; }
+.point_history_toggle_btn:hover {
+  background: #dbeafe;
+}
 
 .point_history_list {
   display: flex;
@@ -1493,8 +1495,14 @@
 }
 
 @keyframes pointHistoryExpand {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .point_history_card--animated {
@@ -1503,8 +1511,14 @@
 }
 
 @keyframes pointCardIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .point_history_closed_hint {

@@ -239,7 +239,13 @@ export function HomePage() {
   const activeTabFromUrl = (() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
-    if (tab === "home" || tab === "reserve" || tab === "delivery" || tab === "care" || tab === "mypage") {
+    if (
+      tab === "home" ||
+      tab === "reserve" ||
+      tab === "delivery" ||
+      tab === "care" ||
+      tab === "mypage"
+    ) {
       return tab as typeof tab;
     }
     return "home";
@@ -276,6 +282,9 @@ export function HomePage() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
   const [allReviewsTag, setAllReviewsTag] = useState<string>("전체");
+  const [openLifecareIndex, setOpenLifecareIndex] = useState<number | null>(
+    null,
+  );
   const homeReviewSwiperRef = useRef<HTMLDivElement>(null);
   const reviewAllContentRef = useRef<HTMLDivElement>(null);
   const reviewAllListRef = useRef<HTMLDivElement>(null);
@@ -367,21 +376,26 @@ export function HomePage() {
   useEffect(() => {
     if (activeTab !== "care" && activeTab !== "mypage") return;
     const timer = setTimeout(() => {
-      const els = document.querySelectorAll('.page_scroll_reveal');
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.08 });
-      els.forEach(el => obs.observe(el));
+      const els = document.querySelectorAll(".page_scroll_reveal");
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      els.forEach((el) => obs.observe(el));
       return () => obs.disconnect();
     }, 50);
     return () => clearTimeout(timer);
   }, [activeTab]);
-  const [laundryHistoryTab, setLaundryHistoryTab] = useState<"누적 세탁 횟수" | "이번 달" | "등록 의류">("누적 세탁 횟수");
+  const [laundryHistoryTab, setLaundryHistoryTab] = useState<
+    "누적 세탁 횟수" | "이번 달" | "등록 의류"
+  >("누적 세탁 횟수");
   const [showMembershipTier, setShowMembershipTier] = useState<boolean>(false);
   const usageGuideScrollRef = useRef<HTMLDivElement>(null);
   const pricingScrollRef = useRef<HTMLDivElement>(null);
@@ -486,7 +500,8 @@ export function HomePage() {
   const [ironingOption, setIroningOption] = useState<string>("기본 (스팀)"); // "기본 (스팀)" | "고급 (칼주름)" | "신청 안 함"
   const [collectionSpot, setCollectionSpot] =
     useState<string>("공동현관 문 앞"); // "공동현관 문 앞" | "경비실 위탁" | "택배함 보관"
-  const [selectedPricingPlan, setSelectedPricingPlan] = useState<string>("일반");
+  const [selectedPricingPlan, setSelectedPricingPlan] =
+    useState<string>("일반");
 
   // --- GPS Tracking Live States ---
   const [gpsCoords, setGpsCoords] = useState({
@@ -497,7 +512,9 @@ export function HomePage() {
   const [etaMinutes, setEtaMinutes] = useState(10);
   const [trackingActive, setTrackingActive] = useState(true);
   const [showGpsDetail, setShowGpsDetail] = useState(false);
-  const [deliveryView, setDeliveryView] = useState<"all" | "status" | "eta" | "gps">("all");
+  const [deliveryView, setDeliveryView] = useState<
+    "all" | "status" | "eta" | "gps"
+  >("all");
   const [deliveryBackTab, setDeliveryBackTab] = useState<string>("home");
   const [satellites, setSatellites] = useState(11);
 
@@ -1415,12 +1432,48 @@ export function HomePage() {
 
   // --- 구매 완료된 세탁 이력 (리뷰 작성용) ---
   const purchasedOrders = [
-    { id: 1, name: "구스 다운 이불", category: "이불·침구", date: "2026.05.19 완료", img: reviewGuuseImg },
-    { id: 2, name: "아우터 코트", category: "아우터·패딩", date: "2026.05.27 완료", img: reviewOuterImg },
-    { id: 3, name: "숄더 토트백", category: "가방·잡화", date: "2026.05.04 완료", img: reviewBlackBagImg },
-    { id: 4, name: "캐시미어 니트", category: "니트·스웨터", date: "2026.04.28 완료", img: reviewCashmereImg },
-    { id: 5, name: "정장 슈트", category: "정장·비즈니스", date: "2026.04.15 완료", img: reviewSuitImg },
-    { id: 6, name: "운동화 2켤레", category: "신발", date: "2026.04.08 완료", img: reviewSneakersImg },
+    {
+      id: 1,
+      name: "구스 다운 이불",
+      category: "이불·침구",
+      date: "2026.05.19 완료",
+      img: reviewGuuseImg,
+    },
+    {
+      id: 2,
+      name: "아우터 코트",
+      category: "아우터·패딩",
+      date: "2026.05.27 완료",
+      img: reviewOuterImg,
+    },
+    {
+      id: 3,
+      name: "숄더 토트백",
+      category: "가방·잡화",
+      date: "2026.05.04 완료",
+      img: reviewBlackBagImg,
+    },
+    {
+      id: 4,
+      name: "캐시미어 니트",
+      category: "니트·스웨터",
+      date: "2026.04.28 완료",
+      img: reviewCashmereImg,
+    },
+    {
+      id: 5,
+      name: "정장 슈트",
+      category: "정장·비즈니스",
+      date: "2026.04.15 완료",
+      img: reviewSuitImg,
+    },
+    {
+      id: 6,
+      name: "운동화 2켤레",
+      category: "신발",
+      date: "2026.04.08 완료",
+      img: reviewSneakersImg,
+    },
   ];
 
   // --- Swappable Review Filter Tags Array ---
@@ -2129,25 +2182,88 @@ export function HomePage() {
                   {[
                     {
                       step: "01",
-                      icon: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect x="5" y="2" width="14" height="20" rx="2" />
+                          <line x1="12" y1="18" x2="12.01" y2="18" />
+                        </svg>
+                      ),
                       title: "앱에서 예약",
                       desc: "세탁 종류·옵션·수거 날짜를 선택하고 60초 만에 예약 완료",
                     },
                     {
                       step: "02",
-                      icon: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><circle cx="16" cy="12" r="1" fill="#2563eb" stroke="none"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect x="3" y="2" width="18" height="20" rx="1" />
+                          <circle
+                            cx="16"
+                            cy="12"
+                            r="1"
+                            fill="#2563eb"
+                            stroke="none"
+                          />
+                        </svg>
+                      ),
                       title: "문 앞 수거",
                       desc: "담당 마스터가 지정 시간에 방문해 안심팩에 포장 후 수거",
                     },
                     {
                       step: "03",
-                      icon: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                          <line x1="3" y1="6" x2="21" y2="6" />
+                          <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                      ),
                       title: "전문 세탁 케어",
                       desc: "소재별 전용 세제·온도·코스로 스마트 팩토리에서 정밀 케어",
                     },
                     {
                       step: "04",
-                      icon: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                          <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                      ),
                       title: "문 앞 배달",
                       desc: "세탁 완료 후 깔끔히 포장해 문 앞으로 안전하게 배달",
                     },
@@ -2237,32 +2353,122 @@ export function HomePage() {
                 >
                   {[
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 20.5C4.5 18.5 3 14 5 9s8-7 13-5c2 5 0 11-5 13-3 1-5.5-.5-6.5-1.5z"/><line x1="6.5" y1="20.5" x2="12" y2="12" stroke="#2563eb" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M6.5 20.5C4.5 18.5 3 14 5 9s8-7 13-5c2 5 0 11-5 13-3 1-5.5-.5-6.5-1.5z" />
+                          <line
+                            x1="6.5"
+                            y1="20.5"
+                            x2="12"
+                            y2="12"
+                            stroke="#2563eb"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      ),
                       title: "친환경 세제",
                       desc: "자연 유래 성분만 사용",
                     },
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="11" cy="11" r="8" />
+                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                      ),
                       title: "AI 소재 분석",
                       desc: "사진 찍으면 최적 코스 추천",
                     },
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
+                      ),
                       title: "실시간 GPS",
                       desc: "수거·배달 경로 실시간 확인",
                     },
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                      ),
                       title: "안심 보장",
                       desc: "분실·손상 시 100% 보상",
                     },
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg>
+                      ),
                       title: "당일 배달",
                       desc: "급행 신청 시 당일 완료",
                     },
                     {
-                      icon: <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5"/></svg>,
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="#2563eb"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5" />
+                        </svg>
+                      ),
                       title: "포인트 적립",
                       desc: "이용마다 왓씨 포인트 적립",
                     },
@@ -2277,7 +2483,11 @@ export function HomePage() {
                         textAlign: "center",
                       }}
                     >
-                      <span style={{ display: "flex", justifyContent: "center" }}>{f.icon}</span>
+                      <span
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        {f.icon}
+                      </span>
                       <p
                         style={{
                           margin: "8px 0 4px",
@@ -2325,7 +2535,9 @@ export function HomePage() {
               {/* FAQ */}
               <div className="aod_section" style={{ paddingBottom: 100 }}>
                 <h3 className="aod_section_title">자주 묻는 질문</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
                   {[
                     {
                       q: "수거 가능한 시간대는?",
@@ -2358,21 +2570,55 @@ export function HomePage() {
                           transition: "all 0.2s ease",
                         }}
                       >
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <p style={{ margin: 0, fontSize: 13, fontWeight: 800, color: isOpen ? "#2563eb" : "#0f172a", flex: 1 }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 13,
+                              fontWeight: 800,
+                              color: isOpen ? "#2563eb" : "#0f172a",
+                              flex: 1,
+                            }}
+                          >
                             Q. {faq.q}
                           </p>
                           <svg
-                            viewBox="0 0 24 24" width="16" height="16"
-                            fill="none" stroke={isOpen ? "#2563eb" : "#94a3b8"}
-                            strokeWidth="2.5" strokeLinecap="round"
-                            style={{ flexShrink: 0, marginLeft: 8, transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }}
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke={isOpen ? "#2563eb" : "#94a3b8"}
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            style={{
+                              flexShrink: 0,
+                              marginLeft: 8,
+                              transform: isOpen
+                                ? "rotate(180deg)"
+                                : "rotate(0deg)",
+                              transition: "transform 0.2s ease",
+                            }}
                           >
-                            <polyline points="6 9 12 15 18 9"/>
+                            <polyline points="6 9 12 15 18 9" />
                           </svg>
                         </div>
                         {isOpen && (
-                          <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "#475569", lineHeight: 1.6, borderTop: "1px solid #dbeafe", paddingTop: 10 }}>
+                          <p
+                            style={{
+                              margin: "10px 0 0",
+                              fontSize: 12.5,
+                              color: "#475569",
+                              lineHeight: 1.6,
+                              borderTop: "1px solid #dbeafe",
+                              paddingTop: 10,
+                            }}
+                          >
                             A. {faq.a}
                           </p>
                         )}
@@ -2767,32 +3013,68 @@ export function HomePage() {
 
             <div className="active_order_scroll">
               {/* 요약 통계 탭 */}
-              <div style={{ background: "linear-gradient(135deg, #2563eb, #1d4ed8)", padding: "22px 20px 0" }}>
+              <div
+                style={{
+                  background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                  padding: "22px 20px 0",
+                }}
+              >
                 <div style={{ display: "flex", gap: 0 }}>
-                  {(["누적 세탁 횟수", "이번 달", "등록 의류"] as const).map((tab, i) => {
-                    const vals = ["24회", "3회", `${registeredClothes.length}벌`];
-                    const isActive = laundryHistoryTab === tab;
-                    return (
-                      <button
-                        key={tab}
-                        type="button"
-                        onClick={() => setLaundryHistoryTab(tab)}
-                        style={{
-                          flex: 1, textAlign: "center", background: "none", border: "none",
-                          cursor: "pointer", padding: "0 0 14px",
-                          borderBottom: isActive ? "2.5px solid #ffffff" : "2.5px solid rgba(255,255,255,0.2)",
-                          transition: "all 0.2s",
-                        }}
-                      >
-                        <p style={{ margin: "0 0 4px", fontSize: 11, color: isActive ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)", fontWeight: 600 }}>
-                          {tab}
-                        </p>
-                        <p style={{ margin: 0, fontSize: 22, fontWeight: 900, color: isActive ? "#ffffff" : "rgba(255,255,255,0.55)", letterSpacing: "-1px" }}>
-                          {vals[i]}
-                        </p>
-                      </button>
-                    );
-                  })}
+                  {(["누적 세탁 횟수", "이번 달", "등록 의류"] as const).map(
+                    (tab, i) => {
+                      const vals = [
+                        "24회",
+                        "3회",
+                        `${registeredClothes.length}벌`,
+                      ];
+                      const isActive = laundryHistoryTab === tab;
+                      return (
+                        <button
+                          key={tab}
+                          type="button"
+                          onClick={() => setLaundryHistoryTab(tab)}
+                          style={{
+                            flex: 1,
+                            textAlign: "center",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            padding: "0 0 14px",
+                            borderBottom: isActive
+                              ? "2.5px solid #ffffff"
+                              : "2.5px solid rgba(255,255,255,0.2)",
+                            transition: "all 0.2s",
+                          }}
+                        >
+                          <p
+                            style={{
+                              margin: "0 0 4px",
+                              fontSize: 11,
+                              color: isActive
+                                ? "rgba(255,255,255,0.95)"
+                                : "rgba(255,255,255,0.55)",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {tab}
+                          </p>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 22,
+                              fontWeight: 900,
+                              color: isActive
+                                ? "#ffffff"
+                                : "rgba(255,255,255,0.55)",
+                              letterSpacing: "-1px",
+                            }}
+                          >
+                            {vals[i]}
+                          </p>
+                        </button>
+                      );
+                    },
+                  )}
                 </div>
               </div>
 
@@ -2809,7 +3091,9 @@ export function HomePage() {
                     ].map((m, i) => (
                       <div key={i} className="aod_info_row">
                         <span className="aod_info_label">{m.month}</span>
-                        <span style={{ fontSize: 13, color: "#64748b" }}>{m.count}</span>
+                        <span style={{ fontSize: 13, color: "#64748b" }}>
+                          {m.count}
+                        </span>
                         <span className="aod_info_val">{m.amount}</span>
                       </div>
                     ))}
@@ -2822,123 +3106,138 @@ export function HomePage() {
                   <h3 className="aod_section_title">등록된 의류</h3>
                   <div className="aod_items_list">
                     {registeredClothes.length === 0 ? (
-                      <p style={{ fontSize: 13, color: "#94a3b8", textAlign: "center", padding: "20px 0" }}>등록된 의류가 없습니다.</p>
-                    ) : registeredClothes.map((c, i) => (
-                      <div key={i} className="aod_item_row">
+                      <p
+                        style={{
+                          fontSize: 13,
+                          color: "#94a3b8",
+                          textAlign: "center",
+                          padding: "20px 0",
+                        }}
+                      >
+                        등록된 의류가 없습니다.
+                      </p>
+                    ) : (
+                      registeredClothes.map((c, i) => (
+                        <div key={i} className="aod_item_row">
+                          <div className="aod_item_info">
+                            <p className="aod_item_name">{c.name}</p>
+                            <p className="aod_item_type">
+                              {c.category} · {c.materials?.join(", ")}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* 이력 목록 (누적 세탁 횟수 탭) */}
+              {laundryHistoryTab === "누적 세탁 횟수" && (
+                <div className="aod_section">
+                  <h3 className="aod_section_title">전체 이력</h3>
+                  <div className="aod_items_list">
+                    {[
+                      {
+                        date: "05.27",
+                        category: "아우터 · 가죽",
+                        desc: "구스다운 아웃도어 패딩 외 1벌",
+                        status: "배송출발",
+                        statusColor: "#2563eb",
+                        price: "22,900원",
+                      },
+                      {
+                        date: "05.14",
+                        category: "일반 세탁",
+                        desc: "안심 생활빨래 안심팩 1회",
+                        status: "완료",
+                        statusColor: "#16a34a",
+                        price: "19,000원",
+                      },
+                      {
+                        date: "04.29",
+                        category: "관리 의류",
+                        desc: "캐시미어 가디건, 울 코트",
+                        status: "완료",
+                        statusColor: "#16a34a",
+                        price: "31,800원",
+                      },
+                      {
+                        date: "04.11",
+                        category: "침구류",
+                        desc: "구스다운 이불 (더블)",
+                        status: "완료",
+                        statusColor: "#16a34a",
+                        price: "59,900원",
+                      },
+                      {
+                        date: "03.28",
+                        category: "신발",
+                        desc: "스웨이드 로퍼, 운동화",
+                        status: "완료",
+                        statusColor: "#16a34a",
+                        price: "34,800원",
+                      },
+                      {
+                        date: "03.12",
+                        category: "일반 세탁",
+                        desc: "안심 생활빨래 안심팩 1회",
+                        status: "완료",
+                        statusColor: "#16a34a",
+                        price: "19,000원",
+                      },
+                    ].map((item, i) => (
+                      <div
+                        key={i}
+                        className="aod_item_row"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setSelectedHistoryItem(item)}
+                      >
                         <div className="aod_item_info">
-                          <p className="aod_item_name">{c.name}</p>
-                          <p className="aod_item_type">{c.category} · {c.materials?.join(", ")}</p>
+                          <p className="aod_item_name">{item.desc}</p>
+                          <p className="aod_item_type">
+                            {item.date} · {item.category}
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            gap: 4,
+                            flexShrink: 0,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: 12,
+                              fontWeight: 800,
+                              color: item.statusColor,
+                              background:
+                                item.statusColor === "#2563eb"
+                                  ? "#eff6ff"
+                                  : "#f0fdf4",
+                              padding: "2px 8px",
+                              borderRadius: 6,
+                            }}
+                          >
+                            {item.status}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: 12,
+                              fontWeight: 700,
+                              color: "#0f172a",
+                            }}
+                          >
+                            {item.price}
+                          </span>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-
-              {/* 이력 목록 (누적 세탁 횟수 탭) */}
-              {laundryHistoryTab === "누적 세탁 횟수" && <div className="aod_section">
-                <h3 className="aod_section_title">전체 이력</h3>
-                <div className="aod_items_list">
-                  {[
-                    {
-                      date: "05.27",
-                      category: "아우터 · 가죽",
-                      desc: "구스다운 아웃도어 패딩 외 1벌",
-                      status: "배송출발",
-                      statusColor: "#2563eb",
-                      price: "22,900원",
-                    },
-                    {
-                      date: "05.14",
-                      category: "일반 세탁",
-                      desc: "안심 생활빨래 안심팩 1회",
-                      status: "완료",
-                      statusColor: "#16a34a",
-                      price: "19,000원",
-                    },
-                    {
-                      date: "04.29",
-                      category: "관리 의류",
-                      desc: "캐시미어 가디건, 울 코트",
-                      status: "완료",
-                      statusColor: "#16a34a",
-                      price: "31,800원",
-                    },
-                    {
-                      date: "04.11",
-                      category: "침구류",
-                      desc: "구스다운 이불 (더블)",
-                      status: "완료",
-                      statusColor: "#16a34a",
-                      price: "59,900원",
-                    },
-                    {
-                      date: "03.28",
-                      category: "신발",
-                      desc: "스웨이드 로퍼, 운동화",
-                      status: "완료",
-                      statusColor: "#16a34a",
-                      price: "34,800원",
-                    },
-                    {
-                      date: "03.12",
-                      category: "일반 세탁",
-                      desc: "안심 생활빨래 안심팩 1회",
-                      status: "완료",
-                      statusColor: "#16a34a",
-                      price: "19,000원",
-                    },
-                  ].map((item, i) => (
-                    <div
-                      key={i}
-                      className="aod_item_row"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => setSelectedHistoryItem(item)}
-                    >
-                      <div className="aod_item_info">
-                        <p className="aod_item_name">{item.desc}</p>
-                        <p className="aod_item_type">
-                          {item.date} · {item.category}
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                          gap: 4,
-                          flexShrink: 0,
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 800,
-                            color: item.statusColor,
-                            background:
-                              item.statusColor === "#2563eb"
-                                ? "#eff6ff"
-                                : "#f0fdf4",
-                            padding: "2px 8px",
-                            borderRadius: 6,
-                          }}
-                        >
-                          {item.status}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: "#0f172a",
-                          }}
-                        >
-                          {item.price}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>}
             </div>
           </div>
         )}
@@ -3388,11 +3687,89 @@ export function HomePage() {
         {showPricingDetail &&
           (() => {
             type PricingTab = "clothing" | "shoes" | "bedding" | "extra";
-            const tabs: { key: PricingTab; label: string; icon: React.ReactNode }[] = [
-              { key: "clothing", label: "의류", icon: <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg> },
-              { key: "shoes", label: "신발", icon: <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 17h16a4 4 0 0 0 4-4v-1a4 4 0 0 0-4-4H9L2 17z"/><circle cx="7" cy="17" r="2"/><circle cx="15" cy="17" r="2"/></svg> },
-              { key: "bedding", label: "침구류", icon: <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg> },
-              { key: "extra", label: "추가요금", icon: <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> },
+            const tabs: {
+              key: PricingTab;
+              label: string;
+              icon: React.ReactNode;
+            }[] = [
+              {
+                key: "clothing",
+                label: "의류",
+                icon: (
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="15"
+                    height="15"
+                    fill="none"
+                    stroke="#2563eb"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z" />
+                  </svg>
+                ),
+              },
+              {
+                key: "shoes",
+                label: "신발",
+                icon: (
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="15"
+                    height="15"
+                    fill="none"
+                    stroke="#2563eb"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M2 17h16a4 4 0 0 0 4-4v-1a4 4 0 0 0-4-4H9L2 17z" />
+                    <circle cx="7" cy="17" r="2" />
+                    <circle cx="15" cy="17" r="2" />
+                  </svg>
+                ),
+              },
+              {
+                key: "bedding",
+                label: "침구류",
+                icon: (
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="15"
+                    height="15"
+                    fill="none"
+                    stroke="#2563eb"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                    <line x1="12" y1="12" x2="12" y2="16" />
+                    <line x1="10" y1="14" x2="14" y2="14" />
+                  </svg>
+                ),
+              },
+              {
+                key: "extra",
+                label: "추가요금",
+                icon: (
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="15"
+                    height="15"
+                    fill="none"
+                    stroke="#2563eb"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                ),
+              },
             ];
 
             const pricingData: Record<
@@ -3500,7 +3877,18 @@ export function HomePage() {
                 >
                   {/* 안내 배너 */}
                   <div className="pricing_banner">
-                    <span className="pricing_banner_emoji" style={{ display:"flex",alignItems:"center",justifyContent:"center",width:36,height:36,borderRadius:10,background:"#eff6ff" }}>
+                    <span
+                      className="pricing_banner_emoji"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 36,
+                        height: 36,
+                        borderRadius: 10,
+                        background: "#eff6ff",
+                      }}
+                    >
                       {tabs.find((t) => t.key === pricingTab)?.icon}
                     </span>
                     <div>
@@ -5082,20 +5470,22 @@ export function HomePage() {
                 </div>
 
                 {/* 리뷰 작성 영역 */}
-                <div className="home_write_review_accordion" style={{ marginBottom: "20px" }}>
+                <div
+                  className="home_write_review_accordion"
+                  style={{ marginBottom: "20px" }}
+                >
                   <button
                     type="button"
-                    className="home_write_review_toggle"
+                    className="home_write_review_toggle home_write_review_card"
                     onClick={() => {
-                      if (!showWriteReview) {
-                        triggerToast("지난 날에 세탁 맡긴 상품들 리뷰를 작성하시겠어요?");
-                      } else {
-                        setShowWriteReview(false);
-                        setReviewSelectedProduct(null);
-                        setWriteReviewStars(0);
-                        setWriteReviewText("");
-                        setWriteReviewSubmitted(false);
-                      }
+                      setShowOrderConfirm(true);
+                      setShowWriteReview(false);
+                      setReviewSelectedProduct(null);
+                      setWriteReviewStars(0);
+                      setWriteReviewText("");
+                      setWriteReviewSubmitted(false);
+                      setShowProductPicker(false);
+                      setPickerSelectedId(null);
                     }}
                   >
                     <span className="home_write_review_toggle_left">
@@ -5104,18 +5494,19 @@ export function HomePage() {
                         나도 리뷰쓰기
                       </span>
                     </span>
-                    <span
-                      className={`home_write_review_toggle_arrow ${showWriteReview ? "open" : ""}`}
-                    >
-                      {showWriteReview ? "접기" : "펼치기"}
-                    </span>
+                    <span className="home_write_review_toggle_arrow">&gt;</span>
                   </button>
 
                   {showWriteReview && reviewSelectedProduct && (
-                    <div className="home_write_review_box" style={{ marginBottom: "20px" }}>
+                    <div
+                      className="home_write_review_box"
+                      style={{ marginBottom: "20px" }}
+                    >
                       {writeReviewSubmitted ? (
                         <div className="home_write_review_success">
-                          <span className="home_write_review_success_icon">✓</span>
+                          <span className="home_write_review_success_icon">
+                            ✓
+                          </span>
                           <p className="home_write_review_success_text">
                             리뷰가 등록되었어요!
                             <br />
@@ -5170,7 +5561,9 @@ export function HomePage() {
                           </div>
 
                           <div className="home_write_review_header">
-                            <span className="home_write_review_label">리뷰 남기기</span>
+                            <span className="home_write_review_label">
+                              리뷰 남기기
+                            </span>
                             <p className="home_write_review_sub">
                               세탁 서비스 경험을 공유해주세요
                             </p>
@@ -5191,7 +5584,16 @@ export function HomePage() {
                             ))}
                             {writeReviewStars > 0 && (
                               <span className="home_write_star_label">
-                                {["", "별로예요", "아쉬워요", "보통이에요", "좋아요", "최고예요"][writeReviewStars]}
+                                {
+                                  [
+                                    "",
+                                    "별로예요",
+                                    "아쉬워요",
+                                    "보통이에요",
+                                    "좋아요",
+                                    "최고예요",
+                                  ][writeReviewStars]
+                                }
                               </span>
                             )}
                           </div>
@@ -5213,7 +5615,10 @@ export function HomePage() {
                           <button
                             type="button"
                             className={`home_write_review_submit ${writeReviewStars > 0 && writeReviewText.trim().length > 0 ? "home_write_review_submit--active" : ""}`}
-                            disabled={writeReviewStars === 0 || writeReviewText.trim().length === 0}
+                            disabled={
+                              writeReviewStars === 0 ||
+                              writeReviewText.trim().length === 0
+                            }
                             onClick={() => {
                               setWriteReviewSubmitted(true);
                               triggerToast("리뷰가 등록되었습니다! 🎉");
@@ -5237,19 +5642,43 @@ export function HomePage() {
                       className="order_confirm_sheet"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <div style={{ display:"flex", justifyContent:"center", padding:"10px 0 0" }}>
-                        <div style={{ width:36, height:4, borderRadius:99, background:"#e2e8f0" }} />
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          padding: "10px 0 0",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 36,
+                            height: 4,
+                            borderRadius: 99,
+                            background: "#e2e8f0",
+                          }}
+                        />
                       </div>
                       <div className="order_confirm_body">
                         <span className="order_confirm_icon">
-                          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                            <line x1="3" y1="6" x2="21" y2="6"/>
-                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="44"
+                            height="44"
+                            fill="none"
+                            stroke="#2563eb"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
                           </svg>
                         </span>
                         <h3 className="order_confirm_title">
-                          지난 날에 세탁 맡긴 상품들<br />리뷰를 작성하시겠어요?
+                          지난 날에 세탁 맡긴 상품들
+                          <br />
+                          리뷰를 작성하시겠어요?
                         </h3>
                       </div>
                       <div className="order_confirm_btn_row">
@@ -5302,21 +5731,60 @@ export function HomePage() {
                               key={order.id}
                               type="button"
                               className={`product_picker_item ${isSelected ? "product_picker_item--selected" : ""}`}
-                              onClick={() => setPickerSelectedId(isSelected ? null : order.id)}
+                              onClick={() =>
+                                setPickerSelectedId(
+                                  isSelected ? null : order.id,
+                                )
+                              }
                             >
                               <div className="product_picker_img_wrap">
-                                <img src={order.img} alt={order.name} className="product_picker_img" />
+                                <img
+                                  src={order.img}
+                                  alt={order.name}
+                                  className="product_picker_img"
+                                />
                               </div>
                               <div className="product_picker_info">
-                                <span className="product_picker_name">{order.name}</span>
-                                <span className="product_picker_category">{order.category}</span>
-                                <span className="product_picker_date_badge">{order.date}</span>
+                                <span className="product_picker_name">
+                                  {order.name}
+                                </span>
+                                <span className="product_picker_category">
+                                  {order.category}
+                                </span>
+                                <span className="product_picker_date_badge">
+                                  {order.date}
+                                </span>
                               </div>
-                              <div className={`product_picker_check ${isSelected ? "product_picker_check--on" : ""}`}>
-                                {isSelected
-                                  ? <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                  : <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/></svg>
-                                }
+                              <div
+                                className={`product_picker_check ${isSelected ? "product_picker_check--on" : ""}`}
+                              >
+                                {isSelected ? (
+                                  <svg
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    height="16"
+                                    fill="none"
+                                    stroke="#ffffff"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <polyline points="20 6 9 17 4 12" />
+                                  </svg>
+                                ) : (
+                                  <svg
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    height="16"
+                                    fill="none"
+                                    stroke="#cbd5e1"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <circle cx="12" cy="12" r="9" />
+                                  </svg>
+                                )}
                               </div>
                             </button>
                           );
@@ -5327,7 +5795,9 @@ export function HomePage() {
                         className={`product_picker_confirm_btn ${pickerSelectedId ? "product_picker_confirm_btn--active" : ""}`}
                         disabled={!pickerSelectedId}
                         onClick={() => {
-                          const order = purchasedOrders.find(o => o.id === pickerSelectedId);
+                          const order = purchasedOrders.find(
+                            (o) => o.id === pickerSelectedId,
+                          );
                           if (order) {
                             setReviewSelectedProduct(order);
                             setShowProductPicker(false);
@@ -5336,7 +5806,9 @@ export function HomePage() {
                           }
                         }}
                       >
-                        {pickerSelectedId ? "이 상품으로 리뷰 쓰기" : "상품을 선택해주세요"}
+                        {pickerSelectedId
+                          ? "이 상품으로 리뷰 쓰기"
+                          : "상품을 선택해주세요"}
                       </button>
                     </div>
                   </div>
@@ -5627,9 +6099,25 @@ export function HomePage() {
                           id: "일반",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" fill="#2563eb"/>
-                              <line x1="3" y1="6" x2="21" y2="6" stroke="white" strokeWidth="1.5"/>
-                              <path d="M16 10a4 4 0 0 1-8 0" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                              <path
+                                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+                                fill="#2563eb"
+                              />
+                              <line
+                                x1="3"
+                                y1="6"
+                                x2="21"
+                                y2="6"
+                                stroke="white"
+                                strokeWidth="1.5"
+                              />
+                              <path
+                                d="M16 10a4 4 0 0 1-8 0"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           label: "일반",
@@ -5640,8 +6128,19 @@ export function HomePage() {
                           id: "친환경",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <path d="M6.5 20.5C4.5 18.5 3 14 5 9s8-7 13-5c2 5 0 11-5 13-3 1-5.5-.5-6.5-1.5z" fill="#2563eb"/>
-                              <line x1="6.5" y1="20.5" x2="12" y2="12" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                              <path
+                                d="M6.5 20.5C4.5 18.5 3 14 5 9s8-7 13-5c2 5 0 11-5 13-3 1-5.5-.5-6.5-1.5z"
+                                fill="#2563eb"
+                              />
+                              <line
+                                x1="6.5"
+                                y1="20.5"
+                                x2="12"
+                                y2="12"
+                                stroke="white"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           label: "친환경",
@@ -5652,8 +6151,18 @@ export function HomePage() {
                           id: "알러지 케어",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#2563eb"/>
-                              <polyline points="9 12 11 14 15 10" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path
+                                d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                                fill="#2563eb"
+                              />
+                              <polyline
+                                points="9 12 11 14 15 10"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           ),
                           label: "알러지 케어",
@@ -5664,15 +6173,79 @@ export function HomePage() {
                           id: "살균",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <circle cx="12" cy="12" r="5" fill="#2563eb"/>
-                              <line x1="12" y1="1" x2="12" y2="4" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="12" y1="20" x2="12" y2="23" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="1" y1="12" x2="4" y2="12" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="20" y1="12" x2="23" y2="12" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
-                              <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <circle cx="12" cy="12" r="5" fill="#2563eb" />
+                              <line
+                                x1="12"
+                                y1="1"
+                                x2="12"
+                                y2="4"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="12"
+                                y1="20"
+                                x2="12"
+                                y2="23"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="4.22"
+                                y1="4.22"
+                                x2="6.34"
+                                y2="6.34"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="17.66"
+                                y1="17.66"
+                                x2="19.78"
+                                y2="19.78"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="1"
+                                y1="12"
+                                x2="4"
+                                y2="12"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="20"
+                                y1="12"
+                                x2="23"
+                                y2="12"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="4.22"
+                                y1="19.78"
+                                x2="6.34"
+                                y2="17.66"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
+                              <line
+                                x1="17.66"
+                                y1="6.34"
+                                x2="19.78"
+                                y2="4.22"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           label: "살균",
@@ -5683,7 +6256,10 @@ export function HomePage() {
                           id: "울/캐시미어",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2563eb"/>
+                              <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                fill="#2563eb"
+                              />
                             </svg>
                           ),
                           label: "울/캐시미어",
@@ -5694,7 +6270,10 @@ export function HomePage() {
                           id: "프리미엄",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#2563eb"/>
+                              <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                                fill="#2563eb"
+                              />
                             </svg>
                           ),
                           label: "프리미엄",
@@ -5744,9 +6323,21 @@ export function HomePage() {
                         id: "무향",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <circle cx="12" cy="13" r="7" fill={c}/>
-                            <circle cx="7" cy="7" r="3.5" fill={c} opacity="0.6"/>
-                            <circle cx="17" cy="6" r="2" fill={c} opacity="0.4"/>
+                            <circle cx="12" cy="13" r="7" fill={c} />
+                            <circle
+                              cx="7"
+                              cy="7"
+                              r="3.5"
+                              fill={c}
+                              opacity="0.6"
+                            />
+                            <circle
+                              cx="17"
+                              cy="6"
+                              r="2"
+                              fill={c}
+                              opacity="0.4"
+                            />
                           </svg>
                         ),
                         label: "무향",
@@ -5760,10 +6351,29 @@ export function HomePage() {
                         id: "라벤더",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-4-4-8-4-8z" fill={c}/>
-                            <path d="M8 8c-2 0-4 2-4 4a4 4 0 0 0 8 0" fill={c} opacity="0.6"/>
-                            <path d="M16 8c2 0 4 2 4 4a4 4 0 0 1-8 0" fill={c} opacity="0.6"/>
-                            <line x1="12" y1="14" x2="12" y2="22" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+                            <path
+                              d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-4-4-8-4-8z"
+                              fill={c}
+                            />
+                            <path
+                              d="M8 8c-2 0-4 2-4 4a4 4 0 0 0 8 0"
+                              fill={c}
+                              opacity="0.6"
+                            />
+                            <path
+                              d="M16 8c2 0 4 2 4 4a4 4 0 0 1-8 0"
+                              fill={c}
+                              opacity="0.6"
+                            />
+                            <line
+                              x1="12"
+                              y1="14"
+                              x2="12"
+                              y2="22"
+                              stroke={c}
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
                           </svg>
                         ),
                         label: "라벤더",
@@ -5777,9 +6387,21 @@ export function HomePage() {
                         id: "시트러스",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <circle cx="12" cy="12" r="9" fill={c}/>
-                            <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
-                            <circle cx="12" cy="12" r="3" fill="white" opacity="0.3"/>
+                            <circle cx="12" cy="12" r="9" fill={c} />
+                            <path
+                              d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"
+                              stroke="white"
+                              strokeWidth="1.2"
+                              strokeLinecap="round"
+                              opacity="0.5"
+                            />
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="3"
+                              fill="white"
+                              opacity="0.3"
+                            />
                           </svg>
                         ),
                         label: "시트러스",
@@ -5793,9 +6415,29 @@ export function HomePage() {
                         id: "오션 브리즈",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round"/>
-                            <path d="M2 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
-                            <path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" opacity="0.3"/>
+                            <path
+                              d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"
+                              fill="none"
+                              stroke={c}
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M2 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"
+                              fill="none"
+                              stroke={c}
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              opacity="0.5"
+                            />
+                            <path
+                              d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"
+                              fill="none"
+                              stroke={c}
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              opacity="0.3"
+                            />
                           </svg>
                         ),
                         label: "오션",
@@ -5809,11 +6451,38 @@ export function HomePage() {
                         id: "로즈",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <path d="M12 3C9 3 6 6 6 10c0 5 6 9 6 9s6-4 6-9c0-4-3-7-6-7z" fill={c}/>
-                            <path d="M12 3c2 2 2 5 0 7-2-2-2-5 0-7z" fill="white" opacity="0.3"/>
-                            <line x1="12" y1="19" x2="12" y2="22" stroke={c} strokeWidth="1.8" strokeLinecap="round"/>
-                            <path d="M10 21c0 0-2-1-2-2" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-                            <path d="M14 21c0 0 2-1 2-2" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                            <path
+                              d="M12 3C9 3 6 6 6 10c0 5 6 9 6 9s6-4 6-9c0-4-3-7-6-7z"
+                              fill={c}
+                            />
+                            <path
+                              d="M12 3c2 2 2 5 0 7-2-2-2-5 0-7z"
+                              fill="white"
+                              opacity="0.3"
+                            />
+                            <line
+                              x1="12"
+                              y1="19"
+                              x2="12"
+                              y2="22"
+                              stroke={c}
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M10 21c0 0-2-1-2-2"
+                              stroke={c}
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              fill="none"
+                            />
+                            <path
+                              d="M14 21c0 0 2-1 2-2"
+                              stroke={c}
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              fill="none"
+                            />
                           </svg>
                         ),
                         label: "로즈",
@@ -5827,8 +6496,15 @@ export function HomePage() {
                         id: "머스크",
                         icon: (c: string) => (
                           <svg viewBox="0 0 24 24" width="22" height="22">
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill={c}/>
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="white" opacity="0.15"/>
+                            <path
+                              d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+                              fill={c}
+                            />
+                            <path
+                              d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+                              fill="white"
+                              opacity="0.15"
+                            />
                           </svg>
                         ),
                         label: "머스크",
@@ -5859,11 +6535,19 @@ export function HomePage() {
                                 onClick={() => setSelectedScent(s.id)}
                               >
                                 {isOn && (
-                                  <span className="laundry_option_check">✓</span>
+                                  <span className="laundry_option_check">
+                                    ✓
+                                  </span>
                                 )}
-                                <span className="scent_palette_emoji">{s.icon(s.dot)}</span>
-                                <span className="scent_palette_name">{s.label}</span>
-                                <span className="scent_palette_price">{s.surcharge}</span>
+                                <span className="scent_palette_emoji">
+                                  {s.icon(s.dot)}
+                                </span>
+                                <span className="scent_palette_name">
+                                  {s.label}
+                                </span>
+                                <span className="scent_palette_price">
+                                  {s.surcharge}
+                                </span>
                               </button>
                             );
                           })}
@@ -5873,7 +6557,10 @@ export function HomePage() {
                   })()}
 
                   {/* 3. 배송 정보 */}
-                  <section className="reserve_detail_section" style={{ position: "relative", zIndex: 10 }}>
+                  <section
+                    className="reserve_detail_section"
+                    style={{ position: "relative", zIndex: 10 }}
+                  >
                     <h2 className="reserve_section_title">배송 정보</h2>
                     <div className="reserve_address_card">
                       {/* 주소 표시 / 편집 영역 */}
@@ -6109,8 +6796,9 @@ export function HomePage() {
                       <div className="info_badge_alert">
                         <div className="alert_info_icon">i</div>
                         <span className="alert_info_text">
-                          지금 예약하시면 가장 빠른 시간에 수거와 배송이 예약됩니다.
-                          <br/>
+                          지금 예약하시면 가장 빠른 시간에 수거와 배송이
+                          예약됩니다.
+                          <br />
                           (기본 24시간 이내 수거/배송)
                         </span>
                       </div>
@@ -6126,7 +6814,10 @@ export function HomePage() {
                           id: "신속 배송",
                           icon: (
                             <svg viewBox="0 0 24 24" width="15" height="15">
-                              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/>
+                              <polygon
+                                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                                fill="white"
+                              />
                             </svg>
                           ),
                           iconBg: "linear-gradient(135deg, #3b5bdb, #2563eb)",
@@ -6141,13 +6832,19 @@ export function HomePage() {
                           id: "하루 배송",
                           icon: (
                             <svg viewBox="0 0 24 24" width="15" height="15">
-                              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#64748b"/>
+                              <path
+                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                                fill="#64748b"
+                              />
                             </svg>
                           ),
                           iconBg: "#f1f5f9",
                           title: "하루 배송",
                           badge: "1DAY",
-                          badgeStyle: { background: "#e2e8f0", color: "#64748b" },
+                          badgeStyle: {
+                            background: "#e2e8f0",
+                            color: "#64748b",
+                          },
                           desc: "24시간 내 안심 수거 · 배달",
                           price: "+0원",
                           priceColor: "#94a3b8",
@@ -6161,12 +6858,22 @@ export function HomePage() {
                             onClick={() => setRiderType(r.id)}
                           >
                             <div className="rider_v2_top">
-                              <span className="rider_v2_badge rider_v2_badge--top" style={r.badgeStyle}>{r.badge}</span>
+                              <span
+                                className="rider_v2_badge rider_v2_badge--top"
+                                style={r.badgeStyle}
+                              >
+                                {r.badge}
+                              </span>
                               <span className="rider_v2_title">{r.title}</span>
                               <p className="rider_v2_desc">{r.desc}</p>
                             </div>
                             <div className="rider_v2_price_section">
-                              <p className="rider_v2_price" style={{ color: r.priceColor }}>{r.price}</p>
+                              <p
+                                className="rider_v2_price"
+                                style={{ color: r.priceColor }}
+                              >
+                                {r.price}
+                              </p>
                             </div>
                           </div>
                         );
@@ -6249,20 +6956,32 @@ export function HomePage() {
                   {/* 8. 요금제 선택 */}
                   <section className="reserve_detail_section">
                     <h2 className="reserve_section_title">요금제 선택</h2>
-                    <p className="reserve_section_sub">더 저렴하게 이용하는 방법을 선택해보세요</p>
+                    <p className="reserve_section_sub">
+                      더 저렴하게 이용하는 방법을 선택해보세요
+                    </p>
 
                     <div className="plan_recommend_banner">
-                      <span className="plan_recommend_tag">✨ 고객님께 추천드려요</span>
+                      <span className="plan_recommend_tag">
+                        ✨ 고객님께 추천드려요
+                      </span>
                       <div className="plan_recommend_row">
                         <div className="plan_recommend_left">
                           <span className="plan_recommend_icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
-                              <circle cx="12" cy="12" r="10" fill="#2563eb"/>
-                              <path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                              <circle cx="12" cy="12" r="10" fill="#2563eb" />
+                              <path
+                                d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           </span>
                           <span className="plan_recommend_name">저가형</span>
-                          <span className="plan_recommend_badge">기본가 10% 절약</span>
+                          <span className="plan_recommend_badge">
+                            기본가 10% 절약
+                          </span>
                         </div>
                         <button
                           type="button"
@@ -6272,7 +6991,9 @@ export function HomePage() {
                           선택
                         </button>
                       </div>
-                      <p className="plan_recommend_desc">기본 세탁 이용 시 저가형으로 10% 아끼세요</p>
+                      <p className="plan_recommend_desc">
+                        기본 세탁 이용 시 저가형으로 10% 아끼세요
+                      </p>
                     </div>
 
                     <div className="plan_cards_grid">
@@ -6281,9 +7002,31 @@ export function HomePage() {
                           id: "일반",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <rect x="1" y="4" width="22" height="16" rx="3" ry="3" fill="#2563eb"/>
-                              <line x1="1" y1="10" x2="23" y2="10" stroke="white" strokeWidth="2"/>
-                              <rect x="4" y="14" width="5" height="2" rx="1" fill="white"/>
+                              <rect
+                                x="1"
+                                y="4"
+                                width="22"
+                                height="16"
+                                rx="3"
+                                ry="3"
+                                fill="#2563eb"
+                              />
+                              <line
+                                x1="1"
+                                y1="10"
+                                x2="23"
+                                y2="10"
+                                stroke="white"
+                                strokeWidth="2"
+                              />
+                              <rect
+                                x="4"
+                                y="14"
+                                width="5"
+                                height="2"
+                                rx="1"
+                                fill="white"
+                              />
                             </svg>
                           ),
                           badge: "기본",
@@ -6297,8 +7040,14 @@ export function HomePage() {
                           id: "저가형",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <circle cx="12" cy="12" r="10" fill="#2563eb"/>
-                              <path d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                              <circle cx="12" cy="12" r="10" fill="#2563eb" />
+                              <path
+                                d="M12 6v2m0 8v2M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 15 9.5 16h5"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           badge: "-10%",
@@ -6312,9 +7061,29 @@ export function HomePage() {
                           id: "구독형",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <polyline points="23 4 23 10 17 10" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              <polyline points="1 20 1 14 7 14" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                              <polyline
+                                points="23 4 23 10 17 10"
+                                fill="none"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <polyline
+                                points="1 20 1 14 7 14"
+                                fill="none"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+                                fill="none"
+                                stroke="#2563eb"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           badge: "-20%",
@@ -6328,9 +7097,27 @@ export function HomePage() {
                           id: "묶음 할인",
                           icon: (
                             <svg viewBox="0 0 24 24" width="22" height="22">
-                              <rect x="1" y="3" width="22" height="5" rx="1" fill="#2563eb"/>
-                              <path d="M3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8z" fill="#2563eb"/>
-                              <line x1="10" y1="13" x2="14" y2="13" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                              <rect
+                                x="1"
+                                y="3"
+                                width="22"
+                                height="5"
+                                rx="1"
+                                fill="#2563eb"
+                              />
+                              <path
+                                d="M3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8z"
+                                fill="#2563eb"
+                              />
+                              <line
+                                x1="10"
+                                y1="13"
+                                x2="14"
+                                y2="13"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           ),
                           badge: "-15%",
@@ -6347,11 +7134,17 @@ export function HomePage() {
                           onClick={() => setSelectedPricingPlan(plan.id)}
                         >
                           <div className="plan_card_top">
-                            <span className={`plan_card_badge ${plan.badgeClass}`}>{plan.badge}</span>
+                            <span
+                              className={`plan_card_badge ${plan.badgeClass}`}
+                            >
+                              {plan.badge}
+                            </span>
                           </div>
                           <h3 className="plan_card_label">{plan.label}</h3>
                           <p className="plan_card_sub">{plan.sub}</p>
-                          <p className={`plan_card_desc ${plan.descClass}`}>{plan.desc}</p>
+                          <p className={`plan_card_desc ${plan.descClass}`}>
+                            {plan.desc}
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -6363,15 +7156,29 @@ export function HomePage() {
                   {/* 배송 요약 */}
                   <div className="rsb_delivery_summary">
                     <div className="rsb_delivery_row">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#2563eb"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
                       </svg>
-                      <span className="rsb_delivery_addr">{reserveAddress}</span>
+                      <span className="rsb_delivery_addr">
+                        {reserveAddress}
+                      </span>
                     </div>
                     <div className="rsb_delivery_chips">
                       <span className="rsb_chip">{reserveDate}</span>
                       <span className="rsb_chip">{reserveTime}</span>
-                      <span className={`rsb_chip ${riderType === "신속 배송" ? "rsb_chip--blue" : ""}`}>
+                      <span
+                        className={`rsb_chip ${riderType === "신속 배송" ? "rsb_chip--blue" : ""}`}
+                      >
                         {riderType === "신속 배송" ? "⚡ 신속" : "🌙 하루"}
                       </span>
                     </div>
@@ -6382,15 +7189,33 @@ export function HomePage() {
                   {/* 가격 명세 */}
                   <div className="rsb_price_rows">
                     <div className="rsb_price_row">
-                      <span className="rsb_label">기본가 ({selectedLaundryType})</span>
+                      <span className="rsb_label">
+                        기본가 ({selectedLaundryType})
+                      </span>
                       <span className="rsb_val">
-                        {(selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000).toLocaleString()}원
+                        {(selectedLaundryType === "일반 빨래"
+                          ? 19000
+                          : selectedLaundryType === "관리 의류"
+                            ? 25000
+                            : 30000
+                        ).toLocaleString()}
+                        원
                       </span>
                     </div>
                     {ironingOption !== "신청 안 함" && (
                       <div className="rsb_price_row">
-                        <span className="rsb_label">다림질 ({ironingOption === "기본 (스팀)" ? "기본" : "고급"})</span>
-                        <span className="rsb_val">+{(ironingOption === "기본 (스팀)" ? 2000 : 4000).toLocaleString()}원</span>
+                        <span className="rsb_label">
+                          다림질 (
+                          {ironingOption === "기본 (스팀)" ? "기본" : "고급"})
+                        </span>
+                        <span className="rsb_val">
+                          +
+                          {(ironingOption === "기본 (스팀)"
+                            ? 2000
+                            : 4000
+                          ).toLocaleString()}
+                          원
+                        </span>
                       </div>
                     )}
                     {riderType === "신속 배송" && (
@@ -6411,16 +7236,33 @@ export function HomePage() {
                       <span className="rsb_total_label">예상 총액</span>
                       <span className="rsb_total_val">
                         {(
-                          (selectedLaundryType === "일반 빨래" ? 19000 : selectedLaundryType === "관리 의류" ? 25000 : 30000) +
-                          (selectedLaundryOptions.includes("친환경") ? 2000 : 0) +
-                          (selectedLaundryOptions.includes("알러지 케어") ? 3000 : 0) +
+                          (selectedLaundryType === "일반 빨래"
+                            ? 19000
+                            : selectedLaundryType === "관리 의류"
+                              ? 25000
+                              : 30000) +
+                          (selectedLaundryOptions.includes("친환경")
+                            ? 2000
+                            : 0) +
+                          (selectedLaundryOptions.includes("알러지 케어")
+                            ? 3000
+                            : 0) +
                           (selectedLaundryOptions.includes("살균") ? 4000 : 0) +
-                          (selectedLaundryOptions.includes("울/캐시미어") ? 5000 : 0) +
-                          (selectedLaundryOptions.includes("프리미엄") ? 6000 : 0) +
-                          (ironingOption === "기본 (스팀)" ? 2000 : ironingOption === "고급 (칼주름)" ? 4000 : 0) +
+                          (selectedLaundryOptions.includes("울/캐시미어")
+                            ? 5000
+                            : 0) +
+                          (selectedLaundryOptions.includes("프리미엄")
+                            ? 6000
+                            : 0) +
+                          (ironingOption === "기본 (스팀)"
+                            ? 2000
+                            : ironingOption === "고급 (칼주름)"
+                              ? 4000
+                              : 0) +
                           (riderType === "신속 배송" ? 1000 : 0) +
                           2900
-                        ).toLocaleString()}원
+                        ).toLocaleString()}
+                        원
                       </span>
                     </div>
                     <button
@@ -6761,9 +7603,11 @@ export function HomePage() {
               </button>
               <div className="home_delivery_title_group">
                 <h1 className="home_delivery_title">
-                  {deliveryView === "status" ? "세탁 현재 상황"
-                    : deliveryView === "eta" ? "예상 배송 시간"
-                    : "수거 · 배송 현황"}
+                  {deliveryView === "status"
+                    ? "세탁 현재 상황"
+                    : deliveryView === "eta"
+                      ? "예상 배송 시간"
+                      : "수거 · 배송 현황"}
                 </h1>
                 {deliveryView === "all" && (
                   <p className="home_delivery_subtitle">
@@ -6776,493 +7620,798 @@ export function HomePage() {
 
             {/* 실시간 상태 요약 카드 */}
             {(deliveryView === "all" || deliveryView === "gps") && (
-            <section className="delivery_status_section">
-              <div
-                className="delivery_status_card"
-                onClick={() => handleAction("수거배송 상세조회")}
-              >
-                <div className="delivery_status_top">
-                  <span className="delivery_status_badge">배송 출발</span>
-                  <span className="delivery_invoice">운송장 8311-9C94</span>
-                </div>
-                <h2 className="delivery_status_main">오늘 밤 11시 도착 예정</h2>
-                <p className="delivery_status_desc">
-                  배송 마스터가 문 앞 안심 배송을 위해 이동 중입니다.
-                </p>
+              <section className="delivery_status_section">
+                <div
+                  className="delivery_status_card"
+                  onClick={() => handleAction("수거배송 상세조회")}
+                >
+                  <div className="delivery_status_top">
+                    <span className="delivery_status_badge">배송 출발</span>
+                    <span className="delivery_invoice">운송장 8311-9C94</span>
+                  </div>
+                  <h2 className="delivery_status_main">
+                    오늘 밤 11시 도착 예정
+                  </h2>
+                  <p className="delivery_status_desc">
+                    배송 마스터가 문 앞 안심 배송을 위해 이동 중입니다.
+                  </p>
 
-                <div className="delivery_progress_line_wrapper">
-                  <div className="delivery_progress_fill" />
-                  <div
-                    className="delivery_progress_dot delivery_progress_dot--active"
-                    style={{ left: "0%" }}
-                  />
-                  <div
-                    className="delivery_progress_dot delivery_progress_dot--active"
-                    style={{ left: "33%" }}
-                  />
-                  <div
-                    className="delivery_progress_dot delivery_progress_dot--active"
-                    style={{ left: "66%" }}
-                  />
-                  <div
-                    className="delivery_progress_dot delivery_progress_dot--pending"
-                    style={{ left: "100%" }}
-                  />
+                  <div className="delivery_progress_line_wrapper">
+                    <div className="delivery_progress_fill" />
+                    <div
+                      className="delivery_progress_dot delivery_progress_dot--active"
+                      style={{ left: "0%" }}
+                    />
+                    <div
+                      className="delivery_progress_dot delivery_progress_dot--active"
+                      style={{ left: "33%" }}
+                    />
+                    <div
+                      className="delivery_progress_dot delivery_progress_dot--active"
+                      style={{ left: "66%" }}
+                    />
+                    <div
+                      className="delivery_progress_dot delivery_progress_dot--pending"
+                      style={{ left: "100%" }}
+                    />
+                  </div>
+                  <div className="delivery_progress_labels">
+                    <span>수거신청</span>
+                    <span>수거완료</span>
+                    <span>세탁완료</span>
+                    <span className="highlight_step">배송중</span>
+                  </div>
                 </div>
-                <div className="delivery_progress_labels">
-                  <span>수거신청</span>
-                  <span>수거완료</span>
-                  <span>세탁완료</span>
-                  <span className="highlight_step">배송중</span>
-                </div>
-              </div>
-            </section>
+              </section>
             )}
 
             {/* 실시간 GPS 위치 확인 대시보드 */}
             {(deliveryView === "all" || deliveryView === "gps") && (
-            <section className="delivery_gps_section">
-              <div className="delivery_gps_card">
-                <div className="delivery_gps_card_header">
-                  <div className="gps_header_title_group">
-                    <span className="gps_section_badge">
-                      GPS LIVE CONNECTED
-                    </span>
-                    <h3 className="gps_card_title">실시간 수거 · 배송 경로</h3>
-                  </div>
-                  <button
-                    type="button"
-                    className={`gps_toggle_btn ${trackingActive ? "gps_toggle_btn--active" : ""}`}
-                    onClick={() => setTrackingActive(!trackingActive)}
-                    aria-label={
-                      trackingActive ? "GPS 추적 일시정지" : "GPS 추적 시작"
-                    }
-                  >
-                    <span
-                      className={`gps_pulse_dot ${trackingActive ? "gps_pulse_dot--active" : "gps_pulse_dot--inactive"}`}
-                    />
-                    <span>{trackingActive ? "추적 중" : "추적 정지"}</span>
-                  </button>
-                </div>
-
-                {/* 실시간 vector map */}
-                <div className="delivery_gps_map_container">
-                  <svg
-                    className="delivery_gps_vector_map"
-                    viewBox="0 0 358 220"
-                    width="100%"
-                    height="220"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* 지도 배경 — 실제 도로맵 느낌 */}
-                    <rect width="358" height="220" fill="#eae6df" rx="16"/>
-
-                    {/* 블록 구역 (건물/대지) */}
-                    <rect x="0" y="0" width="65" height="50" rx="2" fill="#d6d2c8"/>
-                    <rect x="80" y="0" width="80" height="50" rx="2" fill="#d6d2c8"/>
-                    <rect x="175" y="0" width="90" height="50" rx="2" fill="#d6d2c8"/>
-                    <rect x="280" y="0" width="78" height="50" rx="2" fill="#d6d2c8"/>
-                    <rect x="0" y="62" width="65" height="34" rx="2" fill="#d6d2c8"/>
-                    <rect x="80" y="62" width="80" height="34" rx="2" fill="#d6d2c8"/>
-                    <rect x="175" y="62" width="90" height="34" rx="2" fill="#d6d2c8"/>
-                    <rect x="280" y="62" width="78" height="34" rx="2" fill="#d6d2c8"/>
-                    <rect x="0" y="136" width="65" height="36" rx="2" fill="#d6d2c8"/>
-                    <rect x="80" y="136" width="80" height="36" rx="2" fill="#d6d2c8"/>
-                    <rect x="175" y="136" width="90" height="36" rx="2" fill="#d6d2c8"/>
-                    <rect x="280" y="136" width="78" height="36" rx="2" fill="#d6d2c8"/>
-                    <rect x="0" y="182" width="65" height="38" rx="2" fill="#d6d2c8"/>
-                    <rect x="80" y="182" width="80" height="38" rx="2" fill="#d6d2c8"/>
-                    <rect x="175" y="182" width="90" height="38" rx="2" fill="#d6d2c8"/>
-                    <rect x="280" y="182" width="78" height="38" rx="2" fill="#d6d2c8"/>
-
-                    {/* 공원 구역 */}
-                    <ellipse cx="30" cy="188" rx="28" ry="18" fill="#c8dfc0" opacity="0.7"/>
-                    <ellipse cx="320" cy="20" rx="22" ry="14" fill="#c8dfc0" opacity="0.7"/>
-
-                    {/* 한강 */}
-                    <path d="M -5 96 Q 90 118, 180 96 T 365 92 L 365 124 Q 275 128, 180 124 T -5 122 Z" fill="#aad3df"/>
-                    <text x="160" y="114" fill="#7ab8c8" fontSize="7" fontWeight="600" fontFamily="var(--font-pretendard)" letterSpacing="4" textAnchor="middle">한  강</text>
-
-                    {/* 대로 (넓은 도로) — 테두리 먼저 */}
-                    <line x1="0" y1="58" x2="358" y2="58" stroke="#c0bdb5" strokeWidth="11"/>
-                    <line x1="0" y1="130" x2="358" y2="130" stroke="#c0bdb5" strokeWidth="11"/>
-                    <line x1="72" y1="0" x2="72" y2="220" stroke="#c0bdb5" strokeWidth="11"/>
-                    <line x1="171" y1="0" x2="171" y2="220" stroke="#c0bdb5" strokeWidth="9"/>
-                    <line x1="271" y1="0" x2="271" y2="220" stroke="#c0bdb5" strokeWidth="11"/>
-
-                    {/* 도로 흰 표면 */}
-                    <line x1="0" y1="58" x2="358" y2="58" stroke="#f5f1eb" strokeWidth="9"/>
-                    <line x1="0" y1="130" x2="358" y2="130" stroke="#f5f1eb" strokeWidth="9"/>
-                    <line x1="72" y1="0" x2="72" y2="220" stroke="#f5f1eb" strokeWidth="9"/>
-                    <line x1="171" y1="0" x2="171" y2="220" stroke="#f5f1eb" strokeWidth="7"/>
-                    <line x1="271" y1="0" x2="271" y2="220" stroke="#f5f1eb" strokeWidth="9"/>
-
-                    {/* 중앙선 점선 */}
-                    <line x1="0" y1="58" x2="358" y2="58" stroke="#d8d4cc" strokeWidth="0.8" strokeDasharray="6 5"/>
-                    <line x1="0" y1="130" x2="358" y2="130" stroke="#d8d4cc" strokeWidth="0.8" strokeDasharray="6 5"/>
-                    <line x1="72" y1="0" x2="72" y2="220" stroke="#d8d4cc" strokeWidth="0.8" strokeDasharray="6 5"/>
-                    <line x1="271" y1="0" x2="271" y2="220" stroke="#d8d4cc" strokeWidth="0.8" strokeDasharray="6 5"/>
-
-                    {/* 도로명 라벨 */}
-                    <rect x="130" y="48" width="50" height="12" rx="3" fill="rgba(245,241,235,0.92)"/>
-                    <text x="155" y="57.5" fill="#8a867e" fontSize="6.5" fontWeight="700" fontFamily="var(--font-pretendard)" textAnchor="middle">반포대로</text>
-                    <rect x="130" y="120" width="50" height="12" rx="3" fill="rgba(245,241,235,0.92)"/>
-                    <text x="155" y="129.5" fill="#8a867e" fontSize="6.5" fontWeight="700" fontFamily="var(--font-pretendard)" textAnchor="middle">서초대로</text>
-                    <text x="72" y="210" fill="#8a867e" fontSize="6" fontWeight="700" fontFamily="var(--font-pretendard)" textAnchor="middle" transform="rotate(90,72,210)">동작대로</text>
-                    <text x="271" y="210" fill="#8a867e" fontSize="6" fontWeight="700" fontFamily="var(--font-pretendard)" textAnchor="middle" transform="rotate(90,271,210)">강남대로</text>
-
-                    {/* Landmarks Labels */}
-                    <g transform="translate(45, 122)">
-                      <rect
-                        x="-35"
-                        y="-12"
-                        width="70"
-                        height="18"
-                        rx="5"
-                        fill="#334155"
-                      />
-                      <text
-                        x="0"
-                        y="1"
-                        fill="#ffffff"
-                        fontSize="8"
-                        fontWeight="800"
-                        textAnchor="middle"
-                        fontFamily="var(--font-pretendard)"
-                      >
-                        스마트 팩토리
-                      </text>
-                    </g>
-
-                    <g transform="translate(315, 122)">
-                      <rect
-                        x="-22"
-                        y="-12"
-                        width="44"
-                        height="18"
-                        rx="5"
-                        fill="#2563eb"
-                      />
-                      <text
-                        x="0"
-                        y="1"
-                        fill="#ffffff"
-                        fontSize="8"
-                        fontWeight="800"
-                        textAnchor="middle"
-                        fontFamily="var(--font-pretendard)"
-                      >
-                        우리집
-                      </text>
-                    </g>
-
-                    {/* Markers pins */}
-                    {/* Start Marker */}
-                    <circle
-                      cx="40"
-                      cy="145"
-                      r="7"
-                      fill="#64748b"
-                      stroke="#ffffff"
-                      strokeWidth="2"
-                    />
-                    <circle cx="40" cy="145" r="3" fill="#ffffff" />
-
-                    {/* End Marker (Pulsing User Home) */}
-                    <g transform="translate(315, 145)">
-                      <circle
-                        cx="0"
-                        cy="0"
-                        r="14"
-                        className="gps_map_home_pulse"
-                        fill="#2563eb"
-                        opacity="0.2"
-                      />
-                      <circle
-                        cx="0"
-                        cy="0"
-                        r="7"
-                        fill="#2563eb"
-                        stroke="#ffffff"
-                        strokeWidth="2"
-                      />
-                      <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                    </g>
-
-                    {/* Gliding Rider vehicle rendered directly in SVG for bulletproof scaling! */}
-                    <g
-                      className={`gps_delivery_rider_glider ${trackingActive ? "gps_delivery_rider_glider--active" : ""}`}
+              <section className="delivery_gps_section">
+                <div className="delivery_gps_card">
+                  <div className="delivery_gps_card_header">
+                    <div className="gps_header_title_group">
+                      <span className="gps_section_badge">
+                        GPS LIVE CONNECTED
+                      </span>
+                      <h3 className="gps_card_title">
+                        실시간 수거 · 배송 경로
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      className={`gps_toggle_btn ${trackingActive ? "gps_toggle_btn--active" : ""}`}
+                      onClick={() => setTrackingActive(!trackingActive)}
+                      aria-label={
+                        trackingActive ? "GPS 추적 일시정지" : "GPS 추적 시작"
+                      }
                     >
-                      {/* Ring aura pulse */}
-                      <circle
-                        cx="0"
-                        cy="0"
-                        r="13"
-                        className="gps_rider_glow_pulse"
-                        fill="#3b82f6"
-                        opacity="0.3"
+                      <span
+                        className={`gps_pulse_dot ${trackingActive ? "gps_pulse_dot--active" : "gps_pulse_dot--inactive"}`}
                       />
+                      <span>{trackingActive ? "추적 중" : "추적 정지"}</span>
+                    </button>
+                  </div>
+
+                  {/* 실시간 vector map */}
+                  <div className="delivery_gps_map_container">
+                    <svg
+                      className="delivery_gps_vector_map"
+                      viewBox="0 0 358 220"
+                      width="100%"
+                      height="220"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* 지도 배경 — 실제 도로맵 느낌 */}
+                      <rect width="358" height="220" fill="#eae6df" rx="16" />
+
+                      {/* 블록 구역 (건물/대지) */}
+                      <rect
+                        x="0"
+                        y="0"
+                        width="65"
+                        height="50"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="80"
+                        y="0"
+                        width="80"
+                        height="50"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="175"
+                        y="0"
+                        width="90"
+                        height="50"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="280"
+                        y="0"
+                        width="78"
+                        height="50"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="0"
+                        y="62"
+                        width="65"
+                        height="34"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="80"
+                        y="62"
+                        width="80"
+                        height="34"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="175"
+                        y="62"
+                        width="90"
+                        height="34"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="280"
+                        y="62"
+                        width="78"
+                        height="34"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="0"
+                        y="136"
+                        width="65"
+                        height="36"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="80"
+                        y="136"
+                        width="80"
+                        height="36"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="175"
+                        y="136"
+                        width="90"
+                        height="36"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="280"
+                        y="136"
+                        width="78"
+                        height="36"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="0"
+                        y="182"
+                        width="65"
+                        height="38"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="80"
+                        y="182"
+                        width="80"
+                        height="38"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="175"
+                        y="182"
+                        width="90"
+                        height="38"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+                      <rect
+                        x="280"
+                        y="182"
+                        width="78"
+                        height="38"
+                        rx="2"
+                        fill="#d6d2c8"
+                      />
+
+                      {/* 공원 구역 */}
+                      <ellipse
+                        cx="30"
+                        cy="188"
+                        rx="28"
+                        ry="18"
+                        fill="#c8dfc0"
+                        opacity="0.7"
+                      />
+                      <ellipse
+                        cx="320"
+                        cy="20"
+                        rx="22"
+                        ry="14"
+                        fill="#c8dfc0"
+                        opacity="0.7"
+                      />
+
+                      {/* 한강 */}
+                      <path
+                        d="M -5 96 Q 90 118, 180 96 T 365 92 L 365 124 Q 275 128, 180 124 T -5 122 Z"
+                        fill="#aad3df"
+                      />
+                      <text
+                        x="160"
+                        y="114"
+                        fill="#7ab8c8"
+                        fontSize="7"
+                        fontWeight="600"
+                        fontFamily="var(--font-pretendard)"
+                        letterSpacing="4"
+                        textAnchor="middle"
+                      >
+                        한 강
+                      </text>
+
+                      {/* 대로 (넓은 도로) — 테두리 먼저 */}
+                      <line
+                        x1="0"
+                        y1="58"
+                        x2="358"
+                        y2="58"
+                        stroke="#c0bdb5"
+                        strokeWidth="11"
+                      />
+                      <line
+                        x1="0"
+                        y1="130"
+                        x2="358"
+                        y2="130"
+                        stroke="#c0bdb5"
+                        strokeWidth="11"
+                      />
+                      <line
+                        x1="72"
+                        y1="0"
+                        x2="72"
+                        y2="220"
+                        stroke="#c0bdb5"
+                        strokeWidth="11"
+                      />
+                      <line
+                        x1="171"
+                        y1="0"
+                        x2="171"
+                        y2="220"
+                        stroke="#c0bdb5"
+                        strokeWidth="9"
+                      />
+                      <line
+                        x1="271"
+                        y1="0"
+                        x2="271"
+                        y2="220"
+                        stroke="#c0bdb5"
+                        strokeWidth="11"
+                      />
+
+                      {/* 도로 흰 표면 */}
+                      <line
+                        x1="0"
+                        y1="58"
+                        x2="358"
+                        y2="58"
+                        stroke="#f5f1eb"
+                        strokeWidth="9"
+                      />
+                      <line
+                        x1="0"
+                        y1="130"
+                        x2="358"
+                        y2="130"
+                        stroke="#f5f1eb"
+                        strokeWidth="9"
+                      />
+                      <line
+                        x1="72"
+                        y1="0"
+                        x2="72"
+                        y2="220"
+                        stroke="#f5f1eb"
+                        strokeWidth="9"
+                      />
+                      <line
+                        x1="171"
+                        y1="0"
+                        x2="171"
+                        y2="220"
+                        stroke="#f5f1eb"
+                        strokeWidth="7"
+                      />
+                      <line
+                        x1="271"
+                        y1="0"
+                        x2="271"
+                        y2="220"
+                        stroke="#f5f1eb"
+                        strokeWidth="9"
+                      />
+
+                      {/* 중앙선 점선 */}
+                      <line
+                        x1="0"
+                        y1="58"
+                        x2="358"
+                        y2="58"
+                        stroke="#d8d4cc"
+                        strokeWidth="0.8"
+                        strokeDasharray="6 5"
+                      />
+                      <line
+                        x1="0"
+                        y1="130"
+                        x2="358"
+                        y2="130"
+                        stroke="#d8d4cc"
+                        strokeWidth="0.8"
+                        strokeDasharray="6 5"
+                      />
+                      <line
+                        x1="72"
+                        y1="0"
+                        x2="72"
+                        y2="220"
+                        stroke="#d8d4cc"
+                        strokeWidth="0.8"
+                        strokeDasharray="6 5"
+                      />
+                      <line
+                        x1="271"
+                        y1="0"
+                        x2="271"
+                        y2="220"
+                        stroke="#d8d4cc"
+                        strokeWidth="0.8"
+                        strokeDasharray="6 5"
+                      />
+
+                      {/* 도로명 라벨 */}
+                      <rect
+                        x="130"
+                        y="48"
+                        width="50"
+                        height="12"
+                        rx="3"
+                        fill="rgba(245,241,235,0.92)"
+                      />
+                      <text
+                        x="155"
+                        y="57.5"
+                        fill="#8a867e"
+                        fontSize="6.5"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                      >
+                        반포대로
+                      </text>
+                      <rect
+                        x="130"
+                        y="120"
+                        width="50"
+                        height="12"
+                        rx="3"
+                        fill="rgba(245,241,235,0.92)"
+                      />
+                      <text
+                        x="155"
+                        y="129.5"
+                        fill="#8a867e"
+                        fontSize="6.5"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                      >
+                        서초대로
+                      </text>
+                      <text
+                        x="72"
+                        y="210"
+                        fill="#8a867e"
+                        fontSize="6"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                        transform="rotate(90,72,210)"
+                      >
+                        동작대로
+                      </text>
+                      <text
+                        x="271"
+                        y="210"
+                        fill="#8a867e"
+                        fontSize="6"
+                        fontWeight="700"
+                        fontFamily="var(--font-pretendard)"
+                        textAnchor="middle"
+                        transform="rotate(90,271,210)"
+                      >
+                        강남대로
+                      </text>
+
+                      {/* Landmarks Labels */}
+                      <g transform="translate(45, 122)">
+                        <rect
+                          x="-35"
+                          y="-12"
+                          width="70"
+                          height="18"
+                          rx="5"
+                          fill="#334155"
+                        />
+                        <text
+                          x="0"
+                          y="1"
+                          fill="#ffffff"
+                          fontSize="8"
+                          fontWeight="800"
+                          textAnchor="middle"
+                          fontFamily="var(--font-pretendard)"
+                        >
+                          스마트 팩토리
+                        </text>
+                      </g>
+
+                      <g transform="translate(315, 122)">
+                        <rect
+                          x="-22"
+                          y="-12"
+                          width="44"
+                          height="18"
+                          rx="5"
+                          fill="#2563eb"
+                        />
+                        <text
+                          x="0"
+                          y="1"
+                          fill="#ffffff"
+                          fontSize="8"
+                          fontWeight="800"
+                          textAnchor="middle"
+                          fontFamily="var(--font-pretendard)"
+                        >
+                          우리집
+                        </text>
+                      </g>
+
+                      {/* Markers pins */}
+                      {/* Start Marker */}
                       <circle
-                        cx="0"
-                        cy="0"
+                        cx="40"
+                        cy="145"
                         r="7"
-                        fill="#2563eb"
+                        fill="#64748b"
                         stroke="#ffffff"
                         strokeWidth="2"
                       />
-                      <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                    </g>
-                  </svg>
+                      <circle cx="40" cy="145" r="3" fill="#ffffff" />
 
-                  {/* ETA 패널 */}
-                  <div className="gps_telemetry_glass_panel">
-                    <div className="telemetry_row">
-                      <div className="telemetry_item">
-                        <span className="tele_label">현재 위치</span>
-                        <strong className="tele_val">서초대로 인근</strong>
-                      </div>
-                      <div className="telemetry_item">
-                        <span className="tele_label">이동 속도</span>
-                        <strong className="tele_val">24 km/h</strong>
-                      </div>
-                      <div className="telemetry_item">
-                        <span className="tele_label">도착 예정</span>
-                        <strong className="tele_val highlight_blue">
-                          약 {etaMinutes}분
-                        </strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Accuracy check footer + 상세보기 토글 */}
-                <div
-                  className="gps_accuracy_info_footer gps_accuracy_info_footer--clickable"
-                  onClick={() => setShowGpsDetail((v) => !v)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="12"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="gps_info_icon"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                  </svg>
-                  <span>배송 마스터 실시간 이동 경로 추적 중</span>
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="14"
-                    height="14"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{
-                      marginLeft: "auto",
-                      transition: "transform 0.3s ease",
-                      transform: showGpsDetail
-                        ? "rotate(180deg)"
-                        : "rotate(0deg)",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </div>
-
-                {/* 상세 정보 드로어 */}
-                {showGpsDetail && (
-                  <div className="gps_detail_drawer">
-                    {/* 라이더 정보 */}
-                    <div className="gps_detail_section">
-                      <p className="gps_detail_label">담당 라이더</p>
-                      <div className="gps_rider_row">
-                        <img
-                          src={riderJinwooImg}
-                          alt="라이더 진우"
-                          className="gps_rider_avatar"
+                      {/* End Marker (Pulsing User Home) */}
+                      <g transform="translate(315, 145)">
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="14"
+                          className="gps_map_home_pulse"
+                          fill="#2563eb"
+                          opacity="0.2"
                         />
-                        <div className="gps_rider_info">
-                          <strong className="gps_rider_name">
-                            김진우 마스터
-                          </strong>
-                          <span className="gps_rider_meta">
-                            ⭐ 4.98 · 배달 3,214건
-                          </span>
-                          <span className="gps_rider_vehicle">
-                            왓씨 전용 오토바이 · 안심팩 장착
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="7"
+                          fill="#2563eb"
+                          stroke="#ffffff"
+                          strokeWidth="2"
+                        />
+                        <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+                      </g>
 
-                    <div className="gps_detail_divider" />
+                      {/* Gliding Rider vehicle rendered directly in SVG for bulletproof scaling! */}
+                      <g
+                        className={`gps_delivery_rider_glider ${trackingActive ? "gps_delivery_rider_glider--active" : ""}`}
+                      >
+                        {/* Ring aura pulse */}
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="13"
+                          className="gps_rider_glow_pulse"
+                          fill="#3b82f6"
+                          opacity="0.3"
+                        />
+                        <circle
+                          cx="0"
+                          cy="0"
+                          r="7"
+                          fill="#2563eb"
+                          stroke="#ffffff"
+                          strokeWidth="2"
+                        />
+                        <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+                      </g>
+                    </svg>
 
-                    {/* 경로 상세 */}
-                    <div className="gps_detail_section">
-                      <p className="gps_detail_label">배송 경로</p>
-                      <div className="gps_route_list">
-                        <div className="gps_route_item">
-                          <span className="gps_route_dot gps_route_dot--start" />
-                          <div>
-                            <p className="gps_route_place">세탁 공장</p>
-                            <p className="gps_route_addr">
-                              서울 반포동 왓씨 케어센터
-                            </p>
-                          </div>
+                    {/* ETA 패널 */}
+                    <div className="gps_telemetry_glass_panel">
+                      <div className="telemetry_row">
+                        <div className="telemetry_item">
+                          <span className="tele_label">현재 위치</span>
+                          <strong className="tele_val">서초대로 인근</strong>
                         </div>
-                        <div className="gps_route_line" />
-                        <div className="gps_route_item">
-                          <span className="gps_route_dot gps_route_dot--current" />
-                          <div>
-                            <p className="gps_route_place">현재 위치</p>
-                            <p className="gps_route_addr">
-                              서초대로 158 인근 이동 중
-                            </p>
-                          </div>
+                        <div className="telemetry_item">
+                          <span className="tele_label">이동 속도</span>
+                          <strong className="tele_val">24 km/h</strong>
                         </div>
-                        <div className="gps_route_line" />
-                        <div className="gps_route_item">
-                          <span className="gps_route_dot gps_route_dot--end" />
-                          <div>
-                            <p className="gps_route_place">도착지 (우리집)</p>
-                            <p className="gps_route_addr">
-                              반포동 왓씨타워 410호
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="gps_detail_divider" />
-
-                    {/* 실시간 수치 */}
-                    <div className="gps_detail_section">
-                      <p className="gps_detail_label">실시간 현황</p>
-                      <div className="gps_detail_stats">
-                        <div className="gps_stat_item">
-                          <span className="gps_stat_label">이동 속도</span>
-                          <strong className="gps_stat_val">24 km/h</strong>
-                        </div>
-                        <div className="gps_stat_item">
-                          <span className="gps_stat_label">위성 수신</span>
-                          <strong className="gps_stat_val gps_stat_val--green">
-                            {satellites}개
-                          </strong>
-                        </div>
-                        <div className="gps_stat_item">
-                          <span className="gps_stat_label">GPS 정확도</span>
-                          <strong className="gps_stat_val gps_stat_val--green">
-                            ±2m
-                          </strong>
-                        </div>
-                        <div className="gps_stat_item">
-                          <span className="gps_stat_label">도착 예정</span>
-                          <strong className="gps_stat_val gps_stat_val--blue">
+                        <div className="telemetry_item">
+                          <span className="tele_label">도착 예정</span>
+                          <strong className="tele_val highlight_blue">
                             약 {etaMinutes}분
                           </strong>
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </section>
+
+                  {/* Accuracy check footer + 상세보기 토글 */}
+                  <div
+                    className="gps_accuracy_info_footer gps_accuracy_info_footer--clickable"
+                    onClick={() => setShowGpsDetail((v) => !v)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="gps_info_icon"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>배송 마스터 실시간 이동 경로 추적 중</span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{
+                        marginLeft: "auto",
+                        transition: "transform 0.3s ease",
+                        transform: showGpsDetail
+                          ? "rotate(180deg)"
+                          : "rotate(0deg)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+
+                  {/* 상세 정보 드로어 */}
+                  {showGpsDetail && (
+                    <div className="gps_detail_drawer">
+                      {/* 라이더 정보 */}
+                      <div className="gps_detail_section">
+                        <p className="gps_detail_label">담당 라이더</p>
+                        <div className="gps_rider_row">
+                          <img
+                            src={riderJinwooImg}
+                            alt="라이더 진우"
+                            className="gps_rider_avatar"
+                          />
+                          <div className="gps_rider_info">
+                            <strong className="gps_rider_name">
+                              김진우 마스터
+                            </strong>
+                            <span className="gps_rider_meta">
+                              ⭐ 4.98 · 배달 3,214건
+                            </span>
+                            <span className="gps_rider_vehicle">
+                              왓씨 전용 오토바이 · 안심팩 장착
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="gps_detail_divider" />
+
+                      {/* 경로 상세 */}
+                      <div className="gps_detail_section">
+                        <p className="gps_detail_label">배송 경로</p>
+                        <div className="gps_route_list">
+                          <div className="gps_route_item">
+                            <span className="gps_route_dot gps_route_dot--start" />
+                            <div>
+                              <p className="gps_route_place">세탁 공장</p>
+                              <p className="gps_route_addr">
+                                서울 반포동 왓씨 케어센터
+                              </p>
+                            </div>
+                          </div>
+                          <div className="gps_route_line" />
+                          <div className="gps_route_item">
+                            <span className="gps_route_dot gps_route_dot--current" />
+                            <div>
+                              <p className="gps_route_place">현재 위치</p>
+                              <p className="gps_route_addr">
+                                서초대로 158 인근 이동 중
+                              </p>
+                            </div>
+                          </div>
+                          <div className="gps_route_line" />
+                          <div className="gps_route_item">
+                            <span className="gps_route_dot gps_route_dot--end" />
+                            <div>
+                              <p className="gps_route_place">도착지 (우리집)</p>
+                              <p className="gps_route_addr">
+                                반포동 왓씨타워 410호
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="gps_detail_divider" />
+
+                      {/* 실시간 수치 */}
+                      <div className="gps_detail_section">
+                        <p className="gps_detail_label">실시간 현황</p>
+                        <div className="gps_detail_stats">
+                          <div className="gps_stat_item">
+                            <span className="gps_stat_label">이동 속도</span>
+                            <strong className="gps_stat_val">24 km/h</strong>
+                          </div>
+                          <div className="gps_stat_item">
+                            <span className="gps_stat_label">위성 수신</span>
+                            <strong className="gps_stat_val gps_stat_val--green">
+                              {satellites}개
+                            </strong>
+                          </div>
+                          <div className="gps_stat_item">
+                            <span className="gps_stat_label">GPS 정확도</span>
+                            <strong className="gps_stat_val gps_stat_val--green">
+                              ±2m
+                            </strong>
+                          </div>
+                          <div className="gps_stat_item">
+                            <span className="gps_stat_label">도착 예정</span>
+                            <strong className="gps_stat_val gps_stat_val--blue">
+                              약 {etaMinutes}분
+                            </strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
             )}
 
             {/* 배송 히스토리 타임라인 */}
             {(deliveryView === "all" || deliveryView === "status") && (
-            <section className="delivery_timeline_section">
-              <h3 className="delivery_section_title">타임라인 상세</h3>
-              <div className="delivery_timeline_list">
-                <div className="delivery_timeline_item delivery_timeline_item--active">
-                  <div className="delivery_time_col">
-                    <span className="deliv_date">06.01</span>
-                    <span className="deliv_time">16:45</span>
+              <section className="delivery_timeline_section">
+                <h3 className="delivery_section_title">타임라인 상세</h3>
+                <div className="delivery_timeline_list">
+                  <div className="delivery_timeline_item delivery_timeline_item--active">
+                    <div className="delivery_time_col">
+                      <span className="deliv_date">06.01</span>
+                      <span className="deliv_time">16:45</span>
+                    </div>
+                    <div className="delivery_dot_col">
+                      <div className="deliv_timeline_dot deliv_timeline_dot--active-pulse" />
+                      <div className="deliv_timeline_line" />
+                    </div>
+                    <div className="delivery_content_col">
+                      <h4 className="deliv_step_title">
+                        배송 출발 및 마스터 매칭
+                      </h4>
+                      <p className="deliv_step_desc">
+                        소중한 세탁물을 안전하게 안심팩 포장하여 배송 마스터님이
+                        우리집으로 문 앞 배달을 개시했습니다. (10분 내 도착
+                        예정)
+                      </p>
+                    </div>
                   </div>
-                  <div className="delivery_dot_col">
-                    <div className="deliv_timeline_dot deliv_timeline_dot--active-pulse" />
-                    <div className="deliv_timeline_line" />
-                  </div>
-                  <div className="delivery_content_col">
-                    <h4 className="deliv_step_title">
-                      배송 출발 및 마스터 매칭
-                    </h4>
-                    <p className="deliv_step_desc">
-                      소중한 세탁물을 안전하게 안심팩 포장하여 배송 마스터님이
-                      우리집으로 문 앞 배달을 개시했습니다. (10분 내 도착 예정)
-                    </p>
-                  </div>
-                </div>
 
-                <div className="delivery_timeline_item delivery_timeline_item--done">
-                  <div className="delivery_time_col">
-                    <span className="deliv_date">05.31</span>
-                    <span className="deliv_time">02:30</span>
+                  <div className="delivery_timeline_item delivery_timeline_item--done">
+                    <div className="delivery_time_col">
+                      <span className="deliv_date">05.31</span>
+                      <span className="deliv_time">02:30</span>
+                    </div>
+                    <div className="delivery_dot_col">
+                      <div className="deliv_timeline_dot" />
+                      <div className="deliv_timeline_line" />
+                    </div>
+                    <div className="delivery_content_col">
+                      <h4 className="deliv_step_title">
+                        전문 안심 살균 및 건조 완료
+                      </h4>
+                      <p className="deliv_step_desc">
+                        저온 스팀 살균 세탁 공정과 고온 열풍 회전 건조 케어를
+                        안전하게 완료했습니다.
+                      </p>
+                    </div>
                   </div>
-                  <div className="delivery_dot_col">
-                    <div className="deliv_timeline_dot" />
-                    <div className="deliv_timeline_line" />
-                  </div>
-                  <div className="delivery_content_col">
-                    <h4 className="deliv_step_title">
-                      전문 안심 살균 및 건조 완료
-                    </h4>
-                    <p className="deliv_step_desc">
-                      저온 스팀 살균 세탁 공정과 고온 열풍 회전 건조 케어를
-                      안전하게 완료했습니다.
-                    </p>
-                  </div>
-                </div>
 
-                <div className="delivery_timeline_item delivery_timeline_item--done">
-                  <div className="delivery_time_col">
-                    <span className="deliv_date">05.30</span>
-                    <span className="deliv_time">22:00</span>
+                  <div className="delivery_timeline_item delivery_timeline_item--done">
+                    <div className="delivery_time_col">
+                      <span className="deliv_date">05.30</span>
+                      <span className="deliv_time">22:00</span>
+                    </div>
+                    <div className="delivery_dot_col">
+                      <div className="deliv_timeline_dot" />
+                      <div className="deliv_timeline_line" />
+                    </div>
+                    <div className="delivery_content_col">
+                      <h4 className="deliv_step_title">
+                        스마트 팩토리 수거 입고
+                      </h4>
+                      <p className="deliv_step_desc">
+                        왓씨 스마트 허브에 입고되어 정밀 오염 원단 분류 및 살균
+                        준비 단계에 진입했습니다.
+                      </p>
+                    </div>
                   </div>
-                  <div className="delivery_dot_col">
-                    <div className="deliv_timeline_dot" />
-                    <div className="deliv_timeline_line" />
-                  </div>
-                  <div className="delivery_content_col">
-                    <h4 className="deliv_step_title">
-                      스마트 팩토리 수거 입고
-                    </h4>
-                    <p className="deliv_step_desc">
-                      왓씨 스마트 허브에 입고되어 정밀 오염 원단 분류 및 살균
-                      준비 단계에 진입했습니다.
-                    </p>
-                  </div>
-                </div>
 
-                <div className="delivery_timeline_item delivery_timeline_item--done">
-                  <div className="delivery_time_col">
-                    <span className="deliv_date">05.30</span>
-                    <span className="deliv_time">18:40</span>
-                  </div>
-                  <div className="delivery_dot_col">
-                    <div className="deliv_timeline_dot" />
-                  </div>
-                  <div className="delivery_content_col">
-                    <h4 className="deliv_step_title">문 앞 비대면 수거 완료</h4>
-                    <p className="deliv_step_desc">
-                      안심 수거백이 지정하신 수거 장소(문 앞)에서 정상적으로
-                      비대면 수거 완료되었습니다.
-                    </p>
+                  <div className="delivery_timeline_item delivery_timeline_item--done">
+                    <div className="delivery_time_col">
+                      <span className="deliv_date">05.30</span>
+                      <span className="deliv_time">18:40</span>
+                    </div>
+                    <div className="delivery_dot_col">
+                      <div className="deliv_timeline_dot" />
+                    </div>
+                    <div className="delivery_content_col">
+                      <h4 className="deliv_step_title">
+                        문 앞 비대면 수거 완료
+                      </h4>
+                      <p className="deliv_step_desc">
+                        안심 수거백이 지정하신 수거 장소(문 앞)에서 정상적으로
+                        비대면 수거 완료되었습니다.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
             )}
 
             {/* 예상 배송 시간 뷰 */}
@@ -7280,8 +8429,18 @@ export function HomePage() {
                     <span className="eta_time_suffix">도착 예정</span>
                   </div>
                   <div className="eta_remaining_pill">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="13"
+                      height="13"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
                     </svg>
                     약 <strong>{etaMinutes}분</strong> 후 도착
                   </div>
@@ -7340,7 +8499,14 @@ export function HomePage() {
               <button
                 type="button"
                 className="premium_back_btn"
-                onClick={() => { if (careMode === "guide") { setCareMode("normal"); setActiveTab("home"); } else { navigate("/home?tab=home"); } }}
+                onClick={() => {
+                  if (careMode === "guide") {
+                    setCareMode("normal");
+                    setActiveTab("home");
+                  } else {
+                    navigate("/home?tab=home");
+                  }
+                }}
                 aria-label="뒤로가기"
               >
                 <svg
@@ -7356,7 +8522,9 @@ export function HomePage() {
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
-              <h1 className="care_title">{careMode === "guide" ? "세탁 종류 안내" : "의류 케어 매니저"}</h1>
+              <h1 className="care_title">
+                {careMode === "guide" ? "세탁 종류 안내" : "의류 케어 매니저"}
+              </h1>
               <div className="care_header_right_spacer" />
             </header>
 
@@ -7365,37 +8533,171 @@ export function HomePage() {
               <div className="care_guide_content">
                 <section className="care_register_section">
                   <h3 className="care_section_title">맡길 수 있는 세탁 종류</h3>
-                  <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
                     {[
-                      { cat:"일반 빨래", desc:"티셔츠, 바지, 속옷, 타올 등 일상 의류", price:"19,000원~", color:"#eff6ff", tc:"#2563eb" },
-                      { cat:"관리 의류", desc:"아우터, 코트, 실크, 정장 등 섬세 세탁", price:"25,000원~", color:"#f0fdf4", tc:"#16a34a" },
-                      { cat:"이불·침구류", desc:"이불, 베개, 토퍼, 러그 등 대형 침구", price:"30,000원~", color:"#fff7ed", tc:"#ea580c" },
-                      { cat:"신발 케어", desc:"운동화, 구두, 부츠, 슬리퍼 전문 클리닝", price:"13,000원~", color:"#faf5ff", tc:"#9333ea" },
+                      {
+                        cat: "일반 빨래",
+                        desc: "티셔츠, 바지, 속옷, 타올 등 일상 의류",
+                        price: "19,000원~",
+                        color: "#eff6ff",
+                        tc: "#2563eb",
+                      },
+                      {
+                        cat: "관리 의류",
+                        desc: "아우터, 코트, 실크, 정장 등 섬세 세탁",
+                        price: "25,000원~",
+                        color: "#f0fdf4",
+                        tc: "#16a34a",
+                      },
+                      {
+                        cat: "이불·침구류",
+                        desc: "이불, 베개, 토퍼, 러그 등 대형 침구",
+                        price: "30,000원~",
+                        color: "#fff7ed",
+                        tc: "#ea580c",
+                      },
+                      {
+                        cat: "신발 케어",
+                        desc: "운동화, 구두, 부츠, 슬리퍼 전문 클리닝",
+                        price: "13,000원~",
+                        color: "#faf5ff",
+                        tc: "#9333ea",
+                      },
                     ].map((item, i) => (
-                      <div key={i} style={{ background:"#ffffff", border:"1px solid #e2e8f0", borderRadius:14, padding:"14px 16px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                      <div
+                        key={i}
+                        style={{
+                          background: "#ffffff",
+                          border: "1px solid #e2e8f0",
+                          borderRadius: 14,
+                          padding: "14px 16px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
                         <div>
-                          <span style={{ display:"inline-block", fontSize:11, fontWeight:700, color:item.tc, background:item.color, padding:"2px 8px", borderRadius:6, marginBottom:4 }}>{item.cat}</span>
-                          <p style={{ margin:0, fontSize:12, color:"#64748b", fontWeight:500 }}>{item.desc}</p>
+                          <span
+                            style={{
+                              display: "inline-block",
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: item.tc,
+                              background: item.color,
+                              padding: "2px 8px",
+                              borderRadius: 6,
+                              marginBottom: 4,
+                            }}
+                          >
+                            {item.cat}
+                          </span>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 12,
+                              color: "#64748b",
+                              fontWeight: 500,
+                            }}
+                          >
+                            {item.desc}
+                          </p>
                         </div>
-                        <span style={{ fontSize:13, fontWeight:800, color:"#1e293b", flexShrink:0 }}>{item.price}</span>
+                        <span
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 800,
+                            color: "#1e293b",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {item.price}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </section>
 
                 <section className="care_register_section">
-                  <h3 className="care_section_title">커뮤니티 세탁 가이드 & 꿀팁</h3>
-                  <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  <h3 className="care_section_title">
+                    커뮤니티 세탁 가이드 & 꿀팁
+                  </h3>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
                     {[
-                      { tag:"#가죽케어", title:"가죽 의류, 세탁 맡기기 전 꼭 확인하세요", desc:"가죽 표면 스크래치가 있다면 전처리 옵션을 선택하면 더 깔끔하게 복원돼요." },
-                      { tag:"#울케어", title:"울·캐시미어는 냉수 세탁이 정답!", desc:"뜨거운 물에 넣으면 수축돼요. 왓씨 저온 스팀 코스를 이용하면 안전해요." },
-                      { tag:"#이불세탁", title:"이불은 계절 바뀔 때 꼭 세탁해두세요", desc:"살균 코스 추가하면 집먼지 진드기까지 99.9% 제거할 수 있어요." },
-                      { tag:"#신발클리닝", title:"운동화 밑창까지 새것처럼 하는 방법", desc:"프리미엄 코스로 맡기면 밑창과 안창 소독까지 함께 진행돼요." },
+                      {
+                        tag: "#가죽케어",
+                        title: "가죽 의류, 세탁 맡기기 전 꼭 확인하세요",
+                        desc: "가죽 표면 스크래치가 있다면 전처리 옵션을 선택하면 더 깔끔하게 복원돼요.",
+                      },
+                      {
+                        tag: "#울케어",
+                        title: "울·캐시미어는 냉수 세탁이 정답!",
+                        desc: "뜨거운 물에 넣으면 수축돼요. 왓씨 저온 스팀 코스를 이용하면 안전해요.",
+                      },
+                      {
+                        tag: "#이불세탁",
+                        title: "이불은 계절 바뀔 때 꼭 세탁해두세요",
+                        desc: "살균 코스 추가하면 집먼지 진드기까지 99.9% 제거할 수 있어요.",
+                      },
+                      {
+                        tag: "#신발클리닝",
+                        title: "운동화 밑창까지 새것처럼 하는 방법",
+                        desc: "프리미엄 코스로 맡기면 밑창과 안창 소독까지 함께 진행돼요.",
+                      },
                     ].map((tip, i) => (
-                      <div key={i} style={{ background:"#f8fafc", border:"1px solid #f1f5f9", borderRadius:14, padding:"14px 16px" }}>
-                        <span style={{ fontSize:10, fontWeight:700, color:"#2563eb", background:"#eff6ff", padding:"2px 8px", borderRadius:6 }}>{tip.tag}</span>
-                        <p style={{ margin:"8px 0 4px", fontSize:13, fontWeight:800, color:"#0f172a", letterSpacing:"-0.2px" }}>{tip.title}</p>
-                        <p style={{ margin:0, fontSize:11.5, color:"#64748b", lineHeight:1.55 }}>{tip.desc}</p>
+                      <div
+                        key={i}
+                        style={{
+                          background: "#f8fafc",
+                          border: "1px solid #f1f5f9",
+                          borderRadius: 14,
+                          padding: "14px 16px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: 10,
+                            fontWeight: 700,
+                            color: "#2563eb",
+                            background: "#eff6ff",
+                            padding: "2px 8px",
+                            borderRadius: 6,
+                          }}
+                        >
+                          {tip.tag}
+                        </span>
+                        <p
+                          style={{
+                            margin: "8px 0 4px",
+                            fontSize: 13,
+                            fontWeight: 800,
+                            color: "#0f172a",
+                            letterSpacing: "-0.2px",
+                          }}
+                        >
+                          {tip.title}
+                        </p>
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: 11.5,
+                            color: "#64748b",
+                            lineHeight: 1.55,
+                          }}
+                        >
+                          {tip.desc}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -7404,453 +8706,556 @@ export function HomePage() {
             )}
 
             {/* ── 일반 케어 매니저 모드 ── */}
-            {careMode === "normal" && <>
-            {/* [1. 의류 등록 & 소재 분석] */}
-            <section className="care_register_section page_scroll_reveal">
-              <div className="care_interactive_form">
-                <h3 className="care_section_title">스마트 의류 등록</h3>
+            {careMode === "normal" && (
+              <>
+                {/* [1. 의류 등록 & 소재 분석] */}
+                <section className="care_register_section page_scroll_reveal">
+                  <div className="care_interactive_form">
+                    <h3 className="care_section_title">스마트 의류 등록</h3>
 
-                <div className="form_group">
-                  <label className="form_label">의류 이름/종류</label>
-                  <input
-                    type="text"
-                    className="form_input"
-                    placeholder="예: 최애 캐시미어 가디건"
-                    value={clothName}
-                    onChange={(e) => setClothName(e.target.value)}
-                  />
-                </div>
+                    <div className="form_group">
+                      <label className="form_label">의류 이름/종류</label>
+                      <input
+                        type="text"
+                        className="form_input"
+                        placeholder="예: 최애 캐시미어 가디건"
+                        value={clothName}
+                        onChange={(e) => setClothName(e.target.value)}
+                      />
+                    </div>
 
-                <div className="form_group">
-                  <label className="form_label">의류 카테고리 선택</label>
-                  <div className="category_selector">
-                    {["상의", "하의", "아우터", "이불/리빙"].map((cat) => (
-                      <button
-                        key={cat}
-                        type="button"
-                        className={`cat_btn ${clothCategory === cat ? "cat_btn--active" : ""}`}
-                        onClick={() => setClothCategory(cat)}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                    <div className="form_group">
+                      <label className="form_label">의류 카테고리 선택</label>
+                      <div className="category_selector">
+                        {["상의", "하의", "아우터", "이불/리빙"].map((cat) => (
+                          <button
+                            key={cat}
+                            type="button"
+                            className={`cat_btn ${clothCategory === cat ? "cat_btn--active" : ""}`}
+                            onClick={() => setClothCategory(cat)}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                <div className="form_group">
-                  <label className="form_label">
-                    소재 성분 선택 (중복 가능)
-                  </label>
-                  <div className="material_selector">
-                    {["면", "울", "실크", "합성섬유"].map((mat) => {
-                      const isSelected = selectedMaterials.includes(mat);
-                      return (
+                    <div className="form_group">
+                      <label className="form_label">
+                        소재 성분 선택 (중복 가능)
+                      </label>
+                      <div className="material_selector">
+                        {["면", "울", "실크", "합성섬유"].map((mat) => {
+                          const isSelected = selectedMaterials.includes(mat);
+                          return (
+                            <button
+                              key={mat}
+                              type="button"
+                              className={`mat_btn ${isSelected ? "mat_btn--active" : ""}`}
+                              onClick={() => {
+                                if (isSelected) {
+                                  setSelectedMaterials(
+                                    selectedMaterials.filter((m) => m !== mat),
+                                  );
+                                } else {
+                                  setSelectedMaterials([
+                                    ...selectedMaterials,
+                                    mat,
+                                  ]);
+                                }
+                              }}
+                            >
+                              {mat}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="form_group">
+                      <label className="form_label">사진 업로드</label>
+                      <div className="photo_upload_row">
                         <button
-                          key={mat}
                           type="button"
-                          className={`mat_btn ${isSelected ? "mat_btn--active" : ""}`}
+                          className={`photo_btn ${hasPhoto ? "photo_btn--uploaded" : ""}`}
                           onClick={() => {
-                            if (isSelected) {
-                              setSelectedMaterials(
-                                selectedMaterials.filter((m) => m !== mat),
-                              );
-                            } else {
-                              setSelectedMaterials([...selectedMaterials, mat]);
-                            }
+                            setHasPhoto(!hasPhoto);
+                            triggerToast(
+                              hasPhoto
+                                ? "📸 사진 업로드가 취소되었습니다."
+                                : "📸 가상 사진 업로드 완료!",
+                            );
                           }}
                         >
-                          {mat}
+                          {hasPhoto ? "✅ 업로드 완료" : "📸 사진 선택하기"}
+                        </button>
+                        <span className="photo_hint">
+                          라벨이나 옷 사진을 올려주세요
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="form_submit_btn"
+                      onClick={() => {
+                        if (!clothName.trim()) {
+                          triggerToast("⚠️ 의류 이름을 입력해 주세요!");
+                          return;
+                        }
+                        if (selectedMaterials.length === 0) {
+                          triggerToast(
+                            "⚠️ 최소 하나 이상의 소재를 선택해 주세요!",
+                          );
+                          return;
+                        }
+                        const newId = Date.now();
+                        const newCloth = {
+                          id: newId,
+                          name: clothName,
+                          category: clothCategory,
+                          materials: selectedMaterials,
+                          photo: hasPhoto,
+                          analyzing: true,
+                        };
+                        setRegisteredClothes((prev) => [newCloth, ...prev]);
+                        setClothName("");
+                        setSelectedMaterials([]);
+                        setHasPhoto(false);
+                        triggerToast("🔬 AI 소재 분석을 시작합니다...");
+                        setTimeout(() => {
+                          setRegisteredClothes((prev) =>
+                            prev.map((c) =>
+                              c.id === newId ? { ...c, analyzing: false } : c,
+                            ),
+                          );
+                          triggerToast("✨ AI 소재 분석이 완료되었습니다!");
+                        }, 1800);
+                      }}
+                    >
+                      의류 등록 및 AI 소재 분석하기
+                    </button>
+                  </div>
+                </section>
+
+                {/* [3. 세탁 주기 관리] */}
+                <section className="care_cycle_section page_scroll_reveal">
+                  <h3 className="care_section_title">세탁 주기 관리</h3>
+                  <div className="care_cycle_interactive_card">
+                    {/* 상단: 착용 / 주기 / 알림 한 줄 요약 */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: 14,
+                      }}
+                    >
+                      <div style={{ display: "flex", gap: 16 }}>
+                        <div style={{ textAlign: "center" }}>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 10,
+                              color: "#94a3b8",
+                              fontWeight: 600,
+                            }}
+                          >
+                            착용
+                          </p>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 20,
+                              fontWeight: 900,
+                              color: "#2563eb",
+                              letterSpacing: "-1px",
+                            }}
+                          >
+                            {wearCount}
+                            <span style={{ fontSize: 11, fontWeight: 600 }}>
+                              회
+                            </span>
+                          </p>
+                        </div>
+                        <div style={{ width: 1, background: "#e2e8f0" }} />
+                        <div style={{ textAlign: "center" }}>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 10,
+                              color: "#94a3b8",
+                              fontWeight: 600,
+                            }}
+                          >
+                            세탁 주기
+                          </p>
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 20,
+                              fontWeight: 900,
+                              color: "#0f172a",
+                              letterSpacing: "-1px",
+                            }}
+                          >
+                            {targetCycle}
+                            <span style={{ fontSize: 11, fontWeight: 600 }}>
+                              회
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        className={`toggle_alert_btn ${alertEnabled ? "active" : ""}`}
+                        onClick={() => {
+                          setAlertEnabled(!alertEnabled);
+                        }}
+                      >
+                        {alertEnabled ? "알림 On" : "알림 Off"}
+                      </button>
+                    </div>
+
+                    {/* 착용 횟수 — 슬라이더로 직접 조절 */}
+                    <div className="cycle_slider_group">
+                      <div className="slider_label_row">
+                        <span>현재 착용 횟수</span>
+                        <span className="font_bold highlight_blue">
+                          {wearCount} / {targetCycle}회
+                        </span>
+                      </div>
+                      {/* 진행 게이지 */}
+                      <div className="cycle_progress_track">
+                        <div
+                          className={`cycle_progress_fill ${wearCount >= targetCycle ? "cycle_progress_fill--over" : ""}`}
+                          style={{
+                            width: `${Math.min((wearCount / targetCycle) * 100, 100)}%`,
+                          }}
+                        />
+                        {[...Array(targetCycle - 1)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="cycle_progress_tick"
+                            style={{
+                              left: `${((i + 1) / targetCycle) * 100}%`,
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={Math.max(targetCycle, wearCount, 10)}
+                        className="cycle_range_input"
+                        value={wearCount}
+                        onChange={(e) => setWearCount(parseInt(e.target.value))}
+                      />
+                      <div className="sim_btn_row">
+                        <button
+                          type="button"
+                          className="sim_btn"
+                          onClick={() => {
+                            if (wearCount > 0) setWearCount(wearCount - 1);
+                          }}
+                        >
+                          − 1회
+                        </button>
+                        <button
+                          type="button"
+                          className="sim_btn"
+                          onClick={() => setWearCount(wearCount + 1)}
+                        >
+                          + 1회
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* 세탁 주기 설정 */}
+                    <div className="cycle_target_row">
+                      <span className="cycle_target_label">설정 세탁 주기</span>
+                      <div className="cycle_target_controls">
+                        <button
+                          type="button"
+                          className="cycle_target_btn"
+                          onClick={() =>
+                            setTargetCycle(Math.max(2, targetCycle - 1))
+                          }
+                        >
+                          −
+                        </button>
+                        <span className="cycle_target_value">
+                          {targetCycle}회마다 세탁
+                        </span>
+                        <button
+                          type="button"
+                          className="cycle_target_btn"
+                          onClick={() =>
+                            setTargetCycle(Math.min(20, targetCycle + 1))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* 세탁 필요 알림 위젯 */}
+                    {wearCount >= targetCycle && alertEnabled ? (
+                      <div className="cycle_alert_banner">
+                        <span className="alert_icon">
+                          <AlertIcon />
+                        </span>
+                        <div className="alert_content">
+                          <h4 className="alert_title">
+                            세탁이 대단히 시급합니다!
+                          </h4>
+                          <p className="alert_desc">
+                            설정하신 세탁 주기({targetCycle}회)를 초과하여 원단
+                            손상이나 위생 균 번식이 우려됩니다.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="cycle_safe_banner">
+                        <span className="safe_icon">
+                          <SafeIcon />
+                        </span>
+                        <p className="safe_desc">
+                          세탁 주기 상태 양호. {targetCycle - wearCount}회 더
+                          착용한 뒤 세탁하셔도 안전합니다.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                {/* [4. 세탁 추천 및 예약 연결] */}
+                <section className="care_recommend_section page_scroll_reveal">
+                  <div className="care_section_header_row">
+                    <h3 className="care_section_title" style={{ margin: 0 }}>
+                      맞춤형 세탁 추천
+                    </h3>
+                    <span className="care_rec_ai_badge">AI 추천</span>
+                  </div>
+                  <div className="care_rec_scroll">
+                    {[
+                      {
+                        bg: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)",
+                        badge: "실크 · 울 혼방",
+                        title: "안심 저온\n마일드 스팀 코스",
+                        desc: "원단 수축 방지, 칼주름 보존",
+                        img: l1Img,
+                        tag: "#저온스팀 #실크케어",
+                      },
+                      {
+                        bg: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
+                        badge: "아우터 · 가죽",
+                        title: "프리미엄\n드라이 클리닝",
+                        desc: "가죽 광택 복원, 안감 세탁",
+                        img: q1Img,
+                        tag: "#드라이클리닝 #가죽케어",
+                      },
+                      {
+                        bg: "linear-gradient(135deg, #065f46 0%, #059669 100%)",
+                        badge: "일반 의류",
+                        title: "기본 생활빨래\n안심 케어 코스",
+                        desc: "일상 의류 전용 표준 세탁",
+                        img: j1Img,
+                        tag: "#생활빨래 #기본케어",
+                      },
+                    ].map((card, i) => (
+                      <div
+                        key={i}
+                        className="care_rec_card"
+                        style={{ background: card.bg }}
+                        onClick={() => {
+                          setActiveTab("reserve");
+                          setShowReserveDetail(true);
+                        }}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="care_rec_left">
+                          <span className="care_rec_badge">{card.badge}</span>
+                          <h4
+                            className="care_rec_title"
+                            style={{ whiteSpace: "pre-line" }}
+                          >
+                            {card.title}
+                          </h4>
+                          <p className="care_rec_desc">{card.desc}</p>
+                          <span className="care_rec_tag">{card.tag}</span>
+                        </div>
+                        <div className="care_rec_right">
+                          <img
+                            src={card.img}
+                            alt={card.badge}
+                            className="care_rec_img"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* [5. 라이프케어 (보관방법 안내)] */}
+                <section className="care_lifecare_section page_scroll_reveal">
+                  <h3 className="care_section_title">라이프케어 보관법 안내</h3>
+                  <div className="care_lifecare_link_list">
+                    {[
+                      { label: "니트 보관법 알아보기", path: "/lifecare/yarn" },
+                      { label: "코트 보관법 알아보기", path: "/lifecare/coat" },
+                      {
+                        label: "셔츠 관리법 알아보기",
+                        path: "/lifecare/shirt",
+                      },
+                      { label: "패딩 보관법 알아보기", path: "/lifecare/yarn" },
+                    ].map((item, i) => {
+                      const isOpen = openLifecareIndex === i;
+                      return (
+                        <button
+                          key={i}
+                          type="button"
+                          className={`care_lifecare_link_btn ${isOpen ? "open" : "closed"}`}
+                          onClick={() => {
+                            if (isOpen) {
+                              navigate(item.path);
+                            } else {
+                              setOpenLifecareIndex(i);
+                            }
+                          }}
+                          aria-expanded={isOpen}
+                        >
+                          <span
+                            className="care_lifecare_link_icon"
+                            aria-hidden="true"
+                          />
+                          <span className="care_lifecare_link_label">
+                            {item.label}
+                          </span>
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="18"
+                            height="18"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
                         </button>
                       );
                     })}
                   </div>
-                </div>
+                </section>
 
-                <div className="form_group">
-                  <label className="form_label">사진 업로드</label>
-                  <div className="photo_upload_row">
-                    <button
-                      type="button"
-                      className={`photo_btn ${hasPhoto ? "photo_btn--uploaded" : ""}`}
-                      onClick={() => {
-                        setHasPhoto(!hasPhoto);
-                        triggerToast(
-                          hasPhoto
-                            ? "📸 사진 업로드가 취소되었습니다."
-                            : "📸 가상 사진 업로드 완료!",
-                        );
-                      }}
-                    >
-                      {hasPhoto ? "✅ 업로드 완료" : "📸 사진 선택하기"}
-                    </button>
-                    <span className="photo_hint">
-                      라벨이나 옷 사진을 올려주세요
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="form_submit_btn"
-                  onClick={() => {
-                    if (!clothName.trim()) {
-                      triggerToast("⚠️ 의류 이름을 입력해 주세요!");
-                      return;
-                    }
-                    if (selectedMaterials.length === 0) {
-                      triggerToast("⚠️ 최소 하나 이상의 소재를 선택해 주세요!");
-                      return;
-                    }
-                    const newId = Date.now();
-                    const newCloth = {
-                      id: newId,
-                      name: clothName,
-                      category: clothCategory,
-                      materials: selectedMaterials,
-                      photo: hasPhoto,
-                      analyzing: true,
-                    };
-                    setRegisteredClothes((prev) => [newCloth, ...prev]);
-                    setClothName("");
-                    setSelectedMaterials([]);
-                    setHasPhoto(false);
-                    triggerToast("🔬 AI 소재 분석을 시작합니다...");
-                    setTimeout(() => {
-                      setRegisteredClothes((prev) =>
-                        prev.map((c) =>
-                          c.id === newId ? { ...c, analyzing: false } : c,
-                        ),
-                      );
-                      triggerToast("✨ AI 소재 분석이 완료되었습니다!");
-                    }, 1800);
-                  }}
-                >
-                  의류 등록 및 AI 소재 분석하기
-                </button>
-              </div>
-
-            </section>
-
-            {/* [3. 세탁 주기 관리] */}
-            <section className="care_cycle_section page_scroll_reveal">
-              <h3 className="care_section_title">세탁 주기 관리</h3>
-              <div className="care_cycle_interactive_card">
-                {/* 상단: 착용 / 주기 / 알림 한 줄 요약 */}
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
-                  <div style={{ display:"flex", gap:16 }}>
-                    <div style={{ textAlign:"center" }}>
-                      <p style={{ margin:0, fontSize:10, color:"#94a3b8", fontWeight:600 }}>착용</p>
-                      <p style={{ margin:0, fontSize:20, fontWeight:900, color:"#2563eb", letterSpacing:"-1px" }}>{wearCount}<span style={{ fontSize:11, fontWeight:600 }}>회</span></p>
-                    </div>
-                    <div style={{ width:1, background:"#e2e8f0" }}/>
-                    <div style={{ textAlign:"center" }}>
-                      <p style={{ margin:0, fontSize:10, color:"#94a3b8", fontWeight:600 }}>세탁 주기</p>
-                      <p style={{ margin:0, fontSize:20, fontWeight:900, color:"#0f172a", letterSpacing:"-1px" }}>{targetCycle}<span style={{ fontSize:11, fontWeight:600 }}>회</span></p>
-                    </div>
-                  </div>
-                  <button
-                    className={`toggle_alert_btn ${alertEnabled ? "active" : ""}`}
-                    onClick={() => { setAlertEnabled(!alertEnabled); }}
-                  >
-                    {alertEnabled ? "알림 On" : "알림 Off"}
-                  </button>
-                </div>
-
-                {/* 착용 횟수 — 슬라이더로 직접 조절 */}
-                <div className="cycle_slider_group">
-                  <div className="slider_label_row">
-                    <span>현재 착용 횟수</span>
-                    <span className="font_bold highlight_blue">
-                      {wearCount} / {targetCycle}회
-                    </span>
-                  </div>
-                  {/* 진행 게이지 */}
-                  <div className="cycle_progress_track">
+                {/* [6. 관리 팁 제공] */}
+                <section className="care_tips_section page_scroll_reveal">
+                  <h3 className="care_section_title">유용한 의류 관리 팁</h3>
+                  <div className="care_tips_accordion">
                     <div
-                      className={`cycle_progress_fill ${wearCount >= targetCycle ? "cycle_progress_fill--over" : ""}`}
-                      style={{
-                        width: `${Math.min((wearCount / targetCycle) * 100, 100)}%`,
-                      }}
-                    />
-                    {[...Array(targetCycle - 1)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="cycle_progress_tick"
-                        style={{ left: `${((i + 1) / targetCycle) * 100}%` }}
-                      />
-                    ))}
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max={Math.max(targetCycle, wearCount, 10)}
-                    className="cycle_range_input"
-                    value={wearCount}
-                    onChange={(e) => setWearCount(parseInt(e.target.value))}
-                  />
-                  <div className="sim_btn_row">
-                    <button
-                      type="button"
-                      className="sim_btn"
-                      onClick={() => {
-                        if (wearCount > 0) setWearCount(wearCount - 1);
-                      }}
+                      className="care_tip_card"
+                      onClick={() => handleAction("계절별 관리 팁")}
                     >
-                      − 1회
-                    </button>
-                    <button
-                      type="button"
-                      className="sim_btn"
-                      onClick={() => setWearCount(wearCount + 1)}
+                      <h4 className="tip_card_title">계절별 관리</h4>
+                      <p className="tip_card_desc">
+                        황사와 미세먼지가 가득한 환절기에는 안심 털기 후 가벼운
+                        살균 스프레이 소독을 일상화하세요.
+                      </p>
+                    </div>
+                    <div
+                      className="care_tip_card"
+                      onClick={() => handleAction("의류 수명 관리 팁")}
                     >
-                      + 1회
-                    </button>
-                  </div>
-                </div>
-
-                {/* 세탁 주기 설정 */}
-                <div className="cycle_target_row">
-                  <span className="cycle_target_label">설정 세탁 주기</span>
-                  <div className="cycle_target_controls">
-                    <button
-                      type="button"
-                      className="cycle_target_btn"
-                      onClick={() =>
-                        setTargetCycle(Math.max(2, targetCycle - 1))
-                      }
+                      <h4 className="tip_card_title">의류 수명 관리</h4>
+                      <p className="tip_card_desc">
+                        단추를 모두 채우고 뒤집어서 울코스로 세탁망에 세탁하는
+                        것이 옷감 보풀 수명을 3배 늘리는 비결입니다.
+                      </p>
+                    </div>
+                    <div
+                      className="care_tip_card"
+                      onClick={() => handleAction("셔츠 전용 팁")}
                     >
-                      −
-                    </button>
-                    <span className="cycle_target_value">
-                      {targetCycle}회마다 세탁
-                    </span>
-                    <button
-                      type="button"
-                      className="cycle_target_btn"
-                      onClick={() =>
-                        setTargetCycle(Math.min(20, targetCycle + 1))
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                {/* 세탁 필요 알림 위젯 */}
-                {wearCount >= targetCycle && alertEnabled ? (
-                  <div className="cycle_alert_banner">
-                    <span className="alert_icon">
-                      <AlertIcon />
-                    </span>
-                    <div className="alert_content">
-                      <h4 className="alert_title">세탁이 대단히 시급합니다!</h4>
-                      <p className="alert_desc">
-                        설정하신 세탁 주기({targetCycle}회)를 초과하여 원단
-                        손상이나 위생 균 번식이 우려됩니다.
+                      <h4 className="tip_card_title">셔츠 깃 관리</h4>
+                      <p className="tip_card_desc">
+                        목 깃 얼룩은 왓씨 특수 오염팩을 쓰거나 세탁 전 가벼운
+                        식초 희석수를 분무해 주면 황변을 안전하게 방지합니다.
                       </p>
                     </div>
                   </div>
-                ) : (
-                  <div className="cycle_safe_banner">
-                    <span className="safe_icon">
-                      <SafeIcon />
-                    </span>
-                    <p className="safe_desc">
-                      세탁 주기 상태 양호. {targetCycle - wearCount}회 더 착용한
-                      뒤 세탁하셔도 안전합니다.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </section>
+                </section>
 
-            {/* [4. 세탁 추천 및 예약 연결] */}
-            <section className="care_recommend_section page_scroll_reveal">
-              <div className="care_section_header_row">
-                <h3 className="care_section_title" style={{ margin: 0 }}>맞춤형 세탁 추천</h3>
-                <span className="care_rec_ai_badge">AI 추천</span>
-              </div>
-              <div className="care_rec_scroll">
-                {[
-                  {
-                    bg: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)",
-                    badge: "실크 · 울 혼방",
-                    title: "안심 저온\n마일드 스팀 코스",
-                    desc: "원단 수축 방지, 칼주름 보존",
-                    img: l1Img,
-                    tag: "#저온스팀 #실크케어",
-                  },
-                  {
-                    bg: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
-                    badge: "아우터 · 가죽",
-                    title: "프리미엄\n드라이 클리닝",
-                    desc: "가죽 광택 복원, 안감 세탁",
-                    img: q1Img,
-                    tag: "#드라이클리닝 #가죽케어",
-                  },
-                  {
-                    bg: "linear-gradient(135deg, #065f46 0%, #059669 100%)",
-                    badge: "일반 의류",
-                    title: "기본 생활빨래\n안심 케어 코스",
-                    desc: "일상 의류 전용 표준 세탁",
-                    img: j1Img,
-                    tag: "#생활빨래 #기본케어",
-                  },
-                ].map((card, i) => (
-                  <div
-                    key={i}
-                    className="care_rec_card"
-                    style={{ background: card.bg }}
-                    onClick={() => {
-                      setActiveTab("reserve");
-                      setShowReserveDetail(true);
-                    }}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="care_rec_left">
-                      <span className="care_rec_badge">{card.badge}</span>
-                      <h4 className="care_rec_title" style={{ whiteSpace: "pre-line" }}>{card.title}</h4>
-                      <p className="care_rec_desc">{card.desc}</p>
-                      <span className="care_rec_tag">{card.tag}</span>
+                {/* [7. 세탁 이력 관리] */}
+                <section className="care_history_section">
+                  <div className="care_history_header_row">
+                    <h3 className="care_section_title" style={{ margin: 0 }}>
+                      세탁 이력 관리
+                    </h3>
+                    <button
+                      type="button"
+                      className="mypage_active_order_all_btn"
+                      onClick={() => setShowLaundryHistory(true)}
+                    >
+                      전체보기
+                    </button>
+                  </div>
+                  <div className="care_history_card">
+                    <div className="history_summary_row">
+                      <div className="history_summary_box">
+                        <span className="hist_lbl">누적 세탁 횟수</span>
+                        <span className="hist_val font_bold highlight_blue">
+                          24회
+                        </span>
+                      </div>
+                      <div className="history_divider" />
+                      <div className="history_summary_box">
+                        <span className="hist_lbl">의류 등록 개수</span>
+                        <span className="hist_val font_bold">
+                          {registeredClothes.length}벌
+                        </span>
+                      </div>
                     </div>
-                    <div className="care_rec_right">
-                      <img src={card.img} alt={card.badge} className="care_rec_img" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
 
-            {/* [5. 라이프케어 (보관방법 안내)] */}
-            <section className="care_lifecare_section page_scroll_reveal">
-              <h3 className="care_section_title">라이프케어 보관법 안내</h3>
-              <div className="care_lifecare_link_list">
-                {[
-                  { label: "니트 보관법 알아보기", path: "/lifecare/yarn" },
-                  { label: "코트 보관법 알아보기", path: "/lifecare/coat" },
-                  { label: "셔츠 관리법 알아보기", path: "/lifecare/shirt" },
-                  { label: "패딩 보관법 알아보기", path: "/lifecare/yarn" },
-                ].map((item, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className="care_lifecare_link_btn"
-                    onClick={() => navigate(item.path)}
-                  >
-                    <span>{item.label}</span>
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-                  </button>
-                ))}
-              </div>
-            </section>
+                    <div className="care_history_list">
+                      <div
+                        className="care_history_item"
+                        onClick={() => setShowLaundryHistory(true)}
+                      >
+                        <div className="hist_left">
+                          <span className="hist_date">05.27</span>
+                          <span className="hist_category">아우터 · 가죽</span>
+                        </div>
+                        <div className="hist_right">
+                          <span className="hist_cloth_desc">
+                            구스다운 아웃도어 패딩 외 1벌
+                          </span>
+                          <span className="hist_status_done">배송출발</span>
+                        </div>
+                      </div>
 
-            {/* [6. 관리 팁 제공] */}
-            <section className="care_tips_section page_scroll_reveal">
-              <h3 className="care_section_title">유용한 의류 관리 팁</h3>
-              <div className="care_tips_accordion">
-                <div
-                  className="care_tip_card"
-                  onClick={() => handleAction("계절별 관리 팁")}
-                >
-                  <h4 className="tip_card_title">계절별 관리</h4>
-                  <p className="tip_card_desc">
-                    황사와 미세먼지가 가득한 환절기에는 안심 털기 후 가벼운 살균
-                    스프레이 소독을 일상화하세요.
-                  </p>
-                </div>
-                <div
-                  className="care_tip_card"
-                  onClick={() => handleAction("의류 수명 관리 팁")}
-                >
-                  <h4 className="tip_card_title">의류 수명 관리</h4>
-                  <p className="tip_card_desc">
-                    단추를 모두 채우고 뒤집어서 울코스로 세탁망에 세탁하는 것이
-                    옷감 보풀 수명을 3배 늘리는 비결입니다.
-                  </p>
-                </div>
-                <div
-                  className="care_tip_card"
-                  onClick={() => handleAction("셔츠 전용 팁")}
-                >
-                  <h4 className="tip_card_title">셔츠 깃 관리</h4>
-                  <p className="tip_card_desc">
-                    목 깃 얼룩은 왓씨 특수 오염팩을 쓰거나 세탁 전 가벼운 식초
-                    희석수를 분무해 주면 황변을 안전하게 방지합니다.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* [7. 세탁 이력 관리] */}
-            <section className="care_history_section">
-              <div className="care_history_header_row">
-                <h3 className="care_section_title" style={{ margin: 0 }}>
-                  세탁 이력 관리
-                </h3>
-                <button
-                  type="button"
-                  className="mypage_active_order_all_btn"
-                  onClick={() => setShowLaundryHistory(true)}
-                >
-                  전체보기
-                </button>
-              </div>
-              <div className="care_history_card">
-                <div className="history_summary_row">
-                  <div className="history_summary_box">
-                    <span className="hist_lbl">누적 세탁 횟수</span>
-                    <span className="hist_val font_bold highlight_blue">
-                      24회
-                    </span>
-                  </div>
-                  <div className="history_divider" />
-                  <div className="history_summary_box">
-                    <span className="hist_lbl">의류 등록 개수</span>
-                    <span className="hist_val font_bold">
-                      {registeredClothes.length}벌
-                    </span>
-                  </div>
-                </div>
-
-                <div className="care_history_list">
-                  <div
-                    className="care_history_item"
-                    onClick={() => setShowLaundryHistory(true)}
-                  >
-                    <div className="hist_left">
-                      <span className="hist_date">05.27</span>
-                      <span className="hist_category">아우터 · 가죽</span>
-                    </div>
-                    <div className="hist_right">
-                      <span className="hist_cloth_desc">
-                        구스다운 아웃도어 패딩 외 1벌
-                      </span>
-                      <span className="hist_status_done">배송출발</span>
+                      <div
+                        className="care_history_item"
+                        onClick={() => setShowLaundryHistory(true)}
+                      >
+                        <div className="hist_left">
+                          <span className="hist_date">05.14</span>
+                          <span className="hist_category">일반 세탁</span>
+                        </div>
+                        <div className="hist_right">
+                          <span className="hist_cloth_desc">
+                            안심 생활빨래 안심팩 1회
+                          </span>
+                          <span className="hist_status_finish">완료</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <div
-                    className="care_history_item"
-                    onClick={() => setShowLaundryHistory(true)}
-                  >
-                    <div className="hist_left">
-                      <span className="hist_date">05.14</span>
-                      <span className="hist_category">일반 세탁</span>
-                    </div>
-                    <div className="hist_right">
-                      <span className="hist_cloth_desc">
-                        안심 생활빨래 안심팩 1회
-                      </span>
-                      <span className="hist_status_finish">완료</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            </>}
+                </section>
+              </>
+            )}
           </div>
         )}
 
@@ -8083,7 +9488,10 @@ export function HomePage() {
 
               <div
                 className="mypage_active_order_card"
-                onClick={() => setActiveTab("delivery")}
+                onClick={() => {
+                  setDeliveryBackTab("mypage");
+                  setActiveTab("delivery");
+                }}
                 role="button"
                 tabIndex={0}
               >
@@ -8781,8 +10189,17 @@ export function HomePage() {
                         id: "shirt",
                         label: "드레스 셔츠",
                         icon: (
-                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="14"
+                            height="14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z" />
                           </svg>
                         ),
                       },
@@ -8790,10 +10207,19 @@ export function HomePage() {
                         id: "coat",
                         label: "겨울 코트",
                         icon: (
-                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M6 3L2 8v13h20V8l-4-5"/>
-                            <path d="M6 3h12"/>
-                            <path d="M9 3v4l3 2 3-2V3"/>
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="14"
+                            height="14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M6 3L2 8v13h20V8l-4-5" />
+                            <path d="M6 3h12" />
+                            <path d="M9 3v4l3 2 3-2V3" />
                           </svg>
                         ),
                       },
@@ -8801,10 +10227,20 @@ export function HomePage() {
                         id: "bedding",
                         label: "극세사 이불",
                         icon: (
-                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M2 4v16"/><path d="M22 4v16"/>
-                            <rect x="2" y="8" width="20" height="8" rx="2"/>
-                            <path d="M2 12h20"/>
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="14"
+                            height="14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M2 4v16" />
+                            <path d="M22 4v16" />
+                            <rect x="2" y="8" width="20" height="8" rx="2" />
+                            <path d="M2 12h20" />
                           </svg>
                         ),
                       },
@@ -9253,7 +10689,16 @@ export function HomePage() {
             onClick={() => setLightboxImg(null)}
             aria-label="닫기"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -9363,12 +10808,19 @@ export function HomePage() {
                   {/* 선물하기 안내 */}
                   <div className="gift_info_box">
                     <p className="gift_info_title">🎁 선물하기란?</p>
-                    <ul className="gift_info_list" style={{ paddingLeft: "14px", gap: "4px" }}>
+                    <ul
+                      className="gift_info_list"
+                      style={{ paddingLeft: "14px", gap: "4px" }}
+                    >
                       <li>
-                        나의 <strong>안심 포인트</strong>나 <strong>세탁 쿠폰</strong>을 가족·친구에게 간편하게 보낼 수 있는 서비스입니다.
+                        나의 <strong>안심 포인트</strong>나{" "}
+                        <strong>세탁 쿠폰</strong>을 가족·친구에게 간편하게 보낼
+                        수 있는 서비스입니다.
                       </li>
                       <li>
-                        <strong>카카오톡 링크 공유</strong> 혹은 <strong>연락처 입력</strong>을 통해 즉시 선물할 수 있습니다. (전송 후 취소 불가)
+                        <strong>카카오톡 링크 공유</strong> 혹은{" "}
+                        <strong>연락처 입력</strong>을 통해 즉시 선물할 수
+                        있습니다. (전송 후 취소 불가)
                       </li>
                     </ul>
                   </div>

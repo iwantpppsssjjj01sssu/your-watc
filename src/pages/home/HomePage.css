@@ -25,8 +25,12 @@
    내부 position:fixed 오버레이(community, review 등)의 containing block이
    뷰포트가 아닌 home_container로 바뀌어 스크롤 시 함께 이동하는 버그 발생 */
 @keyframes homePageEnter {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ---------------------------------------------------- */
@@ -506,9 +510,9 @@
 
 .home_col_image--search,
 .home_col_image--ring {
-  width: 96px;
+  width: 86px;
   height: auto;
-  bottom: -4px;
+  bottom: -10px;
   right: -6px;
   transform: rotate(6deg);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -677,6 +681,7 @@
   right: -8px;
   opacity: 0.9;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transform: rotate(10deg);
 }
 
 .home_info_card_img--guide {
@@ -1097,7 +1102,9 @@
   height: 100px;
   object-fit: cover;
   display: block;
-  transition: transform 0.2s ease, opacity 0.15s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.15s ease;
 }
 
 .home_review_duvet_img--clickable {
@@ -1222,59 +1229,74 @@
 }
 
 /* ─────────────────────────────────────────── */
-/* 리뷰 작성 박스 – 펼치기/접기 아코디언        */
+/* 리뷰 작성 박스 – 나도 리뷰쓰기 카드           */
 /* ─────────────────────────────────────────── */
 .home_write_review_accordion {
   margin-top: 10px;
-  border: 1px solid #f1f5f9;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.home_write_review_toggle {
+.home_write_review_card {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 16px;
-  background: none;
-  border: none;
+  gap: 12px;
+  padding: 18px 16px;
+  border: 1px solid #f1f5f9;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
   cursor: pointer;
-  text-align: left;
+}
+
+.home_write_review_card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  border-color: #e2e8f0;
+}
+
+.home_write_review_toggle {
+  all: unset;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .home_write_review_toggle_left {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .home_write_review_toggle_icon {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1;
 }
 
 .home_write_review_toggle_label {
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   color: #0f172a;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
 }
 
 .home_write_review_toggle_arrow {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: #2563eb;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(37, 99, 235, 0.07);
-  transition: background 0.15s ease;
-}
-
-.home_write_review_toggle_arrow.open {
-  background: rgba(37, 99, 235, 0.12);
+  min-width: 32px;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+  border-radius: 50%;
+  background: #f8fafc;
 }
 
 .home_write_review_box {
@@ -2438,7 +2460,9 @@
   border-radius: 14px;
   border: 1px solid #f1f5f9;
   display: block;
-  transition: transform 0.2s ease, opacity 0.15s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.15s ease;
 }
 
 .review_all_img--clickable {
@@ -4334,14 +4358,14 @@
 }
 
 .eta_main_card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -40px;
   right: -40px;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .eta_live_row {
@@ -4356,20 +4380,25 @@
   height: 7px;
   border-radius: 50%;
   background: #4ade80;
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.35);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.35);
   flex-shrink: 0;
   animation: etaDotPulse 1.8s ease-in-out infinite;
 }
 
 @keyframes etaDotPulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.35); }
-  50% { box-shadow: 0 0 0 7px rgba(74,222,128,0.1); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(74, 222, 128, 0.1);
+  }
 }
 
 .eta_live_label {
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.3px;
 }
 
@@ -4383,7 +4412,7 @@
 .eta_time_prefix {
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .eta_time_value {
@@ -4397,19 +4426,19 @@
 .eta_time_suffix {
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .eta_remaining_pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 12px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   backdrop-filter: blur(4px);
 }
@@ -5392,7 +5421,7 @@
   overflow: hidden;
   position: relative;
   min-height: 140px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
 }
 
@@ -5411,9 +5440,9 @@
 .care_rec_badge {
   font-size: 10px;
   font-weight: 700;
-  color: rgba(255,255,255,0.8);
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 2px 8px;
   border-radius: 999px;
   width: fit-content;
@@ -5430,14 +5459,14 @@
 
 .care_rec_desc {
   font-size: 11px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   line-height: 1.5;
 }
 
 .care_rec_tag {
   font-size: 10px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.55);
   font-weight: 500;
   margin-top: 2px;
 }
@@ -5450,7 +5479,7 @@
   width: 72px;
   height: 72px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .reserve_link_btn:active {
@@ -5478,7 +5507,7 @@
   box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(15,23,42,0.07);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
   transition: transform 0.2s ease;
 }
 
@@ -5505,7 +5534,7 @@
   background: #f1f5f9;
 }
 .care_lifecare_card:nth-child(2) .life_card_icon {
-  background: rgba(37,99,235,0.1);
+  background: rgba(37, 99, 235, 0.1);
 }
 .care_lifecare_card:nth-child(2) .life_card_title {
   color: #1e293b;
@@ -5516,7 +5545,7 @@
   background: #f1f5f9;
 }
 .care_lifecare_card:nth-child(3) .life_card_icon {
-  background: rgba(37,99,235,0.1);
+  background: rgba(37, 99, 235, 0.1);
 }
 .care_lifecare_card:nth-child(3) .life_card_title {
   color: #1e293b;
@@ -5527,7 +5556,7 @@
   background: linear-gradient(135deg, #d4e9ff 0%, #f0f7ff 100%);
 }
 .care_lifecare_card:nth-child(4) .life_card_icon {
-  background: rgba(37,99,235,0.12);
+  background: rgba(37, 99, 235, 0.12);
 }
 .care_lifecare_card:nth-child(4) .life_card_title {
   color: #1e3a8a;
@@ -5540,7 +5569,7 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
   color: #ffffff;
 }
@@ -5581,20 +5610,20 @@
 .care_lifecare_link_list {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  overflow: hidden;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .care_lifecare_link_btn {
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
   width: 100%;
+  min-height: 72px;
   background: #ffffff;
   border: none;
-  border-bottom: 1px solid #f1f5f9;
+  border-radius: 18px;
   padding: 18px 20px;
   font-size: 16px;
   font-weight: 700;
@@ -5603,15 +5632,119 @@
   cursor: pointer;
   text-align: left;
   letter-spacing: -0.3px;
-  transition: background 0.15s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+  box-shadow: 0 14px 40px -28px rgba(15, 23, 42, 0.16);
+  overflow: hidden;
 }
 
-.care_lifecare_link_btn:last-child {
-  border-bottom: none;
+.care_lifecare_link_icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 54px;
+  min-width: 34px;
+  border-radius: 14px;
+  background: var(--door-bg, #eef2ff);
+  border: 2px solid var(--door-border, #bfdbfe);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.65),
+    0 10px 24px -16px rgba(15, 23, 42, 0.12);
+  flex-shrink: 0;
+}
+
+.care_lifecare_link_icon::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--door-knob, #2563eb);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75);
+}
+
+.care_lifecare_link_label {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 0;
+  transition:
+    opacity 0.18s ease,
+    max-width 0.18s ease,
+    margin-left 0.18s ease,
+    transform 0.18s ease;
+  transform: translateX(-4px);
+}
+
+.care_lifecare_link_btn.open {
+  justify-content: space-between;
+}
+
+.care_lifecare_link_btn.open .care_lifecare_link_label {
+  opacity: 1;
+  max-width: calc(100% - 120px);
+  margin-left: 14px;
+  transform: translateX(0);
+}
+
+.care_lifecare_link_btn.closed svg {
+  opacity: 0;
+}
+
+.care_lifecare_link_btn:hover {
+  transform: translateX(2px);
+  box-shadow: 0 18px 44px -28px rgba(15, 23, 42, 0.18);
 }
 
 .care_lifecare_link_btn:active {
   background: #f8fafc;
+  transform: translateX(1px);
+}
+
+.care_lifecare_link_btn svg {
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.care_lifecare_link_btn:active svg {
+  transform: translateX(4px) rotate(90deg);
+}
+
+.care_lifecare_link_btn:nth-child(1) {
+  --door-bg: #eef2ff;
+  --door-border: #bfdbfe;
+  --door-knob: #2563eb;
+  color: #1e3a8a;
+}
+
+.care_lifecare_link_btn:nth-child(2) {
+  --door-bg: #ecfdf5;
+  --door-border: #86efac;
+  --door-knob: #16a34a;
+  color: #14532d;
+}
+
+.care_lifecare_link_btn:nth-child(3) {
+  --door-bg: #eff6ff;
+  --door-border: #93c5fd;
+  --door-knob: #0284c7;
+  color: #1e3a8a;
+}
+
+.care_lifecare_link_btn:nth-child(4) {
+  --door-bg: #fef9c3;
+  --door-border: #fde68a;
+  --door-knob: #ca8a04;
+  color: #92400e;
 }
 
 /* 6. Accordion Tips */
@@ -7019,8 +7152,12 @@
 }
 
 @keyframes lightboxFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .img_lightbox_close {
@@ -7057,8 +7194,14 @@
 }
 
 @keyframes lightboxImgIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .review_modal_text_wrapper {
@@ -7282,9 +7425,7 @@
 .gps_delivery_rider_glider {
   transform-box: fill-box;
   transform-origin: center;
-  offset-path: path(
-    "M 40 145 L 40 130 L 271 130 L 271 145 L 315 145"
-  );
+  offset-path: path("M 40 145 L 40 130 L 271 130 L 271 145 L 315 145");
   offset-rotate: auto;
 }
 
@@ -8661,27 +8802,29 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 6px 20px rgba(37,99,235,0.28);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.28);
   position: relative;
   overflow: hidden;
 }
 
 .plan_recommend_banner::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: -20px; right: -20px;
-  width: 80px; height: 80px;
+  top: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .plan_recommend_tag {
   font-size: 10px;
   font-weight: 700;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.5px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 2px 10px;
   border-radius: 999px;
   width: fit-content;
@@ -8715,7 +8858,7 @@
 }
 
 .plan_recommend_badge {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
   font-size: 10px;
   font-weight: 600;
@@ -8735,7 +8878,7 @@
   cursor: pointer;
   letter-spacing: -0.2px;
   transition: all 0.15s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .plan_recommend_select_btn:active {
@@ -8744,7 +8887,7 @@
 
 .plan_recommend_desc {
   font-size: 11px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   color: #94a3b8;
   font-weight: 500;
   margin: 0;
@@ -10939,7 +11082,9 @@
   font-weight: 700;
   cursor: pointer;
   font-family: var(--font-pretendard);
-  transition: transform 0.15s ease, opacity 0.13s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.13s ease;
   letter-spacing: -0.2px;
 }
 
@@ -10974,8 +11119,12 @@
 }
 
 @keyframes ppOverlayIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .product_picker_sheet {
@@ -10989,8 +11138,12 @@
 }
 
 @keyframes ppSheetUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .product_picker_handle {
@@ -11143,7 +11296,7 @@
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
 .product_picker_close {

@@ -120,8 +120,8 @@
         font-size="42"
         font-weight="700"
         fill="#1e3a8a"
-        font-family="Georgia, 'Times New Roman', serif"
-        letter-spacing="-1.5">WatC</text>
+        font-family="'Inter', 'Pretendard', 'Arial Rounded MT Bold', 'Helvetica Rounded', sans-serif"
+        letter-spacing="-1.2">WatC</text>
 
   <!-- ─────── 바코드 ─────── -->
   <g clip-path="url(#barcodeClip)">
