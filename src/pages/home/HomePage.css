@@ -5608,8 +5608,8 @@
 }
 
 .care_lifecare_link_list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 12px;
 }
@@ -5617,134 +5617,76 @@
 .care_lifecare_link_btn {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
   width: 100%;
-  min-height: 72px;
-  background: #ffffff;
+  min-height: 130px;
   border: none;
-  border-radius: 18px;
-  padding: 18px 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e293b;
+  border-radius: 20px;
+  padding: 18px 16px 16px;
   font-family: var(--font-pretendard);
   cursor: pointer;
   text-align: left;
-  letter-spacing: -0.3px;
   transition:
     transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.18s ease;
-  box-shadow: 0 14px 40px -28px rgba(15, 23, 42, 0.16);
+    box-shadow 0.18s ease;
+  box-shadow: 0 4px 20px -8px rgba(15, 23, 42, 0.12);
   overflow: hidden;
-}
-
-.care_lifecare_link_icon {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 54px;
-  min-width: 34px;
-  border-radius: 14px;
-  background: var(--door-bg, #eef2ff);
-  border: 2px solid var(--door-border, #bfdbfe);
-  box-shadow:
-    inset 0 4px 0 rgba(255, 255, 255, 0.65),
-    0 10px 24px -16px rgba(15, 23, 42, 0.12);
-  flex-shrink: 0;
-}
-
-.care_lifecare_link_icon::after {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--door-knob, #2563eb);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75);
-}
-
-.care_lifecare_link_label {
-  opacity: 0;
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-left: 0;
-  transition:
-    opacity 0.18s ease,
-    max-width 0.18s ease,
-    margin-left 0.18s ease,
-    transform 0.18s ease;
-  transform: translateX(-4px);
-}
-
-.care_lifecare_link_btn.open {
-  justify-content: space-between;
-}
-
-.care_lifecare_link_btn.open .care_lifecare_link_label {
-  opacity: 1;
-  max-width: calc(100% - 120px);
-  margin-left: 14px;
-  transform: translateX(0);
-}
-
-.care_lifecare_link_btn.closed svg {
-  opacity: 0;
-}
-
-.care_lifecare_link_btn:hover {
-  transform: translateX(2px);
-  box-shadow: 0 18px 44px -28px rgba(15, 23, 42, 0.18);
 }
 
 .care_lifecare_link_btn:active {
-  background: #f8fafc;
-  transform: translateX(1px);
+  transform: scale(0.97);
 }
 
-.care_lifecare_link_btn svg {
-  transition:
-    transform 0.18s ease,
-    opacity 0.18s ease;
+.care_lifecare_link_emoji {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.care_lifecare_link_btn:active svg {
-  transform: translateX(4px) rotate(90deg);
+.care_lifecare_link_title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.3;
+  display: block;
+  margin-bottom: 4px;
 }
 
-.care_lifecare_link_btn:nth-child(1) {
-  --door-bg: #eef2ff;
-  --door-border: #bfdbfe;
-  --door-knob: #2563eb;
+.care_lifecare_link_sub {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.65;
+  letter-spacing: -0.2px;
+}
+
+/* 니트 — 따뜻한 앰버 */
+.care_lifecare_link_btn--yarn {
+  background: linear-gradient(145deg, #fff7ed 0%, #fed7aa 100%);
+  color: #9a3412;
+}
+
+/* 코트 — 차분한 블루 */
+.care_lifecare_link_btn--coat {
+  background: linear-gradient(145deg, #eff6ff 0%, #bfdbfe 100%);
   color: #1e3a8a;
 }
 
-.care_lifecare_link_btn:nth-child(2) {
-  --door-bg: #ecfdf5;
-  --door-border: #86efac;
-  --door-knob: #16a34a;
+/* 셔츠 — 프레시 그린 */
+.care_lifecare_link_btn--shirt {
+  background: linear-gradient(145deg, #f0fdf4 0%, #bbf7d0 100%);
   color: #14532d;
 }
 
-.care_lifecare_link_btn:nth-child(3) {
-  --door-bg: #eff6ff;
-  --door-border: #93c5fd;
-  --door-knob: #0284c7;
-  color: #1e3a8a;
-}
-
-.care_lifecare_link_btn:nth-child(4) {
-  --door-bg: #fef9c3;
-  --door-border: #fde68a;
-  --door-knob: #ca8a04;
-  color: #92400e;
+/* 패딩 — 쿨 바이올렛 */
+.care_lifecare_link_btn--padding {
+  background: linear-gradient(145deg, #faf5ff 0%, #ddd6fe 100%);
+  color: #4c1d95;
 }
 
 /* 6. Accordion Tips */

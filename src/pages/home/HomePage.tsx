@@ -9070,40 +9070,49 @@ export function HomePage() {
                   <h3 className="care_section_title">라이프케어 보관법 안내</h3>
                   <div className="care_lifecare_link_list">
                     {[
-                      { label: "니트 보관법 알아보기", path: "/lifecare/yarn" },
-                      { label: "코트 보관법 알아보기", path: "/lifecare/coat" },
                       {
-                        label: "셔츠 관리법 알아보기",
-                        path: "/lifecare/shirt",
+                        label: "니트 보관법",
+                        path: "/lifecare/yarn",
+                        emoji: "🧶",
+                        mod: "yarn",
                       },
-                      { label: "패딩 보관법 알아보기", path: "/lifecare/yarn" },
-                    ].map((item, i) => {
-                      const isOpen = openLifecareIndex === i;
-                      return (
-                        <button
-                          key={i}
-                          type="button"
-                          className={`care_lifecare_link_btn ${isOpen ? "open" : "closed"}`}
-                          onClick={() => {
-                            if (isOpen) {
-                              navigate(item.path);
-                            } else {
-                              setOpenLifecareIndex(i);
-                            }
-                          }}
-                          aria-expanded={isOpen}
-                        >
-                          <span
-                            className="care_lifecare_link_icon"
-                            aria-hidden="true"
-                          />
-                          <span className="care_lifecare_link_label">
-                            {item.label}
-                          </span>
+                      {
+                        label: "코트 보관법",
+                        path: "/lifecare/coat",
+                        emoji: "🧥",
+                        mod: "coat",
+                      },
+                      {
+                        label: "셔츠 관리법",
+                        path: "/lifecare/shirt",
+                        emoji: "👔",
+                        mod: "shirt",
+                      },
+                      {
+                        label: "패딩 보관법",
+                        path: "/lifecare/yarn",
+                        emoji: "❄️",
+                        mod: "padding",
+                      },
+                    ].map((item, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className={`care_lifecare_link_btn care_lifecare_link_btn--${item.mod}`}
+                        onClick={() => navigate(item.path)}
+                      >
+                        <span className="care_lifecare_link_emoji">
+                          {item.emoji}
+                        </span>
+                        <span className="care_lifecare_link_title">
+                          {item.label}
+                        </span>
+                        <span className="care_lifecare_link_sub">
+                          알아보기
                           <svg
                             viewBox="0 0 24 24"
-                            width="18"
-                            height="18"
+                            width="13"
+                            height="13"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2.5"
@@ -9113,9 +9122,9 @@ export function HomePage() {
                           >
                             <polyline points="9 18 15 12 9 6" />
                           </svg>
-                        </button>
-                      );
-                    })}
+                        </span>
+                      </button>
+                    ))}
                   </div>
                 </section>
 
