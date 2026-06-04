@@ -362,6 +362,25 @@ export function HomePage() {
   const [showUsageGuide, setShowUsageGuide] = useState<boolean>(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [careMode, setCareMode] = useState<"normal" | "guide">("normal");
+
+  // care / mypage 탭 스크롤 등장 애니메이션
+  useEffect(() => {
+    if (activeTab !== "care" && activeTab !== "mypage") return;
+    const timer = setTimeout(() => {
+      const els = document.querySelectorAll('.page_scroll_reveal');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      els.forEach(el => obs.observe(el));
+      return () => obs.disconnect();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [activeTab]);
   const [laundryHistoryTab, setLaundryHistoryTab] = useState<"누적 세탁 횟수" | "이번 달" | "등록 의류">("누적 세탁 횟수");
   const [showMembershipTier, setShowMembershipTier] = useState<boolean>(false);
   const usageGuideScrollRef = useRef<HTMLDivElement>(null);
@@ -5069,7 +5088,7 @@ export function HomePage() {
                     className="home_write_review_toggle"
                     onClick={() => {
                       if (!showWriteReview) {
-                        setShowOrderConfirm(true);
+                        triggerToast("지난 날에 세탁 맡긴 상품들 리뷰를 작성하시겠어요?");
                       } else {
                         setShowWriteReview(false);
                         setReviewSelectedProduct(null);
@@ -5218,9 +5237,17 @@ export function HomePage() {
                       className="order_confirm_sheet"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <div className="product_picker_handle" />
+                      <div style={{ display:"flex", justifyContent:"center", padding:"10px 0 0" }}>
+                        <div style={{ width:36, height:4, borderRadius:99, background:"#e2e8f0" }} />
+                      </div>
                       <div className="order_confirm_body">
-                        <span className="order_confirm_icon">🧺</span>
+                        <span className="order_confirm_icon">
+                          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                          </svg>
+                        </span>
                         <h3 className="order_confirm_title">
                           지난 날에 세탁 맡긴 상품들<br />리뷰를 작성하시겠어요?
                         </h3>
@@ -7379,7 +7406,7 @@ export function HomePage() {
             {/* ── 일반 케어 매니저 모드 ── */}
             {careMode === "normal" && <>
             {/* [1. 의류 등록 & 소재 분석] */}
-            <section className="care_register_section">
+            <section className="care_register_section page_scroll_reveal">
               <div className="care_interactive_form">
                 <h3 className="care_section_title">스마트 의류 등록</h3>
 
@@ -7505,7 +7532,7 @@ export function HomePage() {
             </section>
 
             {/* [3. 세탁 주기 관리] */}
-            <section className="care_cycle_section">
+            <section className="care_cycle_section page_scroll_reveal">
               <h3 className="care_section_title">세탁 주기 관리</h3>
               <div className="care_cycle_interactive_card">
                 {/* 상단: 착용 / 주기 / 알림 한 줄 요약 */}
@@ -7638,7 +7665,7 @@ export function HomePage() {
             </section>
 
             {/* [4. 세탁 추천 및 예약 연결] */}
-            <section className="care_recommend_section">
+            <section className="care_recommend_section page_scroll_reveal">
               <div className="care_section_header_row">
                 <h3 className="care_section_title" style={{ margin: 0 }}>맞춤형 세탁 추천</h3>
                 <span className="care_rec_ai_badge">AI 추천</span>
@@ -7696,7 +7723,7 @@ export function HomePage() {
             </section>
 
             {/* [5. 라이프케어 (보관방법 안내)] */}
-            <section className="care_lifecare_section">
+            <section className="care_lifecare_section page_scroll_reveal">
               <h3 className="care_section_title">라이프케어 보관법 안내</h3>
               <div className="care_lifecare_link_list">
                 {[
@@ -7721,7 +7748,7 @@ export function HomePage() {
             </section>
 
             {/* [6. 관리 팁 제공] */}
-            <section className="care_tips_section">
+            <section className="care_tips_section page_scroll_reveal">
               <h3 className="care_section_title">유용한 의류 관리 팁</h3>
               <div className="care_tips_accordion">
                 <div
@@ -7960,7 +7987,7 @@ export function HomePage() {
             </section>
 
             {/* 지갑 포인트/쿠폰 보유 정보 카드 */}
-            <section className="mypage_wallet_section">
+            <section className="mypage_wallet_section page_scroll_reveal">
               <div className="mypage_wallet_card">
                 <div className="mypage_wallet_column">
                   <span className="mypage_wallet_label">포인트</span>
@@ -8042,7 +8069,7 @@ export function HomePage() {
             </section>
 
             {/* 진행 중인 주문 카드 */}
-            <section className="mypage_active_order_section">
+            <section className="mypage_active_order_section page_scroll_reveal">
               <div className="mypage_active_order_header_row">
                 <h3 className="mypage_active_order_title">진행 중인 주문</h3>
                 <button
@@ -8155,7 +8182,7 @@ export function HomePage() {
             </section>
 
             {/* 마이페이지 세분화된 메뉴 리스트 */}
-            <section className="mypage_menu_section">
+            <section className="mypage_menu_section page_scroll_reveal">
               <div className="mypage_menu_group">
                 <div
                   className="mypage_menu_item"

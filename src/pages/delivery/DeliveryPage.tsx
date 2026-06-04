@@ -189,6 +189,21 @@ export function DeliveryPage() {
     };
   }, [watchId]);
 
+  // 스크롤 등장 애니메이션
+  useEffect(() => {
+    const els = document.querySelectorAll('.page_scroll_reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, [showContent]);
+
   // 페이지 진입 시 최상단 스크롤 리셋
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -289,8 +304,8 @@ export function DeliveryPage() {
         {showContent && (
           <div className="delivery_content_reveal">
             {/* 예약 정보 확인 */}
-            <h2 className="laundry_stage_main_title" style={{ marginBottom: 12 }}>예약 정보 확인</h2>
-            <div className="rsv_info_card">
+            <h2 className="laundry_stage_main_title page_scroll_reveal" style={{ marginBottom: 12 }}>예약 정보 확인</h2>
+            <div className="rsv_info_card page_scroll_reveal">
               <div className="rsv_today_row">
                 <span className="rsv_today_badge">05.27 (월) 주문 접수</span>
               </div>
@@ -325,7 +340,7 @@ export function DeliveryPage() {
 
 
             {/* 세탁 배송 스테이지 */}
-            <section className="laundry_stage_section">
+            <section className="laundry_stage_section page_scroll_reveal">
               <div className="laundry_stage_top">
                 <div>
                   <h2 className="laundry_stage_main_title">세탁 · 배송 스테이지</h2>
@@ -485,7 +500,7 @@ export function DeliveryPage() {
             </section>
 
             {/* 수령 확인 */}
-            <section className="rcv_section">
+            <section className="rcv_section page_scroll_reveal">
               <h2 className="laundry_stage_main_title" style={{ marginBottom: 12 }}>수령 확인</h2>
               <div className="rcv_card">
                 {/* 헤더 */}
