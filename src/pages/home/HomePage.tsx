@@ -371,6 +371,15 @@ export function HomePage() {
   const [showUsageGuide, setShowUsageGuide] = useState<boolean>(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [careMode, setCareMode] = useState<"normal" | "guide">("normal");
+  const [expandedCareSections, setExpandedCareSections] = useState<Set<string>>(
+    new Set(["register"]),
+  );
+  const toggleCareSection = (key: string) =>
+    setExpandedCareSections((prev) => {
+      const next = new Set(prev);
+      next.has(key) ? next.delete(key) : next.add(key);
+      return next;
+    });
 
   // care / mypage 탭 스크롤 등장 애니메이션
   useEffect(() => {
@@ -3049,7 +3058,7 @@ export function HomePage() {
                           <p
                             style={{
                               margin: "0 0 4px",
-                              fontSize: 11,
+                              fontSize: 13,
                               color: isActive
                                 ? "rgba(255,255,255,0.95)"
                                 : "rgba(255,255,255,0.55)",
@@ -3062,7 +3071,7 @@ export function HomePage() {
                             style={{
                               margin: 0,
                               fontSize: 22,
-                              fontWeight: 900,
+                              fontWeight: 500,
                               color: isActive
                                 ? "#ffffff"
                                 : "rgba(255,255,255,0.55)",
@@ -8678,8 +8687,17 @@ export function HomePage() {
               <>
                 {/* [1. 의류 등록 & 소재 분석] */}
                 <section className="care_register_section page_scroll_reveal">
-                  <div className="care_interactive_form">
+                  <button
+                    type="button"
+                    className="care_section_toggle_btn"
+                    data-expanded={expandedCareSections.has("register")}
+                    onClick={() => toggleCareSection("register")}
+                  >
                     <h3 className="care_section_title">스마트 의류 등록</h3>
+                    <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  {expandedCareSections.has("register") && (
+                  <div className="care_interactive_form">
 
                     <div className="form_group">
                       <label className="form_label">의류 이름/종류</label>
@@ -8804,11 +8822,21 @@ export function HomePage() {
                       의류 등록 및 AI 소재 분석하기
                     </button>
                   </div>
+                  )}
                 </section>
 
                 {/* [3. 세탁 주기 관리] */}
                 <section className="care_cycle_section page_scroll_reveal">
-                  <h3 className="care_section_title">세탁 주기 관리</h3>
+                  <button
+                    type="button"
+                    className="care_section_toggle_btn"
+                    data-expanded={expandedCareSections.has("cycle")}
+                    onClick={() => toggleCareSection("cycle")}
+                  >
+                    <h3 className="care_section_title">세탁 주기 관리</h3>
+                    <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  {expandedCareSections.has("cycle") && (
                   <div className="care_cycle_interactive_card">
                     {/* 상단: 착용 / 주기 / 알림 한 줄 요약 */}
                     <div
@@ -8994,16 +9022,24 @@ export function HomePage() {
                       </div>
                     )}
                   </div>
+                  )}
                 </section>
 
                 {/* [4. 세탁 추천 및 예약 연결] */}
                 <section className="care_recommend_section page_scroll_reveal">
-                  <div className="care_section_header_row">
-                    <h3 className="care_section_title" style={{ margin: 0 }}>
-                      맞춤형 세탁 추천
-                    </h3>
-                    <span className="care_rec_ai_badge">AI 추천</span>
-                  </div>
+                  <button
+                    type="button"
+                    className="care_section_toggle_btn"
+                    data-expanded={expandedCareSections.has("recommend")}
+                    onClick={() => toggleCareSection("recommend")}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <h3 className="care_section_title" style={{ margin: 0 }}>맞춤형 세탁 추천</h3>
+                      <span className="care_rec_ai_badge">AI 추천</span>
+                    </span>
+                    <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  {expandedCareSections.has("recommend") && (
                   <div className="care_rec_scroll">
                     {[
                       {
@@ -9063,37 +9099,27 @@ export function HomePage() {
                       </div>
                     ))}
                   </div>
+                  )}
                 </section>
 
                 {/* [5. 라이프케어 (보관방법 안내)] */}
                 <section className="care_lifecare_section page_scroll_reveal">
-                  <h3 className="care_section_title">라이프케어 보관법 안내</h3>
+                  <button
+                    type="button"
+                    className="care_section_toggle_btn"
+                    data-expanded={expandedCareSections.has("lifecare")}
+                    onClick={() => toggleCareSection("lifecare")}
+                  >
+                    <h3 className="care_section_title">라이프케어 보관법 안내</h3>
+                    <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  {expandedCareSections.has("lifecare") && (
                   <div className="care_lifecare_link_list">
                     {[
-                      {
-                        label: "니트 보관법",
-                        path: "/lifecare/yarn",
-                        emoji: "🧶",
-                        mod: "yarn",
-                      },
-                      {
-                        label: "코트 보관법",
-                        path: "/lifecare/coat",
-                        emoji: "🧥",
-                        mod: "coat",
-                      },
-                      {
-                        label: "셔츠 관리법",
-                        path: "/lifecare/shirt",
-                        emoji: "👔",
-                        mod: "shirt",
-                      },
-                      {
-                        label: "패딩 보관법",
-                        path: "/lifecare/yarn",
-                        emoji: "❄️",
-                        mod: "padding",
-                      },
+                      { label: "니트 보관법", path: "/lifecare/yarn", mod: "yarn" },
+                      { label: "코트 보관법", path: "/lifecare/coat", mod: "coat" },
+                      { label: "셔츠 관리법", path: "/lifecare/shirt", mod: "shirt" },
+                      { label: "패딩 보관법", path: "/lifecare/yarn", mod: "padding" },
                     ].map((item, i) => (
                       <button
                         key={i}
@@ -9101,84 +9127,95 @@ export function HomePage() {
                         className={`care_lifecare_link_btn care_lifecare_link_btn--${item.mod}`}
                         onClick={() => navigate(item.path)}
                       >
-                        <span className="care_lifecare_link_emoji">
-                          {item.emoji}
-                        </span>
                         <span className="care_lifecare_link_title">
                           {item.label}
-                        </span>
-                        <span className="care_lifecare_link_sub">
-                          알아보기
-                          <svg
-                            viewBox="0 0 24 24"
-                            width="13"
-                            height="13"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                          >
-                            <polyline points="9 18 15 12 9 6" />
-                          </svg>
                         </span>
                       </button>
                     ))}
                   </div>
+                  )}
                 </section>
 
                 {/* [6. 관리 팁 제공] */}
                 <section className="care_tips_section page_scroll_reveal">
-                  <h3 className="care_section_title">유용한 의류 관리 팁</h3>
+                  <button
+                    type="button"
+                    className="care_section_toggle_btn"
+                    data-expanded={expandedCareSections.has("tips")}
+                    onClick={() => toggleCareSection("tips")}
+                  >
+                    <h3 className="care_section_title">유용한 의류 관리 팁</h3>
+                    <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  {expandedCareSections.has("tips") && (
                   <div className="care_tips_accordion">
+                    {/* 라운드넥 스웨터 */}
                     <div
                       className="care_tip_card"
                       onClick={() => handleAction("계절별 관리 팁")}
                     >
+                      <span className="tip_card_icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 8 A3 3 0 0 1 15 8 L20 10 L20 12.5 L16 11.5 L16 21 L8 21 L8 11.5 L4 12.5 L4 10 Z" />
+                        </svg>
+                      </span>
                       <h4 className="tip_card_title">계절별 관리</h4>
-                      <p className="tip_card_desc">
-                        황사와 미세먼지가 가득한 환절기에는 안심 털기 후 가벼운
-                        살균 스프레이 소독을 일상화하세요.
-                      </p>
                     </div>
+                    {/* V넥 코트 */}
                     <div
                       className="care_tip_card"
                       onClick={() => handleAction("의류 수명 관리 팁")}
                     >
+                      <span className="tip_card_icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 8 L10.5 3 L12 7 L13.5 3 L15 8 L20 10 L20 12.5 L16 11.5 L16 22 L8 22 L8 11.5 L4 12.5 L4 10 Z" />
+                        </svg>
+                      </span>
                       <h4 className="tip_card_title">의류 수명 관리</h4>
-                      <p className="tip_card_desc">
-                        단추를 모두 채우고 뒤집어서 울코스로 세탁망에 세탁하는
-                        것이 옷감 보풀 수명을 3배 늘리는 비결입니다.
-                      </p>
                     </div>
+                    {/* 뾰족 칼라 셔츠 */}
                     <div
                       className="care_tip_card"
                       onClick={() => handleAction("셔츠 전용 팁")}
                     >
+                      <span className="tip_card_icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 8 L10 2.5 L12 7 L14 2.5 L15 8 L20 10 L20 12.5 L16 11.5 L16 21 L8 21 L8 11.5 L4 12.5 L4 10 Z" />
+                        </svg>
+                      </span>
                       <h4 className="tip_card_title">셔츠 깃 관리</h4>
-                      <p className="tip_card_desc">
-                        목 깃 얼룩은 왓씨 특수 오염팩을 쓰거나 세탁 전 가벼운
-                        식초 희석수를 분무해 주면 황변을 안전하게 방지합니다.
-                      </p>
                     </div>
                   </div>
+                  )}
                 </section>
 
                 {/* [7. 세탁 이력 관리] */}
                 <section className="care_history_section">
                   <div className="care_history_header_row">
-                    <h3 className="care_section_title" style={{ margin: 0 }}>
-                      세탁 이력 관리
-                    </h3>
+                    <button
+                      type="button"
+                      className="care_section_toggle_btn"
+                      data-expanded={expandedCareSections.has("history")}
+                      onClick={() => toggleCareSection("history")}
+                      style={{ flex: 1 }}
+                    >
+                      <h3 className="care_section_title" style={{ margin: 0 }}>
+                        세탁 이력 관리
+                      </h3>
+                      <svg className="care_section_chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                    </button>
                     <button
                       type="button"
                       className="mypage_active_order_all_btn"
-                      onClick={() => setShowLaundryHistory(true)}
+                      onClick={() => {
+                        setShowLaundryHistory(true);
+                        setLaundryHistoryTab("누적 세탁 횟수");
+                      }}
                     >
                       전체보기
                     </button>
                   </div>
+                  {expandedCareSections.has("history") && (
                   <div className="care_history_card">
                     <div className="history_summary_row">
                       <div className="history_summary_box">
@@ -9230,6 +9267,7 @@ export function HomePage() {
                       </div>
                     </div>
                   </div>
+                  )}
                 </section>
               </>
             )}
@@ -9574,14 +9612,14 @@ export function HomePage() {
                   onClick={() => setShowActiveOrderDetail(true)}
                 >
                   <span>진행 중 주문</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/washing-rules")}
                 >
                   <span>세탁 이용수칙</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
               </div>
 
@@ -9591,7 +9629,7 @@ export function HomePage() {
                   onClick={() => navigate("/mypage/detail/price-basic")}
                 >
                   <span>기본 가격표</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
@@ -9601,14 +9639,14 @@ export function HomePage() {
                   }}
                 >
                   <span>세탁 종류별 요금</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/price-additional")}
                 >
                   <span>추가 요금 기준</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
               </div>
 
@@ -9618,21 +9656,21 @@ export function HomePage() {
                   onClick={() => navigate("/mypage/detail/care-guide")}
                 >
                   <span>의류 관리 및 라이프케어</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/alert-settings")}
                 >
                   <span>재세탁 알림</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/care-guide")}
                 >
                   <span>관리 팁 제공</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
               </div>
 
@@ -9642,28 +9680,28 @@ export function HomePage() {
                   onClick={() => navigate("/mypage/detail/invite-friend")}
                 >
                   <span>친구 초대</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/attendance-check")}
                 >
                   <span>왓씨 출석체크</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/notices")}
                 >
                   <span>공지사항</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
                 <div
                   className="mypage_menu_item"
                   onClick={() => navigate("/mypage/detail/customer-center")}
                 >
                   <span>고객센터</span>
-                  <span className="mypage_arrow">&gt;</span>
+                  <svg className="mypage_arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 4 17 12 9 20" /></svg>
                 </div>
               </div>
             </section>
