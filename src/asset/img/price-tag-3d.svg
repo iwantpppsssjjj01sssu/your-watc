@@ -1,0 +1,168 @@
+<svg width="190" height="270" viewBox="0 0 190 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 태그 그림자 -->
+    <filter id="tagDrop" x="-20%" y="-10%" width="150%" height="130%">
+      <feDropShadow dx="5" dy="10" stdDeviation="9" flood-color="#1a3a6a" flood-opacity="0.32"/>
+    </filter>
+    <filter id="ropeShadow" x="-30%" y="-30%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#1a3a6a" flood-opacity="0.22"/>
+    </filter>
+    <filter id="discShadow" x="-30%" y="-30%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#333" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- 태그 앞면 (밝은 흰색) -->
+    <linearGradient id="tagFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f8fafc"/>
+      <stop offset="60%"  stop-color="#f0f4f8"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- 파란 프레임 그라데이션 -->
+    <linearGradient id="blueFrame" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%"   stop-color="#6b9de8"/>
+      <stop offset="40%"  stop-color="#3d72c9"/>
+      <stop offset="100%" stop-color="#2458b0"/>
+    </linearGradient>
+
+    <!-- 태그 우측 측면 (3D 깊이) -->
+    <linearGradient id="tagSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#1e4da0"/>
+      <stop offset="100%" stop-color="#2a5ab8"/>
+    </linearGradient>
+
+    <!-- 금속 (아일렛/시큐리티 태그) -->
+    <radialGradient id="metalShine" cx="32%" cy="28%" r="62%">
+      <stop offset="0%"   stop-color="#f1f5f9"/>
+      <stop offset="35%"  stop-color="#cbd5e1"/>
+      <stop offset="70%"  stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </radialGradient>
+    <radialGradient id="metalInner" cx="40%" cy="35%" r="60%">
+      <stop offset="0%"   stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </radialGradient>
+
+    <!-- 로프 블루 그라데이션 -->
+    <linearGradient id="ropeBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#2a58b8"/>
+      <stop offset="50%"  stop-color="#4a7ad4"/>
+      <stop offset="100%" stop-color="#2a58b8"/>
+    </linearGradient>
+
+    <!-- 바코드 패턴 마스크 -->
+    <clipPath id="barcodeClip">
+      <rect x="30" y="222" width="120" height="22" rx="1"/>
+    </clipPath>
+  </defs>
+
+  <!-- 바닥 그림자 타원 -->
+  <ellipse cx="98" cy="263" rx="52" ry="7" fill="rgba(26,58,138,0.14)"/>
+
+  <!-- ─────── 로프 (트위스트 코드) ─────── -->
+  <!-- 왼쪽 로프 스트랜드 -->
+  <path d="M 95 97 C 80 90 60 78 52 58 C 45 40 48 22 60 14 C 70 7 82 6 95 8"
+        stroke="#2a58b8" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#ropeShadow)"/>
+  <!-- 오른쪽 로프 스트랜드 -->
+  <path d="M 95 97 C 110 90 130 78 138 58 C 145 40 142 22 130 14 C 120 7 108 6 95 8"
+        stroke="#2a58b8" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#ropeShadow)"/>
+
+  <!-- 로프 트위스트 하이라이트 (흰색 줄무늬) -->
+  <path d="M 95 97 C 80 90 60 78 52 58 C 45 40 48 22 60 14 C 70 7 82 6 95 8"
+        stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"
+        stroke-dasharray="5 5" stroke-dashoffset="0" fill="none"/>
+  <path d="M 95 97 C 110 90 130 78 138 58 C 145 40 142 22 130 14 C 120 7 108 6 95 8"
+        stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"
+        stroke-dasharray="5 5" stroke-dashoffset="2.5" fill="none"/>
+
+  <!-- 로프 교차점 (매듭) -->
+  <ellipse cx="95" cy="97" rx="7" ry="5" fill="#2a58b8" filter="url(#ropeShadow)"/>
+  <ellipse cx="95" cy="97" rx="4.5" ry="3" fill="#3d6ec8"/>
+
+  <!-- ─────── 태그 우측 3D 측면 ─────── -->
+  <path d="M 158 108 L 165 114 L 165 258 L 158 252 Z"
+        fill="url(#tagSide)" opacity="0.85"/>
+
+  <!-- ─────── 태그 프레임 (파란 테두리) ─────── -->
+  <rect x="22" y="100" width="136" height="152" rx="15"
+        fill="url(#blueFrame)" filter="url(#tagDrop)"/>
+
+  <!-- ─────── 태그 앞면 (흰색 내부) ─────── -->
+  <rect x="31" y="109" width="118" height="134" rx="9"
+        fill="url(#tagFace)"/>
+
+  <!-- 앞면 미세 하이라이트 (상단 광택) -->
+  <rect x="31" y="109" width="118" height="40" rx="9"
+        fill="rgba(255,255,255,0.5)" opacity="0.6"/>
+
+  <!-- ─────── 아일렛 (금속 구멍) ─────── -->
+  <circle cx="90" cy="104" r="8.5" fill="url(#metalShine)" stroke="#7090aa" stroke-width="1"/>
+  <circle cx="90" cy="104" r="5"   fill="none"             stroke="#8099b8" stroke-width="1.5"/>
+  <circle cx="90" cy="104" r="2.5" fill="rgba(100,120,150,0.3)"/>
+
+  <!-- ─────── 시큐리티 디스크 (우측 상단) ─────── -->
+  <circle cx="157" cy="120" r="16" fill="url(#metalShine)" stroke="#7b94b0" stroke-width="0.8" filter="url(#discShadow)"/>
+  <!-- 디스크 내부 링 -->
+  <circle cx="157" cy="120" r="11" fill="none" stroke="#9ab0c8" stroke-width="1.2"/>
+  <circle cx="157" cy="120" r="6"  fill="url(#metalInner)"/>
+  <circle cx="157" cy="120" r="3"  fill="#b0bfd0"/>
+  <!-- 디스크 하이라이트 -->
+  <circle cx="152" cy="115" r="3"  fill="rgba(255,255,255,0.45)"/>
+  <!-- SECURITY 텍스트 (원형 배치) -->
+  <text font-size="4.2" fill="#7090a8" font-family="Arial, sans-serif" font-weight="600" letter-spacing="0.8">
+    <textPath href="#securityCircle" startOffset="10%">SECURITY DE</textPath>
+  </text>
+  <path id="securityCircle" d="M 157 107 A 13 13 0 1 1 156.9 107" fill="none"/>
+
+  <!-- ─────── WatC 텍스트 ─────── -->
+  <text x="90" y="182"
+        text-anchor="middle"
+        font-size="42"
+        font-weight="700"
+        fill="#1e3a8a"
+        font-family="'Inter', 'Pretendard', 'Arial Rounded MT Bold', 'Helvetica Rounded', sans-serif"
+        letter-spacing="-1.2">WatC</text>
+
+  <!-- ─────── 바코드 ─────── -->
+  <g clip-path="url(#barcodeClip)">
+    <!-- 바코드 바들 (두께 변화로 실제처럼) -->
+    <rect x="30"  y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="33"  y="222" width="2.5" height="22" fill="#1e3a8a"/>
+    <rect x="37"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="40"  y="222" width="3"   height="22" fill="#1e3a8a"/>
+    <rect x="45"  y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="48"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="51"  y="222" width="2"   height="22" fill="#1e3a8a"/>
+    <rect x="55"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="58"  y="222" width="3"   height="22" fill="#1e3a8a"/>
+    <rect x="63"  y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="66"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="69"  y="222" width="2.5" height="22" fill="#1e3a8a"/>
+    <rect x="73"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="76"  y="222" width="2"   height="22" fill="#1e3a8a"/>
+    <rect x="80"  y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="83"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="86"  y="222" width="3"   height="22" fill="#1e3a8a"/>
+    <rect x="91"  y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="94"  y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="97"  y="222" width="2"   height="22" fill="#1e3a8a"/>
+    <rect x="101" y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="104" y="222" width="2.5" height="22" fill="#1e3a8a"/>
+    <rect x="109" y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="112" y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="115" y="222" width="3"   height="22" fill="#1e3a8a"/>
+    <rect x="120" y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="123" y="222" width="2"   height="22" fill="#1e3a8a"/>
+    <rect x="127" y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="130" y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="133" y="222" width="2.5" height="22" fill="#1e3a8a"/>
+    <rect x="138" y="222" width="1.5" height="22" fill="#1e3a8a"/>
+    <rect x="141" y="222" width="1"   height="22" fill="#1e3a8a"/>
+    <rect x="144" y="222" width="2"   height="22" fill="#1e3a8a"/>
+    <rect x="148" y="222" width="1"   height="22" fill="#1e3a8a"/>
+  </g>
+
+  <!-- 태그 하단 면 (3D 두께) -->
+  <path d="M 22 252 L 158 252 L 165 258 L 29 258 Z"
+        fill="#1e4da0" opacity="0.7"/>
+</svg>

@@ -1,0 +1,448 @@
+/* ══════════════════════════════════════════
+   WriteReviewPage — 리뷰 작성 전용 페이지
+══════════════════════════════════════════ */
+
+.wr_page {
+  min-height: 100dvh;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-pretendard, "Pretendard", sans-serif);
+  max-width: min(880px, 100%);
+  margin: 0 auto;
+}
+
+/* ── 헤더 ── */
+.wr_header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.wr_back_btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #1e293b;
+  margin-right: 4px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.wr_back_btn:active {
+  background: #f1f5f9;
+}
+
+.wr_header_title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+  margin: 0;
+}
+
+/* ── 본문 ── */
+.wr_body {
+  flex: 1;
+  padding: 20px 20px calc(96px + env(safe-area-inset-bottom, 0px) + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── 섹션 헤더 ── */
+.wr_section_head {
+  margin-bottom: 20px;
+}
+
+.wr_section_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+}
+
+.wr_section_sub {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+/* ── 상품 목록 ── */
+.wr_product_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wr_product_item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 14px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.12s;
+}
+
+.wr_product_item:active {
+  transform: scale(0.985);
+}
+
+.wr_product_item--on {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #eff6ff;
+}
+
+.wr_product_img {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.wr_product_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wr_product_name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+.wr_product_category {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.wr_product_date {
+  font-size: 12px;
+  color: #2563eb;
+  font-weight: 600;
+  background: #eff6ff;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-top: 2px;
+}
+
+.wr_product_item--on .wr_product_date {
+  background: #dbeafe;
+}
+
+.wr_product_check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.wr_product_check--on {
+  background: #2563eb;
+}
+
+/* ── 선택 상품 칩 ── */
+.wr_selected_chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 24px;
+}
+
+.wr_chip_img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.wr_chip_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wr_chip_name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+.wr_chip_date {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.wr_chip_change {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: var(--font-pretendard, "Pretendard", sans-serif);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.wr_chip_change:active {
+  background: #dbeafe;
+}
+
+/* ── 별점 섹션 ── */
+.wr_star_section {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1.5px solid #f1f5f9;
+}
+
+.wr_star_label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 14px;
+  letter-spacing: -0.2px;
+}
+
+.wr_star_row {
+  display: flex;
+  gap: 8px;
+}
+
+.wr_star_btn {
+  font-size: 34px;
+  line-height: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e2e8f0;
+  transition:
+    color 0.15s,
+    transform 0.12s;
+  padding: 0;
+}
+
+.wr_star_btn--on {
+  color: #f59e0b;
+}
+
+.wr_star_btn:active {
+  transform: scale(1.15);
+}
+
+.wr_star_text {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f59e0b;
+  letter-spacing: -0.2px;
+}
+
+/* ── 텍스트 섹션 ── */
+.wr_text_section {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  border: 1.5px solid #f1f5f9;
+  margin-bottom: 14px;
+}
+
+.wr_text_label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 12px;
+  letter-spacing: -0.2px;
+}
+
+.wr_textarea {
+  width: 100%;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-family: var(--font-pretendard, "Pretendard", sans-serif);
+  color: #0f172a;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.wr_textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.wr_textarea::placeholder {
+  color: #cbd5e1;
+}
+
+.wr_char_count {
+  text-align: right;
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 8px 0 0;
+  font-weight: 500;
+}
+
+/* ── 하단 고정 버튼 바 ── */
+.wr_bottom_bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: min(880px, 100%);
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  padding: 12px 20px calc(env(safe-area-inset-bottom, 0px) + 12px);
+  z-index: 50;
+  /* 하단 네비 위 */
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+
+.wr_confirm_btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-pretendard, "Pretendard", sans-serif);
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  background: #e2e8f0;
+  color: #94a3b8;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.12s;
+}
+
+.wr_confirm_btn--on {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+}
+
+.wr_confirm_btn--on:active {
+  transform: scale(0.98);
+}
+
+/* ── 완료 화면 ── */
+.wr_done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px 0;
+  gap: 0;
+}
+
+.wr_done_icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3);
+}
+
+.wr_done_title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0 0 10px;
+}
+
+.wr_done_sub {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 32px;
+  line-height: 1.6;
+}
+
+.wr_done_btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-pretendard, "Pretendard", sans-serif);
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.12s;
+  margin-bottom: 10px;
+}
+
+.wr_done_btn:active {
+  transform: scale(0.98);
+}
+
+.wr_done_btn--main {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+}
+
+.wr_done_btn--sub {
+  background: #f1f5f9;
+  color: #475569;
+}

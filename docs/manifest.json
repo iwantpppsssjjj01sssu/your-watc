@@ -1,0 +1,18 @@
+{
+  "name": "왓씨(WATC)",
+  "short_name": "왓씨",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "description": "스마트 세탁 케어 서비스 — 수거·배송·의류관리를 한 번에",
+  "icons": [
+    {
+      "src": "/launcherIcon.png",
+      "sizes": "2048x2048",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,794 @@
+body:has(.agreement_step_page) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.agreement_step_page {
+  width: 100%;
+  max-width: min(880px, 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: #ffffff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #111827;
+  font-family: var(--font-pretendard);
+}
+
+.agreement_step_banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 150px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #eff6ff 0%, #ddebff 46%, #f8fbff 100%);
+}
+
+.agreement_step_banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 45% 20%,
+      rgba(56, 137, 255, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(180deg, rgba(59, 130, 246, 0.18), rgba(255, 255, 255, 0.95));
+  z-index: 1;
+}
+
+.agreement_step_back {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 42px;
+  margin-top: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.agreement_step_back img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.agreement_step_bubble {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.agreement_step_bubble--large {
+  top: -36px;
+  right: -24px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(255, 255, 255, 0.88),
+    rgba(255, 255, 255, 0.18) 55%,
+    rgba(48, 118, 255, 0.05) 100%
+  );
+  filter: blur(1px);
+  border: none;
+}
+
+.agreement_step_bubble--medium {
+  bottom: -26px;
+  left: -24px;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.86),
+    rgba(255, 255, 255, 0.14) 42%,
+    rgba(178, 210, 255, 0.12) 100%
+  );
+  filter: blur(0.8px);
+  border: none;
+}
+
+.agreement_step_bubble--small {
+  top: 64px;
+  left: 42px;
+  width: 64px;
+  height: 64px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.4) 36%,
+    rgba(186, 215, 255, 0.12) 100%
+  );
+  filter: blur(0.8px);
+  border: none;
+}
+
+.agreement_step_bubble--tiny {
+  right: 84px;
+  bottom: 38px;
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.48) 32%,
+    rgba(196, 221, 255, 0.16) 100%
+  );
+  filter: blur(0.6px);
+  border: none;
+}
+
+.agreement_step_body {
+  display: flex;
+  flex: 1; /* 나머지 공간을 모두 차지 */
+  flex-direction: column;
+  padding: 20px 24px 20px; /* 아래쪽 padding을 확보해서 버튼이 짤리지 않게 함 */
+  overflow-y: auto; /* 내용이 길면 스크롤이 되게 함 */
+  -webkit-overflow-scrolling: touch;
+  padding-top: 20px;
+  margin-top: -30px;
+}
+
+.agreement_step_title_group {
+  padding: 12px 0 8px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.agreement_step_title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+  color: #0f172a;
+  text-align: left;
+  word-break: keep-all;
+}
+
+.agreement_step_title_highlight {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.agreement_step_supporting {
+  margin-top: 1px;
+  color: rgba(71, 85, 105, 0.9);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.2px;
+  text-align: left;
+  word-break: keep-all;
+  margin-bottom: 14px;
+}
+
+.agreement_step_card {
+  position: relative;
+  padding: 16px 20px;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: 0 28px 64px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.agreement_step_continue {
+  position: relative;
+  margin: auto 16px 24px 16px; /* push to bottom and align with 16px margins */
+  width: calc(100% - 32px);
+  height: 56px; /* matches LoginPage and AgreementPage button height */
+  border: 0;
+  border-radius: 14px; /* matches LoginPage and AgreementPage button border-radius */
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px; /* matches button font-size */
+  font-weight: 800;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.agreement_step_continue--emphasized {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+}
+
+.agreement_step_continue:disabled {
+  opacity: 0.58;
+  background: linear-gradient(90deg, #c1d4f4 0%, #d4dbe6 100%);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.agreement_step_continue:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 24px 54px rgba(37, 99, 235, 0.24);
+}
+
+.agreement_step_continue_arrow {
+  display: inline-block;
+  transform: translateX(1px);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.agreement_step_benefits {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.agreement_step_benefit {
+  padding: 18px 18px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 26px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.agreement_step_benefit:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.agreement_step_benefit_check {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f2f5fb;
+  border: 1px solid #d8e1ee;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.agreement_step_benefit_check--active {
+  background: #eff6ff;
+  border-color: #dbeafe;
+}
+
+.agreement_step_benefit_check::before {
+  content: "";
+  display: none;
+}
+
+.agreement_step_benefit_check--active::after {
+  content: "✓";
+  color: #2563eb;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agreement_step_all_select {
+  width: 100%;
+  margin: 0;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 26px;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.agreement_step_all_select:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.12);
+}
+
+.agreement_step_all_select_text {
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.agreement_step_divider {
+  width: 100%;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 4px 0;
+}
+
+.agreement_step_choice {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #e3edff;
+  border-radius: 18px;
+  background: #f8faff;
+  box-sizing: border-box;
+}
+
+.agreement_step_choice--lead {
+  order: -1;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.agreement_step_choice_label {
+  display: block;
+  margin: 0 0 11px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.agreement_step_choice_switch {
+  height: 50px;
+  padding: 4px;
+  border-radius: 13px;
+  background: #e9f0fc;
+  display: flex;
+  gap: 4px;
+}
+
+.agreement_step_choice_option {
+  flex: 1;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.agreement_step_choice_option--selected {
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+}
+
+.agreement_step_choice_option:disabled {
+  cursor: default;
+}
+
+.agreement_step_choice_dot {
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+.agreement_step_overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 120;
+  background: rgba(15, 23, 42, 0.48); /* Soft dark dim background */
+  backdrop-filter: blur(8px); /* Elegant glassmorphism blur */
+}
+
+.agreement_step_alert {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  z-index: 130;
+  width: calc(100% - 48px);
+  max-width: 320px;
+  overflow: visible; /* Support absolute elements floating on top */
+  border-radius: 32px; /* Large beautiful rounded corners */
+  background: #ffffff; /* Pure white background */
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14); /* Silver premium shadow */
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-sizing: border-box;
+  padding: 44px 24px 28px; /* Spacious spacing inside */
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.agreement_step_alert_body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.agreement_step_alert_icon {
+  width: 68px; /* Larger icon area */
+  height: 68px;
+  margin: -78px auto 20px; /* Overlap and float gracefully on top boundary */
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1.5px solid rgba(37, 99, 235, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.1);
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 5;
+  position: relative;
+  animation: float-alert-icon 3s ease-in-out infinite; /* Soft micro animation */
+}
+
+@keyframes float-alert-icon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.agreement_step_alert_icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.agreement_step_alert_title {
+  margin: 0 0 14px;
+  color: #1e293b;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  font-family: var(--font-pretendard);
+  word-break: keep-all;
+}
+
+.agreement_step_alert_text {
+  margin: 0 0 28px; /* Spacious separation before buttons */
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+  font-weight: 500;
+  font-family: var(--font-pretendard);
+  word-break: keep-all;
+}
+
+.agreement_step_alert_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spaced out large CTA buttons */
+  width: 100%;
+}
+
+.agreement_step_alert_button {
+  height: 48px; /* Larger premium height */
+  border: 0;
+  background: #f1f5f9; /* Soft light gray background */
+  color: #4b5563; /* Elegant dark gray text */
+  cursor: pointer;
+  font-family: var(--font-pretendard);
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 14px; /* Curved large button radius */
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.agreement_step_alert_button:hover {
+  background: #e2e8f0;
+}
+
+.agreement_step_alert_button:active {
+  transform: scale(0.98);
+}
+
+.agreement_step_alert_button--allow {
+  background: #2563eb; /* Brand blue point color */
+  color: #ffffff; /* White text */
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+}
+
+.agreement_step_alert_button--allow:hover {
+  background: #1d4ed8;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+}
+
+.agreement_step_alert_button--allow:active {
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+}
+
+/* --- [배너가 없는 버전의 미니멀 화이트 레이아웃] --- */
+.agreement_step_page--nobanner {
+  background-color: #ffffff;
+}
+
+/* Noble minimal layout for steps without banner */
+.agreement_step_page--nobanner .agreement_step_banner {
+  display: none; /* ensure no banner renders */
+}
+
+.agreement_step_page--nobanner .agreement_step_body {
+  padding: 80px 32px 80px; /* generous top padding to prevent clipping */
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title styling for minimal step pages */
+.agreement_step_page--nobanner .agreement_step_title {
+  font-size: 26px;
+  color: #111827;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* 2단 회색 선택 박스 (iOS 추적 금지 / 허용 선택 카드) */
+.att_card_container {
+  width: 100%;
+  max-width: 360px;
+  background-color: #f3f4f6; /* 연한 회색 배경 */
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 28px auto 32px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.att_card_row {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #9ca3af; /* 미선택 컬러 */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.att_card_row--top {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Default: both options gray */
+.att_card_row {
+  color: #9ca3af;
+}
+
+/* Selected: blue highlight */
+.att_card_row--selected {
+  font-weight: 700;
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.att_check_icon {
+  margin-right: 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 혜택 안내 목록 스타일 */
+.benefit_info_list {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* 글들 사이의 수직 간격을 깔끔하게 줄임 */
+  margin: 0 auto 32px;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.benefit_info_item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  padding: 4px 0; /* 각 줄 사이의 패딩 여백도 대폭 줄여 컴팩트하게 조율 */
+}
+
+/* 라운드 서클 라인 아이콘 */
+.benefit_info_circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #dbeafe;
+  background: #eff6ff; /* 부드럽고 맑은 파스텔 블루 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb; /* 세련된 브랜드 파란색 아이콘 컬러 */
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.04); /* 매우 은은하고 고급스러운 그림자 */
+}
+
+.benefit_info_circle--w-icon {
+  font-family: var(--font-pretendard);
+  font-weight: 800;
+  color: #2563eb;
+  font-size: 16px; /* W 아이콘이 원 안에 균형있게 들어가도록 다듬음 */
+}
+
+.benefit_info_text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.45;
+  letter-spacing: -0.3px;
+}
+
+/* 하단 연한 설명 텍스트 */
+.agreement_bottom_legal_text {
+  width: 100%;
+  max-width: 360px;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+  text-align: center;
+  margin: 0 auto 24px;
+}
+
+.agreement_step_body {
+  padding-bottom: 40px;
+}
+
+.agreement_step_continue {
+  position: static;
+  margin: auto 16px 24px 16px;
+  width: calc(100% - 32px);
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+}
+
+.agreement_step_continue:disabled {
+  opacity: 0.58;
+  background: linear-gradient(90deg, #c1d4f4 0%, #d4dbe6 100%) !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+
+/* --- 맞춤 서비스 설정 완료 토스트 스타일 --- */
+.att_success_overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(12px);
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.att_success_toast {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 201;
+  background: #f8fbff;
+  padding: 28px 24px;
+  border-radius: 28px;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09);
+  width: calc(100% - 40px);
+  max-width: 320px;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: successToastReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+}
+
+@keyframes successToastReveal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.9);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+  }
+}
+
+.att_success_icon {
+  font-size: 34px;
+  animation: bounceIcon 1.8s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes bounceIcon {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+.att_success_text {
+  font-size: 16.5px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.55;
+  margin: 0;
+  letter-spacing: -0.3px;
+  word-break: keep-all;
+}
