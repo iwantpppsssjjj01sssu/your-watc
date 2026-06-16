@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\장현지\\\\team3project\\\\watc\" -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "Bash(npx tsc *)",
+      "Bash(xargs grep -l \"type MatchEvent\\\\|interface MatchEvent\")",
+      "WebFetch(domain:www.figma.com)",
+      "mcp__figma__get_design_context",
+      "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|4강\\\\|대진표\\\\|MVP\")",
+      "Bash(xargs grep -l \"하이라이트\\\\|highlight\\\\|Highlight\")",
+      "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|highlight\")",
+      "Bash(xargs grep -l \"4강\\\\|대진표\\\\|MVP 투표\")",
+      "Bash(xargs grep -l \"tournament\\\\|Tournament\\\\|MVP\\\\|Highlight\\\\|highlight\")",
+      "Bash(node -e ' *)",
+      "Bash(ipconfig)",
+      "Bash(findstr /R \"IPv4.*192\\\\|IPv4.*10\\\\.\")",
+      "Bash(findstr \"IPv4\")",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":5174\")",
+      "Bash(taskkill /PID 2596 /F)",
+      "PowerShell(Get-ChildItem \"c:\\\\박수진\\\\your-watc\\\\src\\\\asset\" -Recurse | Where-Object { $_.Name -match \"review|coat|trench\" } | Select-Object FullName)",
+      "Read(//c/�ڼ���/your-watc/src/asset/**)",
+      "PowerShell(Get-ChildItem \"c:\\\\박수진\\\\your-watc\\\\src\\\\asset\\\\icons\" | Where-Object { $_.Name -match \"coat|review|rv\" } | Select-Object Name)",
+      "Bash(python -c \"import rembg; print\\('rembg OK'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c ' *)",
+      "Bash(powershell -Command \"Select-String -Path 'src\\\\pages\\\\home\\\\HomePage.tsx' -Pattern '에코프렌들리' | Select-Object LineNumber, Line\")"
+    ]
+  }
+}
