@@ -9322,9 +9322,8 @@ export function HomePage() {
               <div className="mypage_header_right_spacer" />
             </header>
 
-            {/* 2열 배치 상단 카드 그리드 */}
+            {/* 프로필 카드 */}
             <section className="mypage_top_cards_grid">
-              {/* 왼쪽 파란색 프로필 카드 [i1Img 이미지 탑재 및 +버튼 상세 설정 모달 연결] */}
               <div
                 className="mypage_profile_blue_card"
                 onClick={() => {
@@ -9367,15 +9366,16 @@ export function HomePage() {
                   </div>
                 </div>
               </div>
+            </section>
 
-              {/* 오른쪽 점수 카드 — 리디자인 */}
+            {/* 포인트 리워드 카드 — 풀너비 리디자인 */}
+            <section className="mypage_score_card_section">
               <div
                 className="mypage_score_card"
                 onClick={() => setShowPointDetail(true)}
               >
-                {/* 배경 장식 원 */}
-                <div className="score_deco_circle score_deco_circle--1" />
-                <div className="score_deco_circle score_deco_circle--2" />
+                {/* 우상단 글로우 오브 */}
+                <div className="score_bg_orb" />
 
                 {/* 상단: 라벨 + 등급 배지 */}
                 <div className="score_top_row">
@@ -9389,25 +9389,36 @@ export function HomePage() {
                     }}
                     style={{
                       border: "none",
-                      background: "none",
                       cursor: "pointer",
                       padding: 0,
                       fontFamily: "inherit",
+                      background: "none",
                     }}
                   >
                     🥈 실버
                   </button>
                 </div>
 
-                {/* 메인 점수 */}
-                <div className="score_main_row">
-                  <span className="score_number">
-                    {totalScore.toLocaleString()}
-                  </span>
-                  <span className="score_unit">점</span>
+                {/* 메인 점수 + 스파클 */}
+                <div className="score_main_area">
+                  <span className="score_sparkle score_sparkle--left">✦</span>
+                  <div className="score_main_row">
+                    <span className="score_number">
+                      {totalScore.toLocaleString()}
+                    </span>
+                    <span className="score_unit">점</span>
+                  </div>
+                  <span className="score_sparkle score_sparkle--right">✦</span>
                 </div>
 
-                {/* 다음 등급 진행바 */}
+                {/* 상위 % 뱃지 */}
+                <div className="score_rank_pill">
+                  상위&nbsp;
+                  <span className="score_rank_pct">30%</span>
+                  의 회원이에요!&nbsp;↗
+                </div>
+
+                {/* 진행바 */}
                 <div className="score_progress_wrap">
                   <div className="score_progress_track">
                     <div
@@ -9415,11 +9426,33 @@ export function HomePage() {
                       style={{
                         width: `${Math.min((totalScore / 1000) * 100, 100)}%`,
                       }}
-                    />
+                    >
+                      <div className="score_progress_glow" />
+                    </div>
                   </div>
-                  <span className="score_next_label">
-                    🏆 골드까지 {Math.max(0, 1000 - totalScore)}점
-                  </span>
+                </div>
+
+                {/* 하단 패널: 골드까지 + 더보기 */}
+                <div className="score_bottom_panel">
+                  <div className="score_bottom_left">
+                    <span className="score_trophy_icon">🏆</span>
+                    <div>
+                      <p className="score_bottom_next_lbl">골드까지</p>
+                      <p className="score_bottom_next_pts">
+                        {Math.max(0, 1000 - totalScore).toLocaleString()}점
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="score_more_btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMembershipTier(true);
+                    }}
+                  >
+                    더보기 ›
+                  </button>
                 </div>
               </div>
             </section>

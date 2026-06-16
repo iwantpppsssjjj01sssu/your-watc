@@ -4762,21 +4762,30 @@
   width: 100%;
   background: none;
   border: none;
-  padding: 0;
+  border-bottom: 1px solid #F1F5F9;
+  padding: 0 0 14px 0;
   cursor: pointer;
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   color: inherit;
 }
 
 .care_section_chevron {
   flex-shrink: 0;
-  color: #94a3b8;
+  color: #D1D5DB;
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
   transition: transform 0.22s ease;
 }
 
 .care_section_toggle_btn[data-expanded="true"] .care_section_chevron {
   transform: rotate(180deg);
+}
+
+/* 맞춤형 세탁 추천: 섹션 우측 패딩 없어 chevron이 20px 더 오른쪽에 위치하는 문제 수정 */
+.care_recommend_section .care_section_toggle_btn {
+  padding-right: 20px;
 }
 
 .care_section_toggle_btn--history {
@@ -4785,12 +4794,14 @@
   min-width: 0;
   justify-content: flex-start;
   margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .care_section_right_group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -5826,7 +5837,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
 }
 
 .care_history_section {
@@ -6063,50 +6076,52 @@
 }
 
 /* Right Score Card — 리디자인 */
+/* ============================================================
+   포인트 리워드 카드 섹션 래퍼
+   ============================================================ */
+.mypage_score_card_section {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   포인트 리워드 카드 본체
+   ============================================================ */
 .mypage_score_card {
-  background: linear-gradient(145deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+  background: linear-gradient(160deg, #1a0b6b 0%, #1e1585 20%, #2920a5 48%, #3a2ec8 72%, #4b3de8 100%);
   border-radius: 24px;
-  flex: 0.75;
-  height: 192px;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 16px 14px 14px;
+  gap: 16px;
+  padding: 22px 20px 18px;
   box-sizing: border-box;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  box-shadow:
+    0 0 0 1.5px rgba(130, 110, 255, 0.45),
+    0 20px 48px rgba(20, 10, 100, 0.55),
+    0 0 80px rgba(80, 60, 230, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mypage_score_card:active {
-  transform: scale(0.97);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  transform: scale(0.98);
 }
 
-/* 배경 장식 원 */
-.score_deco_circle {
+/* 우상단 글로우 오브 */
+.score_bg_orb {
   position: absolute;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.07);
+  background: radial-gradient(circle at 38% 38%, #f040e0 0%, #c026d3 30%, rgba(140, 20, 210, 0.45) 60%, transparent 78%);
+  top: -70px;
+  right: -55px;
   pointer-events: none;
-}
-
-.score_deco_circle--1 {
-  width: 100px;
-  height: 100px;
-  top: -30px;
-  right: -30px;
-}
-
-.score_deco_circle--2 {
-  width: 60px;
-  height: 60px;
-  bottom: -10px;
-  left: -10px;
+  opacity: 0.72;
 }
 
 /* 상단 행 */
@@ -6119,74 +6134,198 @@
 }
 
 .score_top_label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.65);
-  letter-spacing: 0.3px;
-}
-
-.score_tier_badge {
-  font-size: 10px;
-  font-weight: 800;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.18);
-  padding: 3px 8px;
-  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.2px;
 }
 
-/* 메인 점수 */
-.score_main_row {
+.score_tier_badge {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 메인 점수 + 스파클 */
+.score_main_area {
   display: flex;
   align-items: flex-end;
-  gap: 3px;
+  justify-content: center;
   position: relative;
   z-index: 1;
 }
 
-.score_number {
-  font-size: 42px;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -2px;
+.score_sparkle {
+  color: #9ec8ff;
+  text-shadow:
+    0 0 8px rgba(140, 190, 255, 0.95),
+    0 0 22px rgba(120, 170, 255, 0.6);
+  animation: sparkle_pulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
   line-height: 1;
 }
 
+.score_sparkle--left {
+  font-size: 22px;
+  margin-right: 6px;
+  margin-bottom: 10px;
+  animation-delay: 0s;
+}
+
+.score_sparkle--right {
+  font-size: 15px;
+  margin-left: 8px;
+  margin-bottom: 24px;
+  animation-delay: 1.2s;
+}
+
+@keyframes sparkle_pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1);    }
+  50%       { opacity: 1;    transform: scale(1.28); }
+}
+
+.score_main_row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.score_number {
+  font-size: 76px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -3px;
+  line-height: 1;
+  text-shadow:
+    0 0 32px rgba(255, 255, 255, 0.55),
+    0 0 64px rgba(160, 180, 255, 0.35);
+}
+
 .score_unit {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 8px;
+}
+
+/* 상위 % 뱃지 */
+.score_rank_pill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.score_rank_pct {
+  color: #FFD54A;
+  font-weight: 800;
 }
 
 /* 진행바 */
 .score_progress_wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   position: relative;
   z-index: 1;
 }
 
 .score_progress_track {
   width: 100%;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-  overflow: hidden;
+  height: 11px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  overflow: visible;
+  position: relative;
 }
 
 .score_progress_fill {
   height: 100%;
+  background: linear-gradient(90deg, #FFB800 0%, #FF6F3C 42%, #FF4080 76%, #FF14A0 100%);
+  border-radius: 8px;
+  position: relative;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 14px rgba(255, 90, 130, 0.55);
+}
+
+.score_progress_glow {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
   background: #ffffff;
-  border-radius: 3px;
-  transition: width 0.6s ease;
+  box-shadow:
+    0 0 8px 3px rgba(255, 70, 150, 0.9),
+    0 0 18px 7px rgba(255, 100, 100, 0.5);
+}
+
+/* 하단 패널 */
+.score_bottom_panel {
+  background: rgba(0, 0, 12, 0.32);
+  border-radius: 16px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.score_bottom_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score_trophy_icon {
+  font-size: 32px;
+  filter: drop-shadow(0 2px 8px rgba(255, 210, 50, 0.55));
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.score_bottom_next_lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 2px;
+}
+
+.score_bottom_next_pts {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFD54A;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.score_more_btn {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  padding: 9px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
 }
 
 .score_next_label {
-  font-size: 10px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.65);
+  display: none;
 }
 
 /* Wallet Point/Coupon Card */
